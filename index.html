@@ -497,6 +497,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAuth();});
   const supportedLanguages = ['tr','az','uz','kk','tk','ky','en'];
   let currentLanguage = 'tr';
   let applying = false;
+  let queuedLanguage = null;
   const nodeRecords = new WeakMap();
   const attrRecords = new WeakMap();
   const translationCache = new Map();
@@ -739,7 +740,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAuth();});
   }
 
   async function applyLanguage(lang){
-    if(!supportedLanguages.includes(lang))lang='tr'; if(applying)return;
+    if(!supportedLanguages.includes(lang))lang='tr';
+    if(applying){queuedLanguage=lang;return;}
     applying=true; currentLanguage=lang; document.documentElement.lang=lang; document.documentElement.dataset.language=lang;
   const sel=document.getElementById('languageSelect');if(sel)sel.value=lang;updateTopLanguageLabels(lang);
     await translateTree(document.body,lang,{online:true});
@@ -750,6 +752,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAuth();});
     window.dispatchEvent(new CustomEvent('tda:languageChanged',{detail:{language:lang}}));
     // Dinamik render'ların eklediği düğümler için son bir tutarlılık taraması.
     setTimeout(()=>translateTree(document.body,lang,{online:true}),150);
+    if(queuedLanguage){const next=queuedLanguage;queuedLanguage=null;applyLanguage(next);}
   }
 
   function updateRuntimeUI(root,lang){
@@ -1025,10 +1028,8 @@ async function sendAI(){const input=$('aiInput');const q=input.value.trim();if(!
 
 $('runMatch')?.addEventListener('click',renderMatches);$('clearMatch')?.addEventListener('click',()=>{['matchTeach','matchLearn','matchCountry','matchLanguage','matchLevel','matchAvailability'].forEach(id=>{if($(id))$(id).value=''});$('matchMode').value='manual';renderMatches()});
 function rerenderFeatureLanguage(){populateMatchControls();renderMatches();renderReviews();renderCommunities();renderArticles();const st=$('aiStatus');if(st)st.textContent=featureT('aiBackendStatus');}
-// applyLanguage zaten mevcut select'i ve sayfayı yeniliyor; dinamik katmanı da güvenli biçimde yenile.
-const oldApplyLanguage=window.TDAI18n?.setLanguage; // dış API referansı
-const originalLangSelect=document.querySelector('.lang-select');
-if(originalLangSelect){originalLangSelect.addEventListener('change',()=>setTimeout(rerenderFeatureLanguage,120));}
+// Dil değişince dinamik listeler ve sekmeler de aynı sözlükten yeniden üretilir.
+window.addEventListener('tda:languageChanged',()=>{rerenderFeatureLanguage();});
 // İlk yükleme
 populateMatchControls();renderMatches();renderReviews();renderCommunities();renderArticles();
 

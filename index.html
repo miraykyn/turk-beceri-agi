@@ -117,6 +117,7 @@
 .tab-nav button{border:0;background:transparent;color:#dce5f5;border-bottom:2px solid transparent;padding:9px 11px;cursor:pointer;font:inherit;font-size:13px;font-weight:750;white-space:nowrap}
 .tab-nav button:hover,.tab-nav button:focus-visible{color:#fff;background:#172a4b;border-radius:8px;outline:0}
 .tab-nav button.active{color:#f5cf79;border-bottom-color:#f5cf79}
+.legacy-nav-link{display:none!important}
 #tabApp{min-height:45vh}
 .tab-panel{display:none;min-height:45vh}
 .tab-panel.active{display:block;animation:tabReveal .18s ease-out}
@@ -771,14 +772,14 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAuth();});
     if(applying){queuedLanguage=lang;return;}
     applying=true; currentLanguage=lang; document.documentElement.lang=lang; document.documentElement.dataset.language=lang;
   const sel=document.getElementById('languageSelect');if(sel)sel.value=lang;updateTopLanguageLabels(lang);
-    await translateTree(document.body,lang,{online:true});
-    await Promise.allSettled([...document.querySelectorAll('[data-user-content],input[data-user-translatable],textarea[data-user-translatable]')].map(el=>translateUserValue(el,lang)));
+    translateBuiltInTree(document.body,lang);
+    Promise.allSettled([...document.querySelectorAll('[data-user-content],input[data-user-translatable],textarea[data-user-translatable]')].map(el=>translateUserValue(el,lang))).catch(()=>{});
     document.querySelectorAll('[data-runtime-ui]').forEach(el=>updateRuntimeUI(el,lang));
     document.querySelectorAll('.skill-picker').forEach(p=>renderSkillPicker(p));
     applying=false;try{localStorage.setItem('tda-language',lang)}catch(e){}
     window.dispatchEvent(new CustomEvent('tda:languageChanged',{detail:{language:lang}}));
     // Dinamik render'ların eklediği düğümler için son bir tutarlılık taraması.
-    setTimeout(()=>translateTree(document.body,lang,{online:true}),150);
+    setTimeout(()=>translateTree(document.body,lang,{online:true}),0);
     if(queuedLanguage){const next=queuedLanguage;queuedLanguage=null;applyLanguage(next);}
   }
 
@@ -1144,7 +1145,7 @@ populateMatchControls();renderMatches();renderReviews();renderCommunities();rend
     tabNav.appendChild(button);
     return button;
   });
-  nav.querySelectorAll(':scope > a').forEach(link=>link.remove());
+  nav.querySelectorAll(':scope > a').forEach(link=>link.classList.add('legacy-nav-link'));
   nav.insertBefore(tabNav,auth||null);
 
   const app=document.createElement('main');
@@ -1215,10 +1216,19 @@ populateMatchControls();renderMatches();renderReviews();renderCommunities();rend
     setTab(panel.id.replace('tab-',''));
     requestAnimationFrame(()=>target.scrollIntoView({behavior:'smooth',block:'start'}));
   });
+  window.addEventListener('hashchange',()=>{
+    const hash=location.hash.replace('#','');
+    if(panels[hash]){setTab(hash,false);return;}
+    const target=document.getElementById(hash);
+    if(target){const panel=target.closest('.tab-panel');if(panel){setTab(panel.id.replace('tab-',''),false);requestAnimationFrame(()=>target.scrollIntoView({behavior:'smooth',block:'start'}));}}
+  });
   window.addEventListener('tda:languageChanged',event=>setLabels(event.detail?.language||window.TDAI18n?.language||'en'));
   setLabels(window.TDAI18n?.language||document.documentElement.lang||'tr');
-  const initial=(location.hash.replace('#','')||'home');
-  setTab(panels[initial]?initial:'home',false);
+  const initialHash=location.hash.replace('#','');
+  const initialTarget=initialHash&&document.getElementById(initialHash);
+  const initialPanel=initialTarget?.closest('.tab-panel');
+  setTab(panels[initialHash]?initialHash:initialPanel?initialPanel.id.replace('tab-',''):'home',false);
+  if(initialTarget&&!panels[initialHash])requestAnimationFrame(()=>initialTarget.scrollIntoView({block:'start'}));
 })();
 </script>
 </body></html>

@@ -118,6 +118,10 @@
 .tab-nav button:hover,.tab-nav button:focus-visible{color:#fff;background:#172a4b;border-radius:8px;outline:0}
 .tab-nav button.active{color:#f5cf79;border-bottom-color:#f5cf79}
 .legacy-nav-link{display:none!important}
+.quick-access{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:20px 6%;max-width:1220px;margin:auto;background:#f7f8fb}
+.quick-access button{border:1px solid #dfe5ee;border-radius:14px;background:#fff;color:#172033;text-align:left;padding:16px;cursor:pointer;box-shadow:0 5px 18px #18233b0b;font:inherit;font-weight:800;line-height:1.3}
+.quick-access button:hover,.quick-access button:focus-visible{border-color:#f5b942;box-shadow:0 0 0 3px #f5b94233;outline:0}
+.quick-access small{display:block;color:#667085;font-size:11px;font-weight:500;margin-top:5px}
 #tabApp{min-height:45vh}
 .tab-panel{display:none;min-height:45vh}
 .tab-panel.active{display:block;animation:tabReveal .18s ease-out}
@@ -130,10 +134,11 @@
 .tab-panel .turan-panel.embedded .turan-close{display:none}
 @keyframes tabReveal{from{opacity:.55;transform:translateY(4px)}to{opacity:1;transform:none}}
 @media(max-width:900px){
-  .tab-nav{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+  .tab-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
   .tab-nav button{text-align:left;white-space:normal;line-height:1.25}
 }
 @media(max-width:600px){
+  .quick-access{grid-template-columns:1fr;padding:16px 5%}
   .tab-panel>.hero{padding:52px 5%}
   .tab-panel>.section-stack>section{padding:38px 5%}
   .tab-panel .turan-panel.embedded .turan-chat{height:270px}
@@ -1118,14 +1123,16 @@ populateMatchControls();renderMatches();renderReviews();renderCommunities();rend
 <script>
 (function(){
   const tabLabels={
-    tr:['Ana Sayfa / Hakkında','Öğrenci Yolculuğu','Akıllı Eşleştirme','Turan AI Asistanı'],
-    az:['Ana səhifə / Haqqında','Tələbə səyahəti','Ağıllı uyğunlaşdırma','Turan AI köməkçisi'],
-    uz:['Bosh sahifa / Loyiha haqida','Talabaning yo‘li','Aqlli moslashtirish','Turan AI yordamchisi'],
-    kk:['Басты бет / Жоба туралы','Студенттің жолы','Ақылды сәйкестендіру','Turan AI көмекшісі'],
-    tk:['Baş sahypa / Taslama barada','Talybyň ýoly','Akylly gabatlaşdyrma','Turan AI kömekçisi'],
-    ky:['Башкы бет / Долбоор жөнүндө','Студенттин жолу','Акылдуу дал келтирүү','Turan AI жардамчысы'],
-    en:['Home / About','Student Journey','Smart Matching','Turan AI Assistant']
+    tr:['Ana Sayfa / Hakkında','Öğrenci Yolculuğu','Akıllı Eşleştirme','Topluluk','Makaleler','Öğrenci Profilim','Turan AI Asistanı'],
+    az:['Ana səhifə / Haqqında','Tələbə səyahəti','Ağıllı uyğunlaşdırma','İcma','Məqalələr','Tələbə profilim','Turan AI köməkçisi'],
+    uz:['Bosh sahifa / Loyiha haqida','Talabaning yo‘li','Aqlli moslashtirish','Hamjamiyat','Maqolalar','Talaba profilim','Turan AI yordamchisi'],
+    kk:['Басты бет / Жоба туралы','Студенттің жолы','Ақылды сәйкестендіру','Қауымдастық','Мақалалар','Студент профилім','Turan AI көмекшісі'],
+    tk:['Baş sahypa / Taslama barada','Talybyň ýoly','Akylly gabatlaşdyrma','Jemgyýet','Makalalar','Talyp profilim','Turan AI kömekçisi'],
+    ky:['Башкы бет / Долбоор жөнүндө','Студенттин жолу','Акылдуу дал келтирүү','Коомчулук','Макалалар','Студент профилим','Turan AI жардамчысы'],
+    en:['Home / About','Student Journey','Smart Matching','Community','Articles','My Student Profile','Turan AI Assistant']
   };
+  const tabAriaLabels={tr:'Ana bölümler',az:'Əsas bölmələr',uz:'Asosiy bo‘limlar',kk:'Негізгі бөлімдер',tk:'Esasy bölümler',ky:'Негизги бөлүмдөр',en:'Main sections'};
+  const quickAriaLabels={tr:'Hızlı erişim',az:'Sürətli giriş',uz:'Tezkor kirish',kk:'Жылдам қолжетімділік',tk:'Çalt giriş',ky:'Ыкчам жетүү',en:'Quick access'};
   const nav=document.getElementById('mainNav');
   const header=document.querySelector('header');
   if(!nav||!header)return;
@@ -1134,7 +1141,7 @@ populateMatchControls();renderMatches();renderReviews();renderCommunities();rend
   tabNav.className='tab-nav';
   tabNav.setAttribute('role','tablist');
   tabNav.setAttribute('aria-label','Content sections');
-  const tabIds=['home','journey','matching','turan'];
+  const tabIds=['home','journey','matching','community','articles','profile','turan'];
   const buttons=tabIds.map((id,index)=>{
     const button=document.createElement('button');
     button.type='button';
@@ -1161,19 +1168,44 @@ populateMatchControls();renderMatches();renderReviews();renderCommunities();rend
     panels[id]=panel;
   });
   const hero=document.querySelector('.hero');
-  const stack={home:document.createElement('div'),journey:document.createElement('div'),matching:document.createElement('div')};
+  const stack={home:document.createElement('div'),journey:document.createElement('div'),matching:document.createElement('div'),community:document.createElement('div'),articles:document.createElement('div'),profile:document.createElement('div')};
   Object.values(stack).forEach(node=>node.className='section-stack');
   if(hero)panels.home.appendChild(hero);
   const journeyIds=new Set(['nasil','yol']);
-  const matchingIds=new Set(['eslesme','topluluk','makaleler']);
+  const matchingIds=new Set(['eslesme']);
+  const communityIds=new Set(['topluluk']);
+  const articleIds=new Set(['makaleler']);
+  const profileIds=new Set(['profil']);
   document.querySelectorAll('body > section').forEach(section=>{
     const id=section.id;
-    const target=journeyIds.has(id)?stack.journey:matchingIds.has(id)?stack.matching:stack.home;
+    const target=journeyIds.has(id)?stack.journey:matchingIds.has(id)?stack.matching:communityIds.has(id)?stack.community:articleIds.has(id)?stack.articles:profileIds.has(id)?stack.profile:stack.home;
     target.appendChild(section);
   });
   panels.home.appendChild(stack.home);
   panels.journey.appendChild(stack.journey);
   panels.matching.appendChild(stack.matching);
+  panels.community.appendChild(stack.community);
+  panels.articles.appendChild(stack.articles);
+  panels.profile.appendChild(stack.profile);
+  const quickLabels={
+    tr:[['journey','Öğrenci Yolculuğu','Sistemi adım adım keşfet'],['matching','Akıllı Eşleştirme','Sana uygun öğrencileri bul'],['turan','Turan AI Asistanı','Sorularına hızlıca yanıt al']],
+    az:[['journey','Tələbə səyahəti','Sistemi addım-addım kəşf et'],['matching','Ağıllı uyğunlaşdırma','Sənə uyğun tələbələri tap'],['turan','Turan AI köməkçisi','Suallarına tez cavab al']],
+    uz:[['journey','Talabaning yo‘li','Tizimni bosqichma-bosqich ko‘r'],['matching','Aqlli moslashtirish','Senga mos talabalarni top'],['turan','Turan AI yordamchisi','Savollaringga tez javob ol']],
+    kk:[['journey','Студенттің жолы','Жүйені қадам-қадаммен зерттеңіз'],['matching','Ақылды сәйкестендіру','Сізге сай студенттерді табыңыз'],['turan','Turan AI көмекшісі','Сұрақтарыңызға жылдам жауап алыңыз']],
+    tk:[['journey','Talybyň ýoly','Ulgamy ädimme-ädim öwren'],['matching','Akylly gabatlaşdyrma','Saňa laýyk talyplary tap'],['turan','Turan AI kömekçisi','Soraglaryň üçin çalt jogap al']],
+    ky:[['journey','Студенттин жолу','Системаны кадам сайын изилде'],['matching','Акылдуу дал келтирүү','Сага ылайыктуу студенттерди тап'],['turan','Turan AI жардамчысы','Суроолоруңа тез жооп ал']],
+    en:[['journey','Student Journey','Explore the system step by step'],['matching','Smart Matching','Find students who fit your needs'],['turan','Turan AI Assistant','Get quick answers to your questions']]
+  };
+  const quick=document.createElement('div');
+  quick.className='quick-access';
+  quick.setAttribute('aria-label','Quick access');
+  panels.home.insertBefore(quick,stack.home);
+  function setQuickLabels(lang){
+    const items=quickLabels[lang]||quickLabels.en;
+    quick.innerHTML=items.map(([id,title,description])=>`<button type="button" data-quick-tab="${id}">${title}<small>${description}</small></button>`).join('');
+    quick.setAttribute('aria-label',quickAriaLabels[lang]||quickAriaLabels.en);
+    quick.querySelectorAll('[data-quick-tab]').forEach(button=>button.addEventListener('click',()=>setTab(button.dataset.quickTab)));
+  }
   const turan=document.getElementById('turanPanel');
   if(turan){turan.classList.add('embedded');panels.turan.appendChild(turan);}
   header.after(app);
@@ -1181,6 +1213,7 @@ populateMatchControls();renderMatches();renderReviews();renderCommunities();rend
   function setLabels(lang){
     const labels=tabLabels[lang]||tabLabels.en;
     buttons.forEach((button,index)=>{button.textContent=labels[index];});
+    tabNav.setAttribute('aria-label',tabAriaLabels[lang]||tabAriaLabels.en);
   }
   function setTab(id,updateHash=true){
     if(!panels[id])id='home';
@@ -1214,21 +1247,28 @@ populateMatchControls();renderMatches();renderReviews();renderCommunities();rend
     event.preventDefault();
     const panel=target.closest('.tab-panel');
     setTab(panel.id.replace('tab-',''));
-    requestAnimationFrame(()=>target.scrollIntoView({behavior:'smooth',block:'start'}));
+    requestAnimationFrame(()=>{
+      const top=target.getBoundingClientRect().top+window.scrollY-header.offsetHeight-12;
+      window.scrollTo({top:Math.max(0,top),behavior:'smooth'});
+      header.classList.add('nav-attention');
+      setTimeout(()=>header.classList.remove('nav-attention'),700);
+    });
   });
   window.addEventListener('hashchange',()=>{
     const hash=location.hash.replace('#','');
     if(panels[hash]){setTab(hash,false);return;}
     const target=document.getElementById(hash);
-    if(target){const panel=target.closest('.tab-panel');if(panel){setTab(panel.id.replace('tab-',''),false);requestAnimationFrame(()=>target.scrollIntoView({behavior:'smooth',block:'start'}));}}
+    if(target){const panel=target.closest('.tab-panel');if(panel){setTab(panel.id.replace('tab-',''),false);requestAnimationFrame(()=>{const top=target.getBoundingClientRect().top+window.scrollY-header.offsetHeight-12;window.scrollTo({top:Math.max(0,top),behavior:'smooth'});});}}
   });
   window.addEventListener('tda:languageChanged',event=>setLabels(event.detail?.language||window.TDAI18n?.language||'en'));
   setLabels(window.TDAI18n?.language||document.documentElement.lang||'tr');
+  window.addEventListener('tda:languageChanged',event=>setQuickLabels(event.detail?.language||window.TDAI18n?.language||'en'));
+  setQuickLabels(window.TDAI18n?.language||document.documentElement.lang||'tr');
   const initialHash=location.hash.replace('#','');
   const initialTarget=initialHash&&document.getElementById(initialHash);
   const initialPanel=initialTarget?.closest('.tab-panel');
   setTab(panels[initialHash]?initialHash:initialPanel?initialPanel.id.replace('tab-',''):'home',false);
-  if(initialTarget&&!panels[initialHash])requestAnimationFrame(()=>initialTarget.scrollIntoView({block:'start'}));
+  if(initialTarget&&!panels[initialHash])requestAnimationFrame(()=>{const top=initialTarget.getBoundingClientRect().top+window.scrollY-header.offsetHeight-12;window.scrollTo({top:Math.max(0,top)});});
 })();
 </script>
 </body></html>

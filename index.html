@@ -111,6 +111,33 @@
   header nav{right:-4px;width:min(310px,calc(100vw - 24px));padding:12px}
 }
 </style>
+<style>
+/* Sekmeli uygulama kabuğu: mevcut bölümleri silmeden tek odaklı gezinme sağlar. */
+.tab-nav{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.tab-nav button{border:0;background:transparent;color:#dce5f5;border-bottom:2px solid transparent;padding:9px 11px;cursor:pointer;font:inherit;font-size:13px;font-weight:750;white-space:nowrap}
+.tab-nav button:hover,.tab-nav button:focus-visible{color:#fff;background:#172a4b;border-radius:8px;outline:0}
+.tab-nav button.active{color:#f5cf79;border-bottom-color:#f5cf79}
+#tabApp{min-height:45vh}
+.tab-panel{display:none;min-height:45vh}
+.tab-panel.active{display:block;animation:tabReveal .18s ease-out}
+.tab-panel>.hero{margin:0}
+.tab-panel>.section-stack>section{max-width:1220px}
+.tab-panel>.section-stack>section:first-child{padding-top:58px}
+.tab-panel .turan-panel.embedded{position:relative;right:auto;bottom:auto;width:100%;max-height:none;display:block;border-radius:0;box-shadow:none;border:0;background:transparent}
+.tab-panel .turan-panel.embedded .turan-head{border-radius:18px 18px 0 0}
+.tab-panel .turan-panel.embedded .turan-chat{height:360px}
+.tab-panel .turan-panel.embedded .turan-close{display:none}
+@keyframes tabReveal{from{opacity:.55;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media(max-width:900px){
+  .tab-nav{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+  .tab-nav button{text-align:left;white-space:normal;line-height:1.25}
+}
+@media(max-width:600px){
+  .tab-panel>.hero{padding:52px 5%}
+  .tab-panel>.section-stack>section{padding:38px 5%}
+  .tab-panel .turan-panel.embedded .turan-chat{height:270px}
+}
+</style>
 </head>
 <body>
 <header><div class="logo">TÜRK DÜNYASI <span>BECERİ AĞI</span></div><div style="display:flex;align-items:center"><nav id="mainNav"><a href="#nasil">Nasıl Çalışır?</a><a href="#profil">Örnek Profil</a><a href="#eslesme">Eşleşme</a><a href="#topluluk">Topluluk</a><a href="#makaleler">Makaleler</a><a href="#ai">Turan AI</a><a href="#harita">Beceri Haritası</a><a href="#yol">Yol Haritası</a><div class="auth-actions"><button class="auth-btn" onclick="openAuth('login')" type="button">Giriş Yap</button><button class="auth-btn register" onclick="openAuth('register')" type="button">Kayıt Ol</button></div></nav><div class="lang-wrap"><span aria-hidden="true">🌐</span><select aria-label="Dil seçimi" class="lang-select" id="languageSelect"><option value="tr">Türkçe</option><option value="az">Azərbaycanca</option><option value="uz">O‘zbekcha</option><option value="kk">Қазақша</option><option value="tk">Türkmençe</option><option value="ky">Кыргызча</option><option value="en">English</option></select></div><button aria-controls="mainNav" aria-expanded="false" aria-label="Menüyü aç" class="menu-toggle" id="menuToggle" type="button">☰</button></div></header>
@@ -1085,6 +1112,113 @@ populateMatchControls();renderMatches();renderReviews();renderCommunities();rend
     panel.setAttribute('aria-hidden',String(!open));
     cleanFab.setAttribute('aria-expanded',String(open));
   });
+})();
+</script>
+<script>
+(function(){
+  const tabLabels={
+    tr:['Ana Sayfa / Hakkında','Öğrenci Yolculuğu','Akıllı Eşleştirme','Turan AI Asistanı'],
+    az:['Ana səhifə / Haqqında','Tələbə səyahəti','Ağıllı uyğunlaşdırma','Turan AI köməkçisi'],
+    uz:['Bosh sahifa / Loyiha haqida','Talabaning yo‘li','Aqlli moslashtirish','Turan AI yordamchisi'],
+    kk:['Басты бет / Жоба туралы','Студенттің жолы','Ақылды сәйкестендіру','Turan AI көмекшісі'],
+    tk:['Baş sahypa / Taslama barada','Talybyň ýoly','Akylly gabatlaşdyrma','Turan AI kömekçisi'],
+    ky:['Башкы бет / Долбоор жөнүндө','Студенттин жолу','Акылдуу дал келтирүү','Turan AI жардамчысы'],
+    en:['Home / About','Student Journey','Smart Matching','Turan AI Assistant']
+  };
+  const nav=document.getElementById('mainNav');
+  const header=document.querySelector('header');
+  if(!nav||!header)return;
+  const auth=nav.querySelector('.auth-actions');
+  const tabNav=document.createElement('div');
+  tabNav.className='tab-nav';
+  tabNav.setAttribute('role','tablist');
+  tabNav.setAttribute('aria-label','Content sections');
+  const tabIds=['home','journey','matching','turan'];
+  const buttons=tabIds.map((id,index)=>{
+    const button=document.createElement('button');
+    button.type='button';
+    button.dataset.tab=id;
+    button.setAttribute('role','tab');
+    button.setAttribute('aria-controls','tab-'+id);
+    button.className='tab-button';
+    tabNav.appendChild(button);
+    return button;
+  });
+  nav.querySelectorAll(':scope > a').forEach(link=>link.remove());
+  nav.insertBefore(tabNav,auth||null);
+
+  const app=document.createElement('main');
+  app.id='tabApp';
+  const panels={};
+  tabIds.forEach(id=>{
+    const panel=document.createElement('div');
+    panel.id='tab-'+id;
+    panel.className='tab-panel';
+    panel.setAttribute('role','tabpanel');
+    panel.setAttribute('aria-labelledby','');
+    app.appendChild(panel);
+    panels[id]=panel;
+  });
+  const hero=document.querySelector('.hero');
+  const stack={home:document.createElement('div'),journey:document.createElement('div'),matching:document.createElement('div')};
+  Object.values(stack).forEach(node=>node.className='section-stack');
+  if(hero)panels.home.appendChild(hero);
+  const journeyIds=new Set(['nasil','yol']);
+  const matchingIds=new Set(['eslesme','topluluk','makaleler']);
+  document.querySelectorAll('body > section').forEach(section=>{
+    const id=section.id;
+    const target=journeyIds.has(id)?stack.journey:matchingIds.has(id)?stack.matching:stack.home;
+    target.appendChild(section);
+  });
+  panels.home.appendChild(stack.home);
+  panels.journey.appendChild(stack.journey);
+  panels.matching.appendChild(stack.matching);
+  const turan=document.getElementById('turanPanel');
+  if(turan){turan.classList.add('embedded');panels.turan.appendChild(turan);}
+  header.after(app);
+
+  function setLabels(lang){
+    const labels=tabLabels[lang]||tabLabels.en;
+    buttons.forEach((button,index)=>{button.textContent=labels[index];});
+  }
+  function setTab(id,updateHash=true){
+    if(!panels[id])id='home';
+    buttons.forEach(button=>{
+      const active=button.dataset.tab===id;
+      button.classList.toggle('active',active);
+      button.setAttribute('aria-selected',String(active));
+      button.tabIndex=active?0:-1;
+      button.setAttribute('id','tab-button-'+button.dataset.tab);
+      panels[button.dataset.tab].classList.toggle('active',active);
+      panels[button.dataset.tab].setAttribute('aria-hidden',String(!active));
+      panels[button.dataset.tab].setAttribute('aria-labelledby','tab-button-'+button.dataset.tab);
+    });
+    if(id==='turan'&&turan){turan.classList.add('open');turan.setAttribute('aria-hidden','false');}
+    if(updateHash)history.replaceState(null,'','#'+id);
+    nav.classList.remove('open');
+  }
+  buttons.forEach(button=>button.addEventListener('click',()=>setTab(button.dataset.tab)));
+  tabNav.addEventListener('keydown',event=>{
+    if(!['ArrowRight','ArrowLeft','Home','End'].includes(event.key))return;
+    event.preventDefault();
+    const current=buttons.indexOf(document.activeElement);
+    const next=event.key==='Home'?0:event.key==='End'?buttons.length-1:(current+(event.key==='ArrowRight'?1:-1)+buttons.length)%buttons.length;
+    buttons[next].focus();setTab(buttons[next].dataset.tab);
+  });
+  document.addEventListener('click',event=>{
+    const link=event.target.closest('a[href^="#"]');
+    if(!link||link.closest('#mainNav'))return;
+    const target=document.querySelector(link.getAttribute('href'));
+    if(!target||!target.closest('.tab-panel'))return;
+    event.preventDefault();
+    const panel=target.closest('.tab-panel');
+    setTab(panel.id.replace('tab-',''));
+    requestAnimationFrame(()=>target.scrollIntoView({behavior:'smooth',block:'start'}));
+  });
+  window.addEventListener('tda:languageChanged',event=>setLabels(event.detail?.language||window.TDAI18n?.language||'en'));
+  setLabels(window.TDAI18n?.language||document.documentElement.lang||'tr');
+  const initial=(location.hash.replace('#','')||'home');
+  setTab(panels[initial]?initial:'home',false);
 })();
 </script>
 </body></html>

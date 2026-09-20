@@ -102,8 +102,9 @@
   header nav .auth-btn{flex:1 1 110px;min-height:38px;white-space:nowrap}
 }
 @media(max-width:600px){
-  .flowline{grid-template-columns:1fr;gap:7px}
-  .flowline .arrow{display:block;line-height:1;font-size:24px;transform:rotate(90deg);min-height:24px;overflow:visible}
+  .flowline{display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;margin-top:12px}
+  .flowline .bubble{width:100%;min-width:0;overflow-wrap:anywhere;text-align:center}
+  .flowline .arrow{display:flex;align-items:center;justify-content:center;flex:0 0 28px;width:100%;height:28px;min-height:28px;margin:0;line-height:1;font-size:24px;transform:rotate(90deg);transform-origin:center;overflow:visible}
   header nav{right:-4px;width:min(310px,calc(100vw - 24px));padding:12px}
 }
 </style>

@@ -742,13 +742,14 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAuth();});
     if(!supportedLanguages.includes(lang))lang='tr'; if(applying)return;
     applying=true; currentLanguage=lang; document.documentElement.lang=lang; document.documentElement.dataset.language=lang;
   const sel=document.getElementById('languageSelect');if(sel)sel.value=lang;updateTopLanguageLabels(lang);
-    translateBuiltInTree(document.body,lang);
+    await translateTree(document.body,lang,{online:true});
     await Promise.allSettled([...document.querySelectorAll('[data-user-content],input[data-user-translatable],textarea[data-user-translatable]')].map(el=>translateUserValue(el,lang)));
     document.querySelectorAll('[data-runtime-ui]').forEach(el=>updateRuntimeUI(el,lang));
     document.querySelectorAll('.skill-picker').forEach(p=>renderSkillPicker(p));
     applying=false;try{localStorage.setItem('tda-language',lang)}catch(e){}
     window.dispatchEvent(new CustomEvent('tda:languageChanged',{detail:{language:lang}}));
-    setTimeout(()=>translateTree(document.body,lang,{online:false}),150);setTimeout(()=>translateTree(document.body,lang,{online:false}),2500);
+    // Dinamik render'ların eklediği düğümler için son bir tutarlılık taraması.
+    setTimeout(()=>translateTree(document.body,lang,{online:true}),150);
   }
 
   function updateRuntimeUI(root,lang){
@@ -765,7 +766,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAuth();});
     if(applying)return;
     const added=[];
     for(const m of mutations)for(const n of m.addedNodes||[])if(n.nodeType===1)added.push(n);
-    if(added.length)setTimeout(()=>added.filter(n=>n.matches?.('[data-user-content]')||n.querySelector?.('[data-user-content]')).forEach(n=>translateTree(n,currentLanguage,{online:false})),0);
+    if(added.length)setTimeout(()=>added.filter(n=>!isExcluded(n)).forEach(n=>translateTree(n,currentLanguage,{online:true})),0);
   });
   observer.observe(document.body,{childList:true,subtree:true});
 

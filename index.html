@@ -186,7 +186,7 @@
 </style>
 </head>
 <body>
-<header><div class="logo">TÜRK DÜNYASI <span>BECERİ AĞI</span></div><div style="display:flex;align-items:center"><nav id="mainNav"><a href="#nasil">Nasıl Çalışır?</a><a href="#profil">Örnek Profil</a><a href="#eslesme">Eşleşme</a><a href="#topluluk">Topluluk</a><a href="#makaleler">Makaleler</a><a href="#ai">Turan AI</a><a href="#harita">Beceri Haritası</a><a href="#yol">Yol Haritası</a><div class="auth-actions"><button class="auth-btn" onclick="openAuth('login')" type="button">Giriş Yap</button><button class="auth-btn register" onclick="openAuth('register')" type="button">Kayıt Ol</button></div></nav><div class="lang-wrap"><span aria-hidden="true">🌐</span><select aria-label="Dil seçimi" class="lang-select" id="languageSelect"><option value="tr">Türkçe</option><option value="az">Azərbaycanca</option><option value="uz">O‘zbekcha</option><option value="kk">Қазақша</option><option value="tk">Türkmençe</option><option value="ky">Кыргызча</option><option value="en">English</option></select></div><button aria-controls="mainNav" aria-expanded="false" aria-label="Menüyü aç" class="menu-toggle" id="menuToggle" type="button">☰</button></div></header>
+<header><div class="logo">TÜRK DÜNYASI <span>BECERİ AĞI</span></div><div style="display:flex;align-items:center"><nav id="mainNav"><a href="#nasil">Nasıl Çalışır?</a><a href="#profil">Örnek Profil</a><a href="#eslesme">Eşleşme</a><a href="#topluluk">Topluluk</a><a href="#makaleler">Makaleler</a><a href="#ai" onclick="document.getElementById('turan-ai-modal').style.display='flex'; return false;">Turan AI</a><a href="#harita">Beceri Haritası</a><a href="#yol">Yol Haritası</a><div class="auth-actions"><button class="auth-btn" onclick="openAuth('login')" type="button">Giriş Yap</button><button class="auth-btn register" onclick="openAuth('register')" type="button">Kayıt Ol</button></div></nav><div class="lang-wrap"><span aria-hidden="true">🌐</span><select aria-label="Dil seçimi" class="lang-select" id="languageSelect"><option value="tr">Türkçe</option><option value="az">Azərbaycanca</option><option value="uz">O‘zbekcha</option><option value="kk">Қазақша</option><option value="tk">Türkmençe</option><option value="ky">Кыргызча</option><option value="en">English</option></select></div><button aria-controls="mainNav" aria-expanded="false" aria-label="Menüyü aç" class="menu-toggle" id="menuToggle" type="button">☰</button></div></header>
 <div class="hero">
 <div class="eyebrow" style="color:#f5cf79">Öğrenciler • Beceriler • Sınır ötesi öğrenme</div>
 <h1>Bildiğini paylaş.<br/>Öğrenmek istediğini öğren.</h1>
@@ -1195,6 +1195,7 @@ populateMatchControls();initMatchDropdowns();renderMatches();renderReviews();ren
     button.setAttribute('role','tab');
     button.setAttribute('aria-controls','tab-'+id);
     button.className='tab-button';
+    if(id==='turan')button.setAttribute('onclick',"document.getElementById('turan-ai-modal').style.display='flex'; return false;");
     tabNav.appendChild(button);
     return button;
   });
@@ -1265,6 +1266,7 @@ populateMatchControls();initMatchDropdowns();renderMatches();renderReviews();ren
   function setTab(id,updateHash=true){
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if(!panels[id])id='home';
+    if(id==='turan'){const fallbackModal=document.getElementById('turan-ai-modal');if(fallbackModal)fallbackModal.style.display='flex';}
     buttons.forEach(button=>{
       const active=button.dataset.tab===id;
       button.classList.toggle('active',active);
@@ -1330,6 +1332,7 @@ populateMatchControls();initMatchDropdowns();renderMatches();renderReviews();ren
     window.scrollTo({ top: 0, behavior: 'smooth' });
     const panel=document.getElementById('tab-'+id);
     if(!panel)return;
+    if(id==='turan'){const fallbackModal=document.getElementById('turan-ai-modal');if(fallbackModal)fallbackModal.style.display='flex';}
     tabButtons.forEach(button=>{
       const active=button.dataset.tab===id;
       button.classList.toggle('active',active);
@@ -1411,6 +1414,25 @@ populateMatchControls();initMatchDropdowns();renderMatches();renderReviews();ren
   function shut(){panel.classList.remove('open');panel.setAttribute('aria-hidden','true');cleanFab.setAttribute('aria-expanded','false');}
   function send(){const input=document.getElementById('turanInput');const q=input?.value.trim();if(!q)return;add(q,'user');input.value='';window.setTimeout(()=>add(answer(q),'bot'),1200);}
   cleanFab.addEventListener('click',()=>panel.classList.contains('open')?shut():open());close?.addEventListener('click',shut);cleanSendButton?.addEventListener('click',send);cleanInputElement?.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();send();}});
+})();
+</script>
+<div id="turan-ai-modal" style="display:none; position:fixed; bottom:20px; right:20px; width:300px; height:400px; background:white; border:1px solid #ccc; border-radius:10px; z-index:9999; box-shadow: 0 4px 8px rgba(0,0,0,0.2); flex-direction:column;">
+<div style="background:#003366; color:white; padding:10px; border-radius:10px 10px 0 0; display:flex; justify-content:space-between;"><b>Turan AI</b> <span id="close-turan" style="cursor:pointer;">X</span></div>
+<div id="turan-chat-body" style="flex:1; padding:10px; overflow-y:auto; font-size:14px;">Merhaba, sana nasıl yardımcı olabilirim?</div>
+<div style="padding:10px; border-top:1px solid #ccc; display:flex;"><input type="text" id="turan-input" style="flex:1; padding:5px;" placeholder="Mesaj yaz..."><button id="turan-send" style="margin-left:5px;">Gönder</button></div>
+</div>
+<script>
+(function(){
+  const modal=document.getElementById('turan-ai-modal');
+  const close=document.getElementById('close-turan');
+  const input=document.getElementById('turan-input');
+  const send=document.getElementById('turan-send');
+  const body=document.getElementById('turan-chat-body');
+  function addMessage(text,fromUser){const message=document.createElement('div');message.textContent=text;message.style.margin='6px 0';message.style.textAlign=fromUser?'right':'left';body.appendChild(message);body.scrollTop=body.scrollHeight;}
+  function sendMessage(){const text=input.value.trim();if(!text)return;addMessage(text,true);input.value='';window.setTimeout(()=>addMessage('Türk Dünyası Beceri Ağına hoş geldin, sana nasıl yardımcı olabilirim?',false),1000);}
+  close.addEventListener('click',()=>{modal.style.display='none';});
+  send.addEventListener('click',sendMessage);
+  input.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();sendMessage();}});
 })();
 </script>
 </body></html>

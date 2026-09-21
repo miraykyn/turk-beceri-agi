@@ -1306,4 +1306,49 @@ populateMatchControls();renderMatches();renderReviews();renderCommunities();rend
   if(initialTarget&&!panels[initialHash])requestAnimationFrame(()=>{const top=initialTarget.getBoundingClientRect().top+window.scrollY-header.offsetHeight-12;window.scrollTo({top:Math.max(0,top)});});
 })();
 </script>
+<script>
+(function(){
+  const nav=document.getElementById('mainNav');
+  const toggle=document.getElementById('menuToggle');
+  const panels=[...document.querySelectorAll('.tab-panel')];
+  const tabButtons=[...document.querySelectorAll('.tab-button')];
+  if(!nav||!panels.length)return;
+  function activate(id){
+    const panel=document.getElementById('tab-'+id);
+    if(!panel)return;
+    tabButtons.forEach(button=>{
+      const active=button.dataset.tab===id;
+      button.classList.toggle('active',active);
+      button.setAttribute('aria-selected',String(active));
+      button.tabIndex=active?0:-1;
+    });
+    panels.forEach(item=>{
+      const active=item===panel;
+      item.classList.toggle('active',active);
+      item.setAttribute('aria-hidden',String(!active));
+    });
+    nav.classList.remove('open');
+    if(history.replaceState)history.replaceState(null,'','#'+id);
+  }
+  document.addEventListener('click',event=>{
+    const button=event.target.closest?.('.tab-button,[data-quick-tab]');
+    if(button){
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      activate(button.dataset.tab||button.dataset.quickTab);
+    }
+  },true);
+  if(toggle){
+    toggle.addEventListener('click',event=>{
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      const open=!nav.classList.contains('open');
+      nav.classList.toggle('open',open);
+      toggle.setAttribute('aria-expanded',String(open));
+      toggle.setAttribute('aria-label',open?'Menüyü kapat':'Menüyü aç');
+      toggle.textContent=open?'×':'☰';
+    },true);
+  }
+})();
+</script>
 </body></html>

@@ -124,6 +124,7 @@
 .quick-access small{display:block;color:#667085;font-size:11px;font-weight:500;margin-top:5px}
 #tabApp{min-height:45vh}
 .tab-panel{display:none;min-height:45vh}
+.tab-panel:first-child{display:block}
 .tab-panel.active{display:block;animation:tabReveal .18s ease-out}
 .tab-panel>.hero{margin:0}
 .tab-panel>.section-stack>section{max-width:1220px}
@@ -1161,7 +1162,7 @@ populateMatchControls();renderMatches();renderReviews();renderCommunities();rend
   tabIds.forEach(id=>{
     const panel=document.createElement('div');
     panel.id='tab-'+id;
-    panel.className='tab-panel';
+    panel.className='tab-panel'+(id==='home'?' active':'');
     panel.setAttribute('role','tabpanel');
     panel.setAttribute('aria-labelledby','');
     app.appendChild(panel);

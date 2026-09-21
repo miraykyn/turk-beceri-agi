@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Türk Dünyası Beceri Ağı</title>
+<meta name="description" content="Türk dünyası öğrencileri için karşılıklı beceri paylaşım ağı. Doğrulanmış öğrenciler arasında para yerine zaman ve bilgi takası yapın, birbirinizden öğrenin."/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Türk Dünyası Beceri Ağı"/>
+<meta property="og:description" content="Doğrulanmış öğrenciler arasında para yerine zaman ve bilgi takası yapan, Türk dünyasını birbirine bağlayan beceri paylaşım ağı."/>
+<meta property="og:image" content="https://suulliish.github.io/turk-beceri-agi/assets/og-image.jpg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:url" content="https://suulliish.github.io/turk-beceri-agi/"/>
+<meta property="og:locale" content="tr_TR"/>
+<meta property="og:site_name" content="Türk Dünyası Beceri Ağı"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Türk Dünyası Beceri Ağı"/>
+<meta name="twitter:description" content="Doğrulanmış öğrenciler arasında para yerine zaman ve bilgi takası yapan, Türk dünyasını birbirine bağlayan beceri paylaşım ağı."/>
+<meta name="twitter:image" content="https://suulliish.github.io/turk-beceri-agi/assets/og-image.jpg"/>
+<meta name="theme-color" content="#0e1b33"/>
+<link rel="canonical" href="https://suulliish.github.io/turk-beceri-agi/"/>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
+<link rel="stylesheet" href="assets/css/01-base.css?v=c672d4037a"/>
+<link rel="stylesheet" href="assets/css/02-components.css?v=c672d4037a"/>
+<link rel="stylesheet" href="assets/css/03-forms.css?v=c672d4037a"/>
+<link rel="stylesheet" href="assets/css/04-assistant.css?v=c672d4037a"/>
+<link rel="stylesheet" href="assets/css/05-responsive.css?v=c672d4037a"/>
+<link rel="stylesheet" href="assets/css/06-features.css?v=c672d4037a"/>
+<link rel="stylesheet" href="assets/css/07-tabs.css?v=c672d4037a"/>
+
+
+</head>
+<body>
+<a class="skip-link" href="#main" data-i18n="skipToContent">İçeriğe geç</a>
+<header><div class="logo"><span data-i18n="logoLead">TÜRK DÜNYASI</span> <span data-i18n="logoTail">BECERİ AĞI</span></div><div style="display:flex;align-items:center"><nav><a href="#nasil" data-i18n="navHowItWorks">Nasıl Çalışır?</a><a href="#profil" data-i18n="navSampleProfile">Örnek Profil</a><a href="#eslesme" data-i18n="navMatching">Eşleşme</a><a href="#topluluk" data-i18n="navCommunity">Topluluk</a><a href="#makaleler" data-i18n="navArticles">Makaleler</a><a href="#ai" id="navTuranLink" data-i18n="navTuran">Turan AI</a><a href="#harita" data-i18n="navSkillMap">Beceri Haritası</a><a href="#yol" data-i18n="navRoadmap">Yol Haritası</a></nav><div class="auth-actions"><button class="auth-btn" onclick="openAuth('login')" type="button" data-i18n="Giriş Yap">Giriş Yap</button><button class="auth-btn register" onclick="openAuth('register')" type="button" data-i18n="Kayıt Ol">Kayıt Ol</button></div><div class="lang-wrap"><span aria-hidden="true">🌐</span><select aria-label="Dil seçimi" class="lang-select" id="languageSelect"><option value="tr">Türkçe</option><option value="az">Azərbaycanca</option><option value="uz">O‘zbekcha</option><option value="kk">Қазақша</option><option value="tk">Türkmençe</option><option value="ky">Кыргызча</option><option value="en">English</option></select></div><button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Menü" aria-expanded="false" type="button"><span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span></button></div></header>
+<div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop" onclick="closeMobileMenu()" aria-hidden="true"></div>
+<aside aria-hidden="true" class="mobile-drawer" id="mobileDrawer" aria-label="Mobil Menü">
+  <div class="mobile-drawer-head">
+    <div class="logo"><span data-i18n="logoLead">TÜRK DÜNYASI</span> <span data-i18n="logoTail">BECERİ AĞI</span></div>
+    <button class="mobile-drawer-close" id="mobileDrawerClose" onclick="closeMobileMenu()" aria-label="Kapat" type="button">✕</button>
+  </div>
+  <div class="mobile-drawer-auth">
+    <button class="auth-btn mobile-auth-btn" onclick="closeMobileMenu();openAuth('login')" type="button" data-i18n="Giriş Yap">Giriş Yap</button>
+    <button class="auth-btn register mobile-auth-btn" onclick="closeMobileMenu();openAuth('register')" type="button" data-i18n="Kayıt Ol">Kayıt Ol</button>
+  </div>
+  <nav class="mobile-drawer-nav">
+    <a href="#nasil" class="mobile-nav-item" onclick="closeMobileMenu()"><span class="m-icon">💡</span> <span data-i18n="navHowItWorks">Nasıl Çalışır?</span></a>
+    <a href="#profil" class="mobile-nav-item" onclick="closeMobileMenu()"><span class="m-icon">👤</span> <span data-i18n="navSampleProfile">Örnek Profil</span></a>
+    <a href="#eslesme" class="mobile-nav-item" onclick="closeMobileMenu()"><span class="m-icon">🤝</span> <span data-i18n="navMatching">Eşleşme</span></a>
+    <a href="#topluluk" class="mobile-nav-item" onclick="closeMobileMenu()"><span class="m-icon">🌐</span> <span data-i18n="navCommunity">Topluluk</span></a>
+    <a href="#makaleler" class="mobile-nav-item" onclick="closeMobileMenu()"><span class="m-icon">📝</span> <span data-i18n="navArticles">Makaleler</span></a>
+    <a href="#ai" id="mobileNavTuranLink" class="mobile-nav-item mobile-nav-turan" onclick="event.preventDefault();closeMobileMenu();window.openTuran();"><span class="m-icon">✨</span> <span data-i18n="navTuran">Turan AI</span></a>
+    <a href="#harita" class="mobile-nav-item" onclick="closeMobileMenu()"><span class="m-icon">🗺️</span> <span data-i18n="navSkillMap">Beceri Haritası</span></a>
+    <a href="#yol" class="mobile-nav-item" onclick="closeMobileMenu()"><span class="m-icon">🚀</span> <span data-i18n="navRoadmap">Yol Haritası</span></a>
+  </nav>
+  <div class="mobile-drawer-footer">
+    <div class="mobile-drawer-hint" data-i18n="footerNote">Öğrenciler arası güvenli ve adil beceri takası.</div>
+  </div>
+</aside>
+<div class="hero" id="main" tabindex="-1">
+<div class="eyebrow" style="color:#f5cf79">Öğrenciler • Beceriler • Sınır ötesi öğrenme</div>
+<h1>Bildiğini paylaş.<br/>Öğrenmek istediğini öğren.</h1>
+<p>Türk Dünyası'ndaki doğrulanmış öğrencileri; öğretebildikleri, öğrenmek istedikleri ve ayırabilecekleri zaman üzerinden bir araya getiren karşılıklı beceri paylaşım ağı.</p>
+<div class="buttons"><a class="btn primary" href="#profil" data-i18n="Örnek sistemi keşfet">Örnek sistemi keşfet</a><a class="btn secondary" href="#nasil" data-i18n="Nasıl çalıştığını gör">Nasıl çalıştığını gör</a></div>
+</div><section id="nasil">
+<div class="eyebrow">Temel fikir</div><h2>Para değil, zaman ve bilgi değişiyor.</h2>
+<p class="muted">Bir öğrenci bildiği bir beceriyi başka bir öğrenciye öğreterek Beceri Puanı kazanır. Kazandığı puanı, Türk Dünyası'nın başka bir ülkesindeki doğrulanmış bir öğrenciden öğrenmek için kullanabilir.</p>
+<div class="cards">
+<div class="card"><div class="icon">🪪</div><h3>Doğrulanmış topluluk</h3><p>Öğrenci kimliği veya üniversite bilgisi doğrulanır. Gerçek kişi ve öğrenci olma durumu için güven katmanı oluşturulur.</p></div>
+<div class="card"><div class="icon">⏱️</div><h3>Zaman temelli puan</h3><p>1 saatlik beceri paylaşımı = 1 Beceri Puanı. 30 dakikalık paylaşım = 0,5 puan gibi süreye dayalı bir sistem kullanılır.</p></div>
+<div class="card"><div class="icon">🤝</div><h3>Beceri eşleştirme</h3><p>Öğretmek istediğin ve öğrenmek istediğin beceriler ülke, seviye ve uygunluk durumuna göre eşleştirilir.</p></div>
+<div class="card"><div class="icon">🗣️</div><h3>Mikro dil öğrenimi</h3><p>Her gün kısa ve isteğe bağlı sorularla farklı Türk dillerinden kelime ve ifadeler öğrenilir.</p></div>
+<div class="card"><div class="icon">🛡️</div><h3>Güvenli iletişim</h3><p>İlk iletişim ağ içinde gerçekleşir. Telefon ve adres gibi kişisel bilgiler herkese açık tutulmaz; bildirme ve engelleme seçenekleri bulunur.</p></div>
+<div class="card"><div class="icon">📊</div><h3>Gençlik beceri haritası</h3><p>Toplu ve anonim verilerle hangi ülkede hangi becerilerin sunulduğu ve hangi becerilere ihtiyaç duyulduğu görülebilir.</p></div>
+</div>
+<div class="flow"><h3>Bir öğrencinin yolculuğu</h3><div class="flowline"><div class="bubble">1. Öğrenci doğrulanır</div><div class="bubble">2. Beceri ekler</div><div class="bubble">3. Eşleşir ve öğretir</div><div class="bubble">4. Beceri Puanı kazanır</div><div class="bubble">5. Başka ülkeden öğrenir</div><div class="bubble">6. Değerlendirme bırakır</div></div></div>
+</section><section id="puan">
+<div class="eyebrow">Beceri Puanı sistemi</div><h2>Puanın kaynağı beceri paylaşımıdır.</h2>
+<div class="cards">
+<div class="card"><div class="icon">🎓</div><h3>Beceri öğret</h3><p>Asıl puan kaynağıdır. Gerçek bir öğrenme oturumu gerçekleştir ve ayırdığın zamana göre puan kazan.</p></div>
+<div class="card"><div class="icon">🌱</div><h3>Başlangıç puanı</h3><p>Yeni kullanıcıya sistemi deneyebilmesi ve ilk eşleşmesini yapabilmesi için sınırlı başlangıç puanı verilebilir.</p></div>
+<div class="card"><div class="icon">🧩</div><h3>Günlük mini görev</h3><p>“Kazakçada arkadaş ne demek?” gibi kısa görevler 0,2 Beceri Puanı kazandırır. Amaç tam dil öğretimi değil, günlük temas sağlamaktır.</p><div class="daily-note"><strong>Günlük sınır:</strong> Bu görev günde yalnızca 1 kez yapılabilir.</div></div>
+<div class="card"><div class="icon">🎬</div><h3>İsteğe bağlı ödüllü reklam</h3><p>Puanı biten kullanıcı, yalnızca kendi isteğiyle günlük 0,2 Beceri Puanı kazanabilir.</p><div class="daily-note"><strong>Günlük sınır:</strong> Bu ödül günde yalnızca 1 kez kullanılabilir.</div></div>
+<div class="card"><div class="icon">🎁</div><h3>Puan bağışı</h3><p>Kullanıcılar ihtiyaç duyan başka bir öğrenciye puan aktarabilir. Böylece sistem içinde dayanışma oluşur.</p></div>
+<div class="card"><div class="icon">🏛️</div><h3>Destekli öğrenme</h3><p>İlerleyen aşamada üniversiteler, kurumlar veya sponsorlar belirli öğrenme alanları için puan desteği sağlayabilir.</p></div>
+</div>
+<div class="table-wrap"><table class="table"><thead><tr><th>Faaliyet</th><th>Örnek puan</th><th>Amaç</th></tr></thead><tbody>
+<tr><td>1 saat beceri öğretimi</td><td>+1</td><td>Temel puan kazanımı</td></tr>
+<tr><td>30 dakika beceri öğretimi</td><td>+0,5</td><td>Kısa oturumları destekleme</td></tr>
+<tr><td>Günlük mikro dil görevi</td><td>+0,2</td><td>Günlük Türk dilleri teması</td></tr>
+<tr><td>İsteğe bağlı reklam</td><td>+0,2</td><td>Puanı biten kullanıcı için ikincil kaynak</td></tr>
+<tr><td>Puan bağışı</td><td>Değişken</td><td>Topluluk dayanışması</td></tr>
+</tbody></table></div>
+<div class="uyari" style="margin-top:18px"><strong>Önemli:</strong> Reklam ve mikro görevler sistemin ana gelir veya puan kaynağı değildir. Ana döngü, öğrencilerin birbirine gerçek beceri ve zaman sunmasıdır.</div>
+</section><section class="demo" id="profil">
+<div class="eyebrow">Örnek kullanıcı</div><h2>Doğrulanmış öğrenci profili</h2>
+<div class="profile">
+<div class="panel">
+<h3>Aylin Yılmaz <span aria-label="Türkiye bayrağı" class="mini-flag"><img alt="Türkiye bayrağı" loading="lazy" referrerpolicy="no-referrer" src="assets/flags/Flag_of_Turkey.svg"/></span></h3><p class="muted">Ekonomi öğrencisi • Doğrulanmış öğrenci ✓</p>
+<h4>Öğretebileceği beceriler</h4><span class="tag">Excel</span><span class="tag">Ekonomi</span><span class="tag">Türkçe</span><span class="tag">Sunum</span>
+<h4>Öğrenmek istedikleri</h4><span class="tag">Kazakça</span><span class="tag">Python</span><span class="tag">Grafik Tasarım</span>
+<h4>Beceri seviyeleri</h4><span class="etiket">Excel • İleri</span><span class="etiket">Ekonomi • Orta-İleri</span><span class="etiket">Türkçe • İleri</span>
+<div class="notice">Beceri doğrulaması; sertifika, seviye testi, örnek çalışma, oturum geçmişi ve öğrenci değerlendirmeleri gibi birden fazla sinyalle güçlendirilebilir.</div>
+</div>
+<div class="panel">
+<div class="muted">Mevcut Beceri Puanı</div><div class="puan">2,5</div>
+<p class="muted">1 saat beceri öğret → <span class="yesil">+1 puan</span></p>
+<div class="bar"><i></i></div><p class="muted">Bir sonraki öğrenme oturumu için yeterli puan biriktiriliyor.</p>
+<button class="btn primary" onclick="window.showToast(window.TDAI18n.t('exampleMatch'))">Eşleşme ara</button>
+<button class="btn secondary" onclick="window.showToast(window.TDAI18n.t('exampleDonate'))" style="background:#102343;margin-left:6px">Puan bağışla</button>
+</div>
+</div>
+</section><section class="feature-section" id="eslesme">
+<div class="eyebrow" data-i18n="matchEyebrow">Akıllı beceri eşleştirme</div>
+<h2 data-i18n="matchTitle">İhtiyacına göre öğrenci bul</h2>
+<p class="muted" data-i18n="matchIntro">Filtreleri kullanabilir veya otomatik eşleştirmeyi açabilirsin. Skor; beceri uyumu, dil, ülke, seviye ve uygunluk sinyallerinden hesaplanır.</p>
+<div class="feature-toolbar">
+<div class="form-field search-field"><label data-i18n="searchLabel" for="matchSearch">Arama motoru / kelime ile ara</label><input autocomplete="off" data-i18n-placeholder="searchPlaceholder" id="matchSearch" placeholder="Beceri, dil, ülke veya öğrenci adı ara…" type="search"/></div>
+<div class="form-field"><label data-i18n="teachSkill" for="matchTeach">Öğretmek istediği beceri</label><select id="matchTeach"><option data-i18n="anyOption" value="">Farketmez</option></select></div>
+<div class="form-field"><label data-i18n="learnSkill" for="matchLearn">Öğrenmek istediği beceri</label><select id="matchLearn"><option data-i18n="anyOption" value="">Farketmez</option></select></div>
+<div class="form-field"><label data-i18n="countryFilter" for="matchCountry">Ülke</label><select id="matchCountry"><option data-i18n="allCountries" value="">Tüm ülkeler</option></select></div>
+<div class="form-field"><label data-i18n="languageFilter" for="matchLanguage">Dil</label><select id="matchLanguage"><option data-i18n="anyOption" value="">Farketmez</option></select></div>
+<div class="form-field"><label data-i18n="levelFilter" for="matchLevel">Seviye</label><select id="matchLevel"><option data-i18n="anyOption" value="">Farketmez</option><option data-i18n="beginner" value="Başlangıç">Başlangıç</option><option data-i18n="intermediate" value="Orta">Orta</option><option data-i18n="advanced" value="İleri">İleri</option></select></div>
+<div class="form-field"><label data-i18n="availabilityFilter" for="matchAvailability">Uygunluk</label><select id="matchAvailability"><option data-i18n="anyOption" value="">Farketmez</option><option data-i18n="weekdays" value="Hafta içi">Hafta içi</option><option data-i18n="weekends" value="Hafta sonu">Hafta sonu</option><option data-i18n="evenings" value="Akşam">Akşam</option></select></div>
+<div class="form-field"><label data-i18n="matchingMode" for="matchMode">Eşleştirme modu</label><select id="matchMode"><option data-i18n="manualMode" value="manual">Manuel seçim</option><option data-i18n="autoMode" value="auto">Otomatik öneri</option></select></div>
+<div class="form-field"><label data-i18n="sortBy" for="matchSort">Sıralama</label><select id="matchSort"><option data-i18n="scoreSort" value="score">Uyum skoruna göre</option><option data-i18n="ratingSort" value="rating">Değerlendirmeye göre</option></select></div>
+</div>
+<div class="filter-actions"><button class="btn primary" data-i18n="findMatches" id="runMatch">Eşleşmeleri bul</button><button class="ghost-btn" data-i18n="clearFilters" id="clearMatch">Filtreleri temizle</button></div>
+<div class="feature-note" data-i18n="matchScoreNote">Otomatik skor bir karar vermez; adayları açıklanabilir ölçütlerle sıralayan bir destek mekanizmasıdır.</div>
+<div class="match-grid" id="matchResults"></div>
+<div class="kutu" id="reviewsBox" style="margin-top:24px">
+<h3 data-i18n="reviewsTitle">Değerlendirmeler</h3>
+<p class="muted" data-i18n="reviewsIntro">Bir eşleşme sonrası puan ve yorum bırakabilirsin. Aşağıdaki kayıtlar bu tarayıcıdaki prototip verileridir.</p>
+<div class="review-list" id="reviewList"></div>
+</div>
+</section><section class="feature-section" id="topluluk">
+<div class="eyebrow" data-i18n="communityEyebrow">Ülke toplulukları</div>
+<h2 data-i18n="communityTitle">Destek iste, puanla dayanış</h2>
+<p class="muted" data-i18n="communityIntro">Bu alan serbest sohbet forumu değildir. Sıfır puanlı kullanıcılar yapılandırılmış destek talebi oluşturabilir; diğer kullanıcılar puan bağışlayabilir.</p>
+<div class="community-rooms-grid" aria-label="Topluluk odaları" data-i18n-aria="roomsAria">
+<article class="community-room-card" data-room="Türkiye"><h3>Türkiye <span data-i18n="roomSuffix">Topluluk Odası</span></h3><p data-i18n="roomDesc">Beceri paylaşımı, dil pratiği ve ülke içi dayanışma.</p></article>
+<article class="community-room-card" data-room="Azerbaycan"><h3>Azerbaycan <span data-i18n="roomSuffix">Topluluk Odası</span></h3><p data-i18n="roomDesc">Beceri paylaşımı, dil pratiği ve ülke içi dayanışma.</p></article>
+<article class="community-room-card" data-room="Kazakistan"><h3>Kazakistan <span data-i18n="roomSuffix">Topluluk Odası</span></h3><p data-i18n="roomDesc">Beceri paylaşımı, dil pratiği ve ülke içi dayanışma.</p></article>
+<article class="community-room-card" data-room="Özbekistan"><h3>Özbekistan <span data-i18n="roomSuffix">Topluluk Odası</span></h3><p data-i18n="roomDesc">Beceri paylaşımı, dil pratiği ve ülke içi dayanışma.</p></article>
+<article class="community-room-card" data-room="Kırgızistan"><h3>Kırgızistan <span data-i18n="roomSuffix">Topluluk Odası</span></h3><p data-i18n="roomDesc">Beceri paylaşımı, dil pratiği ve ülke içi dayanışma.</p></article>
+<article class="community-room-card" data-room="Türkmenistan"><h3>Türkmenistan <span data-i18n="roomSuffix">Topluluk Odası</span></h3><p data-i18n="roomDesc">Beceri paylaşımı, dil pratiği ve ülke içi dayanışma.</p></article>
+<article class="community-room-card" data-room="Kuzey Kıbrıs Türk Cumhuriyeti"><h3>Kuzey Kıbrıs Türk Cumhuriyeti <span data-i18n="roomSuffix">Topluluk Odası</span></h3><p data-i18n="roomDesc">Beceri paylaşımı, dil pratiği ve ülke içi dayanışma.</p></article>
+</div>
+<div class="community-layout">
+<div class="panel"><h3 data-i18n="countriesTitle">Ülke toplulukları</h3><div class="country-grid" id="countryCommunities"></div></div>
+<div class="panel">
+<h3 data-i18n="supportRequests">Destek talepleri</h3>
+<div class="limit-box" id="supportLimit"></div>
+<div class="request-list" id="supportRequests"></div>
+<button class="btn primary" data-i18n="requestOnePoint" id="requestPointBtn" style="margin-top:12px">1 Puan Desteği İste</button>
+<div class="donation-panel">
+<h4 data-i18n="donationTitle">Arkadaşına puan bağışla</h4>
+<p class="muted" data-i18n="donationIntro">Arkadaşının Öğrenci ID'sini girerek ona puan gönderebilirsin. Puanın temel kaynağı beceri paylaşımıdır.</p>
+<div class="student-id-badge" id="myStudentId"><span>🪪</span><span data-i18n="myStudentIdLabel">Senin Öğrenci ID'n:</span> <strong id="myStudentIdValue">—</strong></div>
+<div class="donation-grid">
+<div class="donation-field"><label for="donationRecipientId" data-i18n="recipientIdLabel">Arkadaşının Öğrenci ID'si</label><input id="donationRecipientId" type="text" maxlength="30" placeholder="TDA-XXXXXX" autocomplete="off"></div>
+<div class="donation-field"><label for="donationAmount" data-i18n="donationAmountLabel">Bağış miktarı</label><input id="donationAmount" type="number" min="0.5" max="10" step="0.5" value="1"></div>
+<button class="btn primary" id="donateByIdBtn" type="button" data-i18n="donateById">Puan gönder</button>
+</div>
+<div class="donation-status" id="donationStatus" aria-live="polite"></div>
+</div>
+</div>
+</div>
+<div class="feature-note backend-note" data-i18n="prototypeBackendNote">Hesaplar, gerçek para/puan transferleri ve çok kullanıcılı topluluk güvenliği için sunucu + veritabanı gerekir. Bu HTML sürümü tarayıcı içi prototip olarak localStorage kullanır; gerçek çok kullanıcılı sistem gibi sunulmaz.</div>
+</section><section class="feature-section" id="makaleler">
+<div class="eyebrow" data-i18n="articlesEyebrow">Makaleler / Öğrenci Yazıları</div>
+<h2 data-i18n="articlesTitle">Öğrencilerin ürettiği içerikleri keşfet</h2>
+<p class="muted" data-i18n="articlesIntro">Araştırma, eğitim, kültür ve öğrenci deneyimi yazıları ülke filtresine göre görüntülenir. Filtre yazarın ülkesine göredir; yazının diline göre değildir.</p>
+<div class="article-tabs" id="articleTabs"></div>
+<div class="article-grid" id="articleGrid"></div>
+<div class="kutu" style="margin-top:22px">
+<h3 data-i18n="publishArticle">Öğrenci yazısı yayımla</h3>
+<p class="muted" data-i18n="articleCountryFromProfile">Yazar ülkesi profilindeki ülkeden alınır; form üzerinden başka bir ülke seçilemez.</p>
+<form class="feature-form" id="articleForm">
+<label><span data-i18n="articleTitleLabel">Başlık</span><input id="articleTitle" maxlength="140" required=""/></label>
+<label><span data-i18n="articleCategoryLabel">Kategori</span><select id="articleCategory"><option data-i18n="catAcademic" value="Akademik">Akademik</option><option data-i18n="catCulture" value="Kültür">Kültür</option><option data-i18n="catEducation" value="Eğitim">Eğitim</option><option data-i18n="catTech" value="Teknoloji">Teknoloji</option><option data-i18n="catStudentExp" value="Öğrenci Deneyimi">Öğrenci Deneyimi</option></select></label>
+<label class="full"><span data-i18n="articleBodyLabel">Yazı</span><textarea id="articleBody" minlength="80" required=""></textarea></label>
+<div class="full form-actions"><button class="btn primary" data-i18n="publishButton" type="submit">Yayımla</button></div>
+</form>
+<div class="feature-note" id="articleStatus" style="display:none"></div>
+</div>
+</section><section id="harita">
+<div class="eyebrow">İkinci çıktı</div><h2>Türk Dünyası Gençlik Beceri Haritası</h2>
+<p class="muted">Platform büyüdükçe anonimleştirilmiş toplu veriler, gençlerin hangi becerileri sunduğunu ve hangi becerilere ihtiyaç duyduğunu gösterebilir.</p>
+<div class="map">
+<div class="ülke"><div class="bayrak-svg"><img alt="Türkiye bayrağı" loading="lazy" referrerpolicy="no-referrer" src="assets/flags/Flag_of_Turkey.svg"/></div><b>Türkiye</b><small><span class="harita-etiket">Beceri Arzı:</span> Excel<br><span class="harita-etiket">Öğrenme İhtiyacı:</span> İngilizce</small></div>
+<div class="ülke"><div class="bayrak-svg"><img alt="Azerbaycan bayrağı" loading="lazy" referrerpolicy="no-referrer" src="assets/flags/Flag_of_Azerbaijan.svg"/></div><b>Azerbaycan</b><small><span class="harita-etiket">Beceri Arzı:</span> Türkçe<br><span class="harita-etiket">Öğrenme İhtiyacı:</span> Grafik tasarım</small></div>
+<div class="ülke"><div class="bayrak-svg"><img alt="Kazakistan bayrağı" loading="lazy" referrerpolicy="no-referrer" src="assets/flags/Flag_of_Kazakhstan.svg"/></div><b>Kazakistan</b><small><span class="harita-etiket">Beceri Arzı:</span> Kazakça<br><span class="harita-etiket">Öğrenme İhtiyacı:</span> Kodlama</small></div>
+<div class="ülke"><div class="bayrak-svg"><img alt="Özbekistan bayrağı" loading="lazy" referrerpolicy="no-referrer" src="assets/flags/Flag_of_Uzbekistan.svg"/></div><b>Özbekistan</b><small><span class="harita-etiket">Beceri Arzı:</span> Girişimcilik<br><span class="harita-etiket">Öğrenme İhtiyacı:</span> İngilizce</small></div>
+<div class="ülke"><div class="bayrak-svg"><img alt="Kırgızistan bayrağı" loading="lazy" referrerpolicy="no-referrer" src="assets/flags/Flag_of_Kyrgyzstan.svg"/></div><b>Kırgızistan</b><small><span class="harita-etiket">Beceri Arzı:</span> Medya<br><span class="harita-etiket">Öğrenme İhtiyacı:</span> Video düzenleme</small></div>
+<div class="ülke"><div class="bayrak-svg"><img alt="Türkmenistan bayrağı" loading="lazy" referrerpolicy="no-referrer" src="assets/flags/Flag_of_Turkmenistan.svg"/></div><b>Türkmenistan</b><small><span class="harita-etiket">Beceri Arzı:</span> Akademik yazım<br><span class="harita-etiket">Öğrenme İhtiyacı:</span> Sunum ve hitabet</small></div>
+<div class="ülke"><div class="bayrak-svg"><img alt="Kuzey Kıbrıs Türk Cumhuriyeti bayrağı" loading="lazy" referrerpolicy="no-referrer" src="assets/flags/Flag_of_the_Turkish_Republic_of_Northern_Cyprus.svg"/></div><b>Kuzey Kıbrıs Türk Cumhuriyeti</b><small><span class="harita-etiket">Beceri Arzı:</span> Kültür<br><span class="harita-etiket">Öğrenme İhtiyacı:</span> Veri analizi</small></div>
+</div>
+<div class="harita-notu"><strong>Haritanın amacı:</strong> Ülke bazında beceri arzı ve öğrenme ihtiyacını görünür kılmak; zaman içinde eğitim programları, üniversite iş birlikleri ve sponsorlukların hangi alanlara yöneltilebileceğine dair anonim bir veri zemini oluşturmaktır.</div>
+<div class="harita-notu"><strong>Desteklenen diller:</strong> Türkçe (Türkiye ve KKTC), Azərbaycanca, O‘zbekcha, Қазақша, Türkmençe ve Кыргызча. Bunlara ek olarak dünyada yaygın olarak kullanılan pek çok dil de seçilebilir.</div>
+</section><section>
+<div class="eyebrow">Kalite ve güven</div><h2>Sadece kimlik değil, beceri de doğrulanıyor.</h2>
+<div class="grid2">
+<div class="kutu"><h3>Beceri doğrulama</h3><p class="muted">Kullanıcının öğrenci olduğunun doğrulanması, sahip olduğu her beceriyi otomatik olarak kanıtlamaz. Bu nedenle beceriler için seviye testi, sertifika, örnek çalışma, tamamlanan oturumlar ve akran değerlendirmeleri birlikte kullanılabilir.</p></div>
+<div class="kutu"><h3>Güvenlik katmanı</h3><p class="muted">Bildirme, engelleme, oturum geçmişi, değerlendirme sistemi ve gerektiğinde hesap askıya alma mekanizması bulunur. İlk iletişim ağ içinde tutulur.</p></div>
+<div class="kutu"><h3>Arkadaşlık amaç değil</h3><p class="muted">Sistem romantik veya sosyal eşleşme üzerine kurulmaz. Öğrenme ihtiyacı eşleşmenin temelidir; kültürel ve sosyal bağ bunun doğal sonucu olabilir.</p></div>
+<div class="kutu"><h3>Yapay zekâ destekli eşleştirme</h3><p class="muted">İlerleyen aşamada sistem; beceri, seviye, ülke, dil, uygunluk ve geçmiş değerlendirmeleri kullanarak uygun adayları önerebilir. Karar mekanizmasının yerini değil, destek katmanını oluşturur.</p></div>
+</div>
+</section><section>
+<div class="eyebrow">Beklenen etki</div><h2>Fiziksel hareketlilik olmadan insan hareketliliği.</h2>
+<div class="cards">
+<div class="card"><h3>Bilgi paylaşımı</h3><p>Öğrenciler sahip oldukları becerileri başka ülkelerdeki akranlarına aktarabilir.</p></div>
+<div class="card"><h3>Dil teması</h3><p>Türk Dünyası'ndaki farklı dillerle günlük ve doğal temas artabilir.</p></div>
+<div class="card"><h3>Fırsat eşitliği</h3><p>Öğrenme fırsatının yalnızca maddi imkânlara bağlı olmadığı bir model hedeflenir.</p></div>
+<div class="card"><h3>Türk Dünyası ağı</h3><p>Farklı ülkelerdeki öğrenciler arasında sürdürülebilir, amaç odaklı bağlar kurulabilir.</p></div>
+</div>
+</section><section id="yol">
+<div class="eyebrow">Uygulanabilirlik</div><h2>Aşamalı büyüme planı</h2>
+<div class="timeline">
+<div><strong>1. Aşama — Prototip</strong><span class="muted">Türkiye, Azerbaycan ve Kazakistan ile sınırlı bir pilot; öğrenci doğrulama, beceri profili, puan sistemi ve temel eşleştirme.</span></div>
+<div><strong>2. Aşama — Pilot ağ</strong><span class="muted">Gerçek kullanıcılarla küçük ölçekli deneme; oturum kalitesi, puan dengesi ve güvenlik mekanizmalarının test edilmesi.</span></div>
+<div><strong>3. Aşama — Yedi ülkeye genişleme</strong><span class="muted">Özbekistan, Kırgızistan, Türkmenistan ve Kuzey Kıbrıs Türk Cumhuriyeti'nin dahil edilmesi; ülke bazlı beceri haritasının oluşturulması.</span></div>
+<div><strong>4. Aşama — Kurumsal iş birlikleri</strong><span class="muted">Üniversiteler, öğrenci toplulukları ve uygun kurumlarla doğrulama, sponsorluk ve destekli öğrenme modellerinin geliştirilmesi.</span></div>
+<div><strong>5. Aşama — Akıllı eşleştirme</strong><span class="muted">Yeterli veri oluştuğunda yapay zekâ destekli öneri sistemi ve daha gelişmiş beceri doğrulama katmanlarının eklenmesi.</span></div>
+</div>
+</section><section id="ekip">
+<div class="eyebrow">Proje ekibi</div><h2>Türk Dünyası Beceri Ağı'nın geliştiricileri</h2>
+<p class="muted">Bu proje iki üniversite öğrencisi tarafından geliştirilmiş bir konsept ve prototip çalışmasıdır.</p>
+<div class="team"><div class="team-card team-card-combined"><strong>Miray Kayan &amp; Cemre Erden</strong><div class="team-role" data-i18n="developerRoleCombined">Türk Dünyası Beceri Ağı • Ürün geliştiricileri</div></div></div>
+</section>
+<!-- ===== v5 FEATURES ===== -->
+
+
+
+
+
+
+
+
+
+
+
+
+<div aria-hidden="true" aria-modal="true" class="modal-backdrop" id="authBackdrop" role="dialog">
+<div class="modal">
+<div class="modal-head"><h2 id="authTitle">Kayıt Ol</h2><button aria-label="Kapat" class="close-btn" onclick="closeAuth()" type="button">×</button></div>
+<div id="registerPanel">
+<form id="registerForm">
+<div class="form-grid">
+<div class="form-field"><label for="regFirst" data-i18n="İsim">İsim</label><input autocomplete="given-name" id="regFirst" name="firstName" required="" type="text"/></div>
+<div class="form-field"><label for="regLast" data-i18n="Soyisim">Soyisim</label><input autocomplete="family-name" id="regLast" name="lastName" required="" type="text"/></div>
+<div class="form-field"><label for="regMail" data-i18n="Öğrenci maili">Öğrenci maili</label><input autocomplete="email" id="regMail" name="email" placeholder="ornek@universite.edu.tr" required="" type="email"/></div>
+<div class="form-field"><label for="regCountry" data-i18n="Yaşadığın ülke">Yaşadığın ülke</label><select id="regCountry" name="country" required=""><option value="" data-i18n="Ülke seç">Ülke seç</option><option>Türkiye</option><option>Azerbaycan</option><option>Özbekistan</option><option>Kazakistan</option><option>Kuzey Kıbrıs Türk Cumhuriyeti</option><option>Türkmenistan</option><option>Kırgızistan</option></select></div>
+<div class="form-field full"><label for="regNative" data-i18n="Ana dilin">Ana dilin</label><select id="regNative" name="nativeLanguage" required=""><option value="" data-i18n="Dil seç">Dil seç</option><option>Türkçe</option><option>Azərbaycanca</option><option>O‘zbekcha</option><option>Қазақша</option><option>Türkmençe</option><option>Кыргызча</option></select></div>
+<div class="form-field full"><label data-i18n="Öğrenmek istediklerin">Öğrenmek istediklerin</label><div class="skill-picker" data-picker="learning"><div aria-expanded="false" class="skill-picker-head" role="button" tabindex="0"><strong data-i18n="Seçeneklerden seç">Seçeneklerden seç</strong><span class="skill-chevron">⌄</span></div><div class="skill-picker-body"><div class="skill-tabs"><button class="skill-tab active" data-category="languages" data-i18n="Diller" type="button">Diller</button><button class="skill-tab" data-category="skills" data-i18n="Beceriler" type="button">Beceriler</button><button class="skill-tab" data-category="other" data-i18n="Diğer" type="button">Diğer</button></div><div class="skill-search"><input autocomplete="off" data-skill-search="" data-i18n-placeholder="skillSearchPlaceholder" placeholder="Dil veya beceri ara..." type="search"/></div><div class="skill-count" data-skill-count=""></div><div class="skill-list" data-list=""></div><div class="skill-hint">Yaygın ve uluslararası kullanılan diller listelenir. Aradığın dil yoksa “Diğer” seçeneğini kullanabilirsin.</div><div class="skill-other"><input data-other-input="" data-i18n-placeholder="skillOtherPlaceholder" placeholder="Buraya kendi seçeneğini yaz..." type="text"/><button class="btn primary" data-other-add="" data-i18n="Ekle" type="button">Ekle</button></div><div class="skill-selected" data-selected=""></div><div class="skill-hint">Birden fazla seçenek seçebilirsin. Listede olmayan bir şey için “Diğer” seçeneğini kullanabilirsin.</div></div></div><input id="regLearn" name="learning" type="hidden"/></div>
+<div class="form-field full"><label data-i18n="Öğretebileceklerin">Öğretebileceklerin</label><div class="skill-picker" data-picker="teaching"><div aria-expanded="false" class="skill-picker-head" role="button" tabindex="0"><strong>Seçeneklerden seç</strong><span class="skill-chevron">⌄</span></div><div class="skill-picker-body"><div class="skill-tabs"><button class="skill-tab active" data-category="languages" type="button">Diller</button><button class="skill-tab" data-category="skills" type="button">Beceriler</button><button class="skill-tab" data-category="other" type="button">Diğer</button></div><div class="skill-search"><input autocomplete="off" data-skill-search="" placeholder="Dil veya beceri ara..." type="search"/></div><div class="skill-count" data-skill-count=""></div><div class="skill-list" data-list=""></div><div class="skill-hint">Yaygın ve uluslararası kullanılan diller listelenir. Aradığın dil yoksa “Diğer” seçeneğini kullanabilirsin.</div><div class="skill-other"><input data-other-input="" placeholder="Buraya kendi seçeneğini yaz..." type="text"/><button class="btn primary" data-other-add="" type="button">Ekle</button></div><div class="skill-selected" data-selected=""></div><div class="skill-hint">Birden fazla seçenek seçebilirsin. Listede olmayan bir şey için “Diğer” seçeneğini kullanabilirsin.</div></div></div><input id="regTeach" name="teaching" type="hidden"/></div>
+<div class="form-field full certificate-box">
+<div class="certificate-head">
+<div>
+<h4 data-i18n="certificateTitle">İsteğe bağlı sertifika / belge</h4>
+<p data-i18n="certificateIntro">Becerilerini veya deneyimini destekleyen bir sertifika, kurs belgesi ya da örnek belge ekleyebilirsin.</p>
+</div>
+<span aria-hidden="true">📎</span>
+</div>
+<div class="file-upload">
+<input accept=".pdf,.jpg,.jpeg,.png,.webp,.doc,.docx" aria-label="Sertifika dosyası seç" data-i18n-aria="certificateFileAria" id="regCertificate" name="certificate" type="file"/>
+<div class="file-meta" id="certificateMeta">
+<span class="file-badge">✓</span><span id="certificateMetaText"></span>
+</div>
+</div>
+<div class="certificate-note" data-i18n="certificateNote">Bu alan zorunlu değildir. Prototipte belge yalnızca bu tarayıcıda örnek olarak saklanır; gerçek sistemde güvenli dosya depolama ve erişim yetkilendirmesi gerekir.</div>
+</div>
+<div class="form-field"><label for="regPass" data-i18n="Şifre">Şifre</label><input autocomplete="new-password" id="regPass" minlength="6" name="password" required="" type="password"/></div>
+<div class="form-field"><label for="regPass2" data-i18n="Şifre tekrar">Şifre tekrar</label><input autocomplete="new-password" id="regPass2" minlength="6" name="password2" required="" type="password"/></div>
+</div>
+<div class="form-note" data-i18n="authPrototypeNote">Bu prototipte kayıt bilgileri yalnızca bu tarayıcıdaki localStorage alanında örnek olarak tutulur. Gerçek öğrenci doğrulaması ve güvenli sunucu altyapısı sonraki aşamada kurulacaktır.</div>
+<div class="auth-status" id="registerStatus"></div>
+<div class="form-actions"><button class="btn secondary" onclick="closeAuth()" style="background:#102343" type="button" data-i18n="Vazgeç">Vazgeç</button><button class="btn primary" type="submit" data-i18n="Kayıt Ol">Kayıt Ol</button></div>
+</form>
+</div>
+<div id="loginPanel" style="display:none">
+<form id="loginForm">
+<div class="form-field"><label for="loginMail" data-i18n="Öğrenci maili">Öğrenci maili</label><input autocomplete="email" id="loginMail" name="email" required="" type="email"/></div>
+<div class="form-field" style="margin-top:14px"><label for="loginPass" data-i18n="Şifre">Şifre</label><input autocomplete="current-password" id="loginPass" name="password" required="" type="password"/></div>
+<div class="auth-status" id="loginStatus"></div>
+<div class="form-actions"><button class="btn secondary" onclick="closeAuth()" style="background:#102343" type="button" data-i18n="Vazgeç">Vazgeç</button><button class="btn primary" type="submit" data-i18n="Giriş Yap">Giriş Yap</button></div>
+</form>
+</div>
+</div>
+</div>
+
+<div aria-hidden="true" class="turan-panel" id="turanPanel">
+<div class="turan-head"><div class="turan-head-main"><div class="turan-avatar"><span class="turan-avatar-star">✦</span></div><div><strong data-i18n="turanName">Turan</strong><small data-i18n="turanGreeting">Türk Dünyası Beceri Ağı asistanı • Buradayım.</small></div><span aria-hidden="true" class="turan-status">●</span></div><button class="turan-close" id="turanClose" type="button">×</button></div>
+<div class="turan-tabs"><button class="turan-tab active" data-i18n="turanTabAI" data-turan-tab="assistant" type="button">Yapay zekâ desteği</button><button class="turan-tab" data-i18n="turanTabDetector" data-turan-tab="detector" type="button">Yapay zekâ dedektörü</button></div>
+<div class="turan-pane active" id="turanAssistantPane"><div class="turan-chat" id="turanMessages"></div><div class="turan-input"><input data-i18n-placeholder="turanPlaceholder" id="turanInput" placeholder="Turan’a bir şey sor…"/><button data-i18n="turanSend" id="turanSend" type="button">Gönder</button></div></div>
+<div class="turan-pane" id="turanDetectorPane"><div class="turan-detector"><strong data-i18n="detectorTitle">Yapay zekâ dedektörü</strong><p class="muted" data-i18n="detectorIntro" style="font-size:11px;line-height:1.45">Metnini buraya ekle.</p><textarea data-i18n-placeholder="detectorPlaceholder" id="turanDetectorText" placeholder="Metnini buraya yapıştır…"></textarea><div class="turan-detector-actions"><button class="turan-check" data-i18n="detectorCheck" id="turanDetectorRun" type="button">Metni analiz et</button><button class="turan-detector-clear" data-i18n="detectorClear" id="turanDetectorClear" type="button">Temizle</button></div><div class="turan-result" id="turanDetectorResult" style="display:none"></div><div class="turan-disclaimer" data-i18n="detectorDisclaimer">Sonuç yalnızca dilsel örüntü analizidir.</div></div></div>
+</div>
+<button aria-expanded="false" aria-label="Turan yapay zekâ asistanını aç" class="turan-fab" id="turanFab" type="button" data-i18n-aria="turanFabAria"><span class="turan-orb"><span class="turan-star">✦</span><span class="turan-halo"></span></span><span class="turan-label" data-i18n="turanName">Turan</span></button>
+<div aria-hidden="true" aria-modal="true" class="community-modal-backdrop" id="communityModal" role="dialog">
+<div class="community-modal">
+<div class="community-modal-head"><h2 id="communityModalTitle" data-i18n="roomChatTitle">Sohbet Odası</h2><button aria-label="Kapat" class="community-modal-close" data-i18n-aria="close" id="communityModalClose" type="button">×</button></div>
+<div class="community-chat" id="communityChat"><div class="community-message" data-i18n="roomIntro">Bu odada hazır mesajlardan birini seçerek topluluğa katılabilirsin.</div></div>
+<div class="community-ready-messages">
+<button class="community-ready-message" data-i18n="roomMsg1" type="button">Puanım bitti. Bana destek olur musunuz?</button>
+<button class="community-ready-message" data-i18n="roomMsg2" type="button">Herkese selamlar! Pratik yapmak isteyen var mı?</button>
+<button class="community-ready-message" data-i18n="roomMsg3" type="button">Yeni bir beceri ekledim, profilime bakabilirsiniz!</button>
+</div>
+<p class="form-note" data-i18n="roomNote">Bu oda prototip gösterimidir; mesajlar yalnızca bu tarayıcıda görünür ve kaydedilmez.</p>
+</div>
+</div>
+<footer>
+<div class="developer-footer">
+<div>
+<strong style="color:#fff;font-size:16px">Türk Dünyası Beceri Ağı</strong>
+<div class="developer-list">
+<div class="developer-chip"><strong>Miray Kayan &amp; Cemre Erden</strong><span data-i18n="developerRoleCombined">Türk Dünyası Beceri Ağı • Ürün geliştiricileri</span></div>
+</div>
+</div>
+<div class="footer-project" data-i18n="footerProject">Bildiğini paylaş, öğrenmek istediğini öğren. Bu sayfa yarışma projesi için hazırlanmış etkileşimli konsept prototipidir. Kullanıcılar, puanlar ve beceri verileri örnektir; gerçek kullanıcı verisi değildir.</div>
+</div>
+</footer>
+
+<div aria-hidden="true" aria-modal="true" class="modal-backdrop" id="reviewModalBackdrop" role="dialog">
+<div class="modal" style="max-width:440px">
+<div class="modal-head"><h2 id="reviewModalTitle" data-i18n="reviewModalTitle">Değerlendirme bırak</h2><button aria-label="Kapat" class="close-btn" onclick="closeReviewModal()" type="button" data-i18n-aria="close">×</button></div>
+<form id="reviewModalForm" style="padding:18px 20px 22px">
+<input id="reviewTargetUserId" type="hidden" value=""/>
+<div style="margin-bottom:14px"><strong id="reviewTargetUserName" style="font-size:16px;color:#102343"></strong><div id="reviewTargetUserMeta" class="muted" style="font-size:12px;margin-top:2px"></div></div>
+<div style="margin-bottom:16px"><label style="display:block;font-weight:700;margin-bottom:6px;font-size:13px" data-i18n="rating">Değerlendirme</label>
+<div id="reviewStarRating" style="display:flex;gap:6px;font-size:26px;cursor:pointer;user-select:none">
+<span data-star="1" style="color:#f5cf79">★</span>
+<span data-star="2" style="color:#f5cf79">★</span>
+<span data-star="3" style="color:#f5cf79">★</span>
+<span data-star="4" style="color:#f5cf79">★</span>
+<span data-star="5" style="color:#f5cf79">★</span>
+</div>
+<input id="reviewRatingValue" type="hidden" value="5"/>
+</div>
+<div style="margin-bottom:18px"><label for="reviewModalComment" style="display:block;font-weight:700;margin-bottom:6px;font-size:13px" data-i18n="reviewCommentLabel">Yorum (isteğe bağlı)</label>
+<textarea id="reviewModalComment" rows="3" style="width:100%;border:1px solid #d9e0ea;border-radius:10px;padding:10px;font:inherit;box-sizing:border-box" data-i18n-placeholder="reviewsIntro" placeholder="Bir eşleşme sonrası puan ve yorum bırakabilirsin."></textarea></div>
+<div class="form-actions" style="display:flex;justify-content:flex-end;gap:8px">
+<button class="btn secondary" onclick="closeReviewModal()" style="background:#102343" type="button" data-i18n="cancel">Vazgeç</button>
+<button class="btn primary" type="submit" data-i18n="publishButton">Yayımla</button>
+</div>
+</form>
+</div>
+</div>
+<button aria-label="Yukarı çık" class="back-to-top-btn" data-i18n-aria="backToTop" id="backToTopBtn" type="button">↑</button>
+<script defer src="assets/js/01-ui-shell.js?v=c672d4037a"></script>
+<script defer src="assets/js/02-i18n-data.js?v=c672d4037a"></script>
+<script defer src="assets/js/03-app.js?v=c672d4037a"></script>
+<script defer src="assets/js/04-assistant.js?v=c672d4037a"></script>
+<script defer src="assets/js/05-ui-motion.js?v=c672d4037a"></script>
+<script defer src="assets/js/06-rooms.js?v=c672d4037a"></script>
+<script defer src="assets/js/07-tabs.js?v=c672d4037a"></script>
+</body></html>

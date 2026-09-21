@@ -144,6 +144,21 @@
   .tab-panel>.section-stack>section{padding:38px 5%}
   .tab-panel .turan-panel.embedded .turan-chat{height:270px}
 }
+@media(max-width:900px){
+  header>div:last-child{flex:1;min-width:0}
+  header nav{display:block;position:static;width:100%;max-height:none;overflow:visible;padding:0;background:transparent;border:0;box-shadow:none}
+  header nav.open{display:block;max-height:none;overflow:visible}
+  .tab-nav{display:flex;flex-wrap:nowrap;gap:3px;width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;scroll-behavior:smooth;padding-bottom:3px}
+  .tab-nav button{flex:0 0 auto;white-space:nowrap;text-align:center;padding:9px 10px}
+  .menu-toggle{display:none!important}
+}
+@media(max-width:600px){
+  header{align-items:flex-start}
+  header>div:last-child{display:block}
+  .lang-wrap{display:flex;justify-content:flex-end;margin:0 0 4px}
+  .lang-select{max-width:120px}
+  header nav .auth-actions{display:none}
+}
 </style>
 </head>
 <body>
@@ -1124,13 +1139,13 @@ populateMatchControls();renderMatches();renderReviews();renderCommunities();rend
 <script>
 (function(){
   const tabLabels={
-    tr:['Ana Sayfa / Hakkında','Öğrenci Yolculuğu','Akıllı Eşleştirme','Topluluk','Makaleler','Öğrenci Profilim','Turan AI Asistanı'],
-    az:['Ana səhifə / Haqqında','Tələbə səyahəti','Ağıllı uyğunlaşdırma','İcma','Məqalələr','Tələbə profilim','Turan AI köməkçisi'],
-    uz:['Bosh sahifa / Loyiha haqida','Talabaning yo‘li','Aqlli moslashtirish','Hamjamiyat','Maqolalar','Talaba profilim','Turan AI yordamchisi'],
-    kk:['Басты бет / Жоба туралы','Студенттің жолы','Ақылды сәйкестендіру','Қауымдастық','Мақалалар','Студент профилім','Turan AI көмекшісі'],
-    tk:['Baş sahypa / Taslama barada','Talybyň ýoly','Akylly gabatlaşdyrma','Jemgyýet','Makalalar','Talyp profilim','Turan AI kömekçisi'],
-    ky:['Башкы бет / Долбоор жөнүндө','Студенттин жолу','Акылдуу дал келтирүү','Коомчулук','Макалалар','Студент профилим','Turan AI жардамчысы'],
-    en:['Home / About','Student Journey','Smart Matching','Community','Articles','My Student Profile','Turan AI Assistant']
+    tr:['Ana Sayfa / Hakkında','Nasıl Çalışır? / Öğrenci Yolculuğu','Akıllı Eşleştirme','Topluluk','Makaleler','Öğrenci Profilim','Turan AI Asistanı'],
+    az:['Ana səhifə / Haqqında','Necə işləyir? / Tələbə səyahəti','Ağıllı uyğunlaşdırma','İcma','Məqalələr','Tələbə profilim','Turan AI köməkçisi'],
+    uz:['Bosh sahifa / Loyiha haqida','Qanday ishlaydi? / Talabaning yo‘li','Aqlli moslashtirish','Hamjamiyat','Maqolalar','Talaba profilim','Turan AI yordamchisi'],
+    kk:['Басты бет / Жоба туралы','Қалай жұмыс істейді? / Студенттің жолы','Ақылды сәйкестендіру','Қауымдастық','Мақалалар','Студент профилім','Turan AI көмекшісі'],
+    tk:['Baş sahypa / Taslama barada','Nähili işleýär? / Talybyň ýoly','Akylly gabatlaşdyrma','Jemgyýet','Makalalar','Talyp profilim','Turan AI kömekçisi'],
+    ky:['Башкы бет / Долбоор жөнүндө','Кантип иштейт? / Студенттин жолу','Акылдуу дал келтирүү','Коомчулук','Макалалар','Студент профилим','Turan AI жардамчысы'],
+    en:['Home / About','How It Works / Student Journey','Smart Matching','Community','Articles','My Student Profile','Turan AI Assistant']
   };
   const tabAriaLabels={tr:'Ana bölümler',az:'Əsas bölmələr',uz:'Asosiy bo‘limlar',kk:'Негізгі бөлімдер',tk:'Esasy bölümler',ky:'Негизги бөлүмдөр',en:'Main sections'};
   const quickAriaLabels={tr:'Hızlı erişim',az:'Sürətli giriş',uz:'Tezkor kirish',kk:'Жылдам қолжетімділік',tk:'Çalt giriş',ky:'Ыкчам жетүү',en:'Quick access'};

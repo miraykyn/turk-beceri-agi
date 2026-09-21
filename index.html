@@ -125,6 +125,7 @@
 #tabApp{min-height:45vh}
 .tab-panel{display:none;min-height:45vh}
 .tab-panel:first-child{display:block}
+.tab-panel:not(.active){display:none!important}
 .tab-panel.active{display:block;animation:tabReveal .18s ease-out}
 .tab-panel>.hero{margin:0}
 .tab-panel>.section-stack>section{max-width:1220px}
@@ -1157,6 +1158,8 @@ populateMatchControls();renderMatches();renderReviews();renderCommunities();rend
 </script>
 <script>
 (function(){
+  if(document.body.dataset.tabShellReady==='true')return;
+  document.body.dataset.tabShellReady='true';
   const tabLabels={
     tr:['Ana Sayfa / Hakkında','Nasıl Çalışır? / Öğrenci Yolculuğu','Akıllı Eşleştirme','Topluluk','Makaleler','Öğrenci Profilim','Turan AI Asistanı'],
     az:['Ana səhifə / Haqqında','Necə işləyir? / Tələbə səyahəti','Ağıllı uyğunlaşdırma','İcma','Məqalələr','Tələbə profilim','Turan AI köməkçisi'],
@@ -1206,14 +1209,15 @@ populateMatchControls();renderMatches();renderReviews();renderCommunities();rend
   const stack={home:document.createElement('div'),journey:document.createElement('div'),matching:document.createElement('div'),community:document.createElement('div'),articles:document.createElement('div'),profile:document.createElement('div')};
   Object.values(stack).forEach(node=>node.className='section-stack');
   if(hero)panels.home.appendChild(hero);
-  const journeyIds=new Set(['nasil','yol']);
-  const matchingIds=new Set(['eslesme']);
-  const communityIds=new Set(['topluluk']);
-  const articleIds=new Set(['makaleler']);
-  const profileIds=new Set(['profil']);
+  const sectionOwners={
+    nasil:'journey',yol:'journey',eslesme:'matching',topluluk:'community',makaleler:'articles',profil:'profile',
+    puan:'home',harita:'home',ekip:'home'
+  };
   document.querySelectorAll('body > section').forEach(section=>{
     const id=section.id;
-    const target=journeyIds.has(id)?stack.journey:matchingIds.has(id)?stack.matching:communityIds.has(id)?stack.community:articleIds.has(id)?stack.articles:profileIds.has(id)?stack.profile:stack.home;
+    const owner=sectionOwners[id]||'home';
+    const target=stack[owner];
+    section.dataset.tabOwner=owner;
     target.appendChild(section);
   });
   panels.home.appendChild(stack.home);

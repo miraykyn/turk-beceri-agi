@@ -62,11 +62,13 @@
 .feature-section{background:#f7f8fb}
 .feature-toolbar{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;background:#fff;border:1px solid #e2e7ef;border-radius:18px;padding:16px;margin-top:20px;overflow:visible}
 .feature-toolbar .form-field{position:relative;z-index:1;min-width:0}.feature-toolbar .form-field:focus-within{z-index:3}.feature-toolbar .form-field label{font-size:12px}.feature-toolbar .search-field{grid-column:1/-1}.feature-toolbar .search-field input{width:100%}
+.feature-toolbar select{position:relative;z-index:4;display:block;width:100%;cursor:pointer}.feature-toolbar select:focus,.feature-toolbar select.dropdown-active{z-index:20;outline:2px solid #f5b942;outline-offset:1px}
 .feature-toolbar select,.feature-toolbar input,.feature-form select,.feature-form input,.feature-form textarea{border:1px solid #d9e0ea;border-radius:10px;padding:10px 11px;font:inherit;background:#fff;color:#172033}
 .filter-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.ghost-btn{border:1px solid #d1d9e5;background:#fff;color:#344054;border-radius:10px;padding:9px 12px;font-weight:750;cursor:pointer}
 .match-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:15px;margin-top:18px}.match-card{background:#fff;border:1px solid #e2e7ef;border-radius:18px;padding:18px;box-shadow:0 6px 22px #18233b08}.match-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.match-score{font-size:22px;font-weight:850;color:#087c60}.match-meta{color:#667085;font-size:12px;line-height:1.55;margin:7px 0}.match-reason{background:#f5f8fc;border-radius:11px;padding:10px 11px;color:#475467;font-size:12px;line-height:1.5;margin-top:10px}.match-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}.match-tags span{background:#edf5ff;color:#245a9b;border-radius:999px;padding:5px 8px;font-size:11px}.mode-switch{display:flex;gap:8px;align-items:center;margin-top:16px;flex-wrap:wrap}.mode-switch label{font-size:12px;font-weight:750}.mode-switch select{border:1px solid #d9e0ea;border-radius:9px;padding:8px;background:#fff}
 .feature-note{padding:12px 14px;border-radius:12px;background:#f8fafc;border:1px solid #e3e8ef;color:#667085;font-size:12px;line-height:1.5;margin-top:12px}.backend-note{background:#fff8e8;border:1px solid #f2dda9;color:#725100}
 .country-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:20px}.country-card{background:#fff;border:1px solid #e2e7ef;border-radius:17px;padding:17px}.country-card.active{border-color:#f5b942;box-shadow:0 0 0 2px #f5b94233}.country-head{display:flex;align-items:center;gap:10px}.country-flag{width:48px;height:31px;border-radius:4px;overflow:hidden;box-shadow:0 2px 7px #12203720;object-fit:fill}.country-card h3{margin:0;font-size:15px}.country-stat{font-size:12px;color:#667085;margin-top:8px;line-height:1.45}.country-card button{margin-top:12px}.community-room{margin-top:12px;padding:10px 11px;border:1px solid #edf0f4;border-radius:11px;background:#f8fafc}.community-room strong{display:block;font-size:12px;color:#172033}.community-room span{display:block;margin-top:4px;color:#667085;font-size:11px;line-height:1.45}
+.community-rooms-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin:20px 0}.community-room-card{background:#fff;border:1px solid #e2e7ef;border-radius:17px;padding:17px;box-shadow:0 6px 22px #18233b08}.community-room-card h3{margin:0 0 8px;font-size:15px}.community-room-card p{margin:0;color:#667085;font-size:12px;line-height:1.5}.review-card{background:#fff8e8;border:1px solid #f2dda9;border-radius:14px;padding:14px;margin-top:12px;color:#344054;font-size:13px;line-height:1.6}.review-card strong{color:#172033}.review-card em{color:#667085}
 .community-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:20px}.request-list{display:grid;gap:10px;margin-top:14px}.request-card{border:1px solid #e2e7ef;border-radius:14px;padding:13px;background:#fff;display:flex;align-items:center;justify-content:space-between;gap:10px}.request-card small{color:#667085;display:block;margin-top:4px}.request-actions{display:flex;gap:7px;flex-wrap:wrap}.limit-box{background:#eef7f4;border:1px solid #cde9df;color:#17664f;padding:13px;border-radius:12px;font-size:12px;line-height:1.5}
 .article-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}.article-tab{border:1px solid #d9e0ea;background:#fff;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:750;cursor:pointer}.article-tab.active{background:#102343;color:#fff;border-color:#102343}.article-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:15px;margin-top:17px}.article-card{background:#fff;border:1px solid #e2e7ef;border-radius:18px;padding:18px}.article-card h3{margin:0 0 7px;font-size:18px}.article-card p{color:#667085;font-size:13px;line-height:1.55}.article-byline{font-size:11px;color:#7a8497;margin-top:12px}.article-country{display:inline-block;background:#f0f5fa;padding:5px 8px;border-radius:8px;margin-top:7px;font-size:11px}.feature-form{display:grid;grid-template-columns:1fr 1fr;gap:13px}.feature-form .full{grid-column:1/-1}.feature-form label{display:flex;flex-direction:column;gap:7px;font-size:12px;font-weight:750;color:#344054}.feature-form textarea{min-height:150px;resize:vertical}.ai-box{background:#fff;border:1px solid #e2e7ef;border-radius:18px;padding:18px;margin-top:18px}.ai-messages{min-height:150px;max-height:350px;overflow:auto;background:#f8fafc;border:1px solid #e8edf3;border-radius:14px;padding:12px;display:grid;gap:10px}.ai-msg{padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.5;max-width:90%}.ai-msg.user{justify-self:end;background:#102343;color:#fff}.ai-msg.bot{justify-self:start;background:#fff;border:1px solid #e2e7ef;color:#344054}.ai-input-row{display:flex;gap:8px;margin-top:10px}.ai-input-row input{flex:1;border:1px solid #d9e0ea;border-radius:10px;padding:11px;font:inherit}.rating-row{display:flex;align-items:center;gap:5px;margin-top:9px}.star-btn{border:0;background:transparent;cursor:pointer;font-size:21px;padding:0;opacity:.45}.star-btn.selected,.star-btn:hover{opacity:1}.review-list{display:grid;gap:9px;margin-top:12px}.review-item{background:#f8fafc;border:1px solid #e6eaf0;border-radius:12px;padding:11px;font-size:12px}.empty-state{padding:18px;text-align:center;color:#7a8497;background:#f8fafc;border:1px dashed #d6dde8;border-radius:14px;margin-top:15px}
 @media(max-width:900px){.feature-toolbar{grid-template-columns:1fr 1fr}.community-layout{grid-template-columns:1fr}}
@@ -242,10 +244,10 @@
 <p class="muted" data-i18n="matchIntro">Filtreleri kullanabilir veya otomatik eşleştirmeyi açabilirsin. Skor; beceri uyumu, dil, ülke, seviye ve uygunluk sinyallerinden hesaplanır.</p>
 <div class="feature-toolbar">
 <div class="form-field search-field"><label for="matchSearch">Arama Motoru / Kelime ile Ara</label><input id="matchSearch" type="search" placeholder="Beceri, dil, ülke veya öğrenci adı ara..." autocomplete="off"/></div>
-<div class="form-field"><label data-i18n="teachSkill">Öğretmek istediği beceri</label><select id="matchTeach"><option data-i18n="anyOption" value="">Farketmez</option></select></div>
-<div class="form-field"><label data-i18n="learnSkill">Öğrenmek istediği beceri</label><select id="matchLearn"><option data-i18n="anyOption" value="">Farketmez</option></select></div>
-<div class="form-field"><label data-i18n="countryFilter">Ülke</label><select id="matchCountry"><option data-i18n="allCountries" value="">Tüm ülkeler</option></select></div>
-<div class="form-field"><label data-i18n="languageFilter">Dil</label><select id="matchLanguage"><option data-i18n="anyOption" value="">Farketmez</option></select></div>
+<div class="form-field"><label data-i18n="teachSkill">Öğretmek istediği beceri</label><select id="matchTeach"><option data-i18n="anyOption" value="">Farketmez</option><option>Excel</option><option>Ekonomi</option><option>Türkçe</option><option>Python</option><option>Kodlama ve yazılım</option><option>Grafik tasarım</option><option>Veri analizi</option><option>Girişimcilik</option><option>Medya</option><option>Akademik yazım</option><option>Sunum ve hitabet</option></select></div>
+<div class="form-field"><label data-i18n="learnSkill">Öğrenmek istediği beceri</label><select id="matchLearn"><option data-i18n="anyOption" value="">Farketmez</option><option>Excel</option><option>Ekonomi</option><option>Türkçe</option><option>Python</option><option>Kodlama ve yazılım</option><option>Grafik tasarım</option><option>Veri analizi</option><option>Girişimcilik</option><option>Medya</option><option>Akademik yazım</option><option>Sunum ve hitabet</option></select></div>
+<div class="form-field"><label data-i18n="countryFilter">Ülke</label><select id="matchCountry"><option data-i18n="allCountries" value="">Tüm ülkeler</option><option>Türkiye</option><option>Azerbaycan</option><option>Kazakistan</option><option>Kırgızistan</option><option>Özbekistan</option><option>Türkmenistan</option><option>Kuzey Kıbrıs Türk Cumhuriyeti</option></select></div>
+<div class="form-field"><label data-i18n="languageFilter">Dil</label><select id="matchLanguage"><option data-i18n="anyOption" value="">Farketmez</option><option>Türkçe</option><option>İngilizce</option><option>Azərbaycanca</option><option>Қазақша</option><option>O‘zbekcha</option><option>Кыргызча</option><option>Türkmençe</option></select></div>
 <div class="form-field"><label data-i18n="levelFilter">Seviye</label><select id="matchLevel"><option data-i18n="anyOption" value="">Farketmez</option><option data-i18n="beginner" value="Başlangıç">Başlangıç</option><option data-i18n="intermediate" value="Orta">Orta</option><option data-i18n="advanced" value="İleri">İleri</option></select></div>
 <div class="form-field"><label data-i18n="availabilityFilter">Uygunluk</label><select id="matchAvailability"><option data-i18n="anyOption" value="">Farketmez</option><option data-i18n="weekdays" value="Hafta içi">Hafta içi</option><option data-i18n="weekends" value="Hafta sonu">Hafta sonu</option><option data-i18n="evenings" value="Akşam">Akşam</option></select></div>
 <div class="form-field"><label data-i18n="matchingMode">Eşleştirme modu</label><select id="matchMode"><option data-i18n="manualMode" value="manual">Manuel seçim</option><option data-i18n="autoMode" value="auto">Otomatik öneri</option></select></div>
@@ -257,12 +259,14 @@
 <div class="kutu" id="reviewsBox" style="margin-top:24px">
 <h3 data-i18n="reviewsTitle">Değerlendirmeler</h3>
 <p class="muted" data-i18n="reviewsIntro">Bir eşleşme sonrası puan ve yorum bırakabilirsin. Aşağıdaki kayıtlar bu tarayıcıdaki prototip verileridir.</p>
+<div class="review-card"><strong>Eşleşme:</strong> Python &amp; İngilizce Değişimi (Aibek M. &amp; Leyla S.) <br><strong>Puan:</strong> ⭐⭐⭐⭐⭐ (5/5) <br><strong>Yorum:</strong> "Harika bir çalışma oldu! Aibek bana Python temellerini çok net anlattı, ben de ona İngilizce pratik konusunda destek oldum. Kesinlikle tavsiye ederim." <br><em>Tarih: 2 gün önce</em></div>
 <div class="review-list" id="reviewList"><div class="review-item"><div class="review-item-head"><strong>Eşleşme: Python &amp; İngilizce Değişimi</strong><span>⭐⭐⭐⭐⭐ (5/5)</span></div><div class="review-item-meta">Aibek M. &amp; Leyla S. · 2 gün önce</div><p>"Harika bir çalışma oldu! Aibek bana Python temellerini çok net anlattı, ben de ona İngilizce pratik konusunda destek oldum. Kesinlikle tavsiye ederim."</p></div></div>
 </div>
 </section><section class="feature-section" id="topluluk">
 <div class="eyebrow" data-i18n="communityEyebrow">Ülke toplulukları</div>
 <h2 data-i18n="communityTitle">Destek iste, puanla dayanış</h2>
 <p class="muted" data-i18n="communityIntro">Bu alan serbest sohbet forumu değildir. Sıfır puanlı kullanıcılar yapılandırılmış destek talebi oluşturabilir; diğer kullanıcılar puan bağışlayabilir.</p>
+<div class="community-rooms-grid" aria-label="7 ülke topluluk odaları"><article class="community-room-card"><h3>Türkiye Topluluk Odası</h3><p>Beceri paylaşımı, dil pratiği ve ülke içi dayanışma.</p></article><article class="community-room-card"><h3>Azerbaycan Topluluk Odası</h3><p>Beceri paylaşımı, dil pratiği ve ülke içi dayanışma.</p></article><article class="community-room-card"><h3>Kazakistan Topluluk Odası</h3><p>Beceri paylaşımı, dil pratiği ve ülke içi dayanışma.</p></article><article class="community-room-card"><h3>Kırgızistan Topluluk Odası</h3><p>Beceri paylaşımı, dil pratiği ve ülke içi dayanışma.</p></article><article class="community-room-card"><h3>Özbekistan Topluluk Odası</h3><p>Beceri paylaşımı, dil pratiği ve ülke içi dayanışma.</p></article><article class="community-room-card"><h3>Türkmenistan Topluluk Odası</h3><p>Beceri paylaşımı, dil pratiği ve ülke içi dayanışma.</p></article><article class="community-room-card"><h3>KKTC Topluluk Odası</h3><p>Beceri paylaşımı, dil pratiği ve ülke içi dayanışma.</p></article></div>
 <div class="community-layout">
 <div class="panel"><h3 data-i18n="countriesTitle">Ülke toplulukları</h3><div class="country-grid" id="countryCommunities"></div></div>
 <div class="panel">
@@ -1042,7 +1046,8 @@ function featureT(k,vars={}){return I18N[currentLanguage]?.[k]||FEATURE_I18N.tr[
 function countryLabel(c){const k=translationRegistry[c]||stableKey(c);return I18N[currentLanguage]?.[k]||c}
 function skillLabel(c){const v=localizedSkillName?localizedSkillName(c,currentLanguage):c;return String(v).startsWith('⟦MISSING_SKILL:')?c:v}
 function populateSelect(id,items,allKey='anyOption'){const el=$(id);if(!el)return;const val=el.value;el.innerHTML='';const first=document.createElement('option');first.value='';first.textContent=featureT(allKey);el.appendChild(first);items.forEach(x=>{const o=document.createElement('option');o.value=x;o.textContent=skillLabel(x);el.appendChild(o)});el.value=items.includes(val)?val:''}
-function populateMatchControls(){populateSelect('matchTeach',SKILL_OPTIONS);populateSelect('matchLearn',SKILL_OPTIONS);populateSelect('matchCountry',COUNTRIES.map(c=>c.name),'allCountries');populateSelect('matchLanguage',LANG_OPTIONS);const sort=$('matchSort');if(sort){const v=sort.value;sort.innerHTML=`<option value="score">${featureT('scoreSort')}</option><option value="rating">${featureT('ratingSort')}</option>`;sort.value=v||'score'}}
+function populateMatchControls(){const allSkills=[...new Set([...SKILL_OPTIONS,...skillCatalog.map(x=>x[1])])].sort((a,b)=>a.localeCompare(b,'tr'));const allLanguages=[...new Set([...LANG_OPTIONS,...worldLanguageCatalog.map(x=>x.n.tr).filter(Boolean)])];populateSelect('matchTeach',allSkills);populateSelect('matchLearn',allSkills);populateSelect('matchCountry',COUNTRIES.map(c=>c.name),'allCountries');populateSelect('matchLanguage',allLanguages);const sort=$('matchSort');if(sort){const v=sort.value;sort.innerHTML=`<option value="score">${featureT('scoreSort')}</option><option value="rating">${featureT('ratingSort')}</option>`;sort.value=v||'score'}}
+function initMatchDropdowns(){['matchTeach','matchLearn','matchCountry','matchLanguage','matchLevel','matchAvailability','matchMode','matchSort'].forEach(id=>{const select=$(id);if(!select||select.dataset.dropdownReady)return;select.dataset.dropdownReady='true';select.addEventListener('focus',()=>select.classList.add('dropdown-active'));select.addEventListener('click',()=>select.classList.add('dropdown-active'));select.addEventListener('change',()=>{select.classList.remove('dropdown-active');renderMatches()});select.addEventListener('blur',()=>select.classList.remove('dropdown-active'));});}
 function monthKey(d=new Date()){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`}
 function readJSON(k,fallback){try{const v=JSON.parse(localStorage.getItem(k));return v??fallback}catch(e){return fallback}}
 function writeJSON(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}
@@ -1102,7 +1107,7 @@ function rerenderFeatureLanguage(){populateMatchControls();renderMatches();rende
 // Dil değişince dinamik listeler ve sekmeler de aynı sözlükten yeniden üretilir.
 window.addEventListener('tda:languageChanged',()=>{rerenderFeatureLanguage();});
 // İlk yükleme
-populateMatchControls();renderMatches();renderReviews();renderCommunities();renderArticles();
+populateMatchControls();initMatchDropdowns();renderMatches();renderReviews();renderCommunities();renderArticles();
 
 })();
 </script>
@@ -1257,6 +1262,7 @@ populateMatchControls();renderMatches();renderReviews();renderCommunities();rend
     tabNav.setAttribute('aria-label',tabAriaLabels[lang]||tabAriaLabels.en);
   }
   function setTab(id,updateHash=true){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     if(!panels[id])id='home';
     buttons.forEach(button=>{
       const active=button.dataset.tab===id;
@@ -1271,7 +1277,6 @@ populateMatchControls();renderMatches();renderReviews();renderCommunities();rend
     if(id==='turan'&&turan){turan.classList.add('open');turan.setAttribute('aria-hidden','false');}
     if(updateHash)history.replaceState(null,'','#'+id);
     nav.classList.remove('open');
-    window.scrollTo(0, 0);
   }
   buttons.forEach(button=>button.addEventListener('click',()=>setTab(button.dataset.tab)));
   tabNav.addEventListener('keydown',event=>{
@@ -1321,6 +1326,7 @@ populateMatchControls();renderMatches();renderReviews();renderCommunities();rend
   const tabButtons=[...document.querySelectorAll('.tab-button')];
   if(!nav||!panels.length)return;
   function activate(id){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     const panel=document.getElementById('tab-'+id);
     if(!panel)return;
     tabButtons.forEach(button=>{
@@ -1335,7 +1341,6 @@ populateMatchControls();renderMatches();renderReviews();renderCommunities();rend
       item.setAttribute('aria-hidden',String(!active));
     });
     nav.classList.remove('open');
-    window.scrollTo(0, 0);
     if(history.replaceState)history.replaceState(null,'','#'+id);
   }
   document.addEventListener('click',event=>{

@@ -184,8 +184,24 @@
   header nav .auth-btn{flex:1 1 110px;min-height:38px}
 }
 </style>
+<style>
+.fact-ticker{min-height:48px;display:flex;align-items:center;background:#18233b;color:#f7f8fb;border-bottom:1px solid rgba(255,255,255,.12);padding:0 5%;font-family:Georgia,"Times New Roman",serif}
+.fact-ticker-inner{width:min(1220px,100%);margin:auto;display:flex;align-items:center;gap:14px;min-width:0}
+.fact-ticker-label{flex:0 0 auto;color:#f5cf79;font-size:13px;font-weight:700;letter-spacing:.2px;white-space:nowrap}
+.fact-ticker-separator{width:1px;height:22px;background:rgba(255,255,255,.25);flex:0 0 auto}
+.fact-ticker-message{min-width:0;display:flex;align-items:baseline;gap:8px;overflow:hidden;font-size:13px;line-height:1.35}
+.fact-ticker-country{color:#fff;font-weight:700;white-space:nowrap}
+.fact-ticker-text{color:#dce5f5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fact-ticker-source{color:#9fb0c9;font-size:10px;white-space:nowrap}
+.fact-ticker-message.is-changing{animation:factTickerFade .55s ease both}
+@keyframes factTickerFade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media(max-width:600px){.fact-ticker{min-height:52px;padding:7px 5%}.fact-ticker-inner{align-items:flex-start;gap:8px}.fact-ticker-label{font-size:11px;padding-top:2px}.fact-ticker-separator{height:30px}.fact-ticker-message{display:grid;gap:1px;font-size:11px;line-height:1.3}.fact-ticker-text{white-space:normal;display:-webkit-box;display:box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.fact-ticker-source{font-size:9px}}
+</style>
 </head>
 <body>
+<aside aria-label="Biliyor muydunuz? bilgi şeridi" class="fact-ticker" id="factTicker">
+<div class="fact-ticker-inner"><strong class="fact-ticker-label">Biliyor muydunuz?</strong><span aria-hidden="true" class="fact-ticker-separator"></span><div aria-live="polite" class="fact-ticker-message" id="factTickerMessage"><strong class="fact-ticker-country" id="factTickerCountry"></strong><span class="fact-ticker-text" id="factTickerText"></span><small class="fact-ticker-source" id="factTickerSource"></small></div></div>
+</aside>
 <header><div class="logo">TÜRK DÜNYASI <span>BECERİ AĞI</span></div><div style="display:flex;align-items:center"><nav id="mainNav"><a href="#nasil">Nasıl Çalışır?</a><a href="#profil">Örnek Profil</a><a href="#eslesme">Eşleşme</a><a href="#topluluk">Topluluk</a><a href="#makaleler">Makaleler</a><a href="#ai" onclick="document.getElementById('turanPanel').classList.add('open'); document.getElementById('turanPanel').setAttribute('aria-hidden','false'); return false;">Turan AI</a><a href="#harita">Beceri Haritası</a><a href="#yol">Yol Haritası</a><div class="auth-actions"><button class="auth-btn" onclick="openAuth('login')" type="button">Giriş Yap</button><button class="auth-btn register" onclick="openAuth('register')" type="button">Kayıt Ol</button></div></nav><div class="lang-wrap"><span aria-hidden="true">🌐</span><select aria-label="Dil seçimi" class="lang-select" id="languageSelect"><option value="tr">Türkçe</option><option value="az">Azərbaycanca</option><option value="uz">O‘zbekcha</option><option value="kk">Қазақша</option><option value="tk">Türkmençe</option><option value="ky">Кыргызча</option><option value="en">English</option></select></div><button aria-controls="mainNav" aria-expanded="false" aria-label="Menüyü aç" class="menu-toggle" id="menuToggle" type="button">☰</button></div></header>
 <div class="hero">
 <div class="eyebrow" style="color:#f5cf79">Öğrenciler • Beceriler • Sınır ötesi öğrenme</div>
@@ -1430,6 +1446,74 @@ populateMatchControls();initMatchDropdowns();renderMatches();renderReviews();ren
   function sendMessage(){const text=input?.value.trim();if(!text)return;add(text,'user');input.value='';window.setTimeout(()=>add(answer(text),'bot'),1000);}
   fab.addEventListener('click',()=>panel.classList.contains('open')?hide():show());close?.addEventListener('click',hide);send?.addEventListener('click',sendMessage);input?.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();sendMessage();}});
   document.querySelectorAll('.turan-tab').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.turan-tab').forEach(item=>item.classList.remove('active'));document.querySelectorAll('.turan-pane').forEach(item=>item.classList.remove('active'));tab.classList.add('active');document.getElementById(tab.dataset.turanTab==='assistant'?'turanAssistantPane':'turanDetectorPane')?.classList.add('active');show();}));
+})();
+</script>
+<script>
+(function(){
+  const facts=[
+    {country:'Türkiye',text:'Göbekli Tepe, UNESCO Dünya Mirası Listesi’ne 2018’de alındı.',source:'UNESCO'},
+    {country:'Türkiye',text:'Türkiye Büyük Millet Meclisi 23 Nisan 1920’de açıldı.',source:'TBMM Başkanlığı'},
+    {country:'Türkiye',text:'Türk alfabesinin kabulünü düzenleyen kanun 1 Kasım 1928’de yayımlandı.',source:'Atatürk Araştırma Merkezi'},
+    {country:'Türkiye',text:'Anıtkabir’in inşası 1953’te tamamlandı.',source:'Anıtkabir Komutanlığı'},
+    {country:'Türkiye',text:'İstanbul, 2010 Avrupa Kültür Başkentlerinden biri oldu.',source:'Avrupa Komisyonu'},
+    {country:'Türkiye',text:'Hattuşa, UNESCO Dünya Mirası Listesi’ne 1986’da girdi.',source:'UNESCO'},
+    {country:'Azerbaycan',text:'Azerbaycan Demokratik Cumhuriyeti 1918’de kuruldu ve Müslüman Doğu’nun ilk parlamenter cumhuriyeti oldu.',source:'Azerbaycan Cumhurbaşkanlığı'},
+    {country:'Azerbaycan',text:'Bakü’nün İçerişehir bölgesi UNESCO listesine 2000’de alındı.',source:'UNESCO'},
+    {country:'Azerbaycan',text:'Gobustan Kaya Sanatı Kültürel Peyzajı UNESCO listesine 2007’de girdi.',source:'UNESCO'},
+    {country:'Azerbaycan',text:'Azerbaycan mugamı, UNESCO Somut Olmayan Kültürel Miras Listesi’ndedir.',source:'UNESCO'},
+    {country:'Azerbaycan',text:'Kız Kalesi, Bakü’nün İçerişehir tarihî merkezinin bir parçasıdır.',source:'UNESCO'},
+    {country:'Azerbaycan',text:'Nahçıvan Özerk Cumhuriyeti 9 Şubat 1924’te kuruldu.',source:'Nahçıvan Özerk Cumhuriyeti'},
+    {country:'Kazakistan',text:'Baikonur’dan 4 Ekim 1957’de Sputnik 1, dünyanın ilk yapay uydusu olarak fırlatıldı.',source:'NASA'},
+    {country:'Kazakistan',text:'Saryarka bozkır ve gölleri UNESCO Dünya Mirası Listesi’ne 2008’de alındı.',source:'UNESCO'},
+    {country:'Kazakistan',text:'Kazakistan bağımsızlığını 16 Aralık 1991’de ilan etti.',source:'Kazakistan Cumhurbaşkanlığı'},
+    {country:'Kazakistan',text:'Astana, Kazakistan’ın başkenti olarak 1997’de ilan edildi.',source:'Kazakistan Cumhurbaşkanlığı'},
+    {country:'Kazakistan',text:'Almatı, 1997’ye kadar Kazakistan’ın başkentiydi.',source:'Kazakistan Cumhurbaşkanlığı'},
+    {country:'Kazakistan',text:'Hoca Ahmed Yesevî Türbesi UNESCO Dünya Mirası Listesi’ne 2003’te girdi.',source:'UNESCO'},
+    {country:'Özbekistan',text:'Semerkant, Kültürler Kavşağı olarak UNESCO listesine 2001’de alındı.',source:'UNESCO'},
+    {country:'Özbekistan',text:'İçan-Kale, UNESCO Dünya Mirası Listesi’ne 1990’da girdi.',source:'UNESCO'},
+    {country:'Özbekistan',text:'Buhara’nın tarihî merkezi UNESCO listesine 1993’te alındı.',source:'UNESCO'},
+    {country:'Özbekistan',text:'Taşkent Metrosu 1977’de açıldı ve Orta Asya’nın ilk metrosu oldu.',source:'Taşkent Metrosu'},
+    {country:'Özbekistan',text:'Uluğ Bey, Semerkant’ta 15. yüzyılda önemli bir gözlemevi kurdu.',source:'UNESCO'},
+    {country:'Özbekistan',text:'Timur, 1336’da Keş yakınlarında doğdu.',source:'Encyclopaedia Britannica'},
+    {country:'Kırgızistan',text:'Kırgızların Manas destanı, UNESCO Somut Olmayan Kültürel Miras Listesi’ndedir.',source:'UNESCO'},
+    {country:'Kırgızistan',text:'Süleyman Dağı, UNESCO Dünya Mirası Listesi’ne 2009’da alındı.',source:'UNESCO'},
+    {country:'Kırgızistan',text:'Issık Göl, dünyanın en büyük yüksek rakımlı göllerinden biridir.',source:'Britannica'},
+    {country:'Kırgızistan',text:'Kırgızistan bağımsızlığını 31 Ağustos 1991’de ilan etti.',source:'Kırgızistan Cumhurbaşkanlığı'},
+    {country:'Kırgızistan',text:'Burana Kulesi, 11. yüzyıldan kalma tarihî bir minaredir.',source:'Kırgızistan Kültür Bakanlığı'},
+    {country:'Kırgızistan',text:'Ala-Arça Millî Parkı 1976’da kuruldu.',source:'Kırgızistan Hükümeti'},
+    {country:'Türkmenistan',text:'Antik Nisa, UNESCO Dünya Mirası Listesi’ne 2007’de alındı.',source:'UNESCO'},
+    {country:'Türkmenistan',text:'Merv tarihî ve kültürel parkı UNESCO listesine 1999’da girdi.',source:'UNESCO'},
+    {country:'Türkmenistan',text:'Türkmenistan, daimî tarafsızlık statüsünü 1995’te Birleşmiş Milletler kararıyla aldı.',source:'Birleşmiş Milletler'},
+    {country:'Türkmenistan',text:'Aşkabat şehri 1881’de kuruldu.',source:'Türkmenistan Dışişleri Bakanlığı'},
+    {country:'Türkmenistan',text:'Karakum Kanalı’nın yapımına 1954’te başlandı.',source:'Britannica'},
+    {country:'Türkmenistan',text:'Ahal-Teke atı, Türkmenistan’ın ulusal mirasının önemli bir simgesidir.',source:'Türkmenistan Hükümeti'}
+  ];
+  const countryColors={
+    'Türkiye':'#4b1723','Azerbaycan':'#123d4b','Kazakistan':'#173d51',
+    'Özbekistan':'#243b56','Kırgızistan':'#4b241f','Türkmenistan':'#174238'
+  };
+  const ticker=document.getElementById('factTicker');
+  const message=document.getElementById('factTickerMessage');
+  const country=document.getElementById('factTickerCountry');
+  const text=document.getElementById('factTickerText');
+  const source=document.getElementById('factTickerSource');
+  if(!ticker||!message||!country||!text||!source)return;
+  let previous=-1;
+  function showFact(){
+    let index=Math.floor(Math.random()*facts.length);
+    while(facts.length>1&&index===previous)index=Math.floor(Math.random()*facts.length);
+    previous=index;
+    const fact=facts[index];
+    message.classList.remove('is-changing');
+    void message.offsetWidth;
+    country.textContent=fact.country;
+    text.textContent=fact.text;
+    source.textContent='Kaynak: '+fact.source;
+    ticker.style.backgroundColor=countryColors[fact.country]||'#18233b';
+    message.classList.add('is-changing');
+  }
+  showFact();
+  window.setInterval(showFact,7500);
 })();
 </script>
 </body></html>

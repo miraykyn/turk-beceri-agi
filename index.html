@@ -212,10 +212,11 @@
 .flag-card-face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:16px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 10px 24px #18233b18}
 .flag-card-front{background:transparent}
 .flag-card-front img{display:block;width:100%;height:100%;object-fit:fill;object-position:center;background:transparent}
+.flag-card:first-child .flag-card-front img{transform:scaleX(1.067)}
 .flag-card-back{padding:7px;overflow:hidden;background:#111d35;color:#fff;transform:rotateY(180deg);font-family:Georgia,"Times New Roman",serif;font-size:clamp(8px,.65vw,10px);line-height:1.14;text-align:center;overflow-wrap:anywhere;display:flex;align-items:center;justify-content:center;text-wrap:balance}
 .flag-card-note{margin:14px auto 0;color:#7a8497;font-family:Georgia,"Times New Roman",serif;font-size:14px;font-style:italic;line-height:1.5}
 @media(max-width:900px){.flag-cards-grid{grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}.flag-card-back{padding:6px;font-size:clamp(7px,.9vw,9px);line-height:1.1}}
-@media(max-width:600px){.flag-cards-section{padding:0 8px 24px}.flag-cards-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.flag-card-back{padding:8px;font-size:9px;line-height:1.16}}
+@media(max-width:600px){.flag-cards-section{padding:0 8px 24px;overflow-x:auto;-webkit-overflow-scrolling:touch}.flag-cards-grid{grid-template-columns:repeat(7,170px);gap:8px;width:max-content;margin:0}.flag-card-back{padding:8px;font-size:9px;line-height:1.16}}
 </style>
 <section aria-label="Dönen bayrak kartları" class="flag-cards-section" id="flagCards">
 <div class="flag-cards-grid">

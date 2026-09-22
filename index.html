@@ -204,22 +204,19 @@
 </aside>
 <style>
 .flag-cards-section{max-width:1220px;margin:auto;padding:48px 6% 42px;background:#f7f8fb;text-align:center}
-.flag-cards-heading{margin:0 auto 26px;color:#172033;font-family:Georgia,"Times New Roman",serif;font-size:clamp(28px,4vw,42px);font-weight:700;letter-spacing:.2px}
-.flag-cards-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:14px;align-items:stretch}
-.flag-card{min-width:0;height:235px;perspective:1100px;cursor:pointer;outline:0}
+.flag-cards-grid{display:flex;flex-direction:row;justify-content:center;flex-wrap:wrap;gap:14px}
+.flag-card{flex:1 1 130px;max-width:155px;min-width:125px;aspect-ratio:3/2;perspective:1100px;cursor:pointer;outline:0}
 .flag-card:focus-visible{border-radius:16px;box-shadow:0 0 0 3px #f5b942}
 .flag-card-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.2,.7,.2,1)}
 .flag-card.flipped .flag-card-inner{transform:rotateY(180deg)}
 .flag-card-face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:16px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 10px 24px #18233b18}
 .flag-card-front{background:#fff;border:1px solid #e0e5ed}
-.flag-card-front img{display:block;width:100%;height:100%;object-fit:cover}
+.flag-card-front img{display:block;width:100%;height:100%;object-fit:contain}
 .flag-card-back{padding:24px 18px;background:#111d35;color:#fff;transform:rotateY(180deg);font-family:Georgia,"Times New Roman",serif;font-size:15px;line-height:1.55;text-align:left}
 .flag-card-note{margin:22px auto 0;color:#7a8497;font-family:Georgia,"Times New Roman",serif;font-size:14px;font-style:italic;line-height:1.5}
-@media(max-width:1000px){.flag-cards-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.flag-card{height:220px}}
-@media(max-width:600px){.flag-cards-section{padding:36px 5% 32px}.flag-cards-grid{grid-template-columns:1fr;gap:14px}.flag-card{height:190px}.flag-card-back{padding:22px;font-size:15px}}
+@media(max-width:600px){.flag-cards-section{padding:36px 5% 32px}.flag-cards-grid{gap:14px}.flag-card{flex-basis:150px;max-width:180px}.flag-card-back{padding:22px;font-size:15px}}
 </style>
-<section aria-labelledby="flagCardsTitle" class="flag-cards-section" id="flagCards">
-<h2 class="flag-cards-heading" id="flagCardsTitle">Dönen Kartlar</h2>
+<section aria-label="Dönen bayrak kartları" class="flag-cards-section" id="flagCards">
 <div class="flag-cards-grid">
 <article aria-label="Türkiye bayrağı kartı" aria-pressed="false" class="flag-card" role="button" tabindex="0">
 <div class="flag-card-inner"><div class="flag-card-face flag-card-front"><img alt="Türkiye bayrağı" loading="lazy" referrerpolicy="no-referrer" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Turkey.svg"></div><div class="flag-card-face flag-card-back">Kırmızı renk şehitlerimizin kanını, hilal ve yıldız ise bağımsızlığı ve Türklüğü simgeler.</div></div>

@@ -203,18 +203,18 @@
 <div class="fact-ticker-inner"><strong class="fact-ticker-label">Biliyor muydunuz?</strong><span aria-hidden="true" class="fact-ticker-separator"></span><div aria-live="polite" class="fact-ticker-message" id="factTickerMessage"><strong class="fact-ticker-country" id="factTickerCountry"></strong><span class="fact-ticker-text" id="factTickerText"></span><small class="fact-ticker-source" id="factTickerSource"></small></div></div>
 </aside>
 <style>
-.flag-cards-section{max-width:1220px;margin:0 auto;padding:0 6% 42px;background:#f7f8fb;text-align:center}
+.flag-cards-section{max-width:1220px;margin:0 auto;padding:0 3% 42px;background:#f7f8fb;text-align:center}
 .flag-cards-grid{display:flex;flex-direction:row;justify-content:center;flex-wrap:wrap;gap:14px}
-.flag-card{flex:0 1 280px;width:clamp(240px,22vw,280px);height:180px;perspective:1100px;cursor:pointer;outline:0}
+.flag-card{flex:0 1 150px;width:150px;aspect-ratio:3 / 2;height:auto;perspective:1100px;cursor:pointer;outline:0}
 .flag-card:focus-visible{border-radius:16px;box-shadow:0 0 0 3px #f5b942}
 .flag-card-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.2,.7,.2,1)}
 .flag-card.flipped .flag-card-inner{transform:rotateY(180deg)}
 .flag-card-face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:16px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 10px 24px #18233b18}
 .flag-card-front{background:#fff}
-.flag-card-front img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.flag-card-front img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:#fff}
 .flag-card-back{padding:15px;overflow-y:auto;background:#111d35;color:#fff;transform:rotateY(180deg);font-family:Georgia,"Times New Roman",serif;font-size:16px;line-height:1.55;text-align:left}
 .flag-card-note{margin:22px auto 0;color:#7a8497;font-family:Georgia,"Times New Roman",serif;font-size:14px;font-style:italic;line-height:1.5}
-@media(max-width:600px){.flag-cards-section{padding:0 5% 32px}.flag-cards-grid{gap:14px}.flag-card{flex-basis:280px;width:min(100%,280px);height:180px}.flag-card-back{padding:15px;font-size:15px}}
+@media(max-width:600px){.flag-cards-section{padding:0 5% 32px}.flag-cards-grid{gap:14px}.flag-card{flex-basis:150px;width:min(100%,180px)}.flag-card-back{padding:15px;font-size:15px}}
 </style>
 <section aria-label="Dönen bayrak kartları" class="flag-cards-section" id="flagCards">
 <div class="flag-cards-grid">
@@ -769,6 +769,13 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAuth();});
     en:{'Türkiye bayrağı':'Flag of Türkiye','Fiziksel hareketlilik olmadan insan hareketliliği.':'Human connection without physical mobility.','İlk iletişim ağ içinde gerçekleşir. Telefon ve adres gibi kişisel bilgiler herkese açık tutulmaz; bildirme ve engelleme seçenekleri bulunur.':'Initial contact takes place within the network. Personal information such as phone numbers and addresses is not made public; reporting and blocking options are available.'}
   };
   for(const [lang,dict] of Object.entries(qualityTranslations))translations[lang]=Object.assign(translations[lang]||{},dict);
+
+  const flagCardTranslations={
+    az:{'Biliyor muydunuz?':'Bilirdinizmi?','Bayrakların taşıdığı derin anlamları keşfetmek için üzerlerine tıklayabilirsiniz.':'Bayraqların daşıdığı dərin mənaları kəşf etmək üçün üzərinə klikləyə bilərsiniz.','Kırmızı renk şehitlerimizin kanını, hilal ve yıldız ise bağımsızlığı ve Türklüğü simgeler.':'Qırmızı rəng şəhidlərimizin qanını, aypara və ulduz isə müstəqilliyi və türklüyü simvollaşdırır.','Mavi Türklüğü, kırmızı çağdaşlaşmayı, yeşil İslamiyet\'i temsil eder. 8 köşeli yıldız, Türk boylarının sekiz kolunu ifade eder.':'Mavi türklüyü, qırmızı müasirləşməni, yaşıl İslamı təmsil edir. 8 guşəli ulduz türk tayfalarının səkkiz qolunu ifadə edir.','Gök mavisi sonsuz gökyüzünü ve barışı, güneş bereketi, uçan bozkır kartalı ise özgürlüğü ve gücü temsil eder.':'Göy mavisi sonsuz səmanı və sülhü, günəş bərəkəti, uçan çöl qartalı isə azadlığı və gücü təmsil edir.','Kırmızı cesareti, 40 ışınlı güneş Manas\'ın birleştirdiği 40 boyu, ortadaki motif ise Kırgız çadırının (Yurt) tavanını (tündük) simgeler.':'Qırmızı cəsarəti, 40 şüalı günəş Manasın birləşdirdiyi 40 tayfanı, ortadakı motiv isə qırğız çadırının (yurdun) tavanını simvollaşdırır.','Mavi gökyüzünü, beyaz barışı, yeşil doğayı simgeler. Hilal yeni cumhuriyeti, 12 yıldız ise 12 ayı ve kadim astronomiyi ifade eder.':'Mavi səmanı, ağ sülhü, yaşıl təbiəti simvollaşdırır. Aypara yeni respublikanı, 12 ulduz isə 12 ayı və qədim astronomiyanı ifadə edir.','Yeşil renk ve hilal İslam\'ı ve umudu temsil eder. 5 farklı halı deseni ülkedeki 5 ana Türkmen boyunu simgeler.':'Yaşıl rəng və aypara İslamı və ümidi təmsil edir. 5 fərqli xalça naxışı ölkədəki 5 əsas türkmən tayfasını simvollaşdırır.','Beyaz barışı, kırmızı hilal ve yıldız Türklüğü temsil eder. Çizgiler ise Türkiye\'nin koruyuculuğunu ve Kıbrıs Türkü\'nün sonsuz varlığını simgeler.':'Ağ sülhü, qırmızı aypara və ulduz türklüyü təmsil edir. Xətlər isə Türkiyənin qoruyuculuğunu və Kipr türklərinin əbədi varlığını simvollaşdırır.'},
+    uz:{'Biliyor muydunuz?':'Bilasizmi?','Bayrakların taşıdığı derin anlamları keşfetmek için üzerlerine tıklayabilirsiniz.':'Bayroqlar olib yurgan chuqur maʼnolarni bilish uchun ularni bosing.','Kırmızı renk şehitlerimizin kanını, hilal ve yıldız ise bağımsızlığı ve Türklüğü simgeler.':'Qizil rang shahidlarimiz qonini, hilol va yulduz esa mustaqillik hamda turkiylikni anglatadi.','Mavi Türklüğü, kırmızı çağdaşlaşmayı, yeşil İslamiyet\'i temsil eder. 8 köşeli yıldız, Türk boylarının sekiz kolunu ifade eder.':'Ko‘k rang turkiylikni, qizil zamonaviylikni, yashil islomni anglatadi. 8 qirrali yulduz turkiy qabilalarning sakkiz tarmog‘ini bildiradi.','Gök mavisi sonsuz gökyüzünü ve barışı, güneş bereketi, uçan bozkır kartalı ise özgürlüğü ve gücü temsil eder.':'Osmonrang cheksiz osmon va tinchlikni, quyosh barakani, uchayotgan dasht burguti esa erkinlik va kuchni anglatadi.','Kırmızı cesareti, 40 ışınlı güneş Manas\'ın birleştirdiği 40 boyu, ortadaki motif ise Kırgız çadırının (Yurt) tavanını (tündük) simgeler.':'Qizil jasoratni, 40 nurli quyosh Manas birlashtirgan 40 urug‘ni, markazdagi belgi esa qirg‘iz o‘tovining tomini anglatadi.','Mavi gökyüzünü, beyaz barışı, yeşil doğayı simgeler. Hilal yeni cumhuriyeti, 12 yıldız ise 12 ayı ve kadim astronomiyi ifade eder.':'Ko‘k osmonni, oq tinchlikni, yashil tabiatni anglatadi. Hilol yangi respublikani, 12 yulduz esa 12 oy va qadimiy astronomiyani bildiradi.','Yeşil renk ve hilal İslam\'ı ve umudu temsil eder. 5 farklı halı deseni ülkedeki 5 ana Türkmen boyunu simgeler.':'Yashil rang va hilol islom hamda umidni anglatadi. 5 xil gilam naqshi mamlakatdagi 5 asosiy turkman urug‘ini bildiradi.','Beyaz barışı, kırmızı hilal ve yıldız Türklüğü temsil eder. Çizgiler ise Türkiye\'nin koruyuculuğunu ve Kıbrıs Türkü\'nün sonsuz varlığını simgeler.':'Oq tinchlikni, qizil hilol va yulduz turkiylikni anglatadi. Chiziqlar Turkiyaning himoyasi va Kipr turklarining abadiy mavjudligini bildiradi.'},
+    en:{'Biliyor muydunuz?':'Did you know?','Bayrakların taşıdığı derin anlamları keşfetmek için üzerlerine tıklayabilirsiniz.':'Click the flags to discover the deeper meanings they carry.','Kırmızı renk şehitlerimizin kanını, hilal ve yıldız ise bağımsızlığı ve Türklüğü simgeler.':'The red represents the blood of our martyrs, while the crescent and star represent independence and Turkish identity.','Mavi Türklüğü, kırmızı çağdaşlaşmayı, yeşil İslamiyet\'i temsil eder. 8 köşeli yıldız, Türk boylarının sekiz kolunu ifade eder.':'Blue represents Turkish identity, red modernisation, and green Islam. The eight-pointed star represents the eight branches of the Turkic tribes.','Gök mavisi sonsuz gökyüzünü ve barışı, güneş bereketi, uçan bozkır kartalı ise özgürlüğü ve gücü temsil eder.':'Sky blue represents the endless sky and peace, the sun abundance, and the steppe eagle freedom and strength.','Kırmızı cesareti, 40 ışınlı güneş Manas\'ın birleştirdiği 40 boyu, ortadaki motif ise Kırgız çadırının (Yurt) tavanını (tündük) simgeler.':'Red represents courage, the 40-rayed sun the 40 tribes united by Manas, and the central motif the roof of a Kyrgyz yurt.','Mavi gökyüzünü, beyaz barışı, yeşil doğayı simgeler. Hilal yeni cumhuriyeti, 12 yıldız ise 12 ayı ve kadim astronomiyi ifade eder.':'Blue represents the sky, white peace, and green nature. The crescent represents the new republic, while the 12 stars represent the 12 months and ancient astronomy.','Yeşil renk ve hilal İslam\'ı ve umudu temsil eder. 5 farklı halı deseni ülkedeki 5 ana Türkmen boyunu simgeler.':'Green and the crescent represent Islam and hope. The five carpet patterns represent the five main Turkmen tribes.','Beyaz barışı, kırmızı hilal ve yıldız Türklüğü temsil eder. Çizgiler ise Türkiye\'nin koruyuculuğunu ve Kıbrıs Türkü\'nün sonsuz varlığını simgeler.':'White represents peace, the red crescent and star Turkish identity. The stripes represent Türkiye\'s protection and the enduring presence of Turkish Cypriots.'}
+  };
+  for(const lang of ['az','uz','en'])translations[lang]=Object.assign(translations[lang]||{},flagCardTranslations[lang]);
 
   function cleanText(value){return String(value??'').replace(/\s+/g,' ').trim();}
   function preserveWhitespace(original,translated){const s=String(original), lead=(s.match(/^\s*/) || [''])[0], trail=(s.match(/\s*$/)||[''])[0];return lead+translated+trail;}
@@ -1571,9 +1578,15 @@ populateMatchControls();initMatchDropdowns();renderMatches();renderReviews();ren
     const fact=facts[index];
     message.classList.remove('is-changing');
     void message.offsetWidth;
-    country.textContent=fact.country;
-    text.textContent=fact.text;
-    source.textContent='Kaynak: '+fact.source;
+    const lang=window.TDAI18n?.language||'tr';
+    const translate=value=>lang==='tr'?Promise.resolve(value):window.TDAI18n.translate(value,lang,'tr');
+    Promise.all([translate(fact.country),translate(fact.text),translate(fact.source)]).then(([translatedCountry,translatedText,translatedSource])=>{
+      if(index!==previous)return;
+      country.textContent=translatedCountry;
+      text.textContent=translatedText;
+      source.textContent=(lang==='tr'?'Kaynak: ':'Source: ')+translatedSource;
+      window.requestAnimationFrame(fitMessage);
+    });
     ticker.style.background=countryBackgrounds[fact.country]||'#18233b';
     message.classList.add('is-changing');
     window.requestAnimationFrame(fitMessage);
@@ -1581,6 +1594,7 @@ populateMatchControls();initMatchDropdowns();renderMatches();renderReviews();ren
   showFact();
   window.setInterval(showFact,7500);
   window.addEventListener('resize',fitMessage);
+  window.addEventListener('tda:languageChanged',()=>showFact());
 })();
 </script>
 </body></html>

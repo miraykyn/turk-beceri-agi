@@ -1,0 +1,117 @@
+/* =========================================================
+   Sekmeli Uygulama Mimarisi (Tabs & Quick Access)
+   ========================================================= */
+
+/* Sekmeli uygulama kabuğu: mevcut bölümleri silmeden tek odaklı gezinme sağlar. */
+.tab-nav{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.tab-nav button{border:0;background:transparent;color:#dce5f5;border-bottom:2px solid transparent;padding:9px 11px;cursor:pointer;font:inherit;font-size:13px;font-weight:750;white-space:nowrap}
+.tab-nav button:hover,.tab-nav button:focus-visible{color:#fff;background:#172a4b;border-radius:8px;outline:0}
+.tab-nav button.active{color:#f5cf79;border-bottom-color:#f5cf79}
+
+/* Mektuplar / Haberleşme Sekmesi & İkon Tasarımı (Büyük ve Dikkat Çekici) */
+.tab-button-mektuplar, .nav-mektuplar-link {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 9px;
+  vertical-align: middle;
+}
+
+.nav-mektup-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #ffffff;
+  border: 2px solid #d4af37;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.55), inset 0 0 4px rgba(0,0,0,0.1);
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+  transition: transform .25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .25s ease, border-color .25s ease;
+}
+
+.tab-button-mektuplar:hover .nav-mektup-icon,
+.tab-button-mektuplar.active .nav-mektup-icon,
+.nav-mektuplar-link:hover .nav-mektup-icon {
+  transform: scale(1.15) rotate(-4deg);
+  box-shadow: 0 0 16px rgba(245, 207, 121, 0.95);
+  border-color: #ffd700;
+}
+
+.nav-mektup-badge {
+  background: linear-gradient(135deg, #b8860b, #e0a826);
+  color: #ffffff;
+  font-size: 10.5px;
+  font-weight: 850;
+  padding: 2px 7px;
+  border-radius: 999px;
+  min-width: 18px;
+  text-align: center;
+  line-height: 1.35;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  display: inline-block;
+}
+
+.legacy-nav-link{display:none!important}
+.quick-access{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:20px 6%;max-width:1220px;margin:auto;background:#f7f8fb}
+.quick-access button{border:1px solid #dfe5ee;border-radius:14px;background:#fff;color:#172033;text-align:left;padding:16px;cursor:pointer;box-shadow:0 5px 18px #18233b0b;font:inherit;font-weight:800;line-height:1.3}
+.quick-access button:hover,.quick-access button:focus-visible{border-color:#f5b942;box-shadow:0 0 0 3px #f5b94233;outline:0}
+.quick-access small{display:block;color:#667085;font-size:11px;font-weight:500;margin-top:5px}
+#tabApp{min-height:45vh}
+.tab-panel{display:none;min-height:45vh}
+.tab-panel:first-child{display:block}
+.tab-panel:not(.active){display:none!important}
+.tab-panel.active{display:block;animation:tabReveal .18s ease-out}
+.tab-panel>.hero{margin:0}
+.tab-panel>.section-stack>section{max-width:1220px}
+.tab-panel>.section-stack>section:first-child{padding-top:58px}
+.tab-panel .turan-panel.embedded{position:fixed;right:22px;bottom:94px;width:min(390px,calc(100vw - 28px));max-height:min(620px,calc(100vh - 120px));display:none;border-radius:20px;box-shadow:0 20px 55px #10234330;border:1px solid #dfe5ee;background:#fff;z-index:9998}
+.tab-panel .turan-panel.embedded.open{display:block}
+.tab-panel .turan-panel.embedded .turan-head{border-radius:18px 18px 0 0}
+.tab-panel .turan-panel.embedded .turan-chat{height:360px}
+.tab-panel .turan-panel.embedded .turan-close{display:none}
+@keyframes tabReveal{from{opacity:.55;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media(max-width:900px){
+  .tab-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+  .tab-nav button{text-align:left;white-space:normal;line-height:1.25}
+}
+@media(max-width:600px){
+  .quick-access{grid-template-columns:1fr;padding:16px 5%}
+  .tab-panel>.hero{padding:52px 5%}
+  .tab-panel>.section-stack>section{padding:38px 5%}
+  .tab-panel .turan-panel.embedded .turan-chat{height:270px}
+}
+@media(max-width:900px){
+  header>div:last-child{flex:1;min-width:0}
+  header nav{display:block;position:static;width:100%;max-height:none;overflow:visible;padding:0;background:transparent;border:0;box-shadow:none}
+  header nav.open{display:block;max-height:none;overflow:visible}
+  .tab-nav{display:flex;flex-wrap:nowrap;gap:3px;width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;scroll-behavior:smooth;padding-bottom:3px}
+  .tab-nav button{flex:0 0 auto;white-space:nowrap;text-align:center;padding:9px 10px}
+  .menu-toggle{display:none!important}
+}
+@media(max-width:600px){
+  body{overflow-x:hidden}
+  header{display:block;align-items:initial}
+  header>.logo{display:block;margin-bottom:10px}
+  header>div:last-child{display:block;width:100%;min-width:0}
+  .lang-wrap{display:flex;justify-content:flex-end;margin:0 0 4px}
+  .lang-select{max-width:120px}
+  .tab-nav{display:grid;grid-template-columns:1fr;gap:3px;width:100%;overflow:visible;padding:0}
+  .tab-nav button{display:block;width:100%;min-width:0;text-align:left;white-space:normal;overflow-wrap:anywhere;line-height:1.3;padding:10px 12px}
+  header nav .auth-actions{display:none}
+}
+@media(max-width:900px){
+  header nav{display:none;position:absolute;top:calc(100% + 10px);right:0;width:min(340px,calc(100vw - 24px));max-height:calc(100vh - 96px);overflow-y:auto;padding:12px;background:#0e1b33;border:1px solid #2c456a;border-radius:14px;box-shadow:0 18px 40px #08122566;z-index:20}
+  header nav.open{display:block;max-height:calc(100vh - 96px);overflow-y:auto}
+  .menu-toggle{display:inline-flex!important;align-items:center;justify-content:center;position:relative;z-index:21}
+  .tab-nav{display:grid;grid-template-columns:1fr;gap:4px;width:100%;overflow:visible;padding:0}
+  .tab-nav button{display:block;width:100%;min-width:0;text-align:left;white-space:normal;overflow-wrap:anywhere;line-height:1.3;padding:11px 12px}
+}
+@media(max-width:600px){
+  header>div:last-child{position:relative}
+  .lang-wrap{justify-content:flex-start;padding-right:48px}
+  .menu-toggle{position:absolute;top:0;right:0}
+  header nav{top:calc(100% + 10px);right:0}
+  header nav .auth-actions{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;margin:8px 0 0;padding:10px 2px 2px;border-top:1px solid #2c456a}
+  header nav .auth-btn{flex:1 1 110px;min-height:38px}
+}

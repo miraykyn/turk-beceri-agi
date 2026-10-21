@@ -1,0 +1,10 @@
+# İşletim sistemi ve geçici dosyalar
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Düzenleyici ve IDE yapılandırmaları
+.vscode/
+.idea/
+*.tmp
+*.log

@@ -1,0 +1,1773 @@
+/* =========================================================
+   Türk Dünyası Beceri Ağı - Sınır Ötesi Mektup Arkadaşlığı (Penpal)
+   7 Bağımsız Türk Devleti Öğrencileri Arası Kültürel Mektuplaşma
+   ========================================================= */
+
+.mektup-section {
+  width: 100%;
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* --- 1. Sayfa Başı: 150x150px Büyük Renkli Amblem & Temiz Tasarım --- */
+.mektup-hero-center {
+  text-align: center;
+  padding: 38px 20px 30px;
+  background: linear-gradient(180deg, #0d1a31 0%, #132442 55%, #182e54 100%);
+  border: 1px solid #d4af3744;
+  border-radius: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 15px 40px rgba(10, 21, 41, 0.35), inset 0 0 60px rgba(212, 175, 55, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.mektup-hero-center::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(245, 207, 121, 0.22) 0%, rgba(212, 175, 55, 0.05) 50%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* 150x150px Büyük ve Görkemli Amblem Madalyonu */
+.mektup-grand-emblem-wrap {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  padding: 6px;
+  background: linear-gradient(135deg, #d4af37 0%, #f5cf79 30%, #8a6514 70%, #ffd700 100%);
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5), 0 0 45px rgba(245, 207, 121, 0.35);
+  position: relative;
+  transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .35s ease;
+  cursor: pointer;
+}
+
+.mektup-grand-emblem-wrap:hover {
+  transform: scale(1.06) rotate(-2deg);
+  box-shadow: 0 12px 40px rgba(212, 175, 55, 0.7), 0 0 60px rgba(245, 207, 121, 0.5);
+}
+
+.mektup-grand-emblem {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  background: #ffffff;
+  display: block;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.12);
+}
+
+.mektup-hero-center .eyebrow {
+  color: #f5cf79;
+  letter-spacing: 2px;
+  font-size: 11.5px;
+  font-weight: 850;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.mektup-hero-center h2 {
+  color: #ffffff;
+  font-size: 30px;
+  margin: 0 0 10px 0;
+  font-weight: 850;
+  letter-spacing: -0.4px;
+}
+
+.mektup-hero-center p {
+  color: #dce5f5;
+  font-size: 14.5px;
+  line-height: 1.65;
+  margin: 0 auto;
+  max-width: 780px;
+}
+
+/* --- 2. Bozkır Kartalı Canlı Teslimat Süresi Simülasyonu --- */
+.transit-delivery-widget {
+  background: linear-gradient(135deg, #fefcf7 0%, #fff9ec 100%);
+  border: 1.5px solid #e8d7a7;
+  border-radius: 16px;
+  padding: 18px 22px;
+  margin-bottom: 22px;
+  box-shadow: 0 6px 20px rgba(184, 134, 11, 0.08);
+  position: relative;
+}
+
+.transit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.transit-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 850;
+  color: #8c5d00;
+}
+
+.transit-countdown-badge {
+  background: #102343;
+  color: #f5cf79;
+  font-size: 12.5px;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: 0 2px 8px rgba(16, 35, 67, 0.2);
+}
+
+.flight-route-track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  margin: 18px 12px 10px;
+}
+
+.flight-city-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 2;
+}
+
+.flight-city-dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #d4af37;
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+}
+
+.flight-city-name {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #102343;
+  margin-top: 5px;
+}
+
+.flight-city-country {
+  font-size: 10.5px;
+  color: #64748b;
+}
+
+.flight-progress-line {
+  position: absolute;
+  top: 7px;
+  left: 20px;
+  right: 20px;
+  height: 3px;
+  background: #e2e8f0;
+  z-index: 1;
+}
+
+.flight-progress-fill {
+  height: 100%;
+  width: 50%;
+  background: linear-gradient(90deg, #d4af37, #b8860b);
+  position: relative;
+  transition: width 1s linear;
+}
+
+/* Bozkır Kartalı Taşıyıcı İkonu (Uçak Yerine) */
+.steppe-eagle-carrier {
+  position: absolute;
+  right: -16px;
+  top: -18px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  animation: eagleGlide 2.2s ease-in-out infinite alternate;
+}
+
+.eagle-symbol {
+  font-size: 26px;
+  line-height: 1;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.25));
+}
+
+.eagle-cargo-letter {
+  font-size: 11px;
+  margin-top: -6px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+}
+
+@keyframes eagleGlide {
+  0% { transform: translateY(-4px) rotate(-3deg); }
+  50% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(4px) rotate(3deg); }
+}
+
+.transit-footer-note {
+  font-size: 12px;
+  color: #72624c;
+  margin-top: 14px;
+  background: rgba(212, 175, 55, 0.1);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+/* --- 3. Ana Taşıyıcı Konteyner & Sol Sidebar --- */
+.messaging-container {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 20px;
+  background: #ffffff;
+  border: 1px solid #e3e8ef;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 35px rgba(24, 35, 59, 0.06);
+  min-height: 600px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.mailbox-sidebar {
+  background: #fbfcfe;
+  border-right: 1px solid #edf0f5;
+  padding: 22px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.btn-compose-action {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 16px;
+  background: linear-gradient(135deg, #b8860b 0%, #d4af37 50%, #b8860b 100%);
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 850;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(184, 134, 11, 0.35);
+  border: 1px solid #e8c85c;
+  cursor: pointer;
+  transition: all .2s ease;
+  margin-bottom: 8px;
+}
+
+.btn-compose-action:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 6px 20px rgba(184, 134, 11, 0.45);
+}
+
+.mailbox-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  color: #344054;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+
+.mailbox-nav-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.mailbox-nav-btn:hover {
+  background: #edf3fa;
+  color: #102343;
+}
+
+.mailbox-nav-btn.active {
+  background: #102343;
+  color: #ffffff;
+  box-shadow: 0 3px 10px rgba(16, 35, 67, 0.2);
+}
+
+.mailbox-badge {
+  background: #f5b942;
+  color: #152039;
+  font-size: 11px;
+  font-weight: 850;
+  padding: 2px 7px;
+  border-radius: 999px;
+  min-width: 18px;
+  text-align: center;
+}
+
+.mailbox-badge-muted {
+  background: #e4e9f0;
+  color: #5d6b82;
+}
+
+/* Sidebar Avatar Stüdyosu Butonu */
+.btn-avatar-studio-sidebar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #d4af37;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fffdf9, #fdf4dc);
+  color: #8c5d00;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: all .2s ease;
+}
+
+.btn-avatar-studio-sidebar:hover {
+  background: #d4af37;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);
+  transform: translateY(-1px);
+}
+
+.mailbox-divider {
+  border: 0;
+  height: 1px;
+  background: #edf0f5;
+  margin: 6px 0;
+}
+
+.mailbox-seal-card {
+  margin-top: auto;
+  background: linear-gradient(135deg, #fdfbf7 0%, #f6f1e5 100%);
+  border: 1px dashed #d8caa5;
+  border-radius: 14px;
+  padding: 14px 12px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+/* --- 4. Sağ İçerik Alanı & 3 Aşamalı Akış --- */
+.mailbox-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  min-height: 540px;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.compose-step-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 8px 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.compose-step-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 750;
+  color: #64748b;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: all .15s ease;
+}
+
+.compose-step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #475467;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.compose-step-item.active {
+  color: #102343;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.compose-step-item.active .compose-step-num {
+  background: #d4af37;
+  color: #ffffff;
+}
+
+.compose-step-item.completed .compose-step-num {
+  background: #10b981;
+  color: #ffffff;
+}
+
+.compose-step-sep {
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+/* --- 5. Aşama 1: Ülke Seçim Izgarası --- */
+.country-selection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: 14px;
+}
+
+.country-select-card {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 18px 16px;
+  background: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  transition: all .2s ease;
+  position: relative;
+}
+
+.country-select-card:hover {
+  transform: translateY(-3px);
+  border-color: #d4af37;
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.2);
+}
+
+.country-card-flag {
+  font-size: 38px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.country-card-name {
+  font-size: 15px;
+  font-weight: 850;
+  color: #102343;
+  margin-bottom: 3px;
+}
+
+.country-card-sub {
+  font-size: 11.5px;
+  color: #64748b;
+  margin-bottom: 10px;
+}
+
+.country-card-badge {
+  display: inline-block;
+  background: #f0f7ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  font-size: 11px;
+  font-weight: 750;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+/* --- 6. Aşama 2: Bitmoji / Çizim Avatar Mektup Arkadaşı Profilleri --- */
+.penpal-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+  gap: 16px;
+}
+
+.penpal-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background: #ffffff;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.penpal-card:hover {
+  transform: translateY(-2px);
+  border-color: #d4af37;
+  box-shadow: 0 8px 24px rgba(16, 35, 67, 0.08);
+}
+
+.penpal-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.penpal-avatar-wrap {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fef3c7, #fed7aa);
+  border: 2px solid #d4af37;
+  padding: 2px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.penpal-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #ffffff;
+  display: block;
+}
+
+.penpal-status-dot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #10b981;
+  border: 2px solid #ffffff;
+}
+
+.penpal-meta-info h4 {
+  margin: 0 0 3px 0;
+  font-size: 14.5px;
+  color: #102343;
+  font-weight: 850;
+}
+
+.penpal-meta-info span {
+  display: block;
+  font-size: 11.5px;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+.penpal-flight-preview {
+  background: #fdfaf2;
+  border: 1px dashed #e2d2a4;
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 11.5px;
+  color: #785a15;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.penpal-tags-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.penpal-tag {
+  background: #f1f5f9;
+  color: #475467;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+
+.btn-choose-penpal {
+  margin-top: auto;
+  width: 100%;
+  padding: 9px 12px;
+  font-size: 12.5px;
+  font-weight: 800;
+  border-radius: 10px;
+  border: 1px solid #d4af37;
+  background: #fffdf8;
+  color: #8c5d00;
+  cursor: pointer;
+  transition: all .15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-choose-penpal:hover {
+  background: #d4af37;
+  color: #ffffff;
+  box-shadow: 0 3px 12px rgba(212, 175, 55, 0.3);
+}
+
+/* --- 7. Aşama 3: Sadeleştirilmiş 2 Kağıt Seçeneği --- */
+.recipient-summary-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 12px 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.recipient-summary-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.recipient-avatar-mini {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid #d4af37;
+}
+
+/* SADELEŞTİRİLMİŞ 2 KAĞIT SEÇİMİ (Düz Beyaz & Eskitilmiş Kağıt) */
+.paper-theme-selector-dual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.paper-dual-card {
+  border: 2px solid #cbd5e1;
+  border-radius: 14px;
+  padding: 14px 18px;
+  background: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all .2s ease;
+}
+
+.paper-dual-card:hover {
+  border-color: #d4af37;
+  transform: translateY(-2px);
+}
+
+.paper-dual-card.selected {
+  border-color: #b8860b;
+  background: #fffdf9;
+  box-shadow: 0 4px 16px rgba(184, 134, 11, 0.2);
+}
+
+.paper-card-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.paper-card-title {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #102343;
+}
+
+.paper-card-desc {
+  display: block;
+  font-size: 11.5px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+/* --- 8. Akıllı Yer Tasarruflu ve Fotoğraflı Kültürel Posta Pulları --- */
+.stamp-selection-wrapper {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color .2s ease;
+}
+
+.stamp-selection-wrapper:hover {
+  border-color: #d4af37;
+}
+
+.stamp-selection-summary-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #fffdfa 0%, #fef8eb 100%);
+  gap: 12px;
+  flex-wrap: wrap;
+  cursor: pointer;
+}
+
+.stamp-summary-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stamp-summary-thumb {
+  width: 44px;
+  height: 54px;
+  border: 2px dashed #b8860b;
+  border-radius: 4px;
+  background: #ffffff;
+  padding: 2px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.stamp-summary-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+  display: block;
+}
+
+.free-stamp-badge {
+  display: inline-block;
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 6px;
+  margin-left: 8px;
+}
+
+.btn-toggle-stamp-drawer {
+  background: #102343;
+  color: #f5cf79;
+  border: 1px solid #d4af37;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all .2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-toggle-stamp-drawer:hover {
+  background: #19386d;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(16, 35, 67, 0.25);
+}
+
+.stamp-drawer-panel {
+  border-top: 1px dashed #e2d2a4;
+  background: #fbf9f3;
+  padding: 14px 16px 18px;
+  animation: stampDrawerSlide .22s ease-out;
+}
+
+@keyframes stampDrawerSlide {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stamp-drawer-intro {
+  font-size: 12px;
+  font-weight: 750;
+  color: #725100;
+  margin-bottom: 10px;
+}
+
+.stamp-country-filter-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.stamp-country-tab-btn {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #475467;
+  font-size: 11.5px;
+  font-weight: 750;
+  padding: 6px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s ease;
+}
+
+.stamp-country-tab-btn:hover {
+  border-color: #d4af37;
+}
+
+.stamp-country-tab-btn.active {
+  background: #102343;
+  color: #ffffff;
+  border-color: #102343;
+}
+
+.realistic-stamps-carousel {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+  gap: 12px;
+}
+
+.realistic-stamp-card {
+  position: relative;
+  background: #ffffff;
+  border: 2px dashed #bba477;
+  border-radius: 6px;
+  padding: 8px 8px 10px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all .2s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Gerçekçi Tırtıklı Pul Kenarları */
+.realistic-stamp-card::before,
+.realistic-stamp-card::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  left: 0;
+  background: radial-gradient(circle, transparent 2px, #bba477 2px);
+  background-size: 8px 4px;
+}
+
+.realistic-stamp-card::before { top: 0; }
+.realistic-stamp-card::after { bottom: 0; }
+
+.realistic-stamp-card:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: #d4af37;
+  box-shadow: 0 6px 18px rgba(212, 175, 55, 0.25);
+}
+
+.realistic-stamp-card.selected {
+  border-color: #b8860b;
+  border-style: solid;
+  background: linear-gradient(135deg, #fffdf8, #fbf2dc);
+  box-shadow: 0 4px 16px rgba(184, 134, 11, 0.35);
+}
+
+.stamp-photo-frame {
+  width: 100%;
+  height: 82px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #eef2f6;
+  margin: 4px 0 6px;
+  border: 1px solid #dcd3be;
+  box-shadow: inset 0 0 4px rgba(0,0,0,0.08);
+}
+
+.stamp-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .3s ease;
+}
+
+.realistic-stamp-card:hover .stamp-photo-img {
+  transform: scale(1.08);
+}
+
+.stamp-country-label {
+  font-size: 10px;
+  font-weight: 850;
+  color: #102343;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stamp-landmark-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: #102343;
+  line-height: 1.25;
+  margin-top: 2px;
+}
+
+.stamp-landmark-desc {
+  font-size: 9.5px;
+  color: #64748b;
+  display: block;
+  margin-top: 2px;
+  line-height: 1.2;
+}
+
+.stamp-postmark-ring {
+  position: absolute;
+  top: 4px;
+  right: -4px;
+  width: 32px;
+  height: 32px;
+  border: 1.5px dashed #10234344;
+  border-radius: 50%;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+
+/* --- 9. Mektup Sayfası Dokuları (Düz Beyaz & Parşömen) --- */
+.interactive-letter-sheet {
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  transition: all .25s ease;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* 1. Düz Beyaz Kağıt */
+.interactive-letter-sheet.paper-minimal {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  font-family: Inter, -apple-system, sans-serif;
+  color: #0f172a;
+}
+
+.interactive-letter-sheet.paper-minimal textarea {
+  font-family: Inter, sans-serif;
+  color: #0f172a;
+}
+
+/* 2. Eskitilmiş Kağıt (Tarihi Parşömen Dokusu) */
+.interactive-letter-sheet.paper-parchment {
+  background: #fcf8ee;
+  border: 2px solid #e0d2b0;
+  box-shadow: 0 10px 30px rgba(45, 34, 18, 0.08), inset 0 0 70px rgba(224, 210, 176, 0.35);
+  font-family: Georgia, "Times New Roman", serif;
+  color: #2b2216;
+}
+
+.interactive-letter-sheet.paper-parchment textarea {
+  font-family: Georgia, serif;
+  color: #2b2216;
+}
+
+.letter-sheet-top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.letter-sheet-subject-label,
+.letter-sheet-body-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  color: #725100;
+  margin-bottom: 4px;
+}
+
+.affixed-stamp-container {
+  flex-shrink: 0;
+}
+
+.affixed-postage-stamp {
+  width: 48px;
+  height: 58px;
+  border: 2px dashed #b8860b;
+  border-radius: 4px;
+  background: #ffffff;
+  padding: 2px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+  transform: rotate(2deg);
+  overflow: hidden;
+  position: relative;
+}
+
+.affixed-postage-stamp img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+  display: block;
+}
+
+.letter-sheet-subject {
+  width: 100%;
+  border: 0;
+  border-bottom: 1.5px solid #d5c8a7;
+  background: transparent;
+  font-size: 17px;
+  font-weight: 800;
+  padding: 6px 0 8px;
+  margin-bottom: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.letter-sheet-textarea {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 6px 0;
+  font-size: 15px;
+  line-height: 1.85;
+  resize: vertical;
+  min-height: 170px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.letter-sheet-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  gap: 10px;
+}
+
+.letter-validation-hint {
+  font-size: 12px;
+  font-weight: 750;
+  color: #dc2626;
+  background: #fee2e2;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #fca5a5;
+}
+
+.letter-stamp-badge {
+  width: 36px;
+  height: 44px;
+  border: 1.5px dashed #b8860b;
+  border-radius: 3px;
+  background: #ffffff;
+  padding: 1px;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+.letter-stamp-badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 2px;
+}
+
+/* --- 10. Karşılıklı Onaya Dayalı Fotoğraf Gönderimi (3 Adet Sınırı) --- */
+.photo-consent-box {
+  background: #f8fafc;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 20px;
+  transition: all .2s ease;
+}
+
+.photo-consent-box.locked {
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+
+.photo-consent-box.unlocked {
+  background: #f0fdf4;
+  border-color: #86efac;
+}
+
+.consent-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.consent-title-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.photo-consent-box.locked .consent-title-badge { color: #92400e; }
+.photo-consent-box.unlocked .consent-title-badge { color: #166534; }
+
+.btn-request-photo {
+  background: #d97706;
+  color: #ffffff;
+  border: 0;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 11.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background .15s ease;
+}
+
+.btn-request-photo:hover { background: #b45309; }
+
+.btn-sim-accept {
+  background: transparent;
+  color: #047857;
+  border: 1px dashed #059669;
+  border-radius: 8px;
+  padding: 6px 11px;
+  font-size: 11px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.btn-sim-accept:hover {
+  background: #059669;
+  color: #ffffff;
+}
+
+.photo-uploader-area {
+  margin-top: 14px;
+}
+
+.photo-previews-grid {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.photo-preview-item {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  border: 2px solid #86efac;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.photo-preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.photo-delete-btn {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.65);
+  color: #ffffff;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* --- 11. Bozkır Kartalı Teslimat Kartı & Gönder Butonu --- */
+.delivery-calculation-card {
+  background: #fbfcfe;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.delivery-calc-formula {
+  font-size: 12.5px;
+  color: #475467;
+}
+
+.delivery-calc-formula strong {
+  color: #102343;
+}
+
+.btn-seal-post {
+  background: linear-gradient(135deg, #a67307 0%, #cb971f 50%, #8c5d00 100%);
+  color: #ffffff !important;
+  font-size: 14.5px;
+  font-weight: 850;
+  padding: 14px 26px;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(166, 115, 7, 0.35);
+  border: 1px solid #ffd466;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all .2s ease;
+}
+
+.btn-seal-post:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 6px 22px rgba(166, 115, 7, 0.5);
+}
+
+/* --- 12. Mektup Okuma Görünümü --- */
+.reader-letter-container {
+  border-radius: 18px;
+  padding: 34px 38px;
+  position: relative;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+}
+
+.reader-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1.5px solid #d5c8a7;
+  padding-bottom: 18px;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+.reader-penpal-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.reader-avatar-big {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 2px solid #d4af37;
+}
+
+.reader-attached-photos {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px dashed #cbd5e1;
+}
+
+.reader-photos-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.reader-photo-thumb {
+  width: 120px;
+  height: 90px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}
+
+/* --- 13. Bitmoji / Avatar Tasarım Stüdyosu Modal Stilleri --- */
+.avatar-studio-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 21, 41, 0.75);
+  backdrop-filter: blur(5px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.avatar-studio-card {
+  background: #ffffff;
+  border-radius: 20px;
+  width: min(720px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  border: 1px solid #d4af37;
+  display: flex;
+  flex-direction: column;
+}
+
+.avatar-studio-head {
+  padding: 20px 24px;
+  border-bottom: 1px solid #edf0f5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.avatar-studio-head h3 {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+  color: #102343;
+}
+
+.avatar-close-btn {
+  background: transparent;
+  border: 0;
+  font-size: 24px;
+  cursor: pointer;
+  color: #64748b;
+  line-height: 1;
+}
+
+.avatar-studio-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 20px;
+  padding: 24px;
+}
+
+.avatar-preview-pane {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px 14px;
+}
+
+.avatar-live-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fef3c7, #fed7aa);
+  border: 3px solid #d4af37;
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
+  padding: 4px;
+  margin-bottom: 12px;
+}
+
+.live-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #ffffff;
+  display: block;
+}
+
+.avatar-controls-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 380px;
+  overflow-y: auto;
+  padding: 12px 8px 12px 4px;
+}
+
+.avatar-control-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  color: #102343;
+  margin-bottom: 6px;
+}
+
+.avatar-chip-options {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Memoji / Snapchat Tarzı Renk Paletleri (Color Swatches) */
+.avatar-swatches-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding: 4px 2px;
+}
+
+.avatar-color-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.18), inset 0 0 4px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: transform .2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .2s ease;
+  position: relative;
+  outline: none;
+}
+
+.avatar-color-swatch:hover {
+  transform: scale(1.18);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
+}
+
+.avatar-color-swatch.active {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 3px #102343, 0 4px 12px rgba(16, 35, 67, 0.35);
+}
+
+.swatch-check {
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+/* Memoji / Snapchat Tarzı Saf Görsel Izgara (Pure Visual Grid) */
+.avatar-visual-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+  gap: 10px;
+  padding: 4px 2px;
+}
+
+.avatar-visual-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  transition: all .2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: #475569;
+  outline: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.avatar-visual-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: #0f172a;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.avatar-visual-btn.active {
+  border-color: #d4af37;
+  background: #fffdf5;
+  color: #b45309;
+  box-shadow: 0 0 0 2.5px #d4af37, 0 5px 15px rgba(212, 175, 55, 0.35);
+  transform: scale(1.06);
+}
+
+.avatar-svg-glyph {
+  width: 32px;
+  height: 32px;
+  display: block;
+  pointer-events: none;
+}
+
+/* Şık ve Zarif Tooltip (İpucu) Bileşeni */
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: #0f172a;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  padding: 5px 9px;
+  border-radius: 7px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease, visibility .18s;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.3);
+  z-index: 1000;
+}
+
+[data-tooltip]::before {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + 3px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  border-width: 5px 5px 0 5px;
+  border-style: solid;
+  border-color: #0f172a transparent transparent transparent;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease, visibility .18s;
+  z-index: 1000;
+}
+
+[data-tooltip]:hover::after,
+[data-tooltip]:hover::before,
+[data-tooltip]:focus-visible::after,
+[data-tooltip]:focus-visible::before {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.avatar-chip {
+  padding: 5px 11px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #344054;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+
+.avatar-chip:hover {
+  border-color: #d4af37;
+  background: #fffdfa;
+}
+
+.avatar-chip.active {
+  background: #102343;
+  color: #ffffff;
+  border-color: #102343;
+  box-shadow: 0 2px 6px rgba(16, 35, 67, 0.2);
+}
+
+.avatar-studio-actions {
+  padding: 16px 24px;
+  border-top: 1px solid #edf0f5;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  background: #fbfcfe;
+  border-radius: 0 0 20px 20px;
+}
+
+/* --- 14. Duyarlı Medya Sorguları (Responsive Tasarım) --- */
+@media (max-width: 900px) {
+  .mektup-section {
+    padding: 24px 14px;
+  }
+  .messaging-container {
+    grid-template-columns: 1fr;
+    border-radius: 16px;
+  }
+  .mailbox-sidebar {
+    border-right: 0;
+    border-bottom: 1px solid #edf0f5;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 16px 14px;
+  }
+  .btn-compose-action {
+    width: 100%;
+  }
+  .mailbox-nav-btn {
+    flex: 1 1 calc(50% - 6px);
+  }
+  .btn-avatar-studio-sidebar {
+    width: 100%;
+  }
+  .mailbox-seal-card {
+    display: none;
+  }
+  .mailbox-content {
+    padding: 20px 16px;
+  }
+  .paper-theme-selector-dual {
+    grid-template-columns: 1fr;
+  }
+  .avatar-studio-layout {
+    grid-template-columns: 1fr;
+    padding: 16px;
+    gap: 16px;
+  }
+  .avatar-controls-pane {
+    max-height: 320px;
+  }
+}
+
+@media (max-width: 600px) {
+  .mektup-section {
+    padding: 14px 8px;
+  }
+  .mektup-hero-center {
+    padding: 28px 14px 22px;
+    border-radius: 18px;
+    margin-bottom: 16px;
+  }
+  .mektup-grand-emblem-wrap {
+    width: 110px;
+    height: 110px;
+    margin-bottom: 14px;
+  }
+  .mektup-hero-center h2 {
+    font-size: 22px;
+  }
+  .mektup-hero-center p {
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .transit-delivery-widget {
+    padding: 14px 12px;
+    border-radius: 12px;
+  }
+  .transit-title {
+    font-size: 13px;
+  }
+  .transit-countdown-badge {
+    font-size: 11.5px;
+    padding: 5px 10px;
+    width: 100%;
+    justify-content: center;
+  }
+  .flight-route-track {
+    margin: 14px 6px 8px;
+  }
+  .messaging-container {
+    border-radius: 14px;
+  }
+  .mailbox-sidebar {
+    padding: 12px 10px;
+    gap: 6px;
+  }
+  .mailbox-nav-btn {
+    flex: 1 1 100%;
+    padding: 9px 12px;
+  }
+  .mailbox-content {
+    padding: 14px 10px;
+  }
+  .compose-step-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 10px 12px;
+  }
+  .compose-step-sep {
+    display: none;
+  }
+  .country-selection-grid {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+  }
+  .country-select-card {
+    padding: 12px 10px;
+  }
+  .country-card-flag {
+    font-size: 30px;
+  }
+  .penpal-profile-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .stamp-selection-summary-bar {
+    padding: 10px 12px;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+  }
+  .btn-toggle-stamp-drawer {
+    width: 100%;
+    justify-content: center;
+  }
+  .realistic-stamps-carousel {
+    grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+    gap: 8px;
+  }
+  .interactive-letter-sheet {
+    padding: 16px 12px;
+    border-radius: 12px;
+  }
+  .letter-sheet-subject {
+    font-size: 15px;
+  }
+  .letter-sheet-textarea {
+    font-size: 14px;
+    min-height: 140px;
+  }
+  .delivery-calculation-card {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px;
+  }
+  .btn-seal-post {
+    width: 100%;
+    justify-content: center;
+    padding: 13px 18px;
+    font-size: 13.5px;
+  }
+  .reader-letter-container {
+    padding: 18px 14px;
+    border-radius: 12px;
+  }
+  .avatar-studio-card {
+    border-radius: 14px;
+  }
+  .avatar-studio-head {
+    padding: 14px 16px;
+  }
+  .avatar-studio-actions {
+    padding: 12px 16px;
+    flex-direction: column-reverse;
+  }
+  .avatar-studio-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+}

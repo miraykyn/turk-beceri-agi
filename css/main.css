@@ -1,0 +1,38 @@
+/* =========================================================
+   Ana Tasarım ve Genel Düzen (Main Layout, Header, Hero, Footer)
+   ========================================================= */
+
+.menu-toggle{display:none;border:1px solid #60779b;background:#172a4b;color:#fff;border-radius:9px;width:40px;height:38px;font-size:22px;line-height:1;cursor:pointer}
+.menu-toggle[aria-expanded="true"]{background:#f5b942;color:#152039;border-color:#f5b942}
+@media(max-width:900px){
+  header>div:last-child{position:relative;gap:8px}
+  .menu-toggle{display:inline-flex;align-items:center;justify-content:center}
+  header nav{display:none;position:absolute;top:calc(100% + 14px);right:0;width:min(280px,calc(100vw - 28px));padding:10px;background:#0e1b33;border:1px solid #2c456a;border-radius:14px;box-shadow:0 18px 40px #08122566}
+  header nav.open{display:grid}
+  header nav a{margin:0;padding:11px 12px;border-radius:8px;font-size:13px}
+  header nav a:hover,header nav a:focus-visible{background:#172a4b}
+}
+@media(max-width:600px){
+  header{padding:12px 4%}
+  .logo{font-size:13px;max-width:170px}
+  .auth-actions{display:none}
+  .lang-wrap{display:none}
+}
+
+@media(max-width:900px){
+  header>div:last-child{min-width:0}
+  header nav.open{overflow:visible;max-height:calc(100vh - 86px);overflow-y:auto}
+  header nav a{display:block;white-space:normal;overflow-wrap:anywhere;line-height:1.35}
+  header nav .auth-actions{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;margin:8px 0 0;padding:10px 2px 2px;border-top:1px solid #2c456a}
+  header nav .auth-btn{flex:1 1 110px;min-height:38px;white-space:nowrap}
+}
+@media(max-width:600px){
+  .flow{padding:20px 16px;border-radius:16px;overflow:hidden}
+  .flowline{position:relative;display:flex;flex-direction:column;align-items:stretch;gap:12px;width:100%;margin-top:18px;padding:2px 0 2px 24px}
+  .flowline::before{content:"";position:absolute;top:10px;bottom:10px;left:7px;width:2px;background:linear-gradient(180deg,#f5b942,#d8e0ea);border-radius:999px}
+  .flowline .bubble{position:relative;z-index:1;width:100%;min-width:0;margin:0;padding:13px 14px;overflow-wrap:anywhere;text-align:left;line-height:1.4;background:#fff;border:1px solid #e2e7ef;box-shadow:0 5px 16px #18233b0d}
+  .flowline .bubble::before{content:"";position:absolute;left:-24px;top:50%;width:10px;height:10px;transform:translateY(-50%);border:3px solid #fff;border-radius:50%;background:#f5b942;box-shadow:0 0 0 1px #e4b03e}
+  .flowline .arrow{display:none!important}
+  header nav{right:-4px;width:min(310px,calc(100vw - 24px));padding:12px}
+}
+

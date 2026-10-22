@@ -1419,27 +1419,30 @@ window.TDAMessaging = (function() {
 
   // --- 15. AVATAR STÜDYOSU BİLEŞENİ: VERİ MODELLERİ VE SEÇİCİLER ---
 
-  // 1. Vücut Tipi (Body Type) Silüet Modelleri
+  // 1. Vücut Tipi (Body Type) Silüet Modelleri (Tam Hizalı, Temiz 64x64 SVG İkonları)
   const BODY_TYPES = [
     {
       id: 'slim',
       label: 'Zayıf / Narin Yapı',
-      iconSvg: `<svg viewBox="0 0 40 40" class="body-type-svg-icon" fill="currentColor">
-        <path d="M20 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-4 4c-2.2 0-4 1.8-4 4v7c0 .6.4 1 1 1s1-.4 1-1v-6.5h1v19c0 .8.7 1.5 1.5 1.5s1.5-.7 1.5-1.5V23h2v11.5c0 .8.7 1.5 1.5 1.5s1.5-.7 1.5-1.5V14.5h1V21c0 .6.4 1 1 1s1-.4 1-1v-7c0-2.2-1.8-4-4-4h-4z"/>
+      iconSvg: `<svg viewBox="0 0 64 64" class="body-type-svg-icon" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="32" cy="14" r="7" fill="currentColor"/>
+        <path d="M24 28c3-2 13-2 16 0l4 18h-5v14h-14v-14h-5l4-18z"/>
       </svg>`
     },
     {
       id: 'average',
       label: 'Standart / Atletik Yapı',
-      iconSvg: `<svg viewBox="0 0 40 40" class="body-type-svg-icon" fill="currentColor">
-        <path d="M20 7a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zm-6 4c-2.8 0-5 2.2-5 5v7.5c0 .8.7 1.5 1.5 1.5s1.5-.7 1.5-1.5V16h1.5v17.5c0 1 .8 1.8 1.8 1.8s1.8-.8 1.8-1.8V23.5h2.8v10c0 1 .8 1.8 1.8 1.8s1.8-.8 1.8-1.8V16H28v7.5c0 .8.7 1.5 1.5 1.5s1.5-.7 1.5-1.5V16c0-2.8-2.2-5-5-5h-10.5z"/>
+      iconSvg: `<svg viewBox="0 0 64 64" class="body-type-svg-icon" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="32" cy="14" r="7.5" fill="currentColor"/>
+        <path d="M21 28c4-2.5 18-2.5 22 0l5 18h-6v14h-16v-14h-6l5-18z"/>
       </svg>`
     },
     {
       id: 'plump',
       label: 'Geniş / Dolgun Yapı',
-      iconSvg: `<svg viewBox="0 0 40 40" class="body-type-svg-icon" fill="currentColor">
-        <path d="M20 7.5a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm-7.5 4c-3.6 0-6.5 2.8-6.5 6.2v7.8c0 1 .8 1.8 1.8 1.8s1.8-.8 1.8-1.8v-6h2.2v17c0 1.2 1 2.2 2.2 2.2s2.2-1 2.2-2.2V24h3.6v12.5c0 1.2 1 2.2 2.2 2.2s2.2-1 2.2-2.2v-17H28v6c0 1 .8 1.8 1.8 1.8s1.8-.8 1.8-1.8v-7.8c0-3.4-2.9-6.2-6.5-6.2h-12.6z"/>
+      iconSvg: `<svg viewBox="0 0 64 64" class="body-type-svg-icon" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="32" cy="14" r="8" fill="currentColor"/>
+        <path d="M17 28c6-3 24-3 30 0l6 18h-7v14h-18v-14h-7l6-18z"/>
       </svg>`
     }
   ];
@@ -1468,7 +1471,252 @@ window.TDAMessaging = (function() {
     { id: 'traditional_vest', label: 'Anadolu İşlemeli Yelek', category: 'Kültürel', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7l4 3h6l4-3 2 4-2 4-2-1v13H11V15l-2 1-2-4 2-4z"/><path d="M13 10l3 5 3-5"/><line x1="16" y1="15" x2="16" y2="27"/></svg>` }
   ];
 
-  // Vücut Tipi Seçici Bileşeni (Görsel Silüet İkonları)
+  // 3. Karakter Gövdesi ve Seçilen Kıyafetin SVG Generator'ı
+  function renderTorsoSVG(outfitId, bodyType, skinColor, outfitColor) {
+    const skin = (skinColor || 'f8d9ce').replace('#', '');
+    const cColor = (outfitColor || '102343').replace('#', '');
+    const bType = bodyType || 'average';
+
+    // Vücut tipine göre omuz genişliği
+    let shoulderPoints = 'M24 180 L36 50 C58 32 88 28 120 28 C152 28 182 32 204 50 L216 180 Z';
+    if (bType === 'slim') {
+      shoulderPoints = 'M38 180 L48 54 C66 38 92 34 120 34 C148 34 174 38 192 54 L202 180 Z';
+    } else if (bType === 'plump') {
+      shoulderPoints = 'M10 180 L24 46 C50 26 84 22 120 22 C156 22 190 26 216 46 L230 180 Z';
+    }
+
+    let garmentDetails = '';
+
+    switch(outfitId) {
+      case 'turkish_kaftan':
+        garmentDetails = `
+          <path d="M78 36 L120 105 L162 36" fill="none" stroke="#d4af37" stroke-width="12" stroke-linecap="round"/>
+          <path d="M78 36 L120 105 L162 36" fill="none" stroke="#78350f" stroke-width="2"/>
+          <line x1="120" y1="105" x2="120" y2="180" stroke="#d4af37" stroke-width="8"/>
+          <circle cx="120" cy="120" r="5" fill="#f59e0b" stroke="#78350f" stroke-width="1.5"/>
+          <circle cx="120" cy="144" r="5" fill="#f59e0b" stroke="#78350f" stroke-width="1.5"/>
+          <circle cx="120" cy="168" r="5" fill="#f59e0b" stroke="#78350f" stroke-width="1.5"/>
+          <path d="M92 70 Q80 85 95 95" fill="none" stroke="#d4af37" stroke-width="2.5"/>
+          <path d="M148 70 Q160 85 145 95" fill="none" stroke="#d4af37" stroke-width="2.5"/>
+        `;
+        break;
+
+      case 'kazakh_shapan':
+        garmentDetails = `
+          <path d="M72 32 L120 108 L168 32" fill="none" stroke="#fbbf24" stroke-width="14" stroke-linecap="round"/>
+          <line x1="120" y1="108" x2="120" y2="180" stroke="#fbbf24" stroke-width="10"/>
+          <path d="M88 65 C78 52 64 62 76 74 C86 84 102 78 98 64" fill="none" stroke="#b45309" stroke-width="3"/>
+          <path d="M152 65 C162 52 176 62 164 74 C154 84 138 78 142 64" fill="none" stroke="#b45309" stroke-width="3"/>
+          <circle cx="120" cy="126" r="4.5" fill="#78350f"/>
+          <circle cx="120" cy="154" r="4.5" fill="#78350f"/>
+        `;
+        break;
+
+      case 'uzbek_chapan':
+        garmentDetails = `
+          <path d="M76 34 L120 102 L164 34" fill="none" stroke="#f59e0b" stroke-width="11"/>
+          <line x1="120" y1="102" x2="120" y2="180" stroke="#f59e0b" stroke-width="8"/>
+          <path d="M50 80 L190 140 M50 120 L190 180" stroke="rgba(255,255,255,0.25)" stroke-width="6"/>
+          <path d="M190 80 L50 140 M190 120 L50 180" stroke="rgba(255,215,0,0.3)" stroke-width="4"/>
+        `;
+        break;
+
+      case 'kyrgyz_chepken':
+        garmentDetails = `
+          <path d="M82 34 L120 95 L158 34" fill="none" stroke="#f1f5f9" stroke-width="12"/>
+          <line x1="120" y1="95" x2="120" y2="180" stroke="#f1f5f9" stroke-width="8"/>
+          <circle cx="120" cy="115" r="4" fill="#0f172a"/>
+          <circle cx="120" cy="142" r="4" fill="#0f172a"/>
+          <path d="M96 68 Q88 85 104 88" fill="none" stroke="#dc2626" stroke-width="3"/>
+          <path d="M144 68 Q152 85 136 88" fill="none" stroke="#dc2626" stroke-width="3"/>
+        `;
+        break;
+
+      case 'azerbaijan_libas':
+        garmentDetails = `
+          <path d="M84 34 L120 85 L156 34" fill="none" stroke="#e2e8f0" stroke-width="8"/>
+          <line x1="120" y1="85" x2="120" y2="180" stroke="#cbd5e1" stroke-width="5"/>
+          <rect x="90" y="145" width="60" height="12" rx="3" fill="#64748b"/>
+          <rect x="112" y="142" width="16" height="18" rx="2" fill="#d4af37"/>
+        `;
+        break;
+
+      case 'turkmen_don':
+        garmentDetails = `
+          <path d="M78 32 L120 104 L162 32" fill="none" stroke="#b91c1c" stroke-width="12"/>
+          <path d="M78 32 L120 104 L162 32" fill="none" stroke="#fbbf24" stroke-width="3"/>
+          <line x1="120" y1="104" x2="120" y2="180" stroke="#fbbf24" stroke-width="6"/>
+          <circle cx="100" cy="72" r="3.5" fill="#fef08a"/>
+          <circle cx="140" cy="72" r="3.5" fill="#fef08a"/>
+        `;
+        break;
+
+      case 'casual_hoodie':
+        garmentDetails = `
+          <path d="M72 26 C88 56 152 56 168 26" fill="none" stroke="#1e293b" stroke-width="14" stroke-linecap="round"/>
+          <path d="M78 30 C92 56 148 56 162 30" fill="none" stroke="#334155" stroke-width="4"/>
+          <line x1="108" y1="46" x2="108" y2="102" stroke="#f8fafc" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="108" cy="104" r="2.5" fill="#d4af37"/>
+          <line x1="132" y1="46" x2="132" y2="98" stroke="#f8fafc" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="132" cy="100" r="2.5" fill="#d4af37"/>
+          <path d="M70 148 Q120 135 170 148" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="2.5"/>
+        `;
+        break;
+
+      case 'blazer_formal':
+        garmentDetails = `
+          <polygon points="120,42 96,22 144,22" fill="#ffffff"/>
+          <polygon points="117,42 123,42 126,108 120,120 114,108" fill="#b91c1c"/>
+          <polygon points="82,28 116,102 100,114 62,56" fill="#0f172a"/>
+          <polygon points="158,28 124,102 140,114 178,56" fill="#0f172a"/>
+          <circle cx="120" cy="132" r="3.5" fill="#d4af37"/>
+          <circle cx="120" cy="158" r="3.5" fill="#d4af37"/>
+        `;
+        break;
+
+      case 'bomber_jacket':
+        garmentDetails = `
+          <path d="M88 32 Q120 46 152 32" fill="none" stroke="#0f172a" stroke-width="10"/>
+          <line x1="120" y1="36" x2="120" y2="180" stroke="#cbd5e1" stroke-width="4"/>
+          <rect x="117" y="58" width="6" height="12" rx="2" fill="#d4af37"/>
+          <line x1="68" y1="120" x2="94" y2="140" stroke="rgba(0,0,0,0.3)" stroke-width="3" stroke-linecap="round"/>
+          <line x1="172" y1="120" x2="146" y2="140" stroke="rgba(0,0,0,0.3)" stroke-width="3" stroke-linecap="round"/>
+        `;
+        break;
+
+      case 'polo_shirt':
+        garmentDetails = `
+          <polygon points="86,30 120,52 154,30 144,20 120,28 96,20" fill="#ffffff" stroke="rgba(0,0,0,0.1)"/>
+          <rect x="114" y="50" width="12" height="42" fill="#f8fafc"/>
+          <circle cx="120" cy="62" r="2.2" fill="#64748b"/>
+          <circle cx="120" cy="78" r="2.2" fill="#64748b"/>
+        `;
+        break;
+
+      case 'knit_sweater':
+        garmentDetails = `
+          <rect x="92" y="8" width="56" height="38" rx="6" fill="#334155" stroke="rgba(0,0,0,0.2)"/>
+          <line x1="102" y1="10" x2="102" y2="44" stroke="#475569" stroke-width="2"/>
+          <line x1="111" y1="10" x2="111" y2="44" stroke="#475569" stroke-width="2"/>
+          <line x1="120" y1="10" x2="120" y2="44" stroke="#475569" stroke-width="2"/>
+          <line x1="129" y1="10" x2="129" y2="44" stroke="#475569" stroke-width="2"/>
+          <line x1="138" y1="10" x2="138" y2="44" stroke="#475569" stroke-width="2"/>
+          <path d="M80 80 Q120 70 160 80 M75 120 Q120 110 165 120" stroke="rgba(0,0,0,0.15)" stroke-width="2.5" fill="none"/>
+        `;
+        break;
+
+      case 'plaid_shirt':
+        garmentDetails = `
+          <polygon points="88,30 120,48 152,30 120,24" fill="#ffffff"/>
+          <line x1="120" y1="48" x2="120" y2="180" stroke="#ffffff" stroke-width="4"/>
+          <line x1="40" y1="90" x2="200" y2="90" stroke="rgba(0,0,0,0.3)" stroke-width="4"/>
+          <line x1="40" y1="140" x2="200" y2="140" stroke="rgba(0,0,0,0.3)" stroke-width="4"/>
+          <line x1="85" y1="40" x2="85" y2="180" stroke="rgba(0,0,0,0.3)" stroke-width="4"/>
+          <line x1="155" y1="40" x2="155" y2="180" stroke="rgba(0,0,0,0.3)" stroke-width="4"/>
+          <circle cx="120" cy="70" r="2.5" fill="#1e293b"/>
+          <circle cx="120" cy="105" r="2.5" fill="#1e293b"/>
+          <circle cx="120" cy="140" r="2.5" fill="#1e293b"/>
+        `;
+        break;
+
+      case 'denim_jacket':
+        garmentDetails = `
+          <polygon points="86,30 120,50 154,30 120,24" fill="#1d4ed8"/>
+          <line x1="120" y1="50" x2="120" y2="180" stroke="#f59e0b" stroke-width="3"/>
+          <rect x="68" y="75" width="34" height="24" rx="3" fill="#1e40af" stroke="#f59e0b" stroke-width="1.5"/>
+          <circle cx="85" cy="87" r="2.5" fill="#d97706"/>
+          <rect x="138" y="75" width="34" height="24" rx="3" fill="#1e40af" stroke="#f59e0b" stroke-width="1.5"/>
+          <circle cx="155" cy="87" r="2.5" fill="#d97706"/>
+        `;
+        break;
+
+      case 'leather_jacket':
+        garmentDetails = `
+          <polygon points="76,30 135,100 115,108 55,50" fill="#0f172a"/>
+          <polygon points="164,30 105,100 125,108 185,50" fill="#1e293b"/>
+          <line x1="130" y1="36" x2="105" y2="180" stroke="#cbd5e1" stroke-width="4"/>
+          <circle cx="85" cy="50" r="2.5" fill="#f8fafc"/>
+          <circle cx="155" cy="50" r="2.5" fill="#f8fafc"/>
+        `;
+        break;
+
+      case 'sport_jersey':
+        garmentDetails = `
+          <polygon points="98,34 120,62 142,34" fill="#ffffff"/>
+          <line x1="55" y1="58" x2="38" y2="120" stroke="#ffffff" stroke-width="4"/>
+          <line x1="185" y1="58" x2="202" y2="120" stroke="#ffffff" stroke-width="4"/>
+          <circle cx="85" cy="85" r="9" fill="#dc2626"/>
+          <path d="M85 80 A5 5 0 1 0 85 90 A4 4 0 1 1 85 80 Z" fill="#ffffff"/>
+        `;
+        break;
+
+      case 'winter_parka':
+        garmentDetails = `
+          <path d="M72 26 C90 52 150 52 168 26" fill="none" stroke="#e2e8f0" stroke-width="18" stroke-linecap="round"/>
+          <line x1="120" y1="44" x2="120" y2="180" stroke="#334155" stroke-width="6"/>
+          <circle cx="120" cy="75" r="3" fill="#cbd5e1"/>
+          <circle cx="120" cy="110" r="3" fill="#cbd5e1"/>
+          <circle cx="120" cy="145" r="3" fill="#cbd5e1"/>
+        `;
+        break;
+
+      case 'academic_robe':
+        garmentDetails = `
+          <polygon points="120,40 100,24 140,24" fill="#ffffff"/>
+          <path d="M88 30 L96 180" stroke="#b91c1c" stroke-width="16"/>
+          <path d="M88 30 L96 180" stroke="#d4af37" stroke-width="3"/>
+          <path d="M152 30 L144 180" stroke="#b91c1c" stroke-width="16"/>
+          <path d="M152 30 L144 180" stroke="#d4af37" stroke-width="3"/>
+        `;
+        break;
+
+      case 'linen_shirt':
+        garmentDetails = `
+          <path d="M96 28 C108 36 132 36 144 28" fill="none" stroke="#f8fafc" stroke-width="6"/>
+          <line x1="120" y1="36" x2="120" y2="180" stroke="#f1f5f9" stroke-width="3"/>
+          <circle cx="120" cy="55" r="2.5" fill="#94a3b8"/>
+          <circle cx="120" cy="85" r="2.5" fill="#94a3b8"/>
+          <circle cx="120" cy="115" r="2.5" fill="#94a3b8"/>
+        `;
+        break;
+
+      case 'traditional_vest':
+        garmentDetails = `
+          <polygon points="120,38 98,22 142,22" fill="#ffffff"/>
+          <polygon points="80,28 116,95 86,180 50,180 44,60" fill="#0f172a"/>
+          <polygon points="160,28 124,95 154,180 190,180 196,60" fill="#0f172a"/>
+          <path d="M80 28 L116 95" stroke="#d4af37" stroke-width="3"/>
+          <path d="M160 28 L124 95" stroke="#d4af37" stroke-width="3"/>
+          <circle cx="95" cy="65" r="3" fill="#f59e0b"/>
+          <circle cx="145" cy="65" r="3" fill="#f59e0b"/>
+        `;
+        break;
+
+      case 'casual_tshirt':
+      default:
+        garmentDetails = `
+          <path d="M94 28 C104 46 136 46 146 28" fill="none" stroke="#ffffff" stroke-width="5"/>
+          <path d="M94 28 C104 46 136 46 146 28" fill="none" stroke="rgba(0,0,0,0.15)" stroke-width="1.5"/>
+          <path d="M75 90 Q120 78 165 90" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="2"/>
+        `;
+        break;
+    }
+
+    return `
+      <svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
+        <!-- Boyun Katmanı (Karakter Ten Rengine %100 Uyumlu) -->
+        <path d="M102 0 H138 V48 C138 58 130 65 120 65 C110 65 102 58 102 48 Z" fill="#${skin}"/>
+        
+        <!-- Omuz & Gövde Silüeti -->
+        <path d="${shoulderPoints}" fill="#${cColor}"/>
+        
+        <!-- Seçilen Kıyafet Çizimi & Yaka/Nakış Detayları -->
+        ${garmentDetails}
+      </svg>
+    `;
+  }
+
+  // Vücut Tipi Seçici Bileşeni (Görsel Silüet İkonları - Flexbox)
   function renderBodyTypeSelector(containerId, options, currentValue, onSelect) {
     const el = document.getElementById(containerId);
     if (!el) return;
@@ -1528,10 +1776,13 @@ window.TDAMessaging = (function() {
     // =========================================================================
     // === AVATAR STATE VE VERİ EŞLEŞTİRME (DATA MAPPING) ONARIMI ===
     // 1. Ten Rengi: Varsayılan olarak açık/beyaz ten rengi (#F8D9CE) yüklenir.
+    //    TÜM ÖNİZLEME İKONLARINDA da açık ten (&skinColor=...) parametresi kullanılır.
     // 2. Göz Rengi: 8 doğal iris renk tonu swatches olarak sunulur.
     // 3. Vücut Tipi: 3 silüet ikonu ile omuz ve gövde yapısı anlık güncellenir.
     // 4. Kıyafet: 20 farklı modern, kültürel ve resmi model gardırobu.
     // =========================================================================
+
+    const currentSkin = (currentEditingAvatarConfig.skinColor || 'f8d9ce').replace('#', '');
 
     // 1. Ten Rengi (Color Swatches - Varsayılan Açık/Beyaz Ten: #F8D9CE)
     renderColorSwatches('optSkinColor', [
@@ -1545,6 +1796,8 @@ window.TDAMessaging = (function() {
     ], currentEditingAvatarConfig.skinColor || 'f8d9ce', val => {
       currentEditingAvatarConfig.skinColor = val;
       currentEditingAvatarConfig.skinTone = val;
+      // İkonlardaki ten rengini de anlık güncelle
+      renderAvatarCustomizerControls();
       updateLiveAvatarPreview();
     });
 
@@ -1563,7 +1816,7 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 3. Vücut Tipi (3 Silüet Seçeneği)
+    // 3. Vücut Tipi (3 Silüet Seçeneği - Tam Hizalı)
     renderBodyTypeSelector('optBodyType', BODY_TYPES, currentEditingAvatarConfig.bodyType || 'average', val => {
       currentEditingAvatarConfig.bodyType = val;
       updateLiveAvatarPreview();
@@ -1575,7 +1828,7 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 5. Saç Modeli (DiceBear Adventurer Doğrudan Eşleşen 16 Model)
+    // 5. Saç Modeli (DiceBear Adventurer Doğrudan Eşleşen 16 Model - Açık Tenli Önizleme)
     const hairOptions = [
       { id: 'short01', label: 'Kısa Klasik Kesim' },
       { id: 'short02', label: 'Kısa Katlı Dalga' },
@@ -1597,7 +1850,7 @@ window.TDAMessaging = (function() {
       { id: 'long26', label: 'Klasik Bob Kesim' }
     ].map(opt => ({
       ...opt,
-      iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&hair=${opt.id}&hairProbability=100&glassesProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="${opt.label}" loading="lazy">`
+      iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&skinColor=${encodeURIComponent(currentSkin)}&hair=${opt.id}&hairProbability=100&glassesProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="${opt.label}" loading="lazy">`
     }));
 
     renderVisualButtons('optHairStyle', hairOptions, currentEditingAvatarConfig.hair, val => {
@@ -1623,7 +1876,7 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 7. Yüz İfadesi & Gülümseme (DiceBear Adventurer Mouth Varyantları)
+    // 7. Yüz İfadesi & Gülümseme (Açık Tenli Önizleme)
     const moodOptions = [
       { id: 'variant01', label: 'Samimi Tebessüm' },
       { id: 'variant02', label: 'Geniş Gülüş' },
@@ -1637,7 +1890,7 @@ window.TDAMessaging = (function() {
       { id: 'variant10', label: 'Nezaketli Tebessüm' }
     ].map(opt => ({
       ...opt,
-      iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&mouth=${opt.id}&hairProbability=0&glassesProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="${opt.label}" loading="lazy">`
+      iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&skinColor=${encodeURIComponent(currentSkin)}&mouth=${opt.id}&hairProbability=0&glassesProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="${opt.label}" loading="lazy">`
     }));
 
     renderVisualButtons('optMood', moodOptions, currentEditingAvatarConfig.mood, val => {
@@ -1645,7 +1898,7 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 8. Göz Şekli & Bakış (DiceBear Adventurer Eyes Varyantları)
+    // 8. Göz Şekli & Bakış (Açık Tenli Önizleme)
     const eyeOptions = [
       { id: 'variant01', label: 'Doğal Güleç Bakış' },
       { id: 'variant02', label: 'Canlı Açık Bakış' },
@@ -1657,7 +1910,7 @@ window.TDAMessaging = (function() {
       { id: 'variant08', label: 'Derin / Odaklanmış Bakış' }
     ].map(opt => ({
       ...opt,
-      iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&eyes=${opt.id}&hairProbability=0&glassesProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="${opt.label}" loading="lazy">`
+      iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&skinColor=${encodeURIComponent(currentSkin)}&eyes=${opt.id}&hairProbability=0&glassesProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="${opt.label}" loading="lazy">`
     }));
 
     renderVisualButtons('optEyes', eyeOptions, currentEditingAvatarConfig.eyes, val => {
@@ -1665,7 +1918,7 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 9. Gözlük & Aksesuar (DiceBear Adventurer Glasses Varyantları)
+    // 9. Gözlük & Aksesuar
     const accessoryOptions = [
       {
         id: 'none',
@@ -1675,27 +1928,27 @@ window.TDAMessaging = (function() {
       {
         id: 'variant01',
         label: 'Kalın Dikdörtgen Çerçeve',
-        iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&glasses=variant01&glassesProbability=100&hairProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="Kalın Dikdörtgen Çerçeve" loading="lazy">`
+        iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&skinColor=${encodeURIComponent(currentSkin)}&glasses=variant01&glassesProbability=100&hairProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="Kalın Dikdörtgen Çerçeve" loading="lazy">`
       },
       {
         id: 'variant02',
         label: 'Zarif Yuvarlak Çerçeve',
-        iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&glasses=variant02&glassesProbability=100&hairProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="Zarif Yuvarlak Çerçeve" loading="lazy">`
+        iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&skinColor=${encodeURIComponent(currentSkin)}&glasses=variant02&glassesProbability=100&hairProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="Zarif Yuvarlak Çerçeve" loading="lazy">`
       },
       {
         id: 'variant03',
         label: 'Güneş Gözlüğü',
-        iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&glasses=variant03&glassesProbability=100&hairProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="Güneş Gözlüğü" loading="lazy">`
+        iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&skinColor=${encodeURIComponent(currentSkin)}&glasses=variant03&glassesProbability=100&hairProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="Güneş Gözlüğü" loading="lazy">`
       },
       {
         id: 'variant04',
         label: 'Modern Geometrik Çerçeve',
-        iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&glasses=variant04&glassesProbability=100&hairProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="Modern Geometrik Çerçeve" loading="lazy">`
+        iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&skinColor=${encodeURIComponent(currentSkin)}&glasses=variant04&glassesProbability=100&hairProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="Modern Geometrik Çerçeve" loading="lazy">`
       },
       {
         id: 'variant05',
         label: 'Retro / Vintage Çerçeve',
-        iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&glasses=variant05&glassesProbability=100&hairProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="Retro / Vintage Çerçeve" loading="lazy">`
+        iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&skinColor=${encodeURIComponent(currentSkin)}&glasses=variant05&glassesProbability=100&hairProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="Retro / Vintage Çerçeve" loading="lazy">`
       }
     ];
 
@@ -1704,17 +1957,17 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 10. Arka Plan & Fon Rengi (Color Swatches - 8 Kültürel Renk)
+    // 10. Arka Plan & Kıyafet Rengi
     renderColorSwatches('optOutfitColor', [
-      { id: 'ffdfbf', label: 'Parşömen Beji' },
-      { id: 'b6e3f4', label: 'Gök Mavisi' },
-      { id: 'c0aede', label: 'Lavanta Moru' },
-      { id: 'bbf7d0', label: 'Bozkır Yeşili' },
-      { id: 'fed7aa', label: 'Kayısı Turuncusu' },
-      { id: 'fef08a', label: 'Güneş Sarısı' },
-      { id: 'fbcfe8', label: 'Gül Kurusu' },
-      { id: 'e2e8f0', label: 'Buzul Grisi' }
-    ], currentEditingAvatarConfig.outfitColor || currentEditingAvatarConfig.backgroundColor || 'ffdfbf', val => {
+      { id: '102343', label: 'Gece Mavisi / Lacivert' },
+      { id: 'b91c1c', label: 'Bordo / Kızıl' },
+      { id: '0f766e', label: 'Zümrüt Yeşili' },
+      { id: '78350f', label: 'Sıcak Kahve / Kehribar' },
+      { id: '334155', label: 'Füme / Kömür Grisi' },
+      { id: 'd4af37', label: 'Altın Sarısı' },
+      { id: '4338ca', label: 'Kraliyet Moru' },
+      { id: 'ffdfbf', label: 'Parşömen Beji' }
+    ], currentEditingAvatarConfig.outfitColor || currentEditingAvatarConfig.backgroundColor || '102343', val => {
       currentEditingAvatarConfig.outfitColor = val;
       currentEditingAvatarConfig.backgroundColor = val;
       updateLiveAvatarPreview();
@@ -1723,21 +1976,46 @@ window.TDAMessaging = (function() {
 
   function updateLiveAvatarPreview() {
     const img = document.getElementById('liveAvatarPreviewImg');
+    const skin = (currentEditingAvatarConfig.skinColor || 'f8d9ce').replace('#', '');
     if (img) {
-      img.src = generateAvatarUrl(currentEditingAvatarConfig);
+      img.src = `https://api.dicebear.com/7.x/adventurer/svg?seed=TurkPenpal&skinColor=${encodeURIComponent(skin)}&hair=${encodeURIComponent(currentEditingAvatarConfig.hair || 'long01')}&hairProbability=100&hairColor=${encodeURIComponent(currentEditingAvatarConfig.hairColor || '0e0e0e')}&eyes=${encodeURIComponent(currentEditingAvatarConfig.eyes || 'variant01')}&mouth=${encodeURIComponent(currentEditingAvatarConfig.mood || 'variant01')}&backgroundColor=transparent${currentEditingAvatarConfig.accessories && currentEditingAvatarConfig.accessories !== 'none' ? `&glasses=${encodeURIComponent(currentEditingAvatarConfig.accessories)}&glassesProbability=100` : '&glassesProbability=0'}`;
     }
 
-    // 1. Vücut Tipi (Body Type) Dönüşümü
-    const circle = document.getElementById('liveAvatarCircleContainer');
-    if (circle) {
-      circle.classList.remove('body-slim', 'body-average', 'body-plump');
-      const bType = currentEditingAvatarConfig.bodyType || 'average';
-      circle.classList.add(`body-${bType}`);
-      // CSS değişkeniyle iris rengini aktar
-      circle.style.setProperty('--iris-color', `#${currentEditingAvatarConfig.eyeColor || '3b2219'}`);
+    // 1. Dikey Dikdörtgen Sahnesi & Vücut Tipi Sınıfları
+    const stage = document.getElementById('liveAvatarCircleContainer');
+    if (stage) {
+      stage.classList.remove('body-slim', 'body-average', 'body-plump');
+      stage.classList.add(`body-${currentEditingAvatarConfig.bodyType || 'average'}`);
     }
 
-    // 2. Göz Rengi İris Katmanı & Rozet Güncellemesi
+    // 2. Omuz, Gövde ve Seçilen Kıyafetin Canlı Render'ı
+    const torsoEl = document.getElementById('avatarOutfitTorso');
+    if (torsoEl) {
+      torsoEl.innerHTML = renderTorsoSVG(
+        currentEditingAvatarConfig.outfit || 'casual_tshirt',
+        currentEditingAvatarConfig.bodyType || 'average',
+        currentEditingAvatarConfig.skinColor || 'f8d9ce',
+        currentEditingAvatarConfig.outfitColor || '102343'
+      );
+    }
+
+    // 3. Rozetlerin Güncellenmesi
+    const badgeOutfit = document.getElementById('badgeOutfitName');
+    if (badgeOutfit) {
+      const oModel = OUTFIT_MODELS.find(m => m.id === currentEditingAvatarConfig.outfit) || OUTFIT_MODELS[0];
+      badgeOutfit.textContent = oModel.label;
+    }
+
+    const badgeBody = document.getElementById('badgeBodyType');
+    if (badgeBody) {
+      const bLabels = {
+        'slim': '🏃 Zayıf Yapı',
+        'average': '⚖️ Standart Yapı',
+        'plump': '💪 Dolgun Yapı'
+      };
+      badgeBody.textContent = bLabels[currentEditingAvatarConfig.bodyType] || 'Standart Yapı';
+    }
+
     const badgeEye = document.getElementById('badgeEyeColor');
     if (badgeEye) {
       const eyeNames = {
@@ -1753,24 +2031,6 @@ window.TDAMessaging = (function() {
       const curColor = currentEditingAvatarConfig.eyeColor || '3b2219';
       badgeEye.innerHTML = `<span class="badge-color-dot" style="background:#${curColor};"></span> ${eyeNames[curColor] || 'Göz Rengi'}`;
     }
-
-    // 3. Vücut Tipi Rozeti
-    const badgeBody = document.getElementById('badgeBodyType');
-    if (badgeBody) {
-      const bLabels = {
-        'slim': '🏃 Zayıf Yapı',
-        'average': '⚖️ Standart Yapı',
-        'plump': '💪 Dolgun Yapı'
-      };
-      badgeBody.textContent = bLabels[currentEditingAvatarConfig.bodyType] || 'Standart Yapı';
-    }
-
-    // 4. Kıyafet Gövde Rozeti
-    const outfitTorso = document.getElementById('avatarOutfitTorso');
-    if (outfitTorso) {
-      const oModel = OUTFIT_MODELS.find(m => m.id === currentEditingAvatarConfig.outfit) || OUTFIT_MODELS[0];
-      outfitTorso.innerHTML = `<div class="avatar-torso-badge" title="${oModel.label}">${oModel.iconSvg}</div>`;
-    }
   }
 
   function randomizeAvatar() {
@@ -1783,7 +2043,7 @@ window.TDAMessaging = (function() {
     const moods = ['variant01', 'variant02', 'variant03', 'variant04', 'variant05', 'variant06', 'variant07', 'variant08', 'variant09', 'variant10'];
     const eyes = ['variant01', 'variant02', 'variant03', 'variant04', 'variant05', 'variant06', 'variant07', 'variant08'];
     const accs = ['none', 'variant01', 'variant02', 'variant03', 'variant04', 'variant05'];
-    const backgrounds = ['ffdfbf', 'b6e3f4', 'c0aede', 'bbf7d0', 'fed7aa', 'fef08a', 'fbcfe8', 'e2e8f0'];
+    const backgrounds = ['102343', 'b91c1c', '0f766e', '78350f', '334155', 'd4af37', '4338ca', 'ffdfbf'];
 
     currentEditingAvatarConfig = {
       skinColor: skins[Math.floor(Math.random() * skins.length)],
@@ -2045,6 +2305,9 @@ window.TDAMessaging = (function() {
     const letter = letters.find(l => l.id === letterId);
     if (!letter) return;
 
+    const isPending = letter.status === 'pending';
+    const isTransit = letter.status === 'in_transit';
+
     activeViewingLetter = letter;
     if (!letter.read) {
       letter.read = true;
@@ -2056,7 +2319,6 @@ window.TDAMessaging = (function() {
     const stamp = letter.stamp || CULTURAL_STAMPS.tr[0];
     const stampImg = getStampImageSrc(stamp);
     const dateFormatted = new Date(letter.createdAt).toLocaleDateString('tr-TR', { day:'numeric', month:'long', year:'numeric' });
-    const isTransit = letter.status === 'in_transit';
 
     // 1. Popup Modal Görünümünü Doldur ve Aç
     const modal = document.getElementById('letterReadModal');
@@ -2098,38 +2360,36 @@ window.TDAMessaging = (function() {
 
       // =========================================================================
       // === 5. İLK MEKTUP GÜVENLİK VE TANIŞMA ONAY (CONSENT) DUVARI ===
-      // İlk mektubun statüsü "pending" ise, kullanıcı "Kabul Et" butonuna basana
-      // kadar yanıtlama alanı ve fotoğraf gönderme özellikleri kesinlikle kapalıdır.
-      // "Reddet" tıklandığında mektup ekrandan animasyonla silinir ve kullanıcı engellenir.
+      // Onay butonları modalın en alt barına (Modal Footer) yerleştirilmiştir.
+      // Henüz onay verilmemişse (isPending):
+      // - letterModalConsentFooter görünür (Yeşil Kabul Et & Kırmızı Reddet)
+      // - btnReplyFromModal gizlenir.
+      // Onay verilmişse veya onaylandığı anda:
+      // - letterModalConsentFooter gizlenir
+      // - btnReplyFromModal (↩ Mektuba Yanıt Yaz) görünür ve aktif olur.
       // =========================================================================
-      const consentCard = document.getElementById('letterConsentCard');
-      const consentDesc = document.getElementById('letterConsentDesc');
+      const consentFooter = document.getElementById('letterModalConsentFooter');
       const replyBtn = document.getElementById('btnReplyFromModal');
-      const pendingWarning = document.getElementById('letterPendingWarning');
 
-      if (consentCard) {
-        consentCard.style.display = isPending ? 'block' : 'none';
-        if (consentDesc && isPending) {
-          consentDesc.textContent = `${letter.fromName} (${letter.fromCountry}) sizinle ilk kez mektup arkadaşı olmak istiyor. Topluluk güvenliğimiz için tanışma talebini onaylayabilir veya reddedebilirsiniz. Onaylayana kadar yanıt yazma kapalıdır.`;
+      if (isPending) {
+        if (consentFooter) {
+          consentFooter.style.display = 'flex';
+          consentFooter.style.opacity = '1';
         }
-      }
-
-      if (replyBtn) {
-        if (isPending) {
-          replyBtn.disabled = true;
-          replyBtn.style.opacity = '0.4';
-          replyBtn.style.cursor = 'not-allowed';
-          replyBtn.title = 'Mektuba yanıt yazabilmek için önce yukarıdaki tanışma talebini Kabul Etmelisiniz.';
-        } else {
+        if (replyBtn) {
+          replyBtn.style.display = 'none';
+        }
+      } else {
+        if (consentFooter) {
+          consentFooter.style.display = 'none';
+        }
+        if (replyBtn) {
+          replyBtn.style.display = 'inline-flex';
           replyBtn.disabled = false;
           replyBtn.style.opacity = '1';
           replyBtn.style.cursor = 'pointer';
           replyBtn.title = '';
         }
-      }
-
-      if (pendingWarning) {
-        pendingWarning.style.display = isPending ? 'block' : 'none';
       }
 
       modal.style.display = 'flex';
@@ -2214,20 +2474,21 @@ window.TDAMessaging = (function() {
     saveLetters(letters);
     setIntroductionConsent(target.fromStudentId, 'accepted');
 
-    // UI Güncellemesi: Onay kartını animasyonla gizle
-    const consentCard = document.getElementById('letterConsentCard');
-    if (consentCard) {
-      consentCard.style.transition = 'all 0.3s ease';
-      consentCard.style.opacity = '0';
+    // UI Güncellemesi: Footer onay alanını animasyonla gizle, yanıt yaz butonunu aktif ve parıltılı yap
+    const consentFooter = document.getElementById('letterModalConsentFooter');
+    const replyBtn = document.getElementById('btnReplyFromModal');
+
+    if (consentFooter) {
+      consentFooter.style.transition = 'all 0.3s ease';
+      consentFooter.style.opacity = '0';
       setTimeout(() => { 
-        consentCard.style.display = 'none'; 
-        consentCard.style.opacity = '1'; 
+        consentFooter.style.display = 'none'; 
+        consentFooter.style.opacity = '1'; 
       }, 300);
     }
 
-    // Yanıt butonunu aktif yap ve altın ışıltısı ver
-    const replyBtn = document.getElementById('btnReplyFromModal');
     if (replyBtn) {
+      replyBtn.style.display = 'inline-flex';
       replyBtn.disabled = false;
       replyBtn.style.opacity = '1';
       replyBtn.style.cursor = 'pointer';
@@ -2235,9 +2496,6 @@ window.TDAMessaging = (function() {
       replyBtn.style.boxShadow = '0 0 18px rgba(22, 163, 74, 0.6)';
       setTimeout(() => { replyBtn.style.boxShadow = ''; }, 2000);
     }
-
-    const pendingWarning = document.getElementById('letterPendingWarning');
-    if (pendingWarning) pendingWarning.style.display = 'none';
 
     // Fotoğraf galerisini aç (varsa)
     const photosSection = document.getElementById('letterModalPhotosSection');

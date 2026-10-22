@@ -546,27 +546,29 @@
     </div>
     
     <div class="avatar-studio-layout">
-      <!-- Sol: Canlı Önizleme -->
+      <!-- Sol: Canlı Önizleme (Dikey Dikdörtgen Portrait Formatta Gövde & Kıyafet) -->
       <div class="avatar-preview-pane">
-        <div class="avatar-live-circle body-average" id="liveAvatarCircleContainer">
-          <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=TurkPenpal&skinColor=f8d9ce&backgroundColor=ffdfbf" id="liveAvatarPreviewImg" alt="Avatar Önizleme" class="live-avatar-img">
-          <!-- Göz Rengi İris Katmanı (Canlı Renk Yansıması) -->
-          <div class="avatar-iris-layer" id="avatarIrisLayer">
-            <span class="iris-lens iris-left" id="irisLeft"></span>
-            <span class="iris-lens iris-right" id="irisRight"></span>
+        <div class="avatar-portrait-stage body-average" id="liveAvatarCircleContainer">
+          <!-- Üst: Karakter Başı (DiceBear Adventurer) -->
+          <div class="avatar-head-stage">
+            <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=TurkPenpal&skinColor=f8d9ce&backgroundColor=transparent" id="liveAvatarPreviewImg" alt="Avatar Başı" class="live-avatar-head-img">
           </div>
-          <!-- Dinamik Kıyafet & Yaka Katmanı -->
-          <div class="avatar-outfit-torso" id="avatarOutfitTorso"></div>
+
+          <!-- Alt: Karakter Omuzları, Gövdesi ve Seçilen Kıyafet (Full Torso & Garment) -->
+          <div class="avatar-torso-stage" id="avatarTorsoWrapper">
+            <div class="avatar-outfit-render" id="avatarOutfitTorso"></div>
+          </div>
         </div>
         
         <div class="avatar-badges-row">
           <span class="avatar-badge-tag" id="badgeBodyType">⚖️ Standart Yapı</span>
           <span class="avatar-badge-tag" id="badgeEyeColor"><span class="badge-color-dot" id="badgeEyeDot" style="background:#3b2219;"></span> Kahverengi</span>
+          <span class="avatar-badge-tag" id="badgeOutfitName">👕 Basic Tişört</span>
         </div>
 
         <strong id="liveAvatarNameDisplay">Fahriye</strong>
         <span style="font-size:11px;color:#64748b;margin-top:2px;">Öğrenci Profili Avatarı</span>
-        <button type="button" class="btn secondary" id="btnRandomAvatar" style="margin-top:12px;font-size:12px;padding:6px 12px;">🎲 Rastgele Karıştır</button>
+        <button type="button" class="btn secondary" id="btnRandomAvatar" style="margin-top:12px;font-size:12px;padding:6px 14px;">🎲 Rastgele Karıştır</button>
       </div>
 
       <!-- Sağ: Özelleştirme Kontrolleri -->
@@ -661,21 +663,6 @@
     </div>
 
     <div class="letter-modal-scrollable">
-      <!-- 1. GÜVENLİK VE TANIŞMA ONAY DUVARI (İlk Mektup Consent Mekanizması) -->
-      <div class="letter-consent-card" id="letterConsentCard" style="display:none;">
-        <div class="letter-consent-content">
-          <div class="letter-consent-badge">🛡️ Güvenli Tanışma Duvarı</div>
-          <h4 class="letter-consent-title">Yeni Mektup Arkadaşlığı Onay Talebi</h4>
-          <p class="letter-consent-desc" id="letterConsentDesc">
-            Bu öğrenci sizinle ilk kez mektup arkadaşı olmak istiyor. Topluluğumuzun güvenliği ve samimi bir tanışma ortamı için talebi onaylayabilir veya reddedebilirsiniz. Talebi onaylamadan önce yanıtlama ve fotoğraf paylaşımı kapalı tutulmaktadır.
-          </p>
-        </div>
-        <div class="letter-consent-actions">
-          <button type="button" class="btn-consent-reject" id="btnRejectConsent">✕ Reddet ve Engelle</button>
-          <button type="button" class="btn-consent-accept" id="btnAcceptConsent">✓ Mektup Arkadaşlığını Kabul Et</button>
-        </div>
-      </div>
-
       <div class="letter-modal-transit" id="letterModalTransitAlert" style="display:none;">
         🦅 <strong>Bu mektup şu anda Bozkır Kartalı tarafından taşınmaktadır.</strong> Teslim süresi dolduğunda alıcısına ulaşacaktır.
       </div>
@@ -689,12 +676,23 @@
       </div>
     </div>
 
-    <div class="letter-modal-footer">
-      <div class="letter-pending-warning" id="letterPendingWarning" style="display:none;">
-        ⚠️ Mektuba yanıt verebilmek için yukarıdaki tanışma talebini <strong>Kabul Etmelisiniz</strong>.
+    <!-- 6. MODAL FOOTER: Onay Bekliyor İse Kabul Et / Reddet Butonları Tam Burada Yer Alır -->
+    <div class="letter-modal-footer" id="letterModalFooter">
+      <div class="letter-modal-consent-footer" id="letterModalConsentFooter" style="display:none;">
+        <div class="footer-consent-info">
+          <span class="footer-consent-shield">🛡️</span>
+          <span class="footer-consent-text">Yeni mektup arkadaşlığı talebi: Bu öğrenciyle tanışmayı onaylıyor musunuz?</span>
+        </div>
+        <div class="footer-consent-actions">
+          <button type="button" class="btn-consent-reject" id="btnRejectConsent">✕ Reddet ve Engelle</button>
+          <button type="button" class="btn-consent-accept" id="btnAcceptConsent">✓ Mektup Arkadaşlığını Kabul Et</button>
+        </div>
       </div>
-      <button type="button" class="ghost-btn" id="btnCloseLetterModalBtn">Kapat</button>
-      <button type="button" class="btn primary" id="btnReplyFromModal" style="background:#102343;color:#ffffff;">↩ Mektuba Yanıt Yaz</button>
+
+      <div class="letter-modal-normal-footer" id="letterModalNormalFooter">
+        <button type="button" class="ghost-btn" id="btnCloseLetterModalBtn">Kapat</button>
+        <button type="button" class="btn primary" id="btnReplyFromModal" style="background:#102343;color:#ffffff;">↩ Mektuba Yanıt Yaz</button>
+      </div>
     </div>
   </div>
 </div>

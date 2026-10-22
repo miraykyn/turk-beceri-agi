@@ -596,6 +596,47 @@
   </div>
 </div>
 
+<!-- 6. MEKTUP OKUMA MODALI (DM POPUP MODAL) -->
+<div class="letter-modal-backdrop" id="letterReadModal" style="display:none;" aria-hidden="true" role="dialog">
+  <div class="letter-modal-card">
+    <div class="letter-modal-header">
+      <div class="letter-modal-user">
+        <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Penpal" id="letterModalAvatar" alt="Avatar" class="letter-modal-avatar">
+        <div>
+          <h4 id="letterModalSenderName">Mektup Arkadaşı</h4>
+          <span id="letterModalCountryCity" class="letter-modal-sub">Ülke Bilgisi</span>
+        </div>
+      </div>
+      <div class="letter-modal-header-right">
+        <div class="letter-modal-stamp" id="letterModalStampBadge">
+          <img src="assets/images/mektup-ikon.png" id="letterModalStampImg" alt="Pul">
+          <span id="letterModalStampName">Posta Pulu</span>
+        </div>
+        <button type="button" class="letter-modal-close" id="btnCloseLetterModal" aria-label="Kapat">×</button>
+      </div>
+    </div>
+
+    <div class="letter-modal-scrollable">
+      <div class="letter-modal-transit" id="letterModalTransitAlert" style="display:none;">
+        🦅 <strong>Bu mektup şu anda Bozkır Kartalı tarafından taşınmaktadır.</strong> Teslim süresi dolduğunda alıcısına ulaşacaktır.
+      </div>
+      <div class="letter-modal-date" id="letterModalDate"></div>
+      <h3 class="letter-modal-subject" id="letterModalSubject"></h3>
+      <div class="letter-modal-body" id="letterModalBody"></div>
+      
+      <div class="letter-modal-photos" id="letterModalPhotosSection" style="display:none;">
+        <h5 id="letterModalPhotosTitle">📷 Mektuba Eklenen Fotoğraflar</h5>
+        <div class="letter-modal-photos-grid" id="letterModalPhotosGrid"></div>
+      </div>
+    </div>
+
+    <div class="letter-modal-footer">
+      <button type="button" class="ghost-btn" id="btnCloseLetterModalBtn">Kapat</button>
+      <button type="button" class="btn primary" id="btnReplyFromModal" style="background:#102343;color:#ffffff;">↩ Mektuba Yanıt Yaz</button>
+    </div>
+  </div>
+</div>
+
 <div aria-hidden="true" class="turan-panel" id="turanPanel">
 <div class="turan-head"><div class="turan-head-main"><div class="turan-avatar"><span class="turan-avatar-star">✦</span></div><div><strong data-i18n="turanName">Turan</strong><small data-i18n="turanGreeting">Türk Dünyası Beceri Ağı asistanı • Buradayım.</small></div><span aria-hidden="true" class="turan-status">●</span></div><button class="turan-close" id="turanClose" type="button">×</button></div>
 <div class="turan-tabs"><button class="turan-tab active" data-i18n="turanTabAI" data-turan-tab="assistant" type="button">Yapay zekâ desteği</button><button class="turan-tab" data-i18n="turanTabDetector" data-turan-tab="detector" type="button">Yapay zekâ dedektörü</button></div>

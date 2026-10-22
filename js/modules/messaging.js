@@ -75,15 +75,50 @@ window.TDAMessaging = (function() {
     };
   }
 
-  // --- 2. ÜLKE LİSTESİ ---
+  // --- 2. ÜLKE LİSTESİ (SADE & MİNİMALİST - RESMİ KKTC BAYRAĞI DAHİL) ---
   const COUNTRIES = [
-    { id: 'tr', name: 'Türkiye', flag: '🇹🇷', capital: 'Ankara', penpalCount: 88, motto: 'Anadolu ve Boğazlar' },
-    { id: 'az', name: 'Azerbaycan', flag: '🇦🇿', capital: 'Bakü', penpalCount: 76, motto: 'Hazar Kıyısı ve Odlar Yurdu' },
-    { id: 'kz', name: 'Kazakistan', flag: '🇰🇿', capital: 'Astana', penpalCount: 82, motto: 'Ulu Bozkır ve Altaylar' },
-    { id: 'uz', name: 'Özbekistan', flag: '🇺🇿', capital: 'Taşkent', penpalCount: 72, motto: 'İpek Yolu, Semerkant ve mavi çiniler' },
-    { id: 'kg', name: 'Kırgızistan', flag: '🇰🇬', capital: 'Bişkek', penpalCount: 64, motto: 'Tanrı Dağları ve Manas mirası' },
-    { id: 'tm', name: 'Türkmenistan', flag: '🇹🇲', capital: 'Aşkabat', penpalCount: 51, motto: 'Ahal-Teke zarafeti ve beyaz mermerler' },
-    { id: 'kktc', name: 'Kuzey Kıbrıs Türk Cumhuriyeti', flag: '🇹🇷', capital: 'Lefkoşa', penpalCount: 43, motto: 'Akdeniz’in kalbinde barış ve kardeşlik' }
+    { 
+      id: 'tr', 
+      name: 'Türkiye', 
+      flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Turkey.svg', 
+      penpalCount: 88 
+    },
+    { 
+      id: 'az', 
+      name: 'Azerbaycan', 
+      flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Azerbaijan.svg', 
+      penpalCount: 76 
+    },
+    { 
+      id: 'kz', 
+      name: 'Kazakistan', 
+      flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Kazakhstan.svg', 
+      penpalCount: 82 
+    },
+    { 
+      id: 'uz', 
+      name: 'Özbekistan', 
+      flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Uzbekistan.svg', 
+      penpalCount: 72 
+    },
+    { 
+      id: 'kg', 
+      name: 'Kırgızistan', 
+      flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Kyrgyzstan.svg', 
+      penpalCount: 64 
+    },
+    { 
+      id: 'tm', 
+      name: 'Türkmenistan', 
+      flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Turkmenistan.svg', 
+      penpalCount: 51 
+    },
+    { 
+      id: 'kktc', 
+      name: 'Kuzey Kıbrıs Türk Cumhuriyeti', 
+      flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_the_Turkish_Republic_of_Northern_Cyprus.svg', 
+      penpalCount: 43 
+    }
   ];
 
   // --- 3. BİTMOJİ / ÇİZİM AVATAR MEKTUP ARKADAŞLARI LİSTESİ ---
@@ -473,7 +508,7 @@ window.TDAMessaging = (function() {
         id: 'cy_girne', 
         countryId: 'kktc', 
         country: 'KKTC', 
-        flag: '🇹🇷', 
+        flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_the_Turkish_Republic_of_Northern_Cyprus.svg', 
         name: 'Girne Kalesi & Limanı Pulu', 
         landmark: 'Girne • Akdeniz Muhafızı', 
         image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a9/Kyrenia_01-2017_img02_Castle_exterior.jpg/500px-Kyrenia_01-2017_img02_Castle_exterior.jpg' 
@@ -482,7 +517,7 @@ window.TDAMessaging = (function() {
         id: 'cy_bellapais', 
         countryId: 'kktc', 
         country: 'KKTC', 
-        flag: '🇹🇷', 
+        flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_the_Turkish_Republic_of_Northern_Cyprus.svg', 
         name: 'Bellapais Manastırı Pulu', 
         landmark: 'Girne • Beşparmak Dağları Eteği', 
         image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/Kyrenia_-_Girne_Kloster_Bellapa%C3%ADs_Kirche_7.jpg/500px-Kyrenia_-_Girne_Kloster_Bellapa%C3%ADs_Kirche_7.jpg' 
@@ -491,7 +526,7 @@ window.TDAMessaging = (function() {
         id: 'cy_salamis', 
         countryId: 'kktc', 
         country: 'KKTC', 
-        flag: '🇹🇷', 
+        flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_the_Turkish_Republic_of_Northern_Cyprus.svg', 
         name: 'Salamis Antik Harabeleri Pulu', 
         landmark: 'Gazimağusa • Antik Sütunlar', 
         image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b1/Gymnasion_und_Therme_aus_S%C3%BCdwest.jpg/500px-Gymnasion_und_Therme_aus_S%C3%BCdwest.jpg' 
@@ -500,7 +535,7 @@ window.TDAMessaging = (function() {
         id: 'cy_karpaz', 
         countryId: 'kktc', 
         country: 'KKTC', 
-        flag: '🇹🇷', 
+        flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_the_Turkish_Republic_of_Northern_Cyprus.svg', 
         name: 'Karpaz Zafer Burnu Pulu', 
         landmark: 'Karpaz • Altın Sahil ve Mavi Vatan', 
         image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/Cape_Apostolos_Andreas_1.JPG/500px-Cape_Apostolos_Andreas_1.JPG' 
@@ -649,7 +684,7 @@ window.TDAMessaging = (function() {
     const mouth = c.mood || 'variant01';
     const bg = c.outfitColor || c.backgroundColor || 'ffdfbf';
 
-    let url = `https://api.dicebear.com/7.x/adventurer/svg?seed=${seed}&skinColor=${encodeURIComponent(skin)}&hair=${encodeURIComponent(hair)}&hairColor=${encodeURIComponent(hairColor)}&eyes=${encodeURIComponent(eyes)}&mouth=${encodeURIComponent(mouth)}&backgroundColor=${encodeURIComponent(bg)}`;
+    let url = `https://api.dicebear.com/7.x/adventurer/svg?seed=${seed}&skinColor=${encodeURIComponent(skin)}&hair=${encodeURIComponent(hair)}&hairProbability=100&hairColor=${encodeURIComponent(hairColor)}&eyes=${encodeURIComponent(eyes)}&mouth=${encodeURIComponent(mouth)}&backgroundColor=${encodeURIComponent(bg)}`;
 
     if (c.accessories && c.accessories !== 'none') {
       url += `&glasses=${encodeURIComponent(c.accessories)}&glassesProbability=100`;
@@ -797,16 +832,18 @@ window.TDAMessaging = (function() {
     }
   }
 
-  // --- 12. AŞAMA 1: ÜLKE SEÇİMİ (STEP 1) ---
+  // --- 12. AŞAMA 1: ÜLKE SEÇİMİ (STEP 1 - MİNİMALİST & NET) ---
   function renderStep1Countries() {
     const container = document.getElementById('countrySelectionGrid');
     if (!container) return;
 
+    // Sadece Bayrak, Ülke Adı ve Mavi Mektup Arkadaşı Sayısı Butonu (Alt metinler tamamen kaldırıldı)
     container.innerHTML = COUNTRIES.map(c => `
-      <div class="country-select-card" data-country-id="${c.id}">
-        <span class="country-card-flag">${c.flag}</span>
+      <div class="country-select-card" data-country-id="${c.id}" role="button" tabindex="0">
+        <div class="country-card-flag-wrap">
+          <img src="${c.flagImg}" alt="${c.name} Bayrağı" class="country-card-flag-img" loading="lazy">
+        </div>
         <div class="country-card-name">${c.name}</div>
-        <div class="country-card-sub">${c.capital} • ${c.motto}</div>
         <span class="country-card-badge">👥 ${c.penpalCount} Mektup Arkadaşı</span>
       </div>
     `).join('');
@@ -832,7 +869,10 @@ window.TDAMessaging = (function() {
 
     if (titleEl) {
       titleEl.innerHTML = `
-        <span>${activeSelectedCountry.flag} ${activeSelectedCountry.name} Mektup Arkadaşları</span>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <img src="${activeSelectedCountry.flagImg}" alt="" style="width:24px;height:16px;border-radius:3px;object-fit:cover;">
+          <span>${activeSelectedCountry.name} Mektup Arkadaşları</span>
+        </div>
         <button type="button" class="ghost-btn" id="btnBackToCountries" style="font-size:12px;padding:4px 8px;">← Başka Ülke Seç</button>
       `;
       document.getElementById('btnBackToCountries')?.addEventListener('click', () => goToComposeStep(1));
@@ -983,7 +1023,7 @@ window.TDAMessaging = (function() {
     if (tabsContainer) {
       tabsContainer.innerHTML = COUNTRIES.map(c => `
         <button type="button" class="stamp-country-tab-btn ${c.id === activeStampCountryFilter ? 'active' : ''}" data-country-code="${c.id}">
-          ${c.flag} ${c.name}
+          <img src="${c.flagImg}" alt="" style="width:16px;height:11px;vertical-align:middle;margin-right:6px;border-radius:2px;display:inline-block;object-fit:cover;"> ${c.name}
         </button>
       `).join('');
 
@@ -1279,13 +1319,14 @@ window.TDAMessaging = (function() {
     el.className = 'avatar-visual-grid';
     el.innerHTML = options.map(opt => {
       const isSel = opt.id === currentValue;
+      const contentHtml = opt.iconHtml || opt.svg || '';
       return `
         <button type="button" 
                 class="avatar-visual-btn ${isSel ? 'active' : ''}" 
                 data-val="${opt.id}" 
                 data-tooltip="${opt.label}" 
                 aria-label="${opt.label}">
-          ${opt.svg}
+          ${contentHtml}
         </button>
       `;
     }).join('');
@@ -1300,6 +1341,14 @@ window.TDAMessaging = (function() {
   }
 
   function renderAvatarCustomizerControls() {
+    // =========================================================================
+    // === AVATAR STATE VE VERİ EŞLEŞTİRME (DATA MAPPING) ONARIMI ===
+    // DiceBear Adventurer 7.x kütüphanesinin beklediği resmi enum değerleri ile
+    // buton ikonları ve tooltipleri %100 birebir eşleştirilmiştir.
+    // Her bir görsel buton, kütüphanenin o varyant için ürettiği gerçek SVG çizimini
+    // sergiler. Böylece kullanıcı neye tıklıyorsa, ana avatarda tam olarak o belirir.
+    // =========================================================================
+
     // 1. Ten Rengi (Color Swatches - data-tooltip ile zarif ipucu)
     renderColorSwatches('optSkinColor', [
       { id: 'f9c9b6', label: 'Porselen / Açık Ten' },
@@ -1313,89 +1362,33 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 2. Saç Modeli (Saf Vektörel SVG Silüetleri - 16 Model)
-    renderVisualButtons('optHairStyle', [
-      {
-        id: 'short01',
-        label: 'Klasik Kısa Saç',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><ellipse cx="16" cy="18" rx="8" ry="9" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.25"/><path d="M7 16c0-6.5 4-11 9-11s9 4.5 9 11c-1.5-1.5-3.5-3-9-3s-7.5 1.5-9 3z" fill="currentColor"/></svg>`
-      },
-      {
-        id: 'short02',
-        label: 'Modern Katlı Saç',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><ellipse cx="16" cy="18" rx="8" ry="9" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.25"/><path d="M7 16c-.5-6 3.5-11.5 9-11.5 4 0 7.5 3 8.5 7.5-1.5-.5-3.5 0-5 1.5-1.2-2.5-3.5-3.5-5.5-3-2 .5-3.5 2.5-4 4.5-.8-.2-1.8.2-3 1z" fill="currentColor"/></svg>`
-      },
-      {
-        id: 'short03',
-        label: 'Yanlar Kısa & Fade',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><ellipse cx="16" cy="18" rx="8" ry="9" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.25"/><path d="M9 14c.5-5.5 3.5-9.5 7-9.5s6.5 4 7 9.5c-1-1.5-2.5-3-7-3s-6 1.5-7 3z" fill="currentColor"/><path d="M7 17v-3c0-1 1-2 2-2m14 0c1 0 2 1 2 2v3" stroke="currentColor" stroke-width="1.2" opacity="0.4" fill="none"/></svg>`
-      },
-      {
-        id: 'short04',
-        label: 'Doğal Kıvırcık Saç',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><ellipse cx="16" cy="18" rx="8" ry="9" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.25"/><path d="M7 16c-1-2 0-5 2-6.5 1-2 4-3.5 7-3.5s6 1.5 7 3.5c2 1.5 3 4.5 2 6.5-1.5-1-3.5-2-9-2s-7.5 1-9 2z" fill="currentColor"/><circle cx="10" cy="8.5" r="2.5" fill="currentColor"/><circle cx="15" cy="6" r="2.8" fill="currentColor"/><circle cx="20" cy="7.5" r="2.6" fill="currentColor"/><circle cx="23" cy="11" r="2.3" fill="currentColor"/><circle cx="8" cy="12" r="2.2" fill="currentColor"/></svg>`
-      },
-      {
-        id: 'short05',
-        label: 'Dalgalı Kısa Saç',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><ellipse cx="16" cy="18" rx="8" ry="9" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.25"/><path d="M7 16c0-6 4-11 9-11 4.5 0 8 3.5 8.5 8.5-2-1-4.5-1-6.5.5-2-2-4.5-2-7 0-.8.7-2 1.5-4 2z" fill="currentColor"/></svg>`
-      },
-      {
-        id: 'short06',
-        label: 'Hafif Dağınık Saç',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><ellipse cx="16" cy="18" rx="8" ry="9" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.25"/><path d="M7 16c0-5 2.5-9 6-10.5l1.5 2.5 2.5-4 2 3.5 2.5-2 2 4c.5 2.5.5 4.5-.5 6.5-2-1.5-4.5-2-8-2s-6 1-8 2z" fill="currentColor"/></svg>`
-      },
-      {
-        id: 'short08',
-        label: 'Tepe Topuz / Man Bun',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><circle cx="16" cy="4.5" r="3" fill="currentColor"/><ellipse cx="16" cy="18" rx="8" ry="9" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.25"/><path d="M8 16c0-5.5 3.5-10 8-10s8 4.5 8 10c-1.5-1.5-4-3-8-3s-6.5 1.5-8 3z" fill="currentColor"/></svg>`
-      },
-      {
-        id: 'short12',
-        label: 'Geriye Taranmış Saç',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><ellipse cx="16" cy="18" rx="8" ry="9" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.25"/><path d="M8 15c0-6 3.5-10 8-10s8 4 8 10c-1-2-2.5-4-8-4s-7 2-8 4z" fill="currentColor"/><path d="M11 7c2-1 4-1.5 5-1.5s3 .5 5 1.5m-9 3c1.5-.8 3-1 4-1s2.5.2 4 1" stroke="#fff" stroke-width="0.9" fill="none" opacity="0.6"/></svg>`
-      },
-      {
-        id: 'long01',
-        label: 'Uzun Düz Saç',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><ellipse cx="16" cy="18" rx="8" ry="9" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.25"/><path d="M7 14c0-7 4-9.5 9-9.5s9 2.5 9 9.5v11c0 1-1 2-2 2s-1.5-1-2-3v-8c0-2-1.5-3-5-3s-5 1-5 3v8c-.5 2-1 3-2 3s-2-1-2-2v-11z" fill="currentColor"/></svg>`
-      },
-      {
-        id: 'long02',
-        label: 'Hacimli Uzun Saç',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><ellipse cx="16" cy="18" rx="8" ry="9" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.25"/><path d="M6 15c0-7 4.5-10.5 10-10.5s10 3.5 10 10.5c1.5 4 1 8-1 11-1.5 2-3 1-3.5-1v-8c0-3-2-4.5-5.5-4.5s-5.5 1.5-5.5 4.5v8c-.5 2-2 3-3.5 1-2-3-2.5-7-1-11z" fill="currentColor"/></svg>`
-      },
-      {
-        id: 'long03',
-        label: 'Uzun Dalgalı Saç',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><ellipse cx="16" cy="18" rx="8" ry="9" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.25"/><path d="M6 14c0-6.5 4.5-9.5 10-9.5s10 3 10 9.5c1 3 .5 6 1.5 8.5.8 2-.5 3.5-2 3.5s-2-1.5-2-3.5c0-3-.5-5-2-6-1.5-1-3.5-1-5.5-1s-4 0-5.5 1c-1.5 1-2 3-2 6 0 2-.5 3.5-2 3.5s-2.8-1.5-2-3.5c1-2.5.5-5.5 1.5-8.5z" fill="currentColor"/></svg>`
-      },
-      {
-        id: 'long04',
-        label: 'Ortadan Ayrık Uzun Saç',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><ellipse cx="16" cy="18" rx="8" ry="9" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.25"/><path d="M7 15c0-6.5 4-10 9-10s9 3.5 9 10v9c0 1-1 2-2 2s-1.5-1-2-3v-7c0-2-1.5-3-5-4.5-3.5 1.5-5 2.5-5 4.5v7c-.5 2-1 3-2 3s-2-1-2-2v-9z" fill="currentColor"/><path d="M16 5v6" stroke="#fff" stroke-width="1.2" opacity="0.6"/></svg>`
-      },
-      {
-        id: 'long05',
-        label: 'Tek Örgülü Saç',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><ellipse cx="16" cy="18" rx="8" ry="9" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.25"/><path d="M8 15c0-6 3.5-10 8-10s8 4 8 10c-1.5-1.5-3.5-3-8-3s-6.5 1.5-8 3z" fill="currentColor"/><path d="M20 18c1 2 2 4 1.5 6s-2 3-1.5 5c.5 1-1 2-2 1.5-.5-1.5.5-3 0-5s-2-2.5-1.5-4.5c.5-1.5 1.5-2.5 3.5-3z" fill="currentColor"/></svg>`
-      },
-      {
-        id: 'long06',
-        label: 'Çift Örgülü Saç',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><ellipse cx="16" cy="18" rx="8" ry="9" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.25"/><path d="M8 15c0-6 3.5-10 8-10s8 4 8 10c-1.5-1.5-3.5-3-8-3s-6.5 1.5-8 3z" fill="currentColor"/><path d="M7 17c-1 2-2.5 3.5-2 5.5.5 2 2 3 1.5 5-.5 1.5-2 1-2.5 0-.5-2 1-3.5.5-5.5-.5-2 1-3.5 2.5-5zm18 0c1 2 2.5 3.5 2 5.5-.5 2-2 3-1.5 5 .5 1.5 2 1 2.5 0 .5-2-1-3.5-.5-5.5.5-2-1-3.5-2.5-5z" fill="currentColor"/></svg>`
-      },
-      {
-        id: 'long10',
-        label: 'Kâküllü Uzun Saç',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><ellipse cx="16" cy="18" rx="8" ry="9" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.25"/><path d="M7 14c0-7 4-9.5 9-9.5s9 2.5 9 9.5v11c0 1-1 2-2 2s-1.5-1-2-3v-7c-1 .5-3 1-5 1s-4-.5-5-1v7c-.5 2-1 3-2 3s-2-1-2-2v-11z" fill="currentColor"/><path d="M9 13.5h14v2.5H9z" fill="currentColor"/></svg>`
-      },
-      {
-        id: 'long26',
-        label: 'Modern Bob Kesim',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><ellipse cx="16" cy="18" rx="8" ry="9" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.25"/><path d="M6.5 14c0-6.5 4.5-9.5 9.5-9.5s9.5 3 9.5 9.5c0 3-1 6-2.5 7.5-1.5 1.5-3 .5-3.5-1.5-.5-2-.5-4.5-3.5-4.5s-3 2.5-3.5 4.5c-.5 2-2 3-3.5 1.5C7.5 20 6.5 17 6.5 14z" fill="currentColor"/></svg>`
-      }
-    ], currentEditingAvatarConfig.hair, val => {
+    // 2. Saç Modeli (DiceBear Adventurer Doğrudan Eşleşen 16 Model)
+    // Her butonun 'iconHtml' alanında, kütüphanenin o saç stiline ait gerçek önizlemesi sunulur.
+    const hairOptions = [
+      { id: 'short01', label: 'Kısa Klasik Kesim' },
+      { id: 'short02', label: 'Kısa Katlı Dalga' },
+      { id: 'short03', label: 'Yanlar Kısa / Fade' },
+      { id: 'short04', label: 'Kısa Doğal Hacim' },
+      { id: 'short05', label: 'Tepe Hacimli Kısa' },
+      { id: 'short06', label: 'Modern Kısa Kesim' },
+      { id: 'short08', label: 'Tepe Topuz / Man Bun' },
+      { id: 'short12', label: 'Geriye Taranmış Kısa' },
+      { id: 'short16', label: 'Yoğun Dalgalı Kısa' },
+      { id: 'long01', label: 'Omuz Hizasında Düz' },
+      { id: 'long02', label: 'Uzun Düz Saç' },
+      { id: 'long03', label: 'Yoğun Hacimli Uzun' },
+      { id: 'long04', label: 'Ortadan Ayrık Uzun' },
+      { id: 'long05', label: 'Doğal Dökümlü Uzun' },
+      { id: 'long06', label: 'İki Yana Dökümlü Uzun' },
+      { id: 'long10', label: 'Kâküllü Uzun Saç' },
+      { id: 'long16', label: 'Uzun Katlı Kesim' },
+      { id: 'long26', label: 'Klasik Bob Kesim' }
+    ].map(opt => ({
+      ...opt,
+      iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&hair=${opt.id}&hairProbability=100&glassesProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="${opt.label}" loading="lazy">`
+    }));
+
+    renderVisualButtons('optHairStyle', hairOptions, currentEditingAvatarConfig.hair, val => {
       currentEditingAvatarConfig.hair = val;
       updateLiveAvatarPreview();
     });
@@ -1418,143 +1411,83 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 4. Yüz İfadesi & Gülümseme (Saf Vektörel SVG Çizimleri - 10 İfade)
-    renderVisualButtons('optMood', [
-      {
-        id: 'variant01',
-        label: 'Samimi Tebessüm',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><path d="M9 14c2 6 12 6 14 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="8" cy="13.5" r="1.5" fill="currentColor"/><circle cx="24" cy="13.5" r="1.5" fill="currentColor"/></svg>`
-      },
-      {
-        id: 'variant02',
-        label: 'Geniş Gülüş',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><path d="M8 13c1 7 15 7 16 0H8z" fill="currentColor"/><path d="M9 14.5h14" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>`
-      },
-      {
-        id: 'variant03',
-        label: 'Neşeli Açık Gülüş',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><path d="M7 12c1 9 17 9 18 0H7z" fill="currentColor"/><path d="M12 17c1.5 2 6.5 2 8 0" stroke="#ff7675" stroke-width="3" stroke-linecap="round" fill="none"/></svg>`
-      },
-      {
-        id: 'variant04',
-        label: 'Sakin ve Huzurlu',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><path d="M10 16c2 2.5 10 2.5 12 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>`
-      },
-      {
-        id: 'variant05',
-        label: 'Coşkulu Kahkaha',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><path d="M7 11c1.5 11 16.5 11 18 0H7z" fill="currentColor"/><path d="M9.5 13.5h13" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>`
-      },
-      {
-        id: 'variant06',
-        label: 'Sempatik / Dil Dışarıda',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><path d="M8 13c1 6 15 6 16 0H8z" fill="currentColor"/><path d="M13 16c0 3 2 4.5 3 4.5s3-1.5 3-4.5h-6z" fill="#ff7675"/><path d="M16 16v3" stroke="#d63031" stroke-width="1" stroke-linecap="round"/></svg>`
-      },
-      {
-        id: 'variant07',
-        label: 'Çapkın Tebessüm',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><path d="M9 17c4 1 8 0 14-4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="23.5" cy="13" r="1.5" fill="currentColor"/></svg>`
-      },
-      {
-        id: 'variant08',
-        label: 'Sıcak ve Sevecen',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><path d="M9 14c2 5.5 12 5.5 14 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="7" cy="11.5" rx="2.5" ry="1.5" fill="#ff7675" opacity="0.7"/><ellipse cx="25" cy="11.5" rx="2.5" ry="1.5" fill="#ff7675" opacity="0.7"/></svg>`
-      },
-      {
-        id: 'variant09',
-        label: 'Zeki / Düşünceli',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><path d="M10 17h12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M19 13l3 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`
-      },
-      {
-        id: 'variant10',
-        label: 'Nezaketli Tebessüm',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><path d="M10 15c2 3.5 10 3.5 12 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="9.5" cy="14" r="1" fill="currentColor"/><circle cx="22.5" cy="14" r="1" fill="currentColor"/></svg>`
-      }
-    ], currentEditingAvatarConfig.mood, val => {
+    // 4. Yüz İfadesi & Gülümseme (DiceBear Adventurer Mouth Varyantları)
+    const moodOptions = [
+      { id: 'variant01', label: 'Samimi Tebessüm' },
+      { id: 'variant02', label: 'Geniş Gülüş' },
+      { id: 'variant03', label: 'Neşeli Açık Gülüş' },
+      { id: 'variant04', label: 'Sakin / Dingin Tebessüm' },
+      { id: 'variant05', label: 'Coşkulu Gülümseme' },
+      { id: 'variant06', label: 'Hafif Çapkın Tebessüm' },
+      { id: 'variant07', label: 'Sıcak Gülümseme' },
+      { id: 'variant08', label: 'Sevimli Gülüş' },
+      { id: 'variant09', label: 'Düşünceli / Meraklı' },
+      { id: 'variant10', label: 'Nezaketli Tebessüm' }
+    ].map(opt => ({
+      ...opt,
+      iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&mouth=${opt.id}&hairProbability=0&glassesProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="${opt.label}" loading="lazy">`
+    }));
+
+    renderVisualButtons('optMood', moodOptions, currentEditingAvatarConfig.mood, val => {
       currentEditingAvatarConfig.mood = val;
       updateLiveAvatarPreview();
     });
 
-    // 5. Göz Şekli & Bakış (Saf Vektörel SVG Çizimleri - 8 Bakış)
-    renderVisualButtons('optEyes', [
-      {
-        id: 'variant01',
-        label: 'Işıltılı Güleç Gözler',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><ellipse cx="10" cy="16" rx="4" ry="4.5" fill="currentColor"/><circle cx="8.5" cy="14.5" r="1.6" fill="#fff"/><ellipse cx="22" cy="16" rx="4" ry="4.5" fill="currentColor"/><circle cx="20.5" cy="14.5" r="1.6" fill="#fff"/></svg>`
-      },
-      {
-        id: 'variant02',
-        label: 'Canlı Badem Gözler',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><path d="M5 16c2.5-3.5 6-3.5 9 0-3 3.5-6.5 3.5-9 0zm13 0c2.5-3.5 6-3.5 9 0-3 3.5-6.5 3.5-9 0z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="9.5" cy="16" r="2.4" fill="currentColor"/><circle cx="22.5" cy="16" r="2.4" fill="currentColor"/><circle cx="8.8" cy="15.2" r="0.8" fill="#fff"/><circle cx="21.8" cy="15.2" r="0.8" fill="#fff"/></svg>`
-      },
-      {
-        id: 'variant03',
-        label: 'Derin ve Sakin Bakış',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><path d="M6 15c2 4 6 4 8 0m4 0c2 4 6 4 8 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M14 16l2 2m6-2l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`
-      },
-      {
-        id: 'variant04',
-        label: 'Zeki ve Dikkatli Gözler',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><path d="M6 11l7-1m6 1l7-1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><ellipse cx="9.5" cy="17" rx="3.5" ry="3.8" fill="currentColor"/><circle cx="8.5" cy="15.8" r="1.2" fill="#fff"/><ellipse cx="22.5" cy="17" rx="3.5" ry="3.8" fill="currentColor"/><circle cx="21.5" cy="15.8" r="1.2" fill="#fff"/></svg>`
-      },
-      {
-        id: 'variant05',
-        label: 'Gülümseyen Mutlu Gözler',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><path d="M6 18c1.5-5 6.5-5 8 0m4 0c1.5-5 6.5-5 8 0" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>`
-      },
-      {
-        id: 'variant06',
-        label: 'Heyecanlı & Parıltılı',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><circle cx="10" cy="16" r="5" fill="currentColor"/><polygon points="9,13 10,15 12,15 10.5,16.5 11,18.5 9.5,17 8,18.5 8.5,16.5 7,15 9,15" fill="#fff"/><circle cx="22" cy="16" r="5" fill="currentColor"/><polygon points="21,13 22,15 24,15 22.5,16.5 23,18.5 21.5,17 20,18.5 20.5,16.5 19,15 21,15" fill="#fff"/></svg>`
-      },
-      {
-        id: 'variant07',
-        label: 'Masum ve Sevecen Gözler',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><circle cx="10" cy="16" r="4.2" fill="currentColor"/><circle cx="8.8" cy="14.8" r="1.8" fill="#fff"/><circle cx="11.5" cy="17.2" r="0.9" fill="#fff"/><circle cx="22" cy="16" r="4.2" fill="currentColor"/><circle cx="20.8" cy="14.8" r="1.8" fill="#fff"/><circle cx="23.5" cy="17.2" r="0.9" fill="#fff"/></svg>`
-      },
-      {
-        id: 'variant08',
-        label: 'Dingin ve Huzurlu Bakış',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><path d="M6 14h8m4 0h8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M7 14c.5 3 3 5 5 5s4.5-2 5-5m2 0c.5 3 3 5 5 5s4.5-2 5-5" fill="currentColor" opacity="0.6"/></svg>`
-      }
-    ], currentEditingAvatarConfig.eyes, val => {
+    // 5. Göz Şekli & Bakış (DiceBear Adventurer Eyes Varyantları)
+    const eyeOptions = [
+      { id: 'variant01', label: 'Doğal Güleç Bakış' },
+      { id: 'variant02', label: 'Canlı Açık Bakış' },
+      { id: 'variant03', label: 'Sakin / Dingin Bakış' },
+      { id: 'variant04', label: 'Dikkatli / Zeki Bakış' },
+      { id: 'variant05', label: 'Neşeli Gülen Gözler' },
+      { id: 'variant06', label: 'Parlak / Meraklı Bakış' },
+      { id: 'variant07', label: 'Masum / Sevecen Bakış' },
+      { id: 'variant08', label: 'Derin / Odaklanmış Bakış' }
+    ].map(opt => ({
+      ...opt,
+      iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&eyes=${opt.id}&hairProbability=0&glassesProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="${opt.label}" loading="lazy">`
+    }));
+
+    renderVisualButtons('optEyes', eyeOptions, currentEditingAvatarConfig.eyes, val => {
       currentEditingAvatarConfig.eyes = val;
       updateLiveAvatarPreview();
     });
 
-    // 6. Gözlük & Aksesuar (Saf Vektörel SVG Çizimleri - 6 Seçenek)
-    renderVisualButtons('optAccessories', [
+    // 6. Gözlük & Aksesuar (DiceBear Adventurer Glasses Varyantları)
+    const accessoryOptions = [
       {
         id: 'none',
-        label: 'Aksesuarsız / Sade',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"/><line x1="8" y1="8" x2="24" y2="24" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.6"/></svg>`
+        label: 'Gözlüksüz / Sade',
+        iconHtml: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"/><line x1="8" y1="8" x2="24" y2="24" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.6"/></svg>`
       },
       {
         id: 'variant01',
-        label: 'Klasik Dikdörtgen Çerçeve',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><rect x="4" y="11" width="10" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="18" y="11" width="10" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><line x1="14" y1="15" x2="18" y2="15" stroke="currentColor" stroke-width="2"/><line x1="2" y1="14" x2="4" y2="14" stroke="currentColor" stroke-width="2"/><line x1="28" y1="14" x2="30" y2="14" stroke="currentColor" stroke-width="2"/></svg>`
+        label: 'Kalın Dikdörtgen Çerçeve',
+        iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&glasses=variant01&glassesProbability=100&hairProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="Kalın Dikdörtgen Çerçeve" loading="lazy">`
       },
       {
         id: 'variant02',
-        label: 'Zarif Yuvarlak Gözlük',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><circle cx="9.5" cy="16" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="22.5" cy="16" r="5" fill="none" stroke="currentColor" stroke-width="2"/><line x1="14.5" y1="16" x2="17.5" y2="16" stroke="currentColor" stroke-width="2"/><line x1="2" y1="15" x2="4.5" y2="15" stroke="currentColor" stroke-width="2"/><line x1="27.5" y1="15" x2="30" y2="15" stroke="currentColor" stroke-width="2"/></svg>`
+        label: 'Zarif Yuvarlak Çerçeve',
+        iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&glasses=variant02&glassesProbability=100&hairProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="Zarif Yuvarlak Çerçeve" loading="lazy">`
       },
       {
         id: 'variant03',
-        label: 'Havalı Güneş Gözlüğü',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><path d="M4 11h10l-1.5 8c-.5 2-2 3-4 3-2.5 0-4-1.5-4.5-3.5L4 11zm14 0h10l-.5 7.5c-.5 2-2 3.5-4.5 3.5-2 0-3.5-1-4-3L18 11z" fill="currentColor"/><line x1="14" y1="13" x2="18" y2="13" stroke="currentColor" stroke-width="2.5"/><path d="M6 13l2.5 5m14-5l2.5 5" stroke="#fff" stroke-width="1.2" opacity="0.6"/></svg>`
+        label: 'Güneş Gözlüğü',
+        iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&glasses=variant03&glassesProbability=100&hairProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="Güneş Gözlüğü" loading="lazy">`
       },
       {
         id: 'variant04',
-        label: 'Modern Kalın Çerçeve',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><rect x="4" y="10" width="10" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><rect x="18" y="10" width="10" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><line x1="14" y1="14" x2="18" y2="14" stroke="currentColor" stroke-width="3.5"/><line x1="2" y1="13" x2="4" y2="13" stroke="currentColor" stroke-width="3"/><line x1="28" y1="13" x2="30" y2="13" stroke="currentColor" stroke-width="3"/></svg>`
+        label: 'Modern Geometrik Çerçeve',
+        iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&glasses=variant04&glassesProbability=100&hairProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="Modern Geometrik Çerçeve" loading="lazy">`
       },
       {
         id: 'variant05',
-        label: 'Retro Vintage Gözlük',
-        svg: `<svg class="avatar-svg-glyph" viewBox="0 0 32 32"><path d="M4 11c3 0 9 0 10 3v4c0 2-2 3.5-4.5 3.5C7 21.5 5 19.5 4 17l0-6zm14 3c1-3 7-3 10-3l0 6c-1 2.5-3 4.5-5.5 4.5-2.5 0-4.5-1.5-4.5-3.5v-4z" fill="none" stroke="currentColor" stroke-width="2"/><line x1="14" y1="14" x2="18" y2="14" stroke="currentColor" stroke-width="2"/><path d="M3 11h11m4 0h11" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>`
+        label: 'Retro / Vintage Çerçeve',
+        iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&glasses=variant05&glassesProbability=100&hairProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="Retro / Vintage Çerçeve" loading="lazy">`
       }
-    ], currentEditingAvatarConfig.accessories, val => {
+    ];
+
+    renderVisualButtons('optAccessories', accessoryOptions, currentEditingAvatarConfig.accessories, val => {
       currentEditingAvatarConfig.accessories = val;
       updateLiveAvatarPreview();
     });
@@ -1731,6 +1664,7 @@ window.TDAMessaging = (function() {
   }
 
   // --- 19. GELEN KUTUSU & GÖNDERİLENLER LİSTELEME ---
+  // --- 19. GELEN KUTUSU & GÖNDERİLENLER LİSTELEME (INSTAGRAM DM / GMAIL LİSTE GÖRÜNÜMÜ) ---
   function renderInbox(searchTerm = '') {
     const listEl = document.getElementById('inboxLetterList');
     if (!listEl) return;
@@ -1756,38 +1690,36 @@ window.TDAMessaging = (function() {
       return;
     }
 
+    // Liste Görünümü: Sadece sol tarafta küçük yuvarlak Bitmoji, kalın Ad Soyad, hemen altında hafif gri ülke.
+    // Mektup metni/özeti KESİNLİKLE görünmez. Tıklanınca popup modal açılır.
     listEl.innerHTML = items.map(l => {
       const isUnread = !l.read && l.status === 'delivered';
       const isTransit = l.status === 'in_transit';
-      const stamp = l.stamp || CULTURAL_STAMPS.tr[0];
-      const stampImg = getStampImageSrc(stamp);
+      const avatarSrc = l.fromAvatar || generateAvatarUrl();
+      const dateStr = new Date(l.createdAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' });
 
       return `
-        <div class="letter-card ${isUnread ? 'unread' : ''}" data-letter-id="${l.id}">
-          <div class="letter-card-left">
-            <div class="letter-stamp-badge" title="${stamp.name || 'Posta Pulu'}">
-              <img src="${stampImg}" alt="${stamp.name || 'Pul'}" onerror="this.src='assets/images/mektup-ikon.png'">
+        <div class="letter-dm-row ${isUnread ? 'unread' : ''}" data-letter-id="${l.id}" role="button" tabindex="0">
+          <div class="letter-dm-left">
+            <div class="letter-dm-avatar-frame">
+              <img src="${avatarSrc}" alt="${l.fromName}" class="letter-dm-avatar" onerror="this.src='https://api.dicebear.com/7.x/adventurer/svg?seed=Penpal'">
+              ${isUnread ? '<span class="letter-dm-unread-dot" title="Yeni Mektup"></span>' : ''}
             </div>
-            <div class="letter-card-details">
-              <div class="letter-card-meta">
-                <span class="letter-sender-name">${l.fromName}</span>
-                <span class="letter-country-tag">${l.fromCountry} (${l.fromCity || ''})</span>
-                ${isTransit ? '<span style="font-size:10.5px;background:#fef3c7;color:#92400e;padding:1px 6px;border-radius:4px;font-weight:800;">🦅 Kartal Taşıyor</span>' : ''}
-                ${l.photos && l.photos.length ? `<span style="font-size:11px;color:#15803d;font-weight:750;">📷 ${l.photos.length} Fotoğraf</span>` : ''}
-              </div>
-              <div class="letter-card-subject">${l.subject}</div>
-              <div class="letter-card-snippet">${(l.body || '').slice(0, 95)}...</div>
+            <div class="letter-dm-text">
+              <strong class="letter-dm-name">${l.fromName}</strong>
+              <span class="letter-dm-country">${l.fromCountry}${l.fromCity ? ' (' + l.fromCity + ')' : ''}</span>
             </div>
           </div>
-          <div class="letter-card-right">
-            <span class="letter-date-time">${new Date(l.createdAt).toLocaleDateString('tr-TR', { day:'numeric', month:'short' })}</span>
-            ${isUnread ? '<span class="unread-wax-dot" title="Okunmamış Mektup"></span>' : ''}
+          <div class="letter-dm-right">
+            ${isTransit ? '<span class="letter-dm-transit-badge">🦅 Yolda</span>' : ''}
+            <span class="letter-dm-date">${dateStr}</span>
+            <span class="letter-dm-chevron">›</span>
           </div>
         </div>
       `;
     }).join('');
 
-    listEl.querySelectorAll('.letter-card').forEach(card => {
+    listEl.querySelectorAll('.letter-dm-row').forEach(card => {
       card.addEventListener('click', () => {
         openLetter(card.dataset.letterId);
       });
@@ -1809,42 +1741,40 @@ window.TDAMessaging = (function() {
       return;
     }
 
+    // Gönderilenler Liste Görünümü: Küçük yuvarlak Bitmoji, Alıcı Ad Soyad, Ülke.
     listEl.innerHTML = items.map(l => {
       const isTransit = l.status === 'in_transit';
-      const stamp = l.stamp || CULTURAL_STAMPS.tr[0];
-      const stampImg = getStampImageSrc(stamp);
+      const avatarSrc = l.toAvatar || 'https://api.dicebear.com/7.x/adventurer/svg?seed=Recipient';
+      const dateStr = new Date(l.createdAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' });
 
       return `
-        <div class="letter-card" data-letter-id="${l.id}">
-          <div class="letter-card-left">
-            <div class="letter-stamp-badge" title="${stamp.name || 'Posta Pulu'}">
-              <img src="${stampImg}" alt="${stamp.name || 'Pul'}" onerror="this.src='assets/images/mektup-ikon.png'">
+        <div class="letter-dm-row" data-letter-id="${l.id}" role="button" tabindex="0">
+          <div class="letter-dm-left">
+            <div class="letter-dm-avatar-frame">
+              <img src="${avatarSrc}" alt="${l.toName}" class="letter-dm-avatar" onerror="this.src='https://api.dicebear.com/7.x/adventurer/svg?seed=Penpal'">
             </div>
-            <div class="letter-card-details">
-              <div class="letter-card-meta">
-                <span class="letter-sender-name">Alıcı: ${l.toName}</span>
-                <span class="letter-country-tag">${l.toCountry} (${l.toCity || ''})</span>
-                ${isTransit ? '<span style="font-size:10.5px;background:#fef3c7;color:#92400e;padding:1px 6px;border-radius:4px;font-weight:800;">🦅 Kartal Uçuşta</span>' : '<span style="font-size:10.5px;background:#f0fdf4;color:#166534;padding:1px 6px;border-radius:4px;font-weight:800;">✓ Teslim Edildi</span>'}
-              </div>
-              <div class="letter-card-subject">${l.subject}</div>
-              <div class="letter-card-snippet">${(l.body || '').slice(0, 95)}...</div>
+            <div class="letter-dm-text">
+              <strong class="letter-dm-name">${l.toName}</strong>
+              <span class="letter-dm-country">${l.toCountry}${l.toCity ? ' (' + l.toCity + ')' : ''}</span>
             </div>
           </div>
-          <div class="letter-card-right">
-            <span class="letter-date-time">${new Date(l.createdAt).toLocaleDateString('tr-TR', { day:'numeric', month:'short' })}</span>
+          <div class="letter-dm-right">
+            ${isTransit ? '<span class="letter-dm-transit-badge">🦅 Uçuşta</span>' : '<span class="letter-dm-delivered-badge">✓ Teslim</span>'}
+            <span class="letter-dm-date">${dateStr}</span>
+            <span class="letter-dm-chevron">›</span>
           </div>
         </div>
       `;
     }).join('');
 
-    listEl.querySelectorAll('.letter-card').forEach(card => {
+    listEl.querySelectorAll('.letter-dm-row').forEach(card => {
       card.addEventListener('click', () => {
         openLetter(card.dataset.letterId);
       });
     });
   }
 
-  // --- 20. MEKTUP DETAY GÖRÜNTÜLEYİCİ ---
+  // --- 20. MEKTUP DETAY GÖRÜNTÜLEYİCİ (MODAL / POPUP) ---
   function openLetter(letterId) {
     const letters = getStoredLetters();
     const letter = letters.find(l => l.id === letterId);
@@ -1855,68 +1785,119 @@ window.TDAMessaging = (function() {
       letter.read = true;
       saveLetters(letters);
       renderInbox();
+      updateBadgeCounts();
     }
-
-    const readerContainer = document.getElementById('letterPaperView');
-    if (!readerContainer) return;
 
     const stamp = letter.stamp || CULTURAL_STAMPS.tr[0];
     const stampImg = getStampImageSrc(stamp);
-    const themeClass = letter.paperTheme || 'paper-minimal';
+    const dateFormatted = new Date(letter.createdAt).toLocaleDateString('tr-TR', { day:'numeric', month:'long', year:'numeric' });
     const isTransit = letter.status === 'in_transit';
 
-    readerContainer.className = `reader-letter-container ${themeClass}`;
-    readerContainer.innerHTML = `
-      <div class="reader-header">
-        <div class="reader-penpal-info">
-          <img src="${letter.fromAvatar || 'https://api.dicebear.com/7.x/adventurer/svg?seed=Penpal'}" alt="Avatar" class="reader-avatar-big">
-          <div>
-            <h3 style="margin:0 0 4px 0;font-size:18px;color:#102343;">${letter.fromName}</h3>
-            <div style="font-size:12.5px;color:#64748b;">
-              ${letter.fromCity || ''}, ${letter.fromCountry} ➔ ${letter.toCity || ''}, ${letter.toCountry}
+    // 1. Popup Modal Görünümünü Doldur ve Aç
+    const modal = document.getElementById('letterReadModal');
+    if (modal) {
+      const avatarEl = document.getElementById('letterModalAvatar');
+      const senderNameEl = document.getElementById('letterModalSenderName');
+      const subEl = document.getElementById('letterModalCountryCity');
+      const stampImgEl = document.getElementById('letterModalStampImg');
+      const stampNameEl = document.getElementById('letterModalStampName');
+      const transitAlert = document.getElementById('letterModalTransitAlert');
+      const dateEl = document.getElementById('letterModalDate');
+      const subjectEl = document.getElementById('letterModalSubject');
+      const bodyEl = document.getElementById('letterModalBody');
+      const photosSection = document.getElementById('letterModalPhotosSection');
+      const photosGrid = document.getElementById('letterModalPhotosGrid');
+
+      if (avatarEl) avatarEl.src = letter.fromAvatar || generateAvatarUrl();
+      if (senderNameEl) senderNameEl.textContent = letter.fromName;
+      if (subEl) subEl.textContent = `${letter.fromCity ? letter.fromCity + ', ' : ''}${letter.fromCountry} ➔ ${letter.toCity ? letter.toCity + ', ' : ''}${letter.toCountry}`;
+      if (stampImgEl) {
+        stampImgEl.src = stampImg;
+        stampImgEl.onerror = () => { stampImgEl.src = 'assets/images/mektup-ikon.png'; };
+      }
+      if (stampNameEl) stampNameEl.textContent = stamp.name || 'Posta Pulu';
+      if (transitAlert) transitAlert.style.display = isTransit ? 'block' : 'none';
+      if (dateEl) dateEl.textContent = `Tarih: ${dateFormatted}`;
+      if (subjectEl) subjectEl.textContent = letter.subject || 'Mektup';
+      if (bodyEl) bodyEl.textContent = letter.body || '';
+
+      if (photosSection && photosGrid) {
+        if (letter.photos && letter.photos.length) {
+          photosSection.style.display = 'block';
+          photosGrid.innerHTML = letter.photos.map(src => `<img src="${src}" alt="Ek Fotoğraf" onclick="window.open('${src}')">`).join('');
+        } else {
+          photosSection.style.display = 'none';
+          photosGrid.innerHTML = '';
+        }
+      }
+
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    // 2. readerContainer'ı da doldur
+    const readerContainer = document.getElementById('letterPaperView');
+    if (readerContainer) {
+      const themeClass = letter.paperTheme || 'paper-minimal';
+      readerContainer.className = `reader-letter-container ${themeClass}`;
+      readerContainer.innerHTML = `
+        <div class="reader-header">
+          <div class="reader-penpal-info">
+            <img src="${letter.fromAvatar || generateAvatarUrl()}" alt="Avatar" class="reader-avatar-big">
+            <div>
+              <h3 style="margin:0 0 4px 0;font-size:18px;color:#102343;">${letter.fromName}</h3>
+              <div style="font-size:12.5px;color:#64748b;">
+                ${letter.fromCity || ''}, ${letter.fromCountry} ➔ ${letter.toCity || ''}, ${letter.toCountry}
+              </div>
+              <small class="muted">Tarih: ${dateFormatted}</small>
             </div>
-            <small class="muted">Tarih: ${new Date(letter.createdAt).toLocaleDateString('tr-TR', { day:'numeric', month:'long', year:'numeric' })}</small>
+          </div>
+
+          <div style="text-align:right;">
+            <div class="affixed-postage-stamp" style="display:inline-block;width:56px;height:68px;padding:3px;box-shadow:0 3px 10px rgba(0,0,0,0.12);" title="${stamp.name || 'Posta Pulu'}">
+              <img src="${stampImg}" alt="${stamp.name || 'Pul'}" onerror="this.src='assets/images/mektup-ikon.png'">
+              <div style="font-size:9px;color:#344054;font-weight:750;text-align:center;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${stamp.name || 'Pul'}</div>
+            </div>
           </div>
         </div>
 
-        <div style="text-align:right;">
-          <div class="affixed-postage-stamp" style="display:inline-block;width:56px;height:68px;padding:3px;box-shadow:0 3px 10px rgba(0,0,0,0.12);" title="${stamp.name || 'Posta Pulu'}">
-            <img src="${stampImg}" alt="${stamp.name || 'Pul'}" onerror="this.src='assets/images/mektup-ikon.png'">
-            <div style="font-size:9px;color:#344054;font-weight:750;text-align:center;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${stamp.name || 'Pul'}</div>
+        ${isTransit ? `
+          <div style="background:#fffbeb;border:1px solid #fde68a;padding:12px;border-radius:10px;margin-bottom:18px;font-size:13px;color:#92400e;">
+            🦅 <strong>Bu mektup şu anda Bozkır Kartalı tarafından taşınmaktadır.</strong> Teslim süresi dolduğunda alıcısına ulaşacaktır.
           </div>
+        ` : ''}
+
+        <div class="letter-paper-subject" style="font-size:21px;font-weight:bold;margin-bottom:18px;">
+          ${letter.subject}
         </div>
-      </div>
 
-      ${isTransit ? `
-        <div style="background:#fffbeb;border:1px solid #fde68a;padding:12px;border-radius:10px;margin-bottom:18px;font-size:13px;color:#92400e;">
-          🦅 <strong>Bu mektup şu anda Bozkır Kartalı tarafından taşınmaktadır.</strong> Teslim süresi dolduğunda alıcısına ulaşacaktır.
+        <div class="letter-paper-body" style="font-size:15.5px;line-height:1.85;white-space:pre-line;margin-bottom:24px;">
+          ${letter.body}
         </div>
-      ` : ''}
 
-      <div class="letter-paper-subject" style="font-size:21px;font-weight:bold;margin-bottom:18px;">
-        ${letter.subject}
-      </div>
-
-      <div class="letter-paper-body" style="font-size:15.5px;line-height:1.85;white-space:pre-line;margin-bottom:24px;">
-        ${letter.body}
-      </div>
-
-      ${letter.photos && letter.photos.length ? `
-        <div class="reader-attached-photos">
-          <h5>📷 Mektuba Eklenen Fotoğraflar (${letter.photos.length} Adet - Karşılıklı Güven Doğrulanmış)</h5>
-          <div class="reader-photos-row">
-            ${letter.photos.map(src => `<img src="${src}" alt="Mektup Eki" class="reader-photo-thumb" onclick="window.open('${src}')">`).join('')}
+        ${letter.photos && letter.photos.length ? `
+          <div class="reader-attached-photos">
+            <h5>📷 Mektuba Eklenen Fotoğraflar (${letter.photos.length} Adet)</h5>
+            <div class="reader-photos-row">
+              ${letter.photos.map(src => `<img src="${src}" alt="Mektup Eki" class="reader-photo-thumb" onclick="window.open('${src}')">`).join('')}
+            </div>
           </div>
+        ` : ''}
+
+        <div class="letter-paper-footer" style="border-top:1px solid rgba(0,0,0,0.1);padding-top:16px;margin-top:20px;display:flex;justify-content:space-between;font-size:12px;color:#64748b;">
+          <span>🦅 Türk Dünyası Bozkır Kartalı Posta Ağı</span>
+          <span>${letter.fromName} • ${letter.fromCity || letter.fromCountry}</span>
         </div>
-      ` : ''}
+      `;
+    }
+  }
 
-      <div class="letter-paper-footer" style="border-top:1px solid rgba(0,0,0,0.1);padding-top:16px;margin-top:20px;display:flex;justify-content:space-between;font-size:12px;color:#64748b;">
-        <span>🦅 Türk Dünyası Bozkır Kartalı Posta Ağı</span>
-        <span>${letter.fromName} • ${letter.fromCity || letter.fromCountry}</span>
-      </div>
-    `;
-
-    switchPane('paneReader');
+  function closeLetterModal() {
+    const modal = document.getElementById('letterReadModal');
+    if (modal) {
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+    }
   }
 
   function switchPane(paneId) {
@@ -1964,6 +1945,38 @@ window.TDAMessaging = (function() {
     document.getElementById('btnCancelAvatarStudio')?.addEventListener('click', closeAvatarStudio);
     document.getElementById('btnRandomAvatar')?.addEventListener('click', randomizeAvatar);
     document.getElementById('btnSaveMyAvatar')?.addEventListener('click', saveAvatar);
+
+    // Mektup Okuma Modalı (DM Popup Modal) Dinleyicileri
+    document.getElementById('btnCloseLetterModal')?.addEventListener('click', closeLetterModal);
+    document.getElementById('btnCloseLetterModalBtn')?.addEventListener('click', closeLetterModal);
+    document.getElementById('letterReadModal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'letterReadModal') closeLetterModal();
+    });
+    document.getElementById('btnReplyFromModal')?.addEventListener('click', () => {
+      closeLetterModal();
+      if (!activeViewingLetter) return;
+      const targetPenpal = PENPAL_PROFILES.find(p => p.studentId === activeViewingLetter.fromStudentId) || {
+        id: 'reply-p',
+        name: activeViewingLetter.fromName,
+        studentId: activeViewingLetter.fromStudentId,
+        city: activeViewingLetter.fromCity || 'Almatı',
+        country: activeViewingLetter.fromCountry || 'Kazakistan',
+        avatar: activeViewingLetter.fromAvatar || 'https://api.dicebear.com/7.x/adventurer/svg?seed=MuslumeKZ&backgroundColor=fed7aa'
+      };
+
+      activeSelectedPenpal = targetPenpal;
+      switchPane('paneCompose');
+      goToComposeStep(3);
+
+      const subjInput = document.getElementById('penpalLetterSubject');
+      const bodyInput = document.getElementById('penpalLetterBody');
+      if (subjInput) subjInput.value = `Re: ${(activeViewingLetter.subject || '').replace(/^Re:\s*/i, '')}`;
+      if (bodyInput) {
+        bodyInput.value = `\n\n--- ${activeViewingLetter.fromName} mektubundan alıntı ---\n> ${(activeViewingLetter.body || '').replace(/\n/g, '\n> ')}`;
+        bodyInput.focus();
+        bodyInput.setSelectionRange(0, 0);
+      }
+    });
 
     // Yanıtla Butonu
     document.getElementById('btnReplyLetter')?.addEventListener('click', () => {

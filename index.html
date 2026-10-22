@@ -548,9 +548,22 @@
     <div class="avatar-studio-layout">
       <!-- Sol: Canlı Önizleme -->
       <div class="avatar-preview-pane">
-        <div class="avatar-live-circle">
-          <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=TurkPenpal&backgroundColor=ffdfbf" id="liveAvatarPreviewImg" alt="Avatar Önizleme" class="live-avatar-img">
+        <div class="avatar-live-circle body-average" id="liveAvatarCircleContainer">
+          <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=TurkPenpal&skinColor=f8d9ce&backgroundColor=ffdfbf" id="liveAvatarPreviewImg" alt="Avatar Önizleme" class="live-avatar-img">
+          <!-- Göz Rengi İris Katmanı (Canlı Renk Yansıması) -->
+          <div class="avatar-iris-layer" id="avatarIrisLayer">
+            <span class="iris-lens iris-left" id="irisLeft"></span>
+            <span class="iris-lens iris-right" id="irisRight"></span>
+          </div>
+          <!-- Dinamik Kıyafet & Yaka Katmanı -->
+          <div class="avatar-outfit-torso" id="avatarOutfitTorso"></div>
         </div>
+        
+        <div class="avatar-badges-row">
+          <span class="avatar-badge-tag" id="badgeBodyType">⚖️ Standart Yapı</span>
+          <span class="avatar-badge-tag" id="badgeEyeColor"><span class="badge-color-dot" id="badgeEyeDot" style="background:#3b2219;"></span> Kahverengi</span>
+        </div>
+
         <strong id="liveAvatarNameDisplay">Fahriye</strong>
         <span style="font-size:11px;color:#64748b;margin-top:2px;">Öğrenci Profili Avatarı</span>
         <button type="button" class="btn secondary" id="btnRandomAvatar" style="margin-top:12px;font-size:12px;padding:6px 12px;">🎲 Rastgele Karıştır</button>
@@ -558,30 +571,61 @@
 
       <!-- Sağ: Özelleştirme Kontrolleri -->
       <div class="avatar-controls-pane">
+        <!-- 1. Ten Rengi (Varsayılan Açık/Beyaz Ten: #F8D9CE) -->
         <div class="avatar-control-group">
-          <label>Ten Rengi</label>
+          <label>Ten Rengi <span class="group-hint">(Doğal Açık / Buğday / Esmer Tonlar)</span></label>
           <div id="optSkinColor"></div>
         </div>
+
+        <!-- 2. Göz Rengi (Yeni: 8 Doğal Renk Paleti) -->
+        <div class="avatar-control-group">
+          <label>Göz Rengi <span class="group-hint">(Doğal İris Renk Tonları)</span></label>
+          <div id="optEyeColor"></div>
+        </div>
+
+        <!-- 3. Vücut Tipi (Yeni: 3 Silüet İkonu) -->
+        <div class="avatar-control-group">
+          <label>Vücut Tipi <span class="group-hint">(Silüet Yapısı)</span></label>
+          <div id="optBodyType"></div>
+        </div>
+
+        <!-- 4. Kıyafet & Gardırop (Yeni: 20 Farklı Model) -->
+        <div class="avatar-control-group">
+          <label>Giyim & Kıyafet <span class="group-hint">(20 Farklı Modern, Kültürel ve Resmi Model)</span></label>
+          <div id="optOutfitModel"></div>
+        </div>
+
+        <!-- 5. Saç Modeli -->
         <div class="avatar-control-group">
           <label>Saç Modeli</label>
           <div id="optHairStyle"></div>
         </div>
+
+        <!-- 6. Saç Rengi -->
         <div class="avatar-control-group">
           <label>Saç Rengi</label>
           <div id="optHairColor"></div>
         </div>
+
+        <!-- 7. Yüz İfadesi -->
         <div class="avatar-control-group">
-          <label>Yüz İfadesi</label>
+          <label>Yüz İfadesi & Tebessüm</label>
           <div id="optMood"></div>
         </div>
+
+        <!-- 8. Göz Şekli -->
         <div class="avatar-control-group">
-          <label>Göz Şekli</label>
+          <label>Göz Şekli & Bakış</label>
           <div id="optEyes"></div>
         </div>
+
+        <!-- 9. Gözlük & Aksesuar -->
         <div class="avatar-control-group">
           <label>Gözlük & Aksesuar</label>
           <div id="optAccessories"></div>
         </div>
+
+        <!-- 10. Arka Plan & Kıyafet Rengi -->
         <div class="avatar-control-group">
           <label>Arka Plan Rengi</label>
           <div id="optOutfitColor"></div>
@@ -617,6 +661,21 @@
     </div>
 
     <div class="letter-modal-scrollable">
+      <!-- 1. GÜVENLİK VE TANIŞMA ONAY DUVARI (İlk Mektup Consent Mekanizması) -->
+      <div class="letter-consent-card" id="letterConsentCard" style="display:none;">
+        <div class="letter-consent-content">
+          <div class="letter-consent-badge">🛡️ Güvenli Tanışma Duvarı</div>
+          <h4 class="letter-consent-title">Yeni Mektup Arkadaşlığı Onay Talebi</h4>
+          <p class="letter-consent-desc" id="letterConsentDesc">
+            Bu öğrenci sizinle ilk kez mektup arkadaşı olmak istiyor. Topluluğumuzun güvenliği ve samimi bir tanışma ortamı için talebi onaylayabilir veya reddedebilirsiniz. Talebi onaylamadan önce yanıtlama ve fotoğraf paylaşımı kapalı tutulmaktadır.
+          </p>
+        </div>
+        <div class="letter-consent-actions">
+          <button type="button" class="btn-consent-reject" id="btnRejectConsent">✕ Reddet ve Engelle</button>
+          <button type="button" class="btn-consent-accept" id="btnAcceptConsent">✓ Mektup Arkadaşlığını Kabul Et</button>
+        </div>
+      </div>
+
       <div class="letter-modal-transit" id="letterModalTransitAlert" style="display:none;">
         🦅 <strong>Bu mektup şu anda Bozkır Kartalı tarafından taşınmaktadır.</strong> Teslim süresi dolduğunda alıcısına ulaşacaktır.
       </div>
@@ -631,6 +690,9 @@
     </div>
 
     <div class="letter-modal-footer">
+      <div class="letter-pending-warning" id="letterPendingWarning" style="display:none;">
+        ⚠️ Mektuba yanıt verebilmek için yukarıdaki tanışma talebini <strong>Kabul Etmelisiniz</strong>.
+      </div>
       <button type="button" class="ghost-btn" id="btnCloseLetterModalBtn">Kapat</button>
       <button type="button" class="btn primary" id="btnReplyFromModal" style="background:#102343;color:#ffffff;">↩ Mektuba Yanıt Yaz</button>
     </div>

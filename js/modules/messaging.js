@@ -22,9 +22,11 @@
  */
 
 window.TDAMessaging = (function() {
-  const STORAGE_KEY = 'tda-penpal-letters-v4';
+  const STORAGE_KEY = 'tda-penpal-letters-v5';
   const CONSENT_STORAGE_KEY = 'tda-penpal-consent';
-  const MY_AVATAR_KEY = 'tda-my-avatar-config';
+  const PENPAL_CONSENT_KEY = 'tda-penpal-introduction-consent-v2';
+  const BLOCKED_PENPALS_KEY = 'tda-blocked-penpals';
+  const MY_AVATAR_KEY = 'tda-my-avatar-config-v2';
 
   // --- 1. ŞEHİRLER & KOORDİNAT MATRİSİ ---
   const CITIES = {
@@ -559,6 +561,7 @@ window.TDAMessaging = (function() {
   // --- 6. BAŞLANGIÇ VERİLERİ (GELEN KUTUSU: SADECE MÜSLÜME -> FAHRİYE & GÖNDERİLENLER: FAHRİYE -> MÜSLÜME) ---
   const INITIAL_LETTERS = [
     // 1. Gelen Kutusu (Inbox): Sadece Kazakistan Almatı'daki Müslüme'den İstanbul'daki Fahriye'ye mektup
+    // KRİTİK GÜVENLİK KURALI: İlk defa mektup alındığı için status: 'pending' (onay bekliyor) olarak başlar.
     {
       id: 'let-inbox-muslume',
       fromStudentId: 'TDA-KZ-MUS01',
@@ -577,7 +580,7 @@ window.TDAMessaging = (function() {
       paperTheme: 'paper-parchment',
       createdAt: new Date(Date.now() - 48 * 3600 * 1000).toISOString(),
       deliveredAt: new Date(Date.now() - 37 * 3600 * 1000).toISOString(),
-      status: 'delivered',
+      status: 'pending', // GÜVENLİK DUVARI: İlk mektup onay bekliyor ('pending')
       read: false,
       folder: 'inbox',
       photos: []
@@ -636,6 +639,38 @@ window.TDAMessaging = (function() {
     }
   }
 
+  // Güvenlik & Tanışma Onay Haritası (Introduction Consent Map)
+  function getIntroductionConsentMap() {
+    try {
+      return JSON.parse(localStorage.getItem(PENPAL_CONSENT_KEY)) || {};
+    } catch(e) {
+      return {};
+    }
+  }
+
+  function setIntroductionConsent(studentId, status) {
+    const map = getIntroductionConsentMap();
+    map[studentId] = status; // 'accepted' | 'rejected'
+    localStorage.setItem(PENPAL_CONSENT_KEY, JSON.stringify(map));
+  }
+
+  // Engellenen Mektup Arkadaşları (Blocked Penpals)
+  function getBlockedPenpals() {
+    try {
+      return JSON.parse(localStorage.getItem(BLOCKED_PENPALS_KEY)) || [];
+    } catch(e) {
+      return [];
+    }
+  }
+
+  function blockPenpal(studentId) {
+    const list = getBlockedPenpals();
+    if (!list.includes(studentId)) {
+      list.push(studentId);
+      localStorage.setItem(BLOCKED_PENPALS_KEY, JSON.stringify(list));
+    }
+  }
+
   function getPhotoConsentMap() {
     try {
       return JSON.parse(localStorage.getItem(CONSENT_STORAGE_KEY)) || {};
@@ -650,21 +685,59 @@ window.TDAMessaging = (function() {
     localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(map));
   }
 
-  // --- 8. KULLANICI BİTMOJİ / AVATAR MODELİ ---
+  // --- 8. KULLANICI BİTMOJİ / AVATAR MODELİ (VARSAYILAN INITIAL STATE) ---
+  // KRİTİK DÜZELTME:
+  // 1. Ten Rengi (skinColor): Varsayılan değer kesinlikle açık/beyaz ten rengi (#F8D9CE) olarak yapılandırılmıştır.
+  // 2. Göz Rengi (eyeColor): 8 doğal iris rengi arasından doğal Koyu Kahverengi (#3b2219).
+  // 3. Vücut Tipi (bodyType): 'average' (Standart/Atletik), 'slim' (Zayıf) veya 'plump' (Geniş/Dolgun).
+  // 4. Kıyafet (outfit): 20 model arasından modern 'casual_tshirt' (Bisiklet Yaka Basic Tişört).
   const DEFAULT_AVATAR_CONFIG = {
-    skinColor: 'f2d3b1', // Buğday Ten
-    hair: 'long01',     // Uzun Düz Saç
+    skinColor: 'f8d9ce', // Doğal Açık / Beyaz Ten (#F8D9CE) - Siyah ten bug'ı kesin olarak giderildi
+    skinTone: 'f8d9ce',  // Geriye dönük uyumluluk
+    eyeColor: '3b2219',  // Koyu Kahverengi Doğal İris (#3b2219)
+    bodyType: 'average', // Standart / Orta Vücut Tipi ('slim' | 'average' | 'plump')
+    outfit: 'casual_tshirt', // 20 Kıyafet Modelinden biri
+    hair: 'long01',      // Saç Modeli
     hairColor: '0e0e0e', // Kuzuni Siyah Saç
-    mood: 'variant01',   // Samimi Tebessüm
-    eyes: 'variant01',   // Işıltılı Güleç Gözler
-    accessories: 'none', // Aksesuarsız
-    outfitColor: 'ffdfbf'// Parşömen Beji Fon
+    mood: 'variant01',    // Samimi Tebessüm
+    eyes: 'variant01',    // Işıltılı Güleç Gözler
+    accessories: 'none',  // Aksesuarsız
+    outfitColor: 'ffdfbf',// Parşömen Beji Fon / Kıyafet Vurgu Rengi
+    backgroundColor: 'ffdfbf'
   };
 
   function getMyAvatarConfig() {
     try {
-      const c = JSON.parse(localStorage.getItem(MY_AVATAR_KEY));
-      return Object.assign({}, DEFAULT_AVATAR_CONFIG, c);
+      const raw = localStorage.getItem(MY_AVATAR_KEY);
+      if (!raw) return Object.assign({}, DEFAULT_AVATAR_CONFIG);
+      const parsed = JSON.parse(raw);
+      const merged = Object.assign({}, DEFAULT_AVATAR_CONFIG, parsed);
+
+      // Ten rengi doğrulama & Temizleme (Siyah veya tanımsız ten değerlerini açık ten #f8d9ce ile ez)
+      let sColor = merged.skinColor || merged.skinTone || 'f8d9ce';
+      sColor = String(sColor).replace('#', '').trim().toLowerCase();
+      if (!sColor || sColor === '000000' || sColor === 'undefined' || sColor.length !== 6) {
+        sColor = 'f8d9ce';
+      }
+      merged.skinColor = sColor;
+      merged.skinTone = sColor;
+
+      // Göz rengi doğrulama
+      if (!merged.eyeColor || merged.eyeColor.length !== 6) {
+        merged.eyeColor = '3b2219';
+      }
+
+      // Vücut tipi doğrulama
+      if (!['slim', 'average', 'plump'].includes(merged.bodyType)) {
+        merged.bodyType = 'average';
+      }
+
+      // Kıyafet modeli doğrulama
+      if (!merged.outfit) {
+        merged.outfit = 'casual_tshirt';
+      }
+
+      return merged;
     } catch(e) {
       return Object.assign({}, DEFAULT_AVATAR_CONFIG);
     }
@@ -677,7 +750,10 @@ window.TDAMessaging = (function() {
   function generateAvatarUrl(config) {
     const c = config || getMyAvatarConfig();
     const seed = 'TurkPenpal';
-    const skin = c.skinColor || 'f2d3b1';
+    // Ten rengi daima temiz 6 haneli açık ten hex olmalı
+    let skin = (c.skinColor || c.skinTone || 'f8d9ce').replace('#', '');
+    if (!skin || skin.length !== 6) skin = 'f8d9ce';
+
     const hair = c.hair || 'long01';
     const hairColor = c.hairColor || '0e0e0e';
     const eyes = c.eyes || 'variant01';
@@ -709,7 +785,8 @@ window.TDAMessaging = (function() {
 
   // --- 10. MEKTUP LİSTESİ & SAYACLAR ---
   function getInbox() {
-    return getStoredLetters().filter(l => l.folder !== 'sent');
+    const blocked = getBlockedPenpals();
+    return getStoredLetters().filter(l => l.folder !== 'sent' && !blocked.includes(l.fromStudentId) && l.status !== 'rejected');
   }
 
   function getSent() {
@@ -717,7 +794,7 @@ window.TDAMessaging = (function() {
   }
 
   function getUnreadCount() {
-    return getInbox().filter(l => !l.read && l.status === 'delivered').length;
+    return getInbox().filter(l => !l.read && (l.status === 'delivered' || l.status === 'pending')).length;
   }
 
   function notifyUnread() {
@@ -1340,30 +1417,165 @@ window.TDAMessaging = (function() {
     });
   }
 
+  // --- 15. AVATAR STÜDYOSU BİLEŞENİ: VERİ MODELLERİ VE SEÇİCİLER ---
+
+  // 1. Vücut Tipi (Body Type) Silüet Modelleri
+  const BODY_TYPES = [
+    {
+      id: 'slim',
+      label: 'Zayıf / Narin Yapı',
+      iconSvg: `<svg viewBox="0 0 40 40" class="body-type-svg-icon" fill="currentColor">
+        <path d="M20 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-4 4c-2.2 0-4 1.8-4 4v7c0 .6.4 1 1 1s1-.4 1-1v-6.5h1v19c0 .8.7 1.5 1.5 1.5s1.5-.7 1.5-1.5V23h2v11.5c0 .8.7 1.5 1.5 1.5s1.5-.7 1.5-1.5V14.5h1V21c0 .6.4 1 1 1s1-.4 1-1v-7c0-2.2-1.8-4-4-4h-4z"/>
+      </svg>`
+    },
+    {
+      id: 'average',
+      label: 'Standart / Atletik Yapı',
+      iconSvg: `<svg viewBox="0 0 40 40" class="body-type-svg-icon" fill="currentColor">
+        <path d="M20 7a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zm-6 4c-2.8 0-5 2.2-5 5v7.5c0 .8.7 1.5 1.5 1.5s1.5-.7 1.5-1.5V16h1.5v17.5c0 1 .8 1.8 1.8 1.8s1.8-.8 1.8-1.8V23.5h2.8v10c0 1 .8 1.8 1.8 1.8s1.8-.8 1.8-1.8V16H28v7.5c0 .8.7 1.5 1.5 1.5s1.5-.7 1.5-1.5V16c0-2.8-2.2-5-5-5h-10.5z"/>
+      </svg>`
+    },
+    {
+      id: 'plump',
+      label: 'Geniş / Dolgun Yapı',
+      iconSvg: `<svg viewBox="0 0 40 40" class="body-type-svg-icon" fill="currentColor">
+        <path d="M20 7.5a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm-7.5 4c-3.6 0-6.5 2.8-6.5 6.2v7.8c0 1 .8 1.8 1.8 1.8s1.8-.8 1.8-1.8v-6h2.2v17c0 1.2 1 2.2 2.2 2.2s2.2-1 2.2-2.2V24h3.6v12.5c0 1.2 1 2.2 2.2 2.2s2.2-1 2.2-2.2v-17H28v6c0 1 .8 1.8 1.8 1.8s1.8-.8 1.8-1.8v-7.8c0-3.4-2.9-6.2-6.5-6.2h-12.6z"/>
+      </svg>`
+    }
+  ];
+
+  // 2. Geniş ve Çeşitli Gardırop: 20 Farklı Kıyafet (Modern, Kültürel, Resmi)
+  const OUTFIT_MODELS = [
+    { id: 'casual_tshirt', label: 'Basic Tişört', category: 'Modern', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7l4 3h6l4-3 5 4-3 5-3-2v12H10V14l-3 2-3-5 5-4z"/></svg>` },
+    { id: 'casual_hoodie', label: 'Kapüşonlu Hoodie', category: 'Modern', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 8c0-3 3-5 6-5s6 2 6 5l5 3-3 5-3-2v13H8V14l-3 2-3-5 5-3h3zm6 2v7"/></svg>` },
+    { id: 'bomber_jacket', label: 'Bomber Ceket', category: 'Modern', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 8l4 2h8l4-2 5 4-3 5-2-1v12H8V16l-2 1-3-5 5-4z"/><line x1="16" y1="10" x2="16" y2="28"/></svg>` },
+    { id: 'polo_shirt', label: 'Klasik Polo Tişört', category: 'Modern', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7l4 3h6l4-3 5 4-3 5-3-2v12H10V14l-3 2-3-5 5-4z"/><path d="M13 10l3 5 3-5"/></svg>` },
+    { id: 'knit_sweater', label: 'Boğazlı Triko Kazak', category: 'Kışlık', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5h8v4h-8z"/><path d="M8 9l4 2h8l4-2 5 4-3 5-2-1v12H8V17l-2 1-3-5 5-4z"/></svg>` },
+    { id: 'blazer_formal', label: 'Klasik Blazer & Kravat', category: 'Resmi', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7l4 2h8l4-2 5 4-3 5-2-1v13H8V15l-2 1-3-5 5-4z"/><path d="M13 9l3 9 3-9"/><path d="M16 11l-1 5 1 4 1-4-1-5z"/></svg>` },
+    { id: 'plaid_shirt', label: 'Kareli Oduncu Gömlek', category: 'Modern', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7l4 2h6l4-2 5 4-3 5-3-1v13H10V15l-3 1-3-5 5-4z"/><line x1="16" y1="9" x2="16" y2="28"/><line x1="10" y1="18" x2="22" y2="18"/></svg>` },
+    { id: 'turkish_kaftan', label: 'Geleneksel Türk Kaftanı', category: 'Kültürel', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 6l5 3h8l5-3 5 5-3 6-3-2v14H5V14l-3 2-3-6 5-5z"/><path d="M14 9l2 5 2-5"/><line x1="16" y1="14" x2="16" y2="29"/><circle cx="16" cy="18" r="1" fill="currentColor"/><circle cx="16" cy="22" r="1" fill="currentColor"/></svg>` },
+    { id: 'kazakh_shapan', label: 'Kazak İşlemeli Çapanı', category: 'Kültürel', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l6 3h8l6-3 4 5-3 6-3-2v14H4V14l-3 2-3-6 4-5z"/><path d="M12 9c2 4 6 4 8 0"/><path d="M16 13v16"/></svg>` },
+    { id: 'uzbek_chapan', label: 'Özbek İpek Atlas Cübbe', category: 'Kültürel', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7l6 3h8l6-3 4 5-3 6-3-2v13H4V15l-3 2-3-6 4-5z"/><line x1="16" y1="10" x2="16" y2="29"/><line x1="12" y1="13" x2="20" y2="25"/></svg>` },
+    { id: 'kyrgyz_chepken', label: 'Kırgız Keçe Çepken', category: 'Kültürel', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 6l5 3h8l5-3 5 5-3 6-3-2v14H5V14l-3 2-3-6 5-5z"/><path d="M13 9l3 6 3-6"/></svg>` },
+    { id: 'azerbaijan_libas', label: 'Azerbaycan Milli Libası', category: 'Kültürel', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6l4 2h8l4-2 6 5-3 6-3-2v14H5V15l-3 2-3-6 6-5z"/><path d="M12 8l4 6 4-6"/><line x1="16" y1="14" x2="16" y2="29"/></svg>` },
+    { id: 'turkmen_don', label: 'Türkmen İpek Don / Çapan', category: 'Kültürel', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l6 3h8l6-3 4 5-3 6-3-2v14H4V14l-3 2-3-6 4-5z"/><line x1="16" y1="9" x2="16" y2="29"/><path d="M12 14l8 4"/></svg>` },
+    { id: 'denim_jacket', label: 'Klasik Kot Ceket', category: 'Modern', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 8l4 2h8l4-2 5 4-3 5-2-1v12H8V16l-2 1-3-5 5-4z"/><line x1="16" y1="10" x2="16" y2="28"/><rect x="10" y="13" width="3" height="3" fill="currentColor"/><rect x="19" y="13" width="3" height="3" fill="currentColor"/></svg>` },
+    { id: 'leather_jacket', label: 'Deri Biker Ceket', category: 'Modern', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 8l4 2h8l4-2 5 4-3 5-2-1v12H8V16l-2 1-3-5 5-4z"/><line x1="13" y1="10" x2="20" y2="28"/></svg>` },
+    { id: 'sport_jersey', label: 'Milli Spor Forması', category: 'Sportif', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6l3 2h6l3-2 5 4-3 5-3-2v13H8V13l-3 2-3-5 5-4z"/><circle cx="16" cy="15" r="3" fill="none"/></svg>` },
+    { id: 'winter_parka', label: 'Kışlık Kürklü Parka', category: 'Kışlık', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6c0-2 3-3 7-3s7 1 7 3l4 3-2 5-3-2v15H7V13l-3 2-2-5 4-3h3zm7 0v21"/></svg>` },
+    { id: 'academic_robe', label: 'Akademisyen & Bilim Cübbesi', category: 'Resmi', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7l4 2h8l4-2 5 5-3 5-2-1v14H8V16l-2 1-3-5 5-5z"/><path d="M13 9l3 6 3-6"/><line x1="16" y1="15" x2="16" y2="30"/></svg>` },
+    { id: 'linen_shirt', label: 'Düğmeli Keten Gömlek', category: 'Modern', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7l4 2h6l4-2 5 4-3 5-3-1v13H10V15l-3 1-3-5 5-4z"/><line x1="16" y1="9" x2="16" y2="28"/><circle cx="16" cy="13" r="0.8" fill="currentColor"/><circle cx="16" cy="18" r="0.8" fill="currentColor"/><circle cx="16" cy="23" r="0.8" fill="currentColor"/></svg>` },
+    { id: 'traditional_vest', label: 'Anadolu İşlemeli Yelek', category: 'Kültürel', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7l4 3h6l4-3 2 4-2 4-2-1v13H11V15l-2 1-2-4 2-4z"/><path d="M13 10l3 5 3-5"/><line x1="16" y1="15" x2="16" y2="27"/></svg>` }
+  ];
+
+  // Vücut Tipi Seçici Bileşeni (Görsel Silüet İkonları)
+  function renderBodyTypeSelector(containerId, options, currentValue, onSelect) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    el.className = 'body-type-grid';
+    el.innerHTML = options.map(opt => {
+      const isSel = opt.id === currentValue;
+      return `
+        <button type="button" 
+                class="body-type-card-btn ${isSel ? 'active' : ''}" 
+                data-val="${opt.id}" 
+                data-tooltip="${opt.label}" 
+                aria-label="${opt.label}">
+          ${opt.iconSvg}
+          <span class="body-type-btn-label">${opt.label.split('/')[0].trim()}</span>
+        </button>
+      `;
+    }).join('');
+
+    el.querySelectorAll('.body-type-card-btn').forEach(btn => {
+      btn.onclick = () => {
+        el.querySelectorAll('.body-type-card-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        onSelect(btn.dataset.val);
+      };
+    });
+  }
+
+  // Gardırop & Kıyafet Seçici Bileşeni (20 Model, SVG İkonlu Izgara)
+  function renderOutfitSelector(containerId, options, currentValue, onSelect) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    el.className = 'outfit-grid-container';
+    el.innerHTML = options.map(opt => {
+      const isSel = opt.id === currentValue;
+      return `
+        <button type="button" 
+                class="outfit-card-btn ${isSel ? 'active' : ''}" 
+                data-val="${opt.id}" 
+                data-tooltip="${opt.label} • ${opt.category}" 
+                aria-label="${opt.label}">
+          <div class="outfit-card-icon">${opt.iconSvg}</div>
+          <span class="outfit-card-badge">${opt.label}</span>
+        </button>
+      `;
+    }).join('');
+
+    el.querySelectorAll('.outfit-card-btn').forEach(btn => {
+      btn.onclick = () => {
+        el.querySelectorAll('.outfit-card-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        onSelect(btn.dataset.val);
+      };
+    });
+  }
+
   function renderAvatarCustomizerControls() {
     // =========================================================================
     // === AVATAR STATE VE VERİ EŞLEŞTİRME (DATA MAPPING) ONARIMI ===
-    // DiceBear Adventurer 7.x kütüphanesinin beklediği resmi enum değerleri ile
-    // buton ikonları ve tooltipleri %100 birebir eşleştirilmiştir.
-    // Her bir görsel buton, kütüphanenin o varyant için ürettiği gerçek SVG çizimini
-    // sergiler. Böylece kullanıcı neye tıklıyorsa, ana avatarda tam olarak o belirir.
+    // 1. Ten Rengi: Varsayılan olarak açık/beyaz ten rengi (#F8D9CE) yüklenir.
+    // 2. Göz Rengi: 8 doğal iris renk tonu swatches olarak sunulur.
+    // 3. Vücut Tipi: 3 silüet ikonu ile omuz ve gövde yapısı anlık güncellenir.
+    // 4. Kıyafet: 20 farklı modern, kültürel ve resmi model gardırobu.
     // =========================================================================
 
-    // 1. Ten Rengi (Color Swatches - data-tooltip ile zarif ipucu)
+    // 1. Ten Rengi (Color Swatches - Varsayılan Açık/Beyaz Ten: #F8D9CE)
     renderColorSwatches('optSkinColor', [
-      { id: 'f9c9b6', label: 'Porselen / Açık Ten' },
+      { id: 'f8d9ce', label: 'Doğal Açık / Beyaz Ten (#F8D9CE)' },
+      { id: 'f9c9b6', label: 'Porselen / Açık Pembe Ten' },
       { id: 'f2d3b1', label: 'Doğal Buğday Ten' },
       { id: 'ecad80', label: 'Sıcak Şeftali Ten' },
       { id: 'd4976a', label: 'Doğal Kumral Ten' },
       { id: '9e5622', label: 'Bronz Esmer Ten' },
       { id: '763900', label: 'Koyu Esmer Ten' }
-    ], currentEditingAvatarConfig.skinColor, val => {
+    ], currentEditingAvatarConfig.skinColor || 'f8d9ce', val => {
       currentEditingAvatarConfig.skinColor = val;
+      currentEditingAvatarConfig.skinTone = val;
       updateLiveAvatarPreview();
     });
 
-    // 2. Saç Modeli (DiceBear Adventurer Doğrudan Eşleşen 16 Model)
-    // Her butonun 'iconHtml' alanında, kütüphanenin o saç stiline ait gerçek önizlemesi sunulur.
+    // 2. Göz Rengi (8 Doğal İris Tonu - Color Swatches)
+    renderColorSwatches('optEyeColor', [
+      { id: '3b2219', label: 'Koyu Kahverengi' },
+      { id: '6d4c41', label: 'Açık Fındık / Kahve' },
+      { id: '7d6b38', label: 'Doğal Ela (Hazel)' },
+      { id: '2e7d32', label: 'Zümrüt Yeşili' },
+      { id: '1565c0', label: 'Okyanus Mavisi' },
+      { id: 'b45309', label: 'Sıcak Kehribar (Amber)' },
+      { id: '1a1a1a', label: 'Derin Kömür Siyahı' },
+      { id: '64748b', label: 'Buz Mavisi / Açık Gri' }
+    ], currentEditingAvatarConfig.eyeColor || '3b2219', val => {
+      currentEditingAvatarConfig.eyeColor = val;
+      updateLiveAvatarPreview();
+    });
+
+    // 3. Vücut Tipi (3 Silüet Seçeneği)
+    renderBodyTypeSelector('optBodyType', BODY_TYPES, currentEditingAvatarConfig.bodyType || 'average', val => {
+      currentEditingAvatarConfig.bodyType = val;
+      updateLiveAvatarPreview();
+    });
+
+    // 4. Kıyafet & Gardırop (20 Farklı Model)
+    renderOutfitSelector('optOutfitModel', OUTFIT_MODELS, currentEditingAvatarConfig.outfit || 'casual_tshirt', val => {
+      currentEditingAvatarConfig.outfit = val;
+      updateLiveAvatarPreview();
+    });
+
+    // 5. Saç Modeli (DiceBear Adventurer Doğrudan Eşleşen 16 Model)
     const hairOptions = [
       { id: 'short01', label: 'Kısa Klasik Kesim' },
       { id: 'short02', label: 'Kısa Katlı Dalga' },
@@ -1393,7 +1605,7 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 3. Saç Renk Tonu (Color Swatches - data-tooltip ile)
+    // 6. Saç Renk Tonu (Color Swatches - data-tooltip ile)
     renderColorSwatches('optHairColor', [
       { id: '0e0e0e', label: 'Kuzuni Siyah' },
       { id: '562306', label: 'Koyu Kestane' },
@@ -1411,7 +1623,7 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 4. Yüz İfadesi & Gülümseme (DiceBear Adventurer Mouth Varyantları)
+    // 7. Yüz İfadesi & Gülümseme (DiceBear Adventurer Mouth Varyantları)
     const moodOptions = [
       { id: 'variant01', label: 'Samimi Tebessüm' },
       { id: 'variant02', label: 'Geniş Gülüş' },
@@ -1433,7 +1645,7 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 5. Göz Şekli & Bakış (DiceBear Adventurer Eyes Varyantları)
+    // 8. Göz Şekli & Bakış (DiceBear Adventurer Eyes Varyantları)
     const eyeOptions = [
       { id: 'variant01', label: 'Doğal Güleç Bakış' },
       { id: 'variant02', label: 'Canlı Açık Bakış' },
@@ -1453,7 +1665,7 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 6. Gözlük & Aksesuar (DiceBear Adventurer Glasses Varyantları)
+    // 9. Gözlük & Aksesuar (DiceBear Adventurer Glasses Varyantları)
     const accessoryOptions = [
       {
         id: 'none',
@@ -1492,7 +1704,7 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 7. Arka Plan & Fon Rengi (Color Swatches - 8 Kültürel Renk)
+    // 10. Arka Plan & Fon Rengi (Color Swatches - 8 Kültürel Renk)
     renderColorSwatches('optOutfitColor', [
       { id: 'ffdfbf', label: 'Parşömen Beji' },
       { id: 'b6e3f4', label: 'Gök Mavisi' },
@@ -1514,11 +1726,59 @@ window.TDAMessaging = (function() {
     if (img) {
       img.src = generateAvatarUrl(currentEditingAvatarConfig);
     }
+
+    // 1. Vücut Tipi (Body Type) Dönüşümü
+    const circle = document.getElementById('liveAvatarCircleContainer');
+    if (circle) {
+      circle.classList.remove('body-slim', 'body-average', 'body-plump');
+      const bType = currentEditingAvatarConfig.bodyType || 'average';
+      circle.classList.add(`body-${bType}`);
+      // CSS değişkeniyle iris rengini aktar
+      circle.style.setProperty('--iris-color', `#${currentEditingAvatarConfig.eyeColor || '3b2219'}`);
+    }
+
+    // 2. Göz Rengi İris Katmanı & Rozet Güncellemesi
+    const badgeEye = document.getElementById('badgeEyeColor');
+    if (badgeEye) {
+      const eyeNames = {
+        '3b2219': 'Koyu Kahverengi',
+        '6d4c41': 'Fındık Kahve',
+        '7d6b38': 'Doğal Ela',
+        '2e7d32': 'Zümrüt Yeşil',
+        '1565c0': 'Okyanus Mavi',
+        'b45309': 'Sıcak Kehribar',
+        '1a1a1a': 'Kömür Siyah',
+        '64748b': 'Buz Mavisi'
+      };
+      const curColor = currentEditingAvatarConfig.eyeColor || '3b2219';
+      badgeEye.innerHTML = `<span class="badge-color-dot" style="background:#${curColor};"></span> ${eyeNames[curColor] || 'Göz Rengi'}`;
+    }
+
+    // 3. Vücut Tipi Rozeti
+    const badgeBody = document.getElementById('badgeBodyType');
+    if (badgeBody) {
+      const bLabels = {
+        'slim': '🏃 Zayıf Yapı',
+        'average': '⚖️ Standart Yapı',
+        'plump': '💪 Dolgun Yapı'
+      };
+      badgeBody.textContent = bLabels[currentEditingAvatarConfig.bodyType] || 'Standart Yapı';
+    }
+
+    // 4. Kıyafet Gövde Rozeti
+    const outfitTorso = document.getElementById('avatarOutfitTorso');
+    if (outfitTorso) {
+      const oModel = OUTFIT_MODELS.find(m => m.id === currentEditingAvatarConfig.outfit) || OUTFIT_MODELS[0];
+      outfitTorso.innerHTML = `<div class="avatar-torso-badge" title="${oModel.label}">${oModel.iconSvg}</div>`;
+    }
   }
 
   function randomizeAvatar() {
-    const skins = ['f9c9b6', 'f2d3b1', 'ecad80', 'd4976a', '9e5622', '763900'];
-    const hairs = ['short01', 'short02', 'short03', 'short04', 'short05', 'short06', 'short08', 'short12', 'long01', 'long02', 'long03', 'long04', 'long05', 'long06', 'long10', 'long26'];
+    const skins = ['f8d9ce', 'f9c9b6', 'f2d3b1', 'ecad80', 'd4976a', '9e5622', '763900'];
+    const eyeColors = ['3b2219', '6d4c41', '7d6b38', '2e7d32', '1565c0', 'b45309', '1a1a1a', '64748b'];
+    const bodyTypes = ['slim', 'average', 'plump'];
+    const outfits = OUTFIT_MODELS.map(o => o.id);
+    const hairs = ['short01', 'short02', 'short03', 'short04', 'short05', 'short06', 'short08', 'short12', 'short16', 'long01', 'long02', 'long03', 'long04', 'long05', 'long06', 'long10', 'long16', 'long26'];
     const hairColors = ['0e0e0e', '562306', '6a4e35', '796a45', 'b9a05f', 'e5d7a3', 'ab2a18', 'cb6820', 'afafaf', '3eac2c', '592454'];
     const moods = ['variant01', 'variant02', 'variant03', 'variant04', 'variant05', 'variant06', 'variant07', 'variant08', 'variant09', 'variant10'];
     const eyes = ['variant01', 'variant02', 'variant03', 'variant04', 'variant05', 'variant06', 'variant07', 'variant08'];
@@ -1527,6 +1787,9 @@ window.TDAMessaging = (function() {
 
     currentEditingAvatarConfig = {
       skinColor: skins[Math.floor(Math.random() * skins.length)],
+      eyeColor: eyeColors[Math.floor(Math.random() * eyeColors.length)],
+      bodyType: bodyTypes[Math.floor(Math.random() * bodyTypes.length)],
+      outfit: outfits[Math.floor(Math.random() * outfits.length)],
       hair: hairs[Math.floor(Math.random() * hairs.length)],
       hairColor: hairColors[Math.floor(Math.random() * hairColors.length)],
       mood: moods[Math.floor(Math.random() * moods.length)],
@@ -1693,8 +1956,9 @@ window.TDAMessaging = (function() {
     // Liste Görünümü: Sadece sol tarafta küçük yuvarlak Bitmoji, kalın Ad Soyad, hemen altında hafif gri ülke.
     // Mektup metni/özeti KESİNLİKLE görünmez. Tıklanınca popup modal açılır.
     listEl.innerHTML = items.map(l => {
-      const isUnread = !l.read && l.status === 'delivered';
+      const isUnread = !l.read && (l.status === 'delivered' || l.status === 'pending');
       const isTransit = l.status === 'in_transit';
+      const isPending = l.status === 'pending';
       const avatarSrc = l.fromAvatar || generateAvatarUrl();
       const dateStr = new Date(l.createdAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' });
 
@@ -1711,6 +1975,7 @@ window.TDAMessaging = (function() {
             </div>
           </div>
           <div class="letter-dm-right">
+            ${isPending ? '<span class="letter-dm-pending-badge">🛡️ Onay Bekliyor</span>' : ''}
             ${isTransit ? '<span class="letter-dm-transit-badge">🦅 Yolda</span>' : ''}
             <span class="letter-dm-date">${dateStr}</span>
             <span class="letter-dm-chevron">›</span>
@@ -1822,13 +2087,49 @@ window.TDAMessaging = (function() {
       if (bodyEl) bodyEl.textContent = letter.body || '';
 
       if (photosSection && photosGrid) {
-        if (letter.photos && letter.photos.length) {
+        if (!isPending && letter.photos && letter.photos.length) {
           photosSection.style.display = 'block';
           photosGrid.innerHTML = letter.photos.map(src => `<img src="${src}" alt="Ek Fotoğraf" onclick="window.open('${src}')">`).join('');
         } else {
           photosSection.style.display = 'none';
           photosGrid.innerHTML = '';
         }
+      }
+
+      // =========================================================================
+      // === 5. İLK MEKTUP GÜVENLİK VE TANIŞMA ONAY (CONSENT) DUVARI ===
+      // İlk mektubun statüsü "pending" ise, kullanıcı "Kabul Et" butonuna basana
+      // kadar yanıtlama alanı ve fotoğraf gönderme özellikleri kesinlikle kapalıdır.
+      // "Reddet" tıklandığında mektup ekrandan animasyonla silinir ve kullanıcı engellenir.
+      // =========================================================================
+      const consentCard = document.getElementById('letterConsentCard');
+      const consentDesc = document.getElementById('letterConsentDesc');
+      const replyBtn = document.getElementById('btnReplyFromModal');
+      const pendingWarning = document.getElementById('letterPendingWarning');
+
+      if (consentCard) {
+        consentCard.style.display = isPending ? 'block' : 'none';
+        if (consentDesc && isPending) {
+          consentDesc.textContent = `${letter.fromName} (${letter.fromCountry}) sizinle ilk kez mektup arkadaşı olmak istiyor. Topluluk güvenliğimiz için tanışma talebini onaylayabilir veya reddedebilirsiniz. Onaylayana kadar yanıt yazma kapalıdır.`;
+        }
+      }
+
+      if (replyBtn) {
+        if (isPending) {
+          replyBtn.disabled = true;
+          replyBtn.style.opacity = '0.4';
+          replyBtn.style.cursor = 'not-allowed';
+          replyBtn.title = 'Mektuba yanıt yazabilmek için önce yukarıdaki tanışma talebini Kabul Etmelisiniz.';
+        } else {
+          replyBtn.disabled = false;
+          replyBtn.style.opacity = '1';
+          replyBtn.style.cursor = 'pointer';
+          replyBtn.title = '';
+        }
+      }
+
+      if (pendingWarning) {
+        pendingWarning.style.display = isPending ? 'block' : 'none';
       }
 
       modal.style.display = 'flex';
@@ -1900,6 +2201,96 @@ window.TDAMessaging = (function() {
     }
   }
 
+  // --- 20.1 İLK MEKTUP KABUL / RED FONKSİYONLARI (CONSENT MEKANİZMASI) ---
+  function handleAcceptConsent() {
+    if (!activeViewingLetter) return;
+    const letters = getStoredLetters();
+    const target = letters.find(l => l.id === activeViewingLetter.id);
+    if (!target) return;
+
+    // Durum geçişi: 'pending' -> 'delivered' (kabul edildi)
+    target.status = 'delivered';
+    activeViewingLetter.status = 'delivered';
+    saveLetters(letters);
+    setIntroductionConsent(target.fromStudentId, 'accepted');
+
+    // UI Güncellemesi: Onay kartını animasyonla gizle
+    const consentCard = document.getElementById('letterConsentCard');
+    if (consentCard) {
+      consentCard.style.transition = 'all 0.3s ease';
+      consentCard.style.opacity = '0';
+      setTimeout(() => { 
+        consentCard.style.display = 'none'; 
+        consentCard.style.opacity = '1'; 
+      }, 300);
+    }
+
+    // Yanıt butonunu aktif yap ve altın ışıltısı ver
+    const replyBtn = document.getElementById('btnReplyFromModal');
+    if (replyBtn) {
+      replyBtn.disabled = false;
+      replyBtn.style.opacity = '1';
+      replyBtn.style.cursor = 'pointer';
+      replyBtn.title = '';
+      replyBtn.style.boxShadow = '0 0 18px rgba(22, 163, 74, 0.6)';
+      setTimeout(() => { replyBtn.style.boxShadow = ''; }, 2000);
+    }
+
+    const pendingWarning = document.getElementById('letterPendingWarning');
+    if (pendingWarning) pendingWarning.style.display = 'none';
+
+    // Fotoğraf galerisini aç (varsa)
+    const photosSection = document.getElementById('letterModalPhotosSection');
+    const photosGrid = document.getElementById('letterModalPhotosGrid');
+    if (photosSection && photosGrid && target.photos && target.photos.length) {
+      photosSection.style.display = 'block';
+      photosGrid.innerHTML = target.photos.map(src => `<img src="${src}" alt="Ek Fotoğraf" onclick="window.open('${src}')">`).join('');
+    }
+
+    renderInbox();
+    notifyUnread();
+    alert(`✓ ${target.fromName} ile mektup arkadaşlığı başarıyla kabul edildi! Artık dilediğiniz gibi yanıt yazabilir ve kültürel anılarınızı paylaşabilirsiniz.`);
+  }
+
+  function handleRejectConsent() {
+    if (!activeViewingLetter) return;
+    const senderName = activeViewingLetter.fromName;
+    const senderId = activeViewingLetter.fromStudentId;
+    const letterId = activeViewingLetter.id;
+
+    if (!confirm(`${senderName} adlı kullanıcının mektup arkadaşlığı talebini reddetmek ve bu kullanıcıyı engellemek istediğinize emin misiniz?`)) {
+      return;
+    }
+
+    const letters = getStoredLetters();
+    const target = letters.find(l => l.id === letterId);
+    if (target) {
+      target.status = 'rejected';
+      saveLetters(letters);
+    }
+
+    // Kullanıcıyı engelle ve onay haritasına 'rejected' kaydet
+    blockPenpal(senderId);
+    setIntroductionConsent(senderId, 'rejected');
+
+    closeLetterModal();
+
+    // Satırı animasyonla kaydırarak gelen kutusundan kaldır
+    const rowEl = document.querySelector(`.letter-dm-row[data-letter-id="${letterId}"]`);
+    if (rowEl) {
+      rowEl.classList.add('rejecting');
+      setTimeout(() => {
+        renderInbox();
+        notifyUnread();
+      }, 450);
+    } else {
+      renderInbox();
+      notifyUnread();
+    }
+
+    alert(`Mektup arkadaşlığı reddedildi ve ${senderName} engellendi.`);
+  }
+
   function switchPane(paneId) {
     const panes = ['paneInbox', 'paneSent', 'paneCompose', 'paneReader'];
     panes.forEach(id => {
@@ -1913,6 +2304,10 @@ window.TDAMessaging = (function() {
 
   // --- 21. ARAYÜZ OLAYLARI VE BAŞLATICI ---
   function bindUI() {
+    // İlk Mektup Onay Duvarı Dinleyicileri
+    document.getElementById('btnAcceptConsent')?.addEventListener('click', handleAcceptConsent);
+    document.getElementById('btnRejectConsent')?.addEventListener('click', handleRejectConsent);
+
     // Sol Gezinme Butonları
     document.getElementById('btnShowInbox')?.addEventListener('click', () => {
       switchPane('paneInbox');
@@ -1953,8 +2348,12 @@ window.TDAMessaging = (function() {
       if (e.target.id === 'letterReadModal') closeLetterModal();
     });
     document.getElementById('btnReplyFromModal')?.addEventListener('click', () => {
-      closeLetterModal();
       if (!activeViewingLetter) return;
+      if (activeViewingLetter.status === 'pending') {
+        alert('Mektuba yanıt yazabilmek için lütfen önce yukarıdaki mektup arkadaşlığı talebini Kabul Ediniz.');
+        return;
+      }
+      closeLetterModal();
       const targetPenpal = PENPAL_PROFILES.find(p => p.studentId === activeViewingLetter.fromStudentId) || {
         id: 'reply-p',
         name: activeViewingLetter.fromName,

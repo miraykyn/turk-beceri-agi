@@ -2203,13 +2203,69 @@
 }
 
 /* ==========================================================================
-   23. YENİ AVATAR ÖZELLİKLERİ: PORTRAIT TAM VÜCUT, VÜCUT TİPİ & 20 KIYAFET
+   23. YENİ AVATAR ÖZELLİKLERİ: PORTRAIT TAM VÜCUT, VÜCUT TİPİ & SEKME YAPISI
    ========================================================================== */
 
-/* Dikey Dikdörtgen (Portrait) Önizleme Sahnesi */
+/* Sekme Başlıkları ve Butonları (Yüz Tasarımı & Vücut / Giyim) */
+.avatar-tabs-header {
+  display: flex;
+  gap: 8px;
+  background: #f1f5f9;
+  padding: 5px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 1.5px solid #e2e8f0;
+}
+
+.avatar-tab-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 14px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #64748b;
+  background: transparent;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  user-select: none;
+}
+
+.avatar-tab-btn .avatar-tab-icon {
+  font-size: 16px;
+}
+
+.avatar-tab-btn:hover {
+  color: #102343;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.avatar-tab-btn.active {
+  background: #ffffff;
+  color: #102343;
+  box-shadow: 0 4px 12px rgba(16, 35, 67, 0.08);
+}
+
+.avatar-tab-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: fadeInPane 0.25s ease-out;
+}
+
+@keyframes fadeInPane {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Dikey Dikdörtgen (Portrait) Tam Vücut Önizleme Sahnesi */
 .avatar-portrait-stage {
   width: 220px;
-  height: 310px;
+  height: 365px;
   border-radius: 22px;
   border: 2.5px solid #d4af37;
   background: radial-gradient(circle at 50% 25%, #ffdfbf 0%, #fed7aa 65%, #f6ecd4 100%);
@@ -2225,9 +2281,9 @@
 
 /* Karakter Başı (DiceBear Adventurer Baş Bölgesi) */
 .avatar-head-stage {
-  width: 185px;
-  height: 185px;
-  margin-top: 10px;
+  width: 135px;
+  height: 135px;
+  margin-top: 6px;
   position: relative;
   z-index: 2;
   display: flex;
@@ -2245,13 +2301,13 @@
   filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.1));
 }
 
-/* Karakter Omuzları, Gövdesi ve Seçilen Kıyafet (Full Torso & Garment) */
+/* Karakter Tam Vücut (Omuzlar, Gövde, Alt Giyim ve Ayakkabılar) */
 .avatar-torso-stage {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 165px;
+  height: 250px;
   z-index: 1;
   display: flex;
   align-items: flex-end;
@@ -2276,7 +2332,7 @@
 
 /* Vücut Tipi (Body Type) Dönüşümleri: Torso & Omuzlar */
 .avatar-portrait-stage.body-slim .avatar-outfit-render svg {
-  transform: scale(0.92, 1.01);
+  transform: scale(0.94, 1.01);
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.1));
 }
 
@@ -2286,7 +2342,7 @@
 }
 
 .avatar-portrait-stage.body-plump .avatar-outfit-render svg {
-  transform: scale(1.05, 0.99);
+  transform: scale(1.04, 0.99);
   filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.14));
 }
 

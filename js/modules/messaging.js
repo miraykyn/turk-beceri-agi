@@ -686,24 +686,25 @@ window.TDAMessaging = (function() {
   }
 
   // --- 8. KULLANICI BİTMOJİ / AVATAR MODELİ (VARSAYILAN INITIAL STATE) ---
-  // KRİTİK DÜZELTME:
-  // 1. Ten Rengi (skinColor): Varsayılan değer kesinlikle açık/beyaz ten rengi (#F8D9CE) olarak yapılandırılmıştır.
-  // 2. Göz Rengi (eyeColor): 8 doğal iris rengi arasından doğal Koyu Kahverengi (#3b2219).
-  // 3. Vücut Tipi (bodyType): 'average' (Standart/Atletik), 'slim' (Zayıf) veya 'plump' (Geniş/Dolgun).
-  // 4. Kıyafet (outfit): 20 model arasından modern 'casual_tshirt' (Bisiklet Yaka Basic Tişört).
   const DEFAULT_AVATAR_CONFIG = {
     skinColor: 'f8d9ce', // Doğal Açık / Beyaz Ten (#F8D9CE)
     skinTone: 'f8d9ce',  // Geriye dönük uyumluluk
     eyeColor: '3b2219',  // Koyu Kahverengi Doğal İris (#3b2219)
-    bodyType: 'average', // Standart / Orta Vücut Tipi ('slim' | 'average' | 'plump')
-    outfit: 'basic_tshirt', // Modern Gardıroptan Basic T-Shirt
-    outfitColor: '102343', // Gece Mavisi / Lacivert Kumaş Rengi
-    backgroundColor: 'ffdfbf', // Parşömen Beji Sahne Fonu
+    hairColor: '0e0e0e', // Kuzuni Siyah Saç (Kaşlar da bu renkle senkronize)
     hair: 'long01',      // Saç Modeli
-    hairColor: '0e0e0e', // Kuzuni Siyah Saç
     mood: 'variant01',    // Samimi Tebessüm
     eyes: 'variant01',    // Işıltılı Güleç Gözler
-    accessories: 'none'   // Aksesuarsız
+    accessories: 'none',  // Aksesuarsız
+    bodyType: 'average', // Standart / Orta Vücut Tipi ('slim' | 'average' | 'plump')
+    top: 'basic_tshirt', // Üst Giyim: Basic T-Shirt
+    topColor: '102343',  // Gece Mavisi / Lacivert Kumaş Rengi
+    bottom: 'pants',     // Alt Giyim: Pantolon
+    bottomColor: '1e293b', // Koyu Füme / Kömür Rengi
+    shoes: 'classic_sneaker', // Ayakkabı: Klasik Sneaker
+    shoesColor: 'ffffff', // Beyaz Spor Ayakkabı
+    backgroundColor: 'ffdfbf', // Parşömen Beji Sahne Fonu
+    outfit: 'basic_tshirt', // Geriye dönük uyumluluk
+    outfitColor: '102343'   // Geriye dönük uyumluluk
   };
 
   function getMyAvatarConfig() {
@@ -727,23 +728,50 @@ window.TDAMessaging = (function() {
         merged.eyeColor = '3b2219';
       }
 
+      // Saç rengi doğrulama
+      if (!merged.hairColor || merged.hairColor.length !== 6) {
+        merged.hairColor = '0e0e0e';
+      }
+
       // Vücut tipi doğrulama
       if (!['slim', 'average', 'plump'].includes(merged.bodyType)) {
         merged.bodyType = 'average';
       }
 
-      // Kıyafet modeli eşleme (Eski ID'leri yeni modern gardıroba dönüştür)
-      const modernOutfits = ['basic_tshirt', 'hoodie', 'sweatshirt', 'bomber_jacket', 'polo_shirt', 'turtleneck_sweater'];
-      if (!modernOutfits.includes(merged.outfit)) {
-        if (merged.outfit === 'casual_tshirt') merged.outfit = 'basic_tshirt';
-        else if (merged.outfit === 'casual_hoodie') merged.outfit = 'hoodie';
-        else if (merged.outfit === 'knit_sweater') merged.outfit = 'turtleneck_sweater';
-        else merged.outfit = 'basic_tshirt';
+      // Üst Giyim doğrulama & geriye dönük eşleme
+      const validTops = ['basic_tshirt', 'bomber_jacket', 'polo_shirt', 'turtleneck_sweater'];
+      let topItem = merged.top || merged.outfit || 'basic_tshirt';
+      if (!validTops.includes(topItem)) {
+        if (topItem === 'casual_tshirt') topItem = 'basic_tshirt';
+        else if (topItem === 'knit_sweater') topItem = 'turtleneck_sweater';
+        else topItem = 'basic_tshirt';
+      }
+      merged.top = topItem;
+      merged.outfit = topItem;
+
+      if (!merged.topColor || merged.topColor.length !== 6) {
+        merged.topColor = merged.outfitColor || '102343';
+      }
+      merged.outfitColor = merged.topColor;
+
+      // Alt Giyim doğrulama
+      const validBottoms = ['pants', 'skirt', 'shorts'];
+      if (!validBottoms.includes(merged.bottom)) {
+        merged.bottom = 'pants';
+      }
+      if (!merged.bottomColor || merged.bottomColor.length !== 6) {
+        merged.bottomColor = '1e293b';
       }
 
-      if (!merged.outfitColor || merged.outfitColor.length !== 6) {
-        merged.outfitColor = '102343';
+      // Ayakkabı doğrulama
+      const validShoes = ['classic_sneaker', 'chunky_sneaker', 'high_top_sneaker'];
+      if (!validShoes.includes(merged.shoes)) {
+        merged.shoes = 'classic_sneaker';
       }
+      if (!merged.shoesColor || merged.shoesColor.length !== 6) {
+        merged.shoesColor = 'ffffff';
+      }
+
       if (!merged.backgroundColor || merged.backgroundColor.length !== 6) {
         merged.backgroundColor = 'ffdfbf';
       }
@@ -1459,189 +1487,333 @@ window.TDAMessaging = (function() {
     }
   ];
 
-  // 2. Modern Gardırop: 6 Klasik ve Modern Parça
-  const OUTFIT_MODELS = [
+  // 2. Modern Gardırop Parçaları (Üst Giyim, Alt Giyim, Ayakkabı)
+  const TOP_MODELS = [
     { 
       id: 'basic_tshirt', 
       label: 'Basic T-Shirt', 
-      category: 'Modern', 
+      category: 'Üst Giyim', 
       iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7l4 3h6l4-3 5 4-3 5-3-2v12H10V14l-3 2-3-5 5-4z"/></svg>` 
-    },
-    { 
-      id: 'hoodie', 
-      label: 'Kapüşonlu (Hoodie)', 
-      category: 'Modern', 
-      iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 8c0-3 3-5 6-5s6 2 6 5l5 3-3 5-3-2v13H8V14l-3 2-3-5 5-3h3zm6 2v7"/></svg>` 
-    },
-    { 
-      id: 'sweatshirt', 
-      label: 'Sweatshirt', 
-      category: 'Modern', 
-      iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7l4 2h6l4-2 5 4-3 5-3-1v13H10V15l-3 1-3-5 5-4z"/><path d="M14 9l2 3 2-3"/></svg>` 
     },
     { 
       id: 'bomber_jacket', 
       label: 'Bomber Ceket', 
-      category: 'Modern', 
+      category: 'Üst Giyim', 
       iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l4 2h8l4-2 5 4-3 5-2-1v12H8V16l-2 1-3-5 5-4z"/><line x1="16" y1="10" x2="16" y2="28"/></svg>` 
     },
     { 
       id: 'polo_shirt', 
       label: 'Klasik Polo T-Shirt', 
-      category: 'Modern', 
+      category: 'Üst Giyim', 
       iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7l4 3h6l4-3 5 4-3 5-3-2v12H10V14l-3 2-3-5 5-4z"/><path d="M13 10l3 5 3-5"/></svg>` 
     },
     { 
       id: 'turtleneck_sweater', 
       label: 'Boğazlı Triko Kazak', 
-      category: 'Kışlık', 
+      category: 'Üst Giyim', 
       iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5h8v4h-8z"/><path d="M8 9l4 2h8l4-2 5 4-3 5-2-1v12H8V17l-2 1-3-5 5-4z"/></svg>` 
     }
   ];
 
-  // 3. Karakter Gövdesi ve Seçilen Kıyafetin SVG Generator'ı
-  function renderTorsoSVG(outfitId, bodyType, skinColor, outfitColor) {
-    const skin = (skinColor || 'f8d9ce').replace('#', '');
-    const cColor = (outfitColor || '102343').replace('#', '');
-    const bType = bodyType || 'average';
+  const BOTTOM_MODELS = [
+    {
+      id: 'pants',
+      label: 'Klasik Pantolon',
+      category: 'Alt Giyim',
+      iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h14v7l-2 17h-4l-1-14-1 14h-4l-2-17z"/></svg>`
+    },
+    {
+      id: 'skirt',
+      label: 'Pileli Etek',
+      category: 'Alt Giyim',
+      iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 6h10l4 18H7z"/><line x1="16" y1="6" x2="16" y2="24"/></svg>`
+    },
+    {
+      id: 'shorts',
+      label: 'Rahat Şort',
+      category: 'Alt Giyim',
+      iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h14v8l-2 7h-4l-1-6-1 6h-4l-2-7z"/></svg>`
+    }
+  ];
 
-    // Vücut tipine göre orantılı ve estetik omuz/gövde hatları (Kutuyu taşırmaz)
-    let shoulderPoints = 'M32 180 L44 52 C64 32 90 28 120 28 C150 28 176 32 196 52 L208 180 Z';
+  const SHOES_MODELS = [
+    {
+      id: 'classic_sneaker',
+      label: 'Klasik Sneaker',
+      category: 'Ayakkabı',
+      iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h24v4H4z"/><path d="M4 22c0-5 3-7 8-7h6l6 7H4z"/><line x1="12" y1="18" x2="18" y2="18"/></svg>`
+    },
+    {
+      id: 'chunky_sneaker',
+      label: 'Kalın Tabanlı Spor Ayakkabı',
+      category: 'Ayakkabı',
+      iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h26v6H3z"/><path d="M3 21c0-6 4-8 9-8h7l7 8H3z"/><path d="M7 27c2 2 4 2 6 0 2 2 4 2 6 0 2 2 4 2 6 0"/></svg>`
+    },
+    {
+      id: 'high_top_sneaker',
+      label: 'Yüksek Bilekli Basketbol Ayakkabısı',
+      category: 'Ayakkabı',
+      iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h24v4H4z"/><path d="M10 8h7v7l7 7H4c0-5 2-8 6-14z"/><circle cx="13" cy="13" r="2"/></svg>`
+    }
+  ];
+
+  // Geriye dönük uyumluluk için alias
+  const OUTFIT_MODELS = TOP_MODELS;
+
+  // 3. Karakter Tam Vücut (Üst Giyim + Alt Giyim + Ayakkabı) SVG Generator'ı
+  function renderFullBodySVG(config) {
+    const skin = (config.skinColor || 'f8d9ce').replace('#', '');
+    const tColor = (config.topColor || '102343').replace('#', '');
+    const bColor = (config.bottomColor || '1e293b').replace('#', '');
+    const sColor = (config.shoesColor || 'ffffff').replace('#', '');
+    const bType = config.bodyType || 'average';
+    const topId = config.topId || config.top || 'basic_tshirt';
+    const bottomId = config.bottomId || config.bottom || 'pants';
+    const shoesId = config.shoesId || config.shoes || 'classic_sneaker';
+
+    // Vücut tipine göre orantılı, estetik ve kutuyu taşırmayan omuz/bel koordinatları
+    let shoulderPoints = 'M40 114 L48 34 C66 22 92 18 120 18 C148 18 174 22 192 34 L200 114 Z';
+    let pantsLeft = 'M72 114 L117 114 L112 205 L78 205 Z';
+    let pantsRight = 'M123 114 L168 114 L162 205 L128 205 Z';
+    let skirtPoints = 'M72 114 L168 114 L180 164 L60 164 Z';
+    let shortsLeft = 'M72 114 L117 114 L114 154 L74 154 Z';
+    let shortsRight = 'M123 114 L168 114 L166 154 L126 154 Z';
+    let bareLegs = `
+      <path d="M82 154 L108 154 L104 205 L86 205 Z" fill="#${skin}"/>
+      <path d="M132 154 L158 154 L154 205 L136 205 Z" fill="#${skin}"/>
+    `;
+
     if (bType === 'slim') {
-      shoulderPoints = 'M44 180 L54 55 C70 38 93 34 120 34 C147 34 170 38 186 55 L196 180 Z';
+      shoulderPoints = 'M50 114 L56 36 C72 24 94 20 120 20 C146 20 168 24 184 36 L190 114 Z';
+      pantsLeft = 'M78 114 L117 114 L112 205 L82 205 Z';
+      pantsRight = 'M123 114 L162 114 L158 205 L128 205 Z';
+      skirtPoints = 'M78 114 L162 114 L174 164 L66 164 Z';
+      shortsLeft = 'M78 114 L117 114 L114 154 L80 154 Z';
+      shortsRight = 'M123 114 L162 114 L160 154 L126 154 Z';
+      bareLegs = `
+        <path d="M86 154 L108 154 L104 205 L88 205 Z" fill="#${skin}"/>
+        <path d="M132 154 L154 154 L152 205 L134 205 Z" fill="#${skin}"/>
+      `;
     } else if (bType === 'plump') {
-      shoulderPoints = 'M24 180 L36 50 C58 30 88 26 120 26 C152 26 182 30 204 50 L216 180 Z';
+      // Geniş yapı: Dengeli, estetik ve kart sınırlarını koruyan ölçüler (Taşma yapmaz)
+      shoulderPoints = 'M30 114 L40 32 C60 19 88 16 120 16 C152 16 180 19 200 32 L210 114 Z';
+      pantsLeft = 'M66 114 L118 114 L114 205 L74 205 Z';
+      pantsRight = 'M122 114 L174 114 L166 205 L126 205 Z';
+      skirtPoints = 'M66 114 L174 114 L188 164 L52 164 Z';
+      shortsLeft = 'M66 114 L118 114 L115 154 L68 154 Z';
+      shortsRight = 'M122 114 L174 114 L172 154 L125 154 Z';
+      bareLegs = `
+        <path d="M78 154 L108 154 L104 205 L82 205 Z" fill="#${skin}"/>
+        <path d="M132 154 L162 154 L158 205 L136 205 Z" fill="#${skin}"/>
+      `;
     }
 
-    let garmentDetails = '';
-
-    switch(outfitId) {
-      case 'hoodie':
-      case 'casual_hoodie':
-        garmentDetails = `
-          <!-- Kapüşon İç/Arka Kıvrımı (Doğal Gölgeli Döküm) -->
-          <path d="M84 20 C92 48 114 56 120 56 C126 56 148 48 156 20 C146 14 94 14 84 20 Z" fill="rgba(0,0,0,0.25)"/>
-          
-          <!-- Kapüşon Ön Dökümlü Yakası (Geniş & Rahat Dökümlü) -->
-          <path d="M76 22 C84 56 108 68 120 68 C132 68 156 56 164 22 C148 42 92 42 76 22 Z" fill="rgba(255,255,255,0.18)" stroke="rgba(0,0,0,0.2)" stroke-width="2"/>
-          <path d="M80 24 C90 52 110 60 120 60 C130 60 150 52 160 24" fill="none" stroke="rgba(0,0,0,0.12)" stroke-width="3"/>
-          
-          <!-- Kapüşon İpleri (Beyaz Kordon & Altın Uçluklar) -->
-          <line x1="110" y1="58" x2="108" y2="108" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round"/>
-          <rect x="106.5" y="104" width="3" height="7" rx="1.5" fill="#d4af37"/>
-          
-          <line x1="130" y1="58" x2="132" y2="104" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round"/>
-          <rect x="130.5" y="100" width="3" height="7" rx="1.5" fill="#d4af37"/>
-          
-          <!-- Kanguru Cep -->
-          <path d="M74 146 L86 118 L154 118 L166 146 Z" fill="rgba(0,0,0,0.12)" stroke="rgba(0,0,0,0.18)" stroke-width="1.5"/>
-          <line x1="86" y1="118" x2="80" y2="136" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-linecap="round"/>
-          <line x1="154" y1="118" x2="160" y2="136" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-linecap="round"/>
-        `;
-        break;
-
-      case 'sweatshirt':
-        garmentDetails = `
-          <!-- Kalın Ribana Bisiklet Yaka -->
-          <path d="M94 28 C104 46 136 46 146 28" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="6" stroke-linecap="round"/>
-          <path d="M94 28 C104 46 136 46 146 28" fill="none" stroke="rgba(0,0,0,0.15)" stroke-width="1.5"/>
-          
-          <!-- Klasik Sweatshirt V-Stitch (Üçgen Dikiş) -->
-          <polygon points="113,44 127,44 120,55" fill="rgba(0,0,0,0.15)"/>
-          <path d="M113 44 L120 55 L127 44" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
-          
-          <!-- Raglan Kol Dikişleri -->
-          <line x1="94" y1="28" x2="62" y2="76" stroke="rgba(0,0,0,0.16)" stroke-width="2" stroke-linecap="round"/>
-          <line x1="146" y1="28" x2="178" y2="76" stroke="rgba(0,0,0,0.16)" stroke-width="2" stroke-linecap="round"/>
-          
-          <!-- Göğüs Kumaş Detayı -->
-          <path d="M78 100 Q120 90 162 100" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="2"/>
-        `;
-        break;
-
+    // --- 1. Üst Giyim Detayları ---
+    let topDetails = '';
+    switch(topId) {
       case 'bomber_jacket':
-        garmentDetails = `
+        topDetails = `
           <!-- Dik Triko Ribana Yaka -->
-          <path d="M88 30 Q120 48 152 30" fill="none" stroke="#1e293b" stroke-width="9" stroke-linecap="round"/>
-          <path d="M88 30 Q120 48 152 30" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-linecap="round"/>
+          <path d="M92 20 Q120 34 148 20" fill="none" stroke="#1e293b" stroke-width="7" stroke-linecap="round"/>
+          <path d="M92 20 Q120 34 148 20" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-linecap="round"/>
           
           <!-- Metal Ön Fermuar & Fermuar Ucu -->
-          <line x1="120" y1="36" x2="120" y2="180" stroke="#cbd5e1" stroke-width="3.5"/>
-          <line x1="120" y1="36" x2="120" y2="180" stroke="#475569" stroke-width="1"/>
-          <rect x="117" y="56" width="6" height="12" rx="2" fill="#d4af37" stroke="#78350f" stroke-width="0.8"/>
+          <line x1="120" y1="24" x2="120" y2="114" stroke="#cbd5e1" stroke-width="3"/>
+          <rect x="117.5" y="44" width="5" height="10" rx="1.5" fill="#d4af37" stroke="#78350f" stroke-width="0.8"/>
           
-          <!-- Sol Kol / Göğüs Yardımcı Cebi -->
-          <rect x="68" y="70" width="22" height="30" rx="3" fill="rgba(0,0,0,0.18)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-          <line x1="72" y1="74" x2="86" y2="74" stroke="#cbd5e1" stroke-width="2"/>
+          <!-- Sol Kol Yardımcı Cep -->
+          <rect x="52" y="55" width="16" height="22" rx="2" fill="rgba(0,0,0,0.2)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          <line x1="55" y1="58" x2="65" y2="58" stroke="#cbd5e1" stroke-width="1.8"/>
           
           <!-- Yan Cepler -->
-          <line x1="68" y1="130" x2="94" y2="152" stroke="rgba(0,0,0,0.25)" stroke-width="3" stroke-linecap="round"/>
-          <line x1="172" y1="130" x2="146" y2="152" stroke="rgba(0,0,0,0.25)" stroke-width="3" stroke-linecap="round"/>
+          <line x1="62" y1="88" x2="82" y2="102" stroke="rgba(0,0,0,0.25)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="178" y1="88" x2="158" y2="102" stroke="rgba(0,0,0,0.25)" stroke-width="2.5" stroke-linecap="round"/>
         `;
         break;
 
       case 'polo_shirt':
-        garmentDetails = `
+        topDetails = `
           <!-- Beyaz Polo Yaka Kanatları -->
-          <polygon points="86,28 120,48 108,56 80,34" fill="#ffffff" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
-          <polygon points="154,28 120,48 132,56 160,34" fill="#ffffff" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+          <polygon points="90,18 120,34 110,40 84,24" fill="#ffffff" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+          <polygon points="150,18 120,34 130,40 156,24" fill="#ffffff" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
           
           <!-- Düğme Patı (Placket) -->
-          <rect x="114" y="48" width="12" height="46" rx="2" fill="#f8fafc" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
-          <!-- Düğmeler -->
-          <circle cx="120" cy="58" r="2.5" fill="#64748b" stroke="#334155" stroke-width="0.5"/>
-          <circle cx="120" cy="74" r="2.5" fill="#64748b" stroke="#334155" stroke-width="0.5"/>
-          <circle cx="120" cy="88" r="2.5" fill="#64748b" stroke="#334155" stroke-width="0.5"/>
+          <rect x="115" y="34" width="10" height="34" rx="2" fill="#f8fafc" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
+          <circle cx="120" cy="42" r="2" fill="#64748b"/>
+          <circle cx="120" cy="54" r="2" fill="#64748b"/>
         `;
         break;
 
       case 'turtleneck_sweater':
       case 'knit_sweater':
-        garmentDetails = `
+        topDetails = `
           <!-- Katlı Boğazlı Yaka (Turtleneck Roll) -->
-          <rect x="94" y="6" width="52" height="38" rx="5" fill="#${cColor}" filter="brightness(0.9)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
-          <line x1="102" y1="8" x2="102" y2="42" stroke="rgba(255,255,255,0.2)" stroke-width="1.8"/>
-          <line x1="111" y1="8" x2="111" y2="42" stroke="rgba(255,255,255,0.2)" stroke-width="1.8"/>
-          <line x1="120" y1="8" x2="120" y2="42" stroke="rgba(255,255,255,0.2)" stroke-width="1.8"/>
-          <line x1="129" y1="8" x2="129" y2="42" stroke="rgba(255,255,255,0.2)" stroke-width="1.8"/>
-          <line x1="138" y1="8" x2="138" y2="42" stroke="rgba(255,255,255,0.2)" stroke-width="1.8"/>
-          <path d="M94 25 H146" stroke="rgba(0,0,0,0.18)" stroke-width="1.5"/>
+          <rect x="96" y="2" width="48" height="28" rx="4" fill="#${tColor}" filter="brightness(0.9)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
+          <line x1="104" y1="4" x2="104" y2="28" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+          <line x1="112" y1="4" x2="112" y2="28" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+          <line x1="120" y1="4" x2="120" y2="28" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+          <line x1="128" y1="4" x2="128" y2="28" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+          <line x1="136" y1="4" x2="136" y2="28" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
           
-          <!-- Kazak Örgü / Fitilli Kumaş Dokusu -->
-          <line x1="88" y1="65" x2="88" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
-          <line x1="152" y1="65" x2="152" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
-          <line x1="104" y1="60" x2="104" y2="180" stroke="rgba(0,0,0,0.08)" stroke-width="1.5"/>
-          <line x1="136" y1="60" x2="136" y2="180" stroke="rgba(0,0,0,0.08)" stroke-width="1.5"/>
+          <!-- Triko Örgü Dokusu -->
+          <line x1="84" y1="48" x2="84" y2="114" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+          <line x1="156" y1="48" x2="156" y2="114" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
         `;
         break;
 
       case 'basic_tshirt':
       case 'casual_tshirt':
       default:
-        garmentDetails = `
-          <!-- Yaka Ribana Hattı -->
-          <path d="M95 28 C105 46 135 46 145 28" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="4.5" stroke-linecap="round"/>
-          <path d="M95 28 C105 46 135 46 145 28" fill="none" stroke="rgba(0,0,0,0.18)" stroke-width="1.5" stroke-linecap="round"/>
-          <!-- Göğüs ve Kol Dikiş Çizgileri -->
-          <path d="M68 64 L50 115" stroke="rgba(0,0,0,0.15)" stroke-width="2" stroke-linecap="round"/>
-          <path d="M172 64 L190 115" stroke="rgba(0,0,0,0.15)" stroke-width="2" stroke-linecap="round"/>
-          <path d="M78 95 Q120 84 162 95" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="2"/>
+        topDetails = `
+          <!-- Bisiklet Yaka Ribana Hattı -->
+          <path d="M96 18 C106 32 134 32 144 18" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M96 18 C106 32 134 32 144 18" fill="none" stroke="rgba(0,0,0,0.18)" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M78 68 Q120 60 162 68" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="1.8"/>
+        `;
+        break;
+    }
+
+    // --- 2. Alt Giyim Detayları ---
+    let bottomDetails = '';
+    switch(bottomId) {
+      case 'skirt':
+        bottomDetails = `
+          <!-- Açıkta Kalan Bacaklar (Karakter Ten Renginde) -->
+          ${bareLegs}
+          <!-- Pileli A-Line Etek -->
+          <path d="${skirtPoints}" fill="#${bColor}"/>
+          <line x1="84" y1="114" x2="76" y2="164" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
+          <line x1="102" y1="114" x2="98" y2="164" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
+          <line x1="120" y1="114" x2="120" y2="164" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
+          <line x1="138" y1="114" x2="142" y2="164" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
+          <line x1="156" y1="114" x2="164" y2="164" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
+          <!-- Etek Bel Kemeri -->
+          <rect x="70" y="112" width="100" height="5" fill="rgba(0,0,0,0.15)"/>
+        `;
+        break;
+
+      case 'shorts':
+        bottomDetails = `
+          <!-- Açıkta Kalan Bacaklar (Karakter Ten Renginde) -->
+          ${bareLegs}
+          <!-- Şort Paçaları -->
+          <path d="${shortsLeft}" fill="#${bColor}"/>
+          <path d="${shortsRight}" fill="#${bColor}"/>
+          <!-- Şort Bel Kordonları -->
+          <line x1="117" y1="116" x2="115" y2="128" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="123" y1="116" x2="125" y2="128" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+          <!-- Paça Dikişleri -->
+          <line x1="72" y1="152" x2="116" y2="152" stroke="rgba(255,255,255,0.25)" stroke-width="1.8"/>
+          <line x1="124" y1="152" x2="168" y2="152" stroke="rgba(255,255,255,0.25)" stroke-width="1.8"/>
+        `;
+        break;
+
+      case 'pants':
+      default:
+        bottomDetails = `
+          <!-- Pantolon Sol ve Sağ Paça -->
+          <path d="${pantsLeft}" fill="#${bColor}"/>
+          <path d="${pantsRight}" fill="#${bColor}"/>
+          <!-- Kemer & Altın Toka -->
+          <rect x="70" y="112" width="100" height="6" fill="rgba(0,0,0,0.18)"/>
+          <rect x="114" y="112" width="12" height="6" rx="1.5" fill="#d4af37" stroke="#78350f" stroke-width="0.8"/>
+          <!-- Pat Dikişi -->
+          <line x1="120" y1="118" x2="120" y2="140" stroke="rgba(0,0,0,0.22)" stroke-width="1.5"/>
+        `;
+        break;
+    }
+
+    // --- 3. Ayakkabı Detayları ---
+    let shoesDetails = '';
+    switch(shoesId) {
+      case 'chunky_sneaker':
+        shoesDetails = `
+          <!-- Sol Kalın Taban & Gövde -->
+          <rect x="74" y="222" width="40" height="15" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+          <path d="M76 205 L112 205 L114 222 L74 222 Z" fill="#${sColor}"/>
+          <path d="M80 237 Q94 233 108 237" stroke="#94a3b8" stroke-width="2"/>
+          <line x1="88" y1="212" x2="102" y2="212" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+          
+          <!-- Sağ Kalın Taban & Gövde -->
+          <rect x="126" y="222" width="40" height="15" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+          <path d="M128 205 L164 205 L166 222 L126 222 Z" fill="#${sColor}"/>
+          <path d="M132 237 Q146 233 160 237" stroke="#94a3b8" stroke-width="2"/>
+          <line x1="138" y1="212" x2="152" y2="212" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+        `;
+        break;
+
+      case 'high_top_sneaker':
+        shoesDetails = `
+          <!-- Sol Yüksek Bilekli Basketbol Ayakkabısı -->
+          <path d="M78 190 L110 190 L114 224 L74 224 Z" fill="#${sColor}"/>
+          <rect x="74" y="224" width="40" height="9" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+          <circle cx="86" cy="204" r="5" fill="#ffffff"/>
+          <polygon points="86,201 87,204 90,204 88,206 89,209 86,207 83,209 84,206 82,204 85,204" fill="#dc2626"/>
+          <line x1="94" y1="196" x2="106" y2="200" stroke="#ffffff" stroke-width="1.8"/>
+          <line x1="94" y1="204" x2="106" y2="208" stroke="#ffffff" stroke-width="1.8"/>
+          
+          <!-- Sağ Yüksek Bilekli Basketbol Ayakkabısı -->
+          <path d="M130 190 L162 190 L166 224 L126 224 Z" fill="#${sColor}"/>
+          <rect x="126" y="224" width="40" height="9" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+          <circle cx="154" cy="204" r="5" fill="#ffffff"/>
+          <polygon points="154,201 155,204 158,204 156,206 157,209 154,207 151,209 152,206 150,204 153,204" fill="#dc2626"/>
+          <line x1="134" y1="196" x2="146" y2="200" stroke="#ffffff" stroke-width="1.8"/>
+          <line x1="134" y1="204" x2="146" y2="208" stroke="#ffffff" stroke-width="1.8"/>
+        `;
+        break;
+
+      case 'classic_sneaker':
+      default:
+        shoesDetails = `
+          <!-- Sol Klasik Sneaker -->
+          <rect x="74" y="224" width="38" height="9" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+          <path d="M78 205 L110 205 L112 224 L74 224 Z" fill="#${sColor}"/>
+          <path d="M102 216 Q112 218 112 224 L96 224 Z" fill="#ffffff"/>
+          <line x1="84" y1="212" x2="98" y2="216" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+          <line x1="84" y1="217" x2="98" y2="221" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+          
+          <!-- Sağ Klasik Sneaker -->
+          <rect x="128" y="224" width="38" height="9" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+          <path d="M130 205 L162 205 L166 224 L128 224 Z" fill="#${sColor}"/>
+          <path d="M154 216 Q164 218 166 224 L150 224 Z" fill="#ffffff"/>
+          <line x1="142" y1="212" x2="156" y2="216" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+          <line x1="142" y1="217" x2="156" y2="221" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
         `;
         break;
     }
 
     return `
-      <svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
-        <!-- Boyun Katmanı (Karakter Ten Rengine %100 Uyumlu) -->
-        <path d="M102 0 H138 V48 C138 58 130 65 120 65 C110 65 102 58 102 48 Z" fill="#${skin}"/>
+      <svg viewBox="0 0 240 250" xmlns="http://www.w3.org/2000/svg">
+        <!-- 1. Boyun Katmanı (Ten Rengine Kusursuz Eşitlenmiş) -->
+        <path d="M104 0 H136 V30 C136 38 130 44 120 44 C110 44 104 38 104 30 Z" fill="#${skin}"/>
         
-        <!-- Omuz & Gövde Silüeti -->
-        <path d="${shoulderPoints}" fill="#${cColor}"/>
+        <!-- 2. Omuz ve Üst Gövde Katmanı -->
+        <path d="${shoulderPoints}" fill="#${tColor}"/>
         
-        <!-- Seçilen Kıyafet Çizimi & Yaka/Nakış Detayları -->
-        ${garmentDetails}
+        <!-- 3. Üst Giyim Yaka, Fermuar ve Dikiş Detayları -->
+        ${topDetails}
+
+        <!-- 4. Alt Giyim (Pantolon / Etek / Şort) ve Bacaklar -->
+        ${bottomDetails}
+
+        <!-- 5. Ayakkabılar (Sneakers) -->
+        ${shoesDetails}
       </svg>
     `;
+  }
+
+  // Geriye dönük uyumluluk için renderTorsoSVG alias'ı
+  function renderTorsoSVG(outfitId, bodyType, skinColor, outfitColor) {
+    return renderFullBodySVG({
+      topId: outfitId,
+      topColor: outfitColor,
+      bottomId: 'pants',
+      bottomColor: '1e293b',
+      shoesId: 'classic_sneaker',
+      shoesColor: 'ffffff',
+      bodyType: bodyType,
+      skinColor: skinColor
+    });
   }
 
   // Vücut Tipi Seçici Bileşeni (Görsel Silüet İkonları - Flexbox)
@@ -1672,8 +1844,8 @@ window.TDAMessaging = (function() {
     });
   }
 
-  // Gardırop & Kıyafet Seçici Bileşeni (20 Model, SVG İkonlu Izgara)
-  function renderOutfitSelector(containerId, options, currentValue, onSelect) {
+  // Gardırop & Kıyafet Seçici Bileşeni (Grid Izgarası)
+  function renderGridCardSelector(containerId, options, currentValue, onSelect) {
     const el = document.getElementById(containerId);
     if (!el) return;
     el.className = 'outfit-grid-container';
@@ -1683,7 +1855,7 @@ window.TDAMessaging = (function() {
         <button type="button" 
                 class="outfit-card-btn ${isSel ? 'active' : ''}" 
                 data-val="${opt.id}" 
-                data-tooltip="${opt.label} • ${opt.category}" 
+                data-tooltip="${opt.label} • ${opt.category || ''}" 
                 aria-label="${opt.label}">
           <div class="outfit-card-icon">${opt.iconSvg}</div>
           <span class="outfit-card-badge">${opt.label}</span>
@@ -1700,19 +1872,40 @@ window.TDAMessaging = (function() {
     });
   }
 
+  // Geriye dönük uyumluluk alias
+  const renderOutfitSelector = renderGridCardSelector;
+
   function renderAvatarCustomizerControls() {
-    // =========================================================================
-    // === AVATAR STATE VE VERİ EŞLEŞTİRME (DATA MAPPING) ONARIMI ===
-    // 1. Ten Rengi: Varsayılan olarak açık/beyaz ten rengi (#F8D9CE) yüklenir.
-    //    TÜM ÖNİZLEME İKONLARINDA da açık ten (&skinColor=...) parametresi kullanılır.
-    // 2. Göz Rengi: 8 doğal iris renk tonu swatches olarak sunulur.
-    // 3. Vücut Tipi: 3 silüet ikonu ile omuz ve gövde yapısı anlık güncellenir.
-    // 4. Kıyafet: 20 farklı modern, kültürel ve resmi model gardırobu.
-    // =========================================================================
+    // 1. Sekmeler Arası Geçiş (Yüz Tasarımı & Vücut / Giyim)
+    const tabBtnFace = document.getElementById('tabBtnFace');
+    const tabBtnBody = document.getElementById('tabBtnBody');
+    const paneFace = document.getElementById('paneAvatarFace');
+    const paneBody = document.getElementById('paneAvatarBody');
+
+    if (tabBtnFace && tabBtnBody && paneFace && paneBody) {
+      tabBtnFace.onclick = () => {
+        tabBtnFace.classList.add('active');
+        tabBtnFace.setAttribute('aria-selected', 'true');
+        tabBtnBody.classList.remove('active');
+        tabBtnBody.setAttribute('aria-selected', 'false');
+        paneFace.style.display = 'flex';
+        paneBody.style.display = 'none';
+      };
+
+      tabBtnBody.onclick = () => {
+        tabBtnBody.classList.add('active');
+        tabBtnBody.setAttribute('aria-selected', 'true');
+        tabBtnFace.classList.remove('active');
+        tabBtnFace.setAttribute('aria-selected', 'false');
+        paneFace.style.display = 'none';
+        paneBody.style.display = 'flex';
+      };
+    }
 
     const currentSkin = (currentEditingAvatarConfig.skinColor || 'f8d9ce').replace('#', '');
 
-    // 1. Ten Rengi (Color Swatches - Varsayılan Açık/Beyaz Ten: #F8D9CE)
+    // === TAB 1: YÜZ TASARIMI ===
+    // 1. Ten Rengi (Color Swatches)
     renderColorSwatches('optSkinColor', [
       { id: 'f8d9ce', label: 'Doğal Açık / Beyaz Ten (#F8D9CE)' },
       { id: 'f9c9b6', label: 'Porselen / Açık Pembe Ten' },
@@ -1724,56 +1917,11 @@ window.TDAMessaging = (function() {
     ], currentEditingAvatarConfig.skinColor || 'f8d9ce', val => {
       currentEditingAvatarConfig.skinColor = val;
       currentEditingAvatarConfig.skinTone = val;
-      // İkonlardaki ten rengini de anlık güncelle
       renderAvatarCustomizerControls();
       updateLiveAvatarPreview();
     });
 
-    // 2. Göz Rengi (8 Doğal İris Tonu - Color Swatches)
-    renderColorSwatches('optEyeColor', [
-      { id: '3b2219', label: 'Koyu Kahverengi' },
-      { id: '6d4c41', label: 'Açık Fındık / Kahve' },
-      { id: '7d6b38', label: 'Doğal Ela (Hazel)' },
-      { id: '2e7d32', label: 'Zümrüt Yeşili' },
-      { id: '1565c0', label: 'Okyanus Mavisi' },
-      { id: 'b45309', label: 'Sıcak Kehribar (Amber)' },
-      { id: '1a1a1a', label: 'Derin Kömür Siyahı' },
-      { id: '64748b', label: 'Buz Mavisi / Açık Gri' }
-    ], currentEditingAvatarConfig.eyeColor || '3b2219', val => {
-      currentEditingAvatarConfig.eyeColor = val;
-      updateLiveAvatarPreview();
-    });
-
-    // 3. Vücut Tipi (3 Silüet Seçeneği - Tam Hizalı)
-    renderBodyTypeSelector('optBodyType', BODY_TYPES, currentEditingAvatarConfig.bodyType || 'average', val => {
-      currentEditingAvatarConfig.bodyType = val;
-      updateLiveAvatarPreview();
-    });
-
-    // 4. Kıyafet & Gardırop (6 Modern ve Klasik Parça)
-    renderOutfitSelector('optOutfitModel', OUTFIT_MODELS, currentEditingAvatarConfig.outfit || 'basic_tshirt', val => {
-      currentEditingAvatarConfig.outfit = val;
-      updateLiveAvatarPreview();
-    });
-
-    // 4.1 YENİ ÖZELLİK: Kıyafet Rengi (Bağımsız Kumaş Renk Paleti)
-    renderColorSwatches('optOutfitColor', [
-      { id: '102343', label: 'Gece Mavisi / Lacivert' },
-      { id: '1a1a1a', label: 'Klasik Kömür Siyahı' },
-      { id: 'f8fafc', label: 'Temiz Beyaz / Kar' },
-      { id: '64748b', label: 'Füme / Çelik Grisi' },
-      { id: '7f1d1d', label: 'Bordo / Şarap Kızılı' },
-      { id: '3f6212', label: 'Haki / Zeytin Yeşili' },
-      { id: '78350f', label: 'Sıcak Taba / Kahve' },
-      { id: 'd97706', label: 'Hardal / Kehribar Sarısı' },
-      { id: '0284c7', label: 'Okyanus / Buz Mavisi' },
-      { id: '4338ca', label: 'Kraliyet İndigo / Mor' }
-    ], currentEditingAvatarConfig.outfitColor || '102343', val => {
-      currentEditingAvatarConfig.outfitColor = val;
-      updateLiveAvatarPreview();
-    });
-
-    // 5. Saç Modeli (DiceBear Adventurer Doğrudan Eşleşen 16 Model - Açık Tenli Önizleme)
+    // 2. Saç Modeli
     const hairOptions = [
       { id: 'short01', label: 'Kısa Klasik Kesim' },
       { id: 'short02', label: 'Kısa Katlı Dalga' },
@@ -1803,7 +1951,7 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 6. Saç Renk Tonu (Color Swatches - data-tooltip ile)
+    // 3. Saç Rengi (Kaşlar da bu renkle senkronize boyanır)
     renderColorSwatches('optHairColor', [
       { id: '0e0e0e', label: 'Kuzuni Siyah' },
       { id: '562306', label: 'Koyu Kestane' },
@@ -1821,7 +1969,42 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 7. Yüz İfadesi & Gülümseme (Açık Tenli Önizleme)
+    // 4. Göz Şekli
+    const eyeOptions = [
+      { id: 'variant01', label: 'Doğal Güleç Bakış' },
+      { id: 'variant02', label: 'Canlı Açık Bakış' },
+      { id: 'variant03', label: 'Sakin / Dingin Bakış' },
+      { id: 'variant04', label: 'Dikkatli / Zeki Bakış' },
+      { id: 'variant05', label: 'Neşeli Gülen Gözler' },
+      { id: 'variant06', label: 'Parlak / Meraklı Bakış' },
+      { id: 'variant07', label: 'Masum / Sevecen Bakış' },
+      { id: 'variant08', label: 'Derin / Odaklanmış Bakış' }
+    ].map(opt => ({
+      ...opt,
+      iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&skinColor=${encodeURIComponent(currentSkin)}&eyes=${opt.id}&hairProbability=0&glassesProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="${opt.label}" loading="lazy">`
+    }));
+
+    renderVisualButtons('optEyes', eyeOptions, currentEditingAvatarConfig.eyes, val => {
+      currentEditingAvatarConfig.eyes = val;
+      updateLiveAvatarPreview();
+    });
+
+    // 5. Göz Rengi (Sadece İris - Göz akı ve dış çizgiler korunur)
+    renderColorSwatches('optEyeColor', [
+      { id: '3b2219', label: 'Koyu Kahverengi' },
+      { id: '6d4c41', label: 'Açık Fındık / Kahve' },
+      { id: '7d6b38', label: 'Doğal Ela (Hazel)' },
+      { id: '2e7d32', label: 'Zümrüt Yeşili' },
+      { id: '1565c0', label: 'Okyanus Mavisi' },
+      { id: 'b45309', label: 'Sıcak Kehribar (Amber)' },
+      { id: '1a1a1a', label: 'Derin Kömür Siyahı' },
+      { id: '64748b', label: 'Buz Mavisi / Açık Gri' }
+    ], currentEditingAvatarConfig.eyeColor || '3b2219', val => {
+      currentEditingAvatarConfig.eyeColor = val;
+      updateLiveAvatarPreview();
+    });
+
+    // 6. Yüz İfadesi & Gülümseme
     const moodOptions = [
       { id: 'variant01', label: 'Samimi Tebessüm' },
       { id: 'variant02', label: 'Geniş Gülüş' },
@@ -1843,27 +2026,7 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 8. Göz Şekli & Bakış (Açık Tenli Önizleme)
-    const eyeOptions = [
-      { id: 'variant01', label: 'Doğal Güleç Bakış' },
-      { id: 'variant02', label: 'Canlı Açık Bakış' },
-      { id: 'variant03', label: 'Sakin / Dingin Bakış' },
-      { id: 'variant04', label: 'Dikkatli / Zeki Bakış' },
-      { id: 'variant05', label: 'Neşeli Gülen Gözler' },
-      { id: 'variant06', label: 'Parlak / Meraklı Bakış' },
-      { id: 'variant07', label: 'Masum / Sevecen Bakış' },
-      { id: 'variant08', label: 'Derin / Odaklanmış Bakış' }
-    ].map(opt => ({
-      ...opt,
-      iconHtml: `<img src="https://api.dicebear.com/7.x/adventurer/svg?seed=preview&skinColor=${encodeURIComponent(currentSkin)}&eyes=${opt.id}&hairProbability=0&glassesProbability=0&backgroundColor=transparent" class="avatar-svg-glyph" alt="${opt.label}" loading="lazy">`
-    }));
-
-    renderVisualButtons('optEyes', eyeOptions, currentEditingAvatarConfig.eyes, val => {
-      currentEditingAvatarConfig.eyes = val;
-      updateLiveAvatarPreview();
-    });
-
-    // 9. Gözlük & Aksesuar
+    // 7. Gözlük & Aksesuar
     const accessoryOptions = [
       {
         id: 'none',
@@ -1902,7 +2065,7 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 10. Arka Plan Rengi (Sahne Fonu - Kıyafetten Tamamen Bağımsız)
+    // 8. Arka Plan Rengi (Sahne Fonu - Kıyafetten Tamamen Bağımsız)
     renderColorSwatches('optBackgroundColor', [
       { id: 'ffdfbf', label: 'Parşömen Beji' },
       { id: 'b6e3f4', label: 'Buz / Gökyüzü Mavisi' },
@@ -1918,25 +2081,109 @@ window.TDAMessaging = (function() {
       currentEditingAvatarConfig.backgroundColor = val;
       updateLiveAvatarPreview();
     });
+
+    // === TAB 2: VÜCUT & GİYİM ===
+    // 9. Vücut Tipi (3 Silüet Seçeneği)
+    renderBodyTypeSelector('optBodyType', BODY_TYPES, currentEditingAvatarConfig.bodyType || 'average', val => {
+      currentEditingAvatarConfig.bodyType = val;
+      updateLiveAvatarPreview();
+    });
+
+    // 10. Üst Giyim Modeli (Basic, Bomber, Polo, Boğazlı Kazak)
+    renderGridCardSelector('optTopModel', TOP_MODELS, currentEditingAvatarConfig.top || 'basic_tshirt', val => {
+      currentEditingAvatarConfig.top = val;
+      currentEditingAvatarConfig.outfit = val;
+      updateLiveAvatarPreview();
+    });
+
+    // 11. Üst Giyim Rengi
+    renderColorSwatches('optTopColor', [
+      { id: '102343', label: 'Gece Mavisi / Lacivert' },
+      { id: '1a1a1a', label: 'Klasik Kömür Siyahı' },
+      { id: 'f8fafc', label: 'Temiz Beyaz / Kar' },
+      { id: '64748b', label: 'Füme / Çelik Grisi' },
+      { id: '7f1d1d', label: 'Bordo / Şarap Kızılı' },
+      { id: '3f6212', label: 'Haki / Zeytin Yeşili' },
+      { id: '78350f', label: 'Sıcak Taba / Kahve' },
+      { id: 'd97706', label: 'Hardal / Kehribar Sarısı' },
+      { id: '0284c7', label: 'Okyanus / Buz Mavisi' },
+      { id: '4338ca', label: 'Kraliyet İndigo / Mor' }
+    ], currentEditingAvatarConfig.topColor || '102343', val => {
+      currentEditingAvatarConfig.topColor = val;
+      currentEditingAvatarConfig.outfitColor = val;
+      updateLiveAvatarPreview();
+    });
+
+    // 12. Alt Giyim Modeli (Pantolon, Etek, Şort)
+    renderGridCardSelector('optBottomModel', BOTTOM_MODELS, currentEditingAvatarConfig.bottom || 'pants', val => {
+      currentEditingAvatarConfig.bottom = val;
+      updateLiveAvatarPreview();
+    });
+
+    // 13. Alt Giyim Rengi
+    renderColorSwatches('optBottomColor', [
+      { id: '1e293b', label: 'Koyu Füme / Kömür' },
+      { id: '1e3a8a', label: 'Klasik Denim Kot Mavisi' },
+      { id: '0f172a', label: 'Derin Siyah' },
+      { id: 'f8fafc', label: 'Beyaz / Kar' },
+      { id: '78350f', label: 'Kahverengi / Taba' },
+      { id: '3f6212', label: 'Haki Kargo Yeşili' },
+      { id: 'cbd5e1', label: 'Açık Kül Grisi' },
+      { id: '7f1d1d', label: 'Bordo / Şarap' }
+    ], currentEditingAvatarConfig.bottomColor || '1e293b', val => {
+      currentEditingAvatarConfig.bottomColor = val;
+      updateLiveAvatarPreview();
+    });
+
+    // 14. Ayakkabı Modeli (Sneaker, Chunky, High-Top)
+    renderGridCardSelector('optShoesModel', SHOES_MODELS, currentEditingAvatarConfig.shoes || 'classic_sneaker', val => {
+      currentEditingAvatarConfig.shoes = val;
+      updateLiveAvatarPreview();
+    });
+
+    // 15. Ayakkabı Rengi
+    renderColorSwatches('optShoesColor', [
+      { id: 'ffffff', label: 'Temiz Beyaz' },
+      { id: '1a1a1a', label: 'Klasik Siyah' },
+      { id: 'dc2626', label: 'Kırmızı / Retro Vurgu' },
+      { id: '2563eb', label: 'Sportif Mavi' },
+      { id: '16a34a', label: 'Zümrüt Yeşil Vurgu' },
+      { id: 'f59e0b', label: 'Kehribar Sarısı' },
+      { id: '64748b', label: 'Füme / Gri' },
+      { id: 'd97706', label: 'Karamel / Taba' }
+    ], currentEditingAvatarConfig.shoesColor || 'ffffff', val => {
+      currentEditingAvatarConfig.shoesColor = val;
+      updateLiveAvatarPreview();
+    });
   }
 
   // Canlı SVG Önbelleği (Hızlı 60 FPS Geçişler)
   const adventurerSvgCache = new Map();
 
-  // Adventurer Göz İrisini Doğrudan SVG İçinde Yeniden Renklendirme
-  function recolorAdventurerEyes(svgText, eyeColorHex) {
+  // Adventurer Göz İrisini ve Kaşlarını Doğrudan SVG İçinde Yeniden Renklendirme
+  function recolorAdventurerSvg(svgText, eyeColorHex, hairColorHex) {
     if (!svgText) return svgText;
-    const hex = (eyeColorHex || '3b2219').replace('#', '');
-    
-    // Adventurer göz grubu: Göz akı (fill="#fff") sonrasında gelen göz bebeği fill'ini renklendirir
-    return svgText.replace(/(<g transform="translate\(-161 -83\)">[\s\S]*?fill="#fff"[\s\S]*?)(fill="#000"|fill="black")([\s\S]*?<\/g>)/i, (match, prefix, fillAttr, suffix) => {
+    const eyeHex = (eyeColorHex || '3b2219').replace('#', '');
+    const hairHex = (hairColorHex || '0e0e0e').replace('#', '');
+
+    // 1. Göz İrisi: Göz grubunda beyaz göz aklarının (fill="#fff") hemen ardından gelen irisin fill'ini boya
+    // Dış göz çizgileri (#000) ve göz akları (#fff) kesinlikle siyah/beyaz kalır
+    let result = svgText.replace(/(<g transform="translate\(-161 -83\)">[\s\S]*?fill="#fff"[\s\S]*?)(fill="#000"|fill="black")([\s\S]*?<\/g>)/i, (match, prefix, fillAttr, suffix) => {
       const lastWhite = prefix.lastIndexOf('fill="#fff"');
       if (lastWhite === -1) return match;
       const beforeWhite = prefix.slice(0, lastWhite);
       const afterWhite = prefix.slice(lastWhite) + fillAttr + suffix;
-      const replaced = afterWhite.replace(/(fill="#000"|fill="black")/i, `fill="#${hex}"`);
+      const replaced = afterWhite.replace(/(fill="#000"|fill="black")/i, `fill="#${eyeHex}"`);
       return beforeWhite + replaced;
     });
+
+    // 2. Kaşlar: Göz grubunun hemen ardından gelen ve y koordinatları kaş seviyesinde (350-420) olan kaş katmanını
+    // doğrudan saç rengine (hairColor) bağla
+    result = result.replace(/(<\/g>\s*<g transform="translate\(-161 -83\)">\s*<path d="[^"]*[34]\d{2}[^"]*"\s*)(fill="#000"|fill="black")/i, (match, prefix, fillAttr) => {
+      return `${prefix}fill="#${hairHex}"`;
+    });
+
+    return result;
   }
 
   function updateLiveAvatarPreview() {
@@ -1944,12 +2191,12 @@ window.TDAMessaging = (function() {
     const seed = 'TurkPenpal';
     const headUrl = `https://api.dicebear.com/7.x/adventurer/svg?seed=${seed}&skinColor=${encodeURIComponent(skin)}&hair=${encodeURIComponent(currentEditingAvatarConfig.hair || 'long01')}&hairProbability=100&hairColor=${encodeURIComponent(currentEditingAvatarConfig.hairColor || '0e0e0e')}&eyes=${encodeURIComponent(currentEditingAvatarConfig.eyes || 'variant01')}&mouth=${encodeURIComponent(currentEditingAvatarConfig.mood || 'variant01')}&backgroundColor=transparent${currentEditingAvatarConfig.accessories && currentEditingAvatarConfig.accessories !== 'none' ? `&glasses=${encodeURIComponent(currentEditingAvatarConfig.accessories)}&glassesProbability=100` : '&glassesProbability=0'}`;
 
-    // 1. Canlı Baş Bölgesi ve Göz Rengi (SVG İris Katmanına Doğrudan Aktarım)
+    // 1. Canlı Baş Bölgesi, Göz İrisi ve Kaş Senkronizasyonu (SVG İris & Kaş Katmanı)
     const headContainer = document.querySelector('.avatar-head-stage');
     if (adventurerSvgCache.has(headUrl)) {
       const rawSvg = adventurerSvgCache.get(headUrl);
       if (headContainer) {
-        headContainer.innerHTML = recolorAdventurerEyes(rawSvg, currentEditingAvatarConfig.eyeColor);
+        headContainer.innerHTML = recolorAdventurerSvg(rawSvg, currentEditingAvatarConfig.eyeColor, currentEditingAvatarConfig.hairColor);
       }
     } else {
       if (headContainer && !headContainer.querySelector('img')) {
@@ -1963,7 +2210,7 @@ window.TDAMessaging = (function() {
         .then(rawSvg => {
           adventurerSvgCache.set(headUrl, rawSvg);
           if (headContainer) {
-            headContainer.innerHTML = recolorAdventurerEyes(rawSvg, currentEditingAvatarConfig.eyeColor);
+            headContainer.innerHTML = recolorAdventurerSvg(rawSvg, currentEditingAvatarConfig.eyeColor, currentEditingAvatarConfig.hairColor);
           }
         })
         .catch(err => {
@@ -1982,43 +2229,59 @@ window.TDAMessaging = (function() {
       stage.style.background = `radial-gradient(circle at 50% 25%, #${bg} 0%, #${bg}ee 65%, #${bg}cc 100%)`;
     }
 
-    // 3. Omuz, Gövde ve Seçilen Kıyafetin Canlı Render'ı
+    // 3. Karakter Tam Vücut Kombini (Üst Giyim + Alt Giyim + Ayakkabı)
     const torsoEl = document.getElementById('avatarOutfitTorso');
     if (torsoEl) {
-      torsoEl.innerHTML = renderTorsoSVG(
-        currentEditingAvatarConfig.outfit || 'basic_tshirt',
-        currentEditingAvatarConfig.bodyType || 'average',
-        currentEditingAvatarConfig.skinColor || 'f8d9ce',
-        currentEditingAvatarConfig.outfitColor || '102343'
-      );
+      torsoEl.innerHTML = renderFullBodySVG({
+        topId: currentEditingAvatarConfig.top || currentEditingAvatarConfig.outfit || 'basic_tshirt',
+        topColor: currentEditingAvatarConfig.topColor || currentEditingAvatarConfig.outfitColor || '102343',
+        bottomId: currentEditingAvatarConfig.bottom || 'pants',
+        bottomColor: currentEditingAvatarConfig.bottomColor || '1e293b',
+        shoesId: currentEditingAvatarConfig.shoes || 'classic_sneaker',
+        shoesColor: currentEditingAvatarConfig.shoesColor || 'ffffff',
+        bodyType: currentEditingAvatarConfig.bodyType || 'average',
+        skinColor: currentEditingAvatarConfig.skinColor || 'f8d9ce'
+      });
     }
 
     // 4. Rozetlerin Güncellenmesi
-    const badgeOutfit = document.getElementById('badgeOutfitName');
-    if (badgeOutfit) {
-      const oModel = OUTFIT_MODELS.find(m => m.id === currentEditingAvatarConfig.outfit) || OUTFIT_MODELS[0];
-      badgeOutfit.textContent = oModel.label;
-    }
-
     const badgeBody = document.getElementById('badgeBodyType');
     if (badgeBody) {
       const bLabels = {
-        'slim': '🏃 Zayıf Yapı',
-        'average': '⚖️ Standart Yapı',
-        'plump': '💪 Geniş Yapı'
+        'slim': '🏃 Zayıf',
+        'average': '⚖️ Standart',
+        'plump': '💪 Geniş'
       };
-      badgeBody.textContent = bLabels[currentEditingAvatarConfig.bodyType] || 'Standart Yapı';
+      badgeBody.textContent = bLabels[currentEditingAvatarConfig.bodyType] || 'Standart';
+    }
+
+    const badgeTop = document.getElementById('badgeTopName');
+    if (badgeTop) {
+      const tModel = TOP_MODELS.find(m => m.id === (currentEditingAvatarConfig.top || currentEditingAvatarConfig.outfit)) || TOP_MODELS[0];
+      badgeTop.textContent = `👕 ${tModel.label}`;
+    }
+
+    const badgeBottom = document.getElementById('badgeBottomName');
+    if (badgeBottom) {
+      const bModel = BOTTOM_MODELS.find(m => m.id === currentEditingAvatarConfig.bottom) || BOTTOM_MODELS[0];
+      badgeBottom.textContent = `👖 ${bModel.label}`;
+    }
+
+    const badgeShoes = document.getElementById('badgeShoesName');
+    if (badgeShoes) {
+      const sModel = SHOES_MODELS.find(m => m.id === currentEditingAvatarConfig.shoes) || SHOES_MODELS[0];
+      badgeShoes.textContent = `👟 ${sModel.label.split(' ')[0]}`;
     }
 
     const badgeEye = document.getElementById('badgeEyeColor');
     if (badgeEye) {
       const eyeNames = {
-        '3b2219': 'Koyu Kahverengi',
+        '3b2219': 'Koyu Kahve',
         '6d4c41': 'Fındık Kahve',
         '7d6b38': 'Doğal Ela',
         '2e7d32': 'Zümrüt Yeşil',
         '1565c0': 'Okyanus Mavi',
-        'b45309': 'Sıcak Kehribar',
+        'b45309': 'Kehribar',
         '1a1a1a': 'Kömür Siyah',
         '64748b': 'Buz Mavisi'
       };
@@ -2031,8 +2294,12 @@ window.TDAMessaging = (function() {
     const skins = ['f8d9ce', 'f9c9b6', 'f2d3b1', 'ecad80', 'd4976a', '9e5622', '763900'];
     const eyeColors = ['3b2219', '6d4c41', '7d6b38', '2e7d32', '1565c0', 'b45309', '1a1a1a', '64748b'];
     const bodyTypes = ['slim', 'average', 'plump'];
-    const outfits = OUTFIT_MODELS.map(o => o.id);
-    const outfitColors = ['102343', '1a1a1a', 'f8fafc', '64748b', '7f1d1d', '3f6212', '78350f', 'd97706', '0284c7', '4338ca'];
+    const tops = TOP_MODELS.map(o => o.id);
+    const topColors = ['102343', '1a1a1a', 'f8fafc', '64748b', '7f1d1d', '3f6212', '78350f', 'd97706', '0284c7', '4338ca'];
+    const bottoms = BOTTOM_MODELS.map(o => o.id);
+    const bottomColors = ['1e293b', '1e3a8a', '0f172a', 'f8fafc', '78350f', '3f6212', 'cbd5e1', '7f1d1d'];
+    const shoes = SHOES_MODELS.map(o => o.id);
+    const shoesColors = ['ffffff', '1a1a1a', 'dc2626', '2563eb', '16a34a', 'f59e0b', '64748b', 'd97706'];
     const backgroundColors = ['ffdfbf', 'b6e3f4', 'c0aede', 'bbf7d0', 'fed7aa', 'fef08a', 'fbcfe8', 'e2e8f0', '102343'];
     const hairs = ['short01', 'short02', 'short03', 'short04', 'short05', 'short06', 'short08', 'short12', 'short16', 'long01', 'long02', 'long03', 'long04', 'long05', 'long06', 'long10', 'long16', 'long26'];
     const hairColors = ['0e0e0e', '562306', '6a4e35', '796a45', 'b9a05f', 'e5d7a3', 'ab2a18', 'cb6820', 'afafaf', '3eac2c', '592454'];
@@ -2040,12 +2307,21 @@ window.TDAMessaging = (function() {
     const eyes = ['variant01', 'variant02', 'variant03', 'variant04', 'variant05', 'variant06', 'variant07', 'variant08'];
     const accs = ['none', 'variant01', 'variant02', 'variant03', 'variant04', 'variant05'];
 
+    const chosenTop = tops[Math.floor(Math.random() * tops.length)];
+    const chosenTopColor = topColors[Math.floor(Math.random() * topColors.length)];
+
     currentEditingAvatarConfig = {
       skinColor: skins[Math.floor(Math.random() * skins.length)],
       eyeColor: eyeColors[Math.floor(Math.random() * eyeColors.length)],
       bodyType: bodyTypes[Math.floor(Math.random() * bodyTypes.length)],
-      outfit: outfits[Math.floor(Math.random() * outfits.length)],
-      outfitColor: outfitColors[Math.floor(Math.random() * outfitColors.length)],
+      top: chosenTop,
+      outfit: chosenTop,
+      topColor: chosenTopColor,
+      outfitColor: chosenTopColor,
+      bottom: bottoms[Math.floor(Math.random() * bottoms.length)],
+      bottomColor: bottomColors[Math.floor(Math.random() * bottomColors.length)],
+      shoes: shoes[Math.floor(Math.random() * shoes.length)],
+      shoesColor: shoesColors[Math.floor(Math.random() * shoesColors.length)],
       backgroundColor: backgroundColors[Math.floor(Math.random() * backgroundColors.length)],
       hair: hairs[Math.floor(Math.random() * hairs.length)],
       hairColor: hairColors[Math.floor(Math.random() * hairColors.length)],

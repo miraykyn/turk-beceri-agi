@@ -2265,27 +2265,26 @@
 /* Dikey Dikdörtgen (Portrait) Tam Vücut Önizleme Sahnesi */
 .avatar-portrait-stage {
   width: 220px;
-  height: 365px;
+  height: 385px;
   border-radius: 22px;
   border: 2.5px solid #d4af37;
   background: radial-gradient(circle at 50% 25%, #ffdfbf 0%, #fed7aa 65%, #f6ecd4 100%);
   box-shadow: 0 14px 40px rgba(16, 35, 67, 0.15), inset 0 0 20px rgba(212, 175, 55, 0.1);
   position: relative;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+  display: block;
   transition: background 0.35s ease, box-shadow 0.3s ease;
 }
 
-/* Karakter Başı (DiceBear Adventurer Baş Bölgesi) */
+/* Karakter Başı (DiceBear Adventurer Baş Bölgesi) - Çene boyuna kusursuz oturur */
 .avatar-head-stage {
-  width: 135px;
-  height: 135px;
-  margin-top: 6px;
-  position: relative;
-  z-index: 2;
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 136px;
+  height: 136px;
+  z-index: 4;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2298,19 +2297,19 @@
   height: 100%;
   object-fit: contain;
   display: block;
-  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.12));
 }
 
-/* Karakter Tam Vücut (Omuzlar, Gövde, Alt Giyim ve Ayakkabılar) */
+/* Karakter Tam Vücut Katmanı (Anatomi, Kollar, Eller, Gövde, Bacaklar, Kıyafet & Ayakkabılar) */
 .avatar-torso-stage {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
-  right: 0;
-  height: 250px;
-  z-index: 1;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   pointer-events: none;
 }
@@ -2319,7 +2318,7 @@
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
 }
 
@@ -2330,20 +2329,23 @@
   transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
 }
 
-/* Vücut Tipi (Body Type) Dönüşümleri: Torso & Omuzlar */
+/* Vücut Tipi (Body Type) Dönüşümleri: Tüm Vücut Anatomisi Orantılı ve Estetik Olarak Ölçeklenir */
 .avatar-portrait-stage.body-slim .avatar-outfit-render svg {
-  transform: scale(0.94, 1.01);
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.1));
+  transform: scale(0.93, 1.0);
+  transform-origin: 110px 140px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
 }
 
 .avatar-portrait-stage.body-average .avatar-outfit-render svg {
   transform: scale(1, 1);
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
+  transform-origin: 110px 140px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
 }
 
 .avatar-portrait-stage.body-plump .avatar-outfit-render svg {
-  transform: scale(1.04, 0.99);
-  filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.14));
+  transform: scale(1.08, 0.99);
+  transform-origin: 110px 140px;
+  filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.12));
 }
 
 /* Vücut Tipi Rozetleri ve Bilgilendiriciler */

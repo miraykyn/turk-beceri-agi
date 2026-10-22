@@ -1382,6 +1382,7 @@ window.TDAMessaging = (function() {
 
   // --- 16. GELİŞMİŞ BİTMOJİ / AVATAR TASARIM STÜDYOSU ---
   function openAvatarStudio() {
+    currentAvatarStudioTab = 'face';
     currentEditingAvatarConfig = Object.assign({}, getMyAvatarConfig());
     const modal = document.getElementById('avatarStudioModal');
     if (modal) {
@@ -1560,7 +1561,7 @@ window.TDAMessaging = (function() {
   // Geriye dönük uyumluluk için alias
   const OUTFIT_MODELS = TOP_MODELS;
 
-  // 3. Karakter Tam Vücut (Üst Giyim + Alt Giyim + Ayakkabı) SVG Generator'ı
+  // 3. Karakter Tam Vücut (Anatomi, Kollar, Eller, Gövde, Bacaklar, Kıyafet & Ayakkabılar) SVG Generator'ı
   function renderFullBodySVG(config) {
     const skin = (config.skinColor || 'f8d9ce').replace('#', '');
     const tColor = (config.topColor || '102343').replace('#', '');
@@ -1571,93 +1572,70 @@ window.TDAMessaging = (function() {
     const bottomId = config.bottomId || config.bottom || 'pants';
     const shoesId = config.shoesId || config.shoes || 'classic_sneaker';
 
-    // Vücut tipine göre orantılı, estetik ve kutuyu taşırmayan omuz/bel koordinatları
-    let shoulderPoints = 'M40 114 L48 34 C66 22 92 18 120 18 C148 18 174 22 192 34 L200 114 Z';
-    let pantsLeft = 'M72 114 L117 114 L112 205 L78 205 Z';
-    let pantsRight = 'M123 114 L168 114 L162 205 L128 205 Z';
-    let skirtPoints = 'M72 114 L168 114 L180 164 L60 164 Z';
-    let shortsLeft = 'M72 114 L117 114 L114 154 L74 154 Z';
-    let shortsRight = 'M123 114 L168 114 L166 154 L126 154 Z';
-    let bareLegs = `
-      <path d="M82 154 L108 154 L104 205 L86 205 Z" fill="#${skin}"/>
-      <path d="M132 154 L158 154 L154 205 L136 205 Z" fill="#${skin}"/>
-    `;
-
-    if (bType === 'slim') {
-      shoulderPoints = 'M50 114 L56 36 C72 24 94 20 120 20 C146 20 168 24 184 36 L190 114 Z';
-      pantsLeft = 'M78 114 L117 114 L112 205 L82 205 Z';
-      pantsRight = 'M123 114 L162 114 L158 205 L128 205 Z';
-      skirtPoints = 'M78 114 L162 114 L174 164 L66 164 Z';
-      shortsLeft = 'M78 114 L117 114 L114 154 L80 154 Z';
-      shortsRight = 'M123 114 L162 114 L160 154 L126 154 Z';
-      bareLegs = `
-        <path d="M86 154 L108 154 L104 205 L88 205 Z" fill="#${skin}"/>
-        <path d="M132 154 L154 154 L152 205 L134 205 Z" fill="#${skin}"/>
-      `;
-    } else if (bType === 'plump') {
-      // Geniş yapı: Dengeli, estetik ve kart sınırlarını koruyan ölçüler (Taşma yapmaz)
-      shoulderPoints = 'M30 114 L40 32 C60 19 88 16 120 16 C152 16 180 19 200 32 L210 114 Z';
-      pantsLeft = 'M66 114 L118 114 L114 205 L74 205 Z';
-      pantsRight = 'M122 114 L174 114 L166 205 L126 205 Z';
-      skirtPoints = 'M66 114 L174 114 L188 164 L52 164 Z';
-      shortsLeft = 'M66 114 L118 114 L115 154 L68 154 Z';
-      shortsRight = 'M122 114 L174 114 L172 154 L125 154 Z';
-      bareLegs = `
-        <path d="M78 154 L108 154 L104 205 L82 205 Z" fill="#${skin}"/>
-        <path d="M132 154 L162 154 L158 205 L136 205 Z" fill="#${skin}"/>
-      `;
-    }
-
-    // --- 1. Üst Giyim Detayları ---
+    // 1. ÜST GİYİM OVERLAY (Giysi Katmanı)
     let topDetails = '';
     switch(topId) {
       case 'bomber_jacket':
         topDetails = `
-          <!-- Dik Triko Ribana Yaka -->
-          <path d="M92 20 Q120 34 148 20" fill="none" stroke="#1e293b" stroke-width="7" stroke-linecap="round"/>
-          <path d="M92 20 Q120 34 148 20" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-linecap="round"/>
-          
-          <!-- Metal Ön Fermuar & Fermuar Ucu -->
-          <line x1="120" y1="24" x2="120" y2="114" stroke="#cbd5e1" stroke-width="3"/>
-          <rect x="117.5" y="44" width="5" height="10" rx="1.5" fill="#d4af37" stroke="#78350f" stroke-width="0.8"/>
-          
-          <!-- Sol Kol Yardımcı Cep -->
-          <rect x="52" y="55" width="16" height="22" rx="2" fill="rgba(0,0,0,0.2)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-          <line x1="55" y1="58" x2="65" y2="58" stroke="#cbd5e1" stroke-width="1.8"/>
-          
+          <!-- Bomber Ceket Gövdesi ve Uzun Kollar (Bileklere kadar) -->
+          <path d="M94 136 C102 142 118 142 126 136 L172 144 C182 164 190 216 186 264 L168 266 L174 216 C174 204 156 182 154 176 C152 206 148 230 148 244 C134 246 86 246 72 244 C72 230 68 206 66 176 C64 182 46 204 46 216 L52 266 L34 264 C30 216 38 164 48 144 Z" fill="#${tColor}"/>
+          <!-- Ribana Yaka -->
+          <path d="M94 136 Q110 144 126 136" fill="none" stroke="#1e293b" stroke-width="6" stroke-linecap="round"/>
+          <path d="M94 136 Q110 144 126 136" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.8" stroke-linecap="round"/>
+          <!-- Ribana Kol Manşetleri (Cuffs) -->
+          <rect x="33" y="261" width="19" height="7" rx="2" fill="#1e293b" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
+          <rect x="168" y="261" width="19" height="7" rx="2" fill="#1e293b" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
+          <!-- Ön Fermuar ve Metal Çekme Ucu -->
+          <line x1="110" y1="140" x2="110" y2="246" stroke="#cbd5e1" stroke-width="2.8"/>
+          <rect x="107.5" y="160" width="5" height="9" rx="1.5" fill="#d4af37" stroke="#78350f" stroke-width="0.8"/>
+          <!-- Sol Kol MA-1 Askeri Fermuarlı Yardımcı Cep & Kırmızı Ribbon Tag -->
+          <rect x="36" y="190" width="14" height="20" rx="2" fill="rgba(0,0,0,0.25)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <line x1="39" y1="194" x2="47" y2="194" stroke="#cbd5e1" stroke-width="1.5"/>
+          <rect x="41" y="206" width="4" height="12" rx="1" fill="#dc2626"/>
           <!-- Yan Cepler -->
-          <line x1="62" y1="88" x2="82" y2="102" stroke="rgba(0,0,0,0.25)" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="178" y1="88" x2="158" y2="102" stroke="rgba(0,0,0,0.25)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="68" y1="216" x2="84" y2="228" stroke="rgba(0,0,0,0.3)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="152" y1="216" x2="136" y2="228" stroke="rgba(0,0,0,0.3)" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Etek Ribana Lastiği -->
+          <rect x="71" y="238" width="78" height="9" rx="2" fill="#1e293b" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
         `;
         break;
 
       case 'polo_shirt':
         topDetails = `
-          <!-- Beyaz Polo Yaka Kanatları -->
-          <polygon points="90,18 120,34 110,40 84,24" fill="#ffffff" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
-          <polygon points="150,18 120,34 130,40 156,24" fill="#ffffff" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
-          
-          <!-- Düğme Patı (Placket) -->
-          <rect x="115" y="34" width="10" height="34" rx="2" fill="#f8fafc" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
-          <circle cx="120" cy="42" r="2" fill="#64748b"/>
-          <circle cx="120" cy="54" r="2" fill="#64748b"/>
+          <!-- Polo Gövde ve Kısa Kollar -->
+          <path d="M96 138 L172 146 C178 152 184 172 184 186 L154 190 L154 178 C152 204 148 228 147 244 C134 246 86 246 73 244 C72 228 68 204 66 178 L66 190 L36 186 C36 172 42 152 48 146 Z" fill="#${tColor}"/>
+          <!-- Polo Yaka Kanatları -->
+          <polygon points="90,134 110,154 98,160 76,144" fill="#ffffff" stroke="rgba(0,0,0,0.18)" stroke-width="1"/>
+          <polygon points="130,134 110,154 122,160 144,144" fill="#ffffff" stroke="rgba(0,0,0,0.18)" stroke-width="1"/>
+          <!-- Düğme Patı ve Sedef Düğmeler -->
+          <rect x="105" y="152" width="10" height="32" rx="2" fill="#f8fafc" stroke="rgba(0,0,0,0.12)" stroke-width="1"/>
+          <circle cx="110" cy="160" r="1.8" fill="#475569"/>
+          <circle cx="110" cy="172" r="1.8" fill="#475569"/>
+          <!-- Kol Manşet Dikişleri -->
+          <line x1="36" y1="185" x2="66" y2="189" stroke="#ffffff" stroke-width="2.5"/>
+          <line x1="184" y1="185" x2="154" y2="189" stroke="#ffffff" stroke-width="2.5"/>
         `;
         break;
 
       case 'turtleneck_sweater':
       case 'knit_sweater':
         topDetails = `
+          <!-- Boğazlı Kazak Gövdesi ve Uzun Triko Kollar -->
+          <path d="M92 136 L172 144 C180 164 188 216 186 264 L168 266 L174 216 C174 204 156 182 154 176 C152 206 148 230 148 246 C134 248 86 248 72 246 C72 230 68 206 66 176 C64 182 46 204 46 216 L52 266 L34 264 C32 216 40 164 48 144 Z" fill="#${tColor}"/>
           <!-- Katlı Boğazlı Yaka (Turtleneck Roll) -->
-          <rect x="96" y="2" width="48" height="28" rx="4" fill="#${tColor}" filter="brightness(0.9)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
-          <line x1="104" y1="4" x2="104" y2="28" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
-          <line x1="112" y1="4" x2="112" y2="28" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
-          <line x1="120" y1="4" x2="120" y2="28" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
-          <line x1="128" y1="4" x2="128" y2="28" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
-          <line x1="136" y1="4" x2="136" y2="28" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
-          
+          <rect x="94" y="112" width="32" height="26" rx="4" fill="#${tColor}" filter="brightness(0.92)" stroke="rgba(0,0,0,0.2)" stroke-width="1.4"/>
+          <line x1="100" y1="114" x2="100" y2="136" stroke="rgba(255,255,255,0.25)" stroke-width="1.2"/>
+          <line x1="106" y1="114" x2="106" y2="136" stroke="rgba(255,255,255,0.25)" stroke-width="1.2"/>
+          <line x1="114" y1="114" x2="114" y2="136" stroke="rgba(255,255,255,0.25)" stroke-width="1.2"/>
+          <line x1="120" y1="114" x2="120" y2="136" stroke="rgba(255,255,255,0.25)" stroke-width="1.2"/>
           <!-- Triko Örgü Dokusu -->
-          <line x1="84" y1="48" x2="84" y2="114" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
-          <line x1="156" y1="48" x2="156" y2="114" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+          <line x1="88" y1="154" x2="88" y2="242" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+          <line x1="110" y1="154" x2="110" y2="242" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+          <line x1="132" y1="154" x2="132" y2="242" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+          <!-- Manşetler ve Etek Ribanası -->
+          <rect x="34" y="258" width="18" height="7" rx="2" fill="#${tColor}" filter="brightness(0.9)" stroke="rgba(0,0,0,0.2)" stroke-width="0.8"/>
+          <rect x="168" y="258" width="18" height="7" rx="2" fill="#${tColor}" filter="brightness(0.9)" stroke="rgba(0,0,0,0.2)" stroke-width="0.8"/>
+          <rect x="71" y="240" width="78" height="8" rx="2" fill="#${tColor}" filter="brightness(0.9)" stroke="rgba(0,0,0,0.18)" stroke-width="0.8"/>
         `;
         break;
 
@@ -1665,100 +1643,118 @@ window.TDAMessaging = (function() {
       case 'casual_tshirt':
       default:
         topDetails = `
-          <!-- Bisiklet Yaka Ribana Hattı -->
-          <path d="M96 18 C106 32 134 32 144 18" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="4.5" stroke-linecap="round"/>
-          <path d="M96 18 C106 32 134 32 144 18" fill="none" stroke="rgba(0,0,0,0.18)" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M78 68 Q120 60 162 68" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="1.8"/>
+          <!-- Basic T-Shirt Gövde ve Kısa Kollar -->
+          <path d="M96 138 C102 150 118 150 124 138 L172 146 C178 152 184 172 184 188 L154 192 L154 178 C152 204 148 228 147 244 C134 246 86 246 73 244 C72 228 68 204 66 178 L66 192 L36 188 C36 172 42 152 48 146 Z" fill="#${tColor}"/>
+          <!-- Ribana Bisiklet Yaka -->
+          <path d="M96 138 C102 150 118 150 124 138" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M96 138 C102 150 118 150 124 138" fill="none" stroke="rgba(0,0,0,0.18)" stroke-width="1.3" stroke-linecap="round"/>
+          <!-- Kol Ucu Dikişleri -->
+          <line x1="36" y1="187" x2="66" y2="191" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
+          <line x1="184" y1="187" x2="154" y2="191" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
+          <!-- Etek Dikişi ve Doku -->
+          <line x1="75" y1="241" x2="145" y2="241" stroke="rgba(0,0,0,0.15)" stroke-width="1.5"/>
+          <path d="M80 180 Q110 172 140 180" fill="none" stroke="rgba(0,0,0,0.06)" stroke-width="2"/>
         `;
         break;
     }
 
-    // --- 2. Alt Giyim Detayları ---
+    // 2. ALT GİYİM OVERLAY (Giysi Katmanı)
     let bottomDetails = '';
     switch(bottomId) {
       case 'skirt':
         bottomDetails = `
-          <!-- Açıkta Kalan Bacaklar (Karakter Ten Renginde) -->
-          ${bareLegs}
-          <!-- Pileli A-Line Etek -->
-          <path d="${skirtPoints}" fill="#${bColor}"/>
-          <line x1="84" y1="114" x2="76" y2="164" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
-          <line x1="102" y1="114" x2="98" y2="164" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
-          <line x1="120" y1="114" x2="120" y2="164" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
-          <line x1="138" y1="114" x2="142" y2="164" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
-          <line x1="156" y1="114" x2="164" y2="164" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
-          <!-- Etek Bel Kemeri -->
-          <rect x="70" y="112" width="100" height="5" fill="rgba(0,0,0,0.15)"/>
+          <!-- Pileli Etek Bel Bandı -->
+          <rect x="72" y="236" width="76" height="7" rx="2" fill="#${bColor}" filter="brightness(0.9)" stroke="rgba(0,0,0,0.2)" stroke-width="1"/>
+          <!-- A-Line Flared Pileli Etek Gövdesi -->
+          <path d="M72 242 L148 242 L164 286 L56 286 Z" fill="#${bColor}"/>
+          <!-- 8 Adet Keskin Pile Çizgileri -->
+          <line x1="70" y1="242" x2="68" y2="286" stroke="rgba(0,0,0,0.25)" stroke-width="1.8"/>
+          <line x1="84" y1="242" x2="82" y2="286" stroke="rgba(0,0,0,0.25)" stroke-width="1.8"/>
+          <line x1="97" y1="242" x2="96" y2="286" stroke="rgba(0,0,0,0.25)" stroke-width="1.8"/>
+          <line x1="110" y1="242" x2="110" y2="286" stroke="rgba(0,0,0,0.25)" stroke-width="1.8"/>
+          <line x1="123" y1="242" x2="124" y2="286" stroke="rgba(0,0,0,0.25)" stroke-width="1.8"/>
+          <line x1="136" y1="242" x2="138" y2="286" stroke="rgba(0,0,0,0.25)" stroke-width="1.8"/>
+          <line x1="150" y1="242" x2="152" y2="286" stroke="rgba(0,0,0,0.25)" stroke-width="1.8"/>
+          <path d="M56 286 L164 286" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
         `;
         break;
 
       case 'shorts':
         bottomDetails = `
-          <!-- Açıkta Kalan Bacaklar (Karakter Ten Renginde) -->
-          ${bareLegs}
-          <!-- Şort Paçaları -->
-          <path d="${shortsLeft}" fill="#${bColor}"/>
-          <path d="${shortsRight}" fill="#${bColor}"/>
-          <!-- Şort Bel Kordonları -->
-          <line x1="117" y1="116" x2="115" y2="128" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
-          <line x1="123" y1="116" x2="125" y2="128" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+          <!-- Rahat Şort Gövdesi (Diz üstünde biter) -->
+          <path d="M72 240 L110 240 L108 266 L105 292 L72 292 L72 268 Z" fill="#${bColor}"/>
+          <path d="M110 240 L148 240 L148 268 L148 292 L115 292 L112 266 Z" fill="#${bColor}"/>
+          <!-- Elastik Büzgülü Bel Lastiği -->
+          <rect x="71" y="238" width="78" height="6" rx="2" fill="rgba(0,0,0,0.18)"/>
+          <!-- Beyaz Bağcıklar & Düğüm -->
+          <circle cx="110" cy="241" r="2.2" fill="#ffffff"/>
+          <path d="M109 242 Q106 250 104 256" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M111 242 Q114 250 116 256" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
           <!-- Paça Dikişleri -->
-          <line x1="72" y1="152" x2="116" y2="152" stroke="rgba(255,255,255,0.25)" stroke-width="1.8"/>
-          <line x1="124" y1="152" x2="168" y2="152" stroke="rgba(255,255,255,0.25)" stroke-width="1.8"/>
+          <line x1="73" y1="289" x2="104" y2="289" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+          <line x1="116" y1="289" x2="147" y2="289" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
         `;
         break;
 
       case 'pants':
       default:
         bottomDetails = `
-          <!-- Pantolon Sol ve Sağ Paça -->
-          <path d="${pantsLeft}" fill="#${bColor}"/>
-          <path d="${pantsRight}" fill="#${bColor}"/>
-          <!-- Kemer & Altın Toka -->
-          <rect x="70" y="112" width="100" height="6" fill="rgba(0,0,0,0.18)"/>
-          <rect x="114" y="112" width="12" height="6" rx="1.5" fill="#d4af37" stroke="#78350f" stroke-width="0.8"/>
-          <!-- Pat Dikişi -->
-          <line x1="120" y1="118" x2="120" y2="140" stroke="rgba(0,0,0,0.22)" stroke-width="1.5"/>
+          <!-- Pantolon Paçaları (Belden ayak bileğine kadar kusursuz drape) -->
+          <path d="M72 242 L110 242 L108 266 L103 312 L101 350 L79 350 L75 312 L72 270 Z" fill="#${bColor}"/>
+          <path d="M110 242 L148 242 L148 270 L145 312 L141 350 L119 350 L117 312 L112 266 Z" fill="#${bColor}"/>
+          <!-- Bel Kemeri ve Altın Toka -->
+          <rect x="71" y="238" width="78" height="7" rx="2" fill="rgba(0,0,0,0.25)"/>
+          <rect x="105" y="238" width="10" height="7" rx="1.5" fill="#d4af37" stroke="#78350f" stroke-width="0.8"/>
+          <!-- Ön Pat Dikişi -->
+          <line x1="110" y1="245" x2="110" y2="264" stroke="rgba(0,0,0,0.25)" stroke-width="1.6"/>
+          <!-- Yan Cepler -->
+          <path d="M76 245 C80 252 84 256 88 258" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M144 245 C140 252 136 256 132 258" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="1.3" stroke-linecap="round"/>
+          <!-- Paça Katlantı Çizgileri -->
+          <line x1="79" y1="346" x2="101" y2="346" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+          <line x1="119" y1="346" x2="141" y2="346" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
         `;
         break;
     }
 
-    // --- 3. Ayakkabı Detayları ---
+    // 3. AYAKKABI OVERLAY
     let shoesDetails = '';
     switch(shoesId) {
       case 'chunky_sneaker':
         shoesDetails = `
-          <!-- Sol Kalın Taban & Gövde -->
-          <rect x="74" y="222" width="40" height="15" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
-          <path d="M76 205 L112 205 L114 222 L74 222 Z" fill="#${sColor}"/>
-          <path d="M80 237 Q94 233 108 237" stroke="#94a3b8" stroke-width="2"/>
-          <line x1="88" y1="212" x2="102" y2="212" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-          
-          <!-- Sağ Kalın Taban & Gövde -->
-          <rect x="126" y="222" width="40" height="15" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
-          <path d="M128 205 L164 205 L166 222 L126 222 Z" fill="#${sColor}"/>
-          <path d="M132 237 Q146 233 160 237" stroke="#94a3b8" stroke-width="2"/>
-          <line x1="138" y1="212" x2="152" y2="212" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+          <!-- Sol Kalın Tabanlı Sneaker -->
+          <path d="M78 348 L66 362 L104 362 L101 348 Z" fill="#${sColor}"/>
+          <path d="M74 356 Q85 352 96 356" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+          <path d="M64 362 Q74 358 84 363 Q94 359 106 362 L105 375 L65 375 Z" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+          <path d="M70 372 Q85 368 100 372" fill="none" stroke="#64748b" stroke-width="1.8"/>
+
+          <!-- Sağ Kalın Tabanlı Sneaker -->
+          <path d="M119 348 L116 362 L154 362 L142 348 Z" fill="#${sColor}"/>
+          <path d="M124 356 Q135 352 146 356" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+          <path d="M114 362 Q126 359 136 363 Q146 358 156 362 L155 375 L115 375 Z" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+          <path d="M120 372 Q135 368 150 372" fill="none" stroke="#64748b" stroke-width="1.8"/>
         `;
         break;
 
       case 'high_top_sneaker':
         shoesDetails = `
           <!-- Sol Yüksek Bilekli Basketbol Ayakkabısı -->
-          <path d="M78 190 L110 190 L114 224 L74 224 Z" fill="#${sColor}"/>
-          <rect x="74" y="224" width="40" height="9" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
-          <circle cx="86" cy="204" r="5" fill="#ffffff"/>
-          <polygon points="86,201 87,204 90,204 88,206 89,209 86,207 83,209 84,206 82,204 85,204" fill="#dc2626"/>
-          <line x1="94" y1="196" x2="106" y2="200" stroke="#ffffff" stroke-width="1.8"/>
-          <line x1="94" y1="204" x2="106" y2="208" stroke="#ffffff" stroke-width="1.8"/>
-          
+          <path d="M78 334 L77 364 L105 364 L101 334 Z" fill="#${sColor}"/>
+          <circle cx="86" cy="346" r="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.8"/>
+          <polygon points="86,343 87,346 90,346 88,348 89,350 86,349 84,350 85,348 83,346 85,346" fill="#dc2626"/>
+          <line x1="94" y1="338" x2="100" y2="340" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="92" y1="345" x2="101" y2="347" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="88" y1="352" x2="102" y2="354" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+          <rect x="66" y="364" width="39" height="10" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+
           <!-- Sağ Yüksek Bilekli Basketbol Ayakkabısı -->
-          <path d="M130 190 L162 190 L166 224 L126 224 Z" fill="#${sColor}"/>
-          <rect x="126" y="224" width="40" height="9" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
-          <circle cx="154" cy="204" r="5" fill="#ffffff"/>
-          <polygon points="154,201 155,204 158,204 156,206 157,209 154,207 151,209 152,206 150,204 153,204" fill="#dc2626"/>
-          <line x1="134" y1="196" x2="146" y2="200" stroke="#ffffff" stroke-width="1.8"/>
-          <line x1="134" y1="204" x2="146" y2="208" stroke="#ffffff" stroke-width="1.8"/>
+          <path d="M119 334 L115 364 L143 364 L142 334 Z" fill="#${sColor}"/>
+          <circle cx="134" cy="346" r="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.8"/>
+          <polygon points="134,343 135,346 138,346 136,348 137,350 134,349 132,350 133,348 131,346 133,346" fill="#dc2626"/>
+          <line x1="120" y1="338" x2="126" y2="340" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="119" y1="345" x2="128" y2="347" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="118" y1="352" x2="132" y2="354" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+          <rect x="115" y="364" width="39" height="10" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
         `;
         break;
 
@@ -1766,37 +1762,77 @@ window.TDAMessaging = (function() {
       default:
         shoesDetails = `
           <!-- Sol Klasik Sneaker -->
-          <rect x="74" y="224" width="38" height="9" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
-          <path d="M78 205 L110 205 L112 224 L74 224 Z" fill="#${sColor}"/>
-          <path d="M102 216 Q112 218 112 224 L96 224 Z" fill="#ffffff"/>
-          <line x1="84" y1="212" x2="98" y2="216" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-          <line x1="84" y1="217" x2="98" y2="221" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-          
+          <path d="M79 348 C75 352 70 358 67 366 L103 366 L101 348 Z" fill="#${sColor}"/>
+          <path d="M67 366 C68 360 74 358 78 366 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.8"/>
+          <line x1="82" y1="353" x2="94" y2="355" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+          <line x1="80" y1="358" x2="94" y2="360" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+          <line x1="79" y1="363" x2="95" y2="364" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+          <rect x="66" y="366" width="38" height="9" rx="3" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+          <line x1="68" y1="371" x2="102" y2="371" stroke="#94a3b8" stroke-width="1"/>
+
           <!-- Sağ Klasik Sneaker -->
-          <rect x="128" y="224" width="38" height="9" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
-          <path d="M130 205 L162 205 L166 224 L128 224 Z" fill="#${sColor}"/>
-          <path d="M154 216 Q164 218 166 224 L150 224 Z" fill="#ffffff"/>
-          <line x1="142" y1="212" x2="156" y2="216" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-          <line x1="142" y1="217" x2="156" y2="221" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+          <path d="M119 348 L117 366 L153 366 C150 358 145 352 141 348 Z" fill="#${sColor}"/>
+          <path d="M153 366 C152 360 146 358 142 366 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.8"/>
+          <line x1="126" y1="353" x2="138" y2="355" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+          <line x1="126" y1="358" x2="140" y2="360" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+          <line x1="125" y1="363" x2="141" y2="364" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+          <rect x="116" y="366" width="38" height="9" rx="3" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+          <line x1="118" y1="371" x2="152" y2="371" stroke="#94a3b8" stroke-width="1"/>
         `;
         break;
     }
 
     return `
-      <svg viewBox="0 0 240 250" xmlns="http://www.w3.org/2000/svg">
-        <!-- 1. Boyun Katmanı (Ten Rengine Kusursuz Eşitlenmiş) -->
-        <path d="M104 0 H136 V30 C136 38 130 44 120 44 C110 44 104 38 104 30 Z" fill="#${skin}"/>
-        
-        <!-- 2. Omuz ve Üst Gövde Katmanı -->
-        <path d="${shoulderPoints}" fill="#${tColor}"/>
-        
-        <!-- 3. Üst Giyim Yaka, Fermuar ve Dikiş Detayları -->
-        ${topDetails}
+      <svg viewBox="0 0 220 385" xmlns="http://www.w3.org/2000/svg">
+        <!-- ======================================================== -->
+        <!-- 1. ANATOMİK TABAN VÜCUT (TEN KATMANI)                    -->
+        <!-- ======================================================== -->
+        <g class="anatomical-skin-base" id="skinBaseLayer">
+          <!-- BOYUN (Çenenin arkasından y=94 seviyesinde başlayıp gövdeye bağlanır) -->
+          <path d="M96 94 H124 V138 C124 142 118 144 110 144 C102 144 96 142 96 138 Z" fill="#${skin}"/>
+          <ellipse cx="110" cy="122" rx="20" ry="7" fill="rgba(0,0,0,0.12)"/>
 
-        <!-- 4. Alt Giyim (Pantolon / Etek / Şort) ve Bacaklar -->
+          <!-- GÖĞÜS & OMUZ BAZI -->
+          <path d="M96 134 C82 136 62 140 48 146 C42 148 40 154 44 162 L66 174 L110 178 L154 174 L176 162 C180 154 178 148 172 146 C158 140 138 136 124 134 Z" fill="#${skin}"/>
+
+          <!-- SOL KOL & EL (Omurdan dirseğe, bileğe ve parmaklara kadar tam anatomik kol) -->
+          <path d="M48 146 C38 162 32 186 32 214 C32 238 34 256 38 270 C36 278 36 290 38 304 C40 307 46 307 47 302 C49 294 49 284 48 278 C52 278 54 274 53 270 C48 270 45 264 45 254 C42 242 42 228 44 214 C46 196 56 182 66 174 Z" fill="#${skin}"/>
+          <!-- Sol El Detayı -->
+          <path d="M48 278 C51 276 53 279 51 283" fill="none" stroke="rgba(0,0,0,0.2)" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="42" y1="292" x2="42" y2="302" stroke="rgba(0,0,0,0.18)" stroke-width="1.1" stroke-linecap="round"/>
+
+          <!-- SAĞ KOL & EL (Simetrik tam anatomik kol ve parmaklar) -->
+          <path d="M172 146 C182 162 188 186 188 214 C188 238 186 256 182 270 C184 278 184 290 182 304 C180 307 174 307 173 302 C171 294 171 284 172 278 C168 278 166 274 167 270 C172 270 175 264 175 254 C178 242 178 228 176 214 C174 196 164 182 154 174 Z" fill="#${skin}"/>
+          <!-- Sağ El Detayı -->
+          <path d="M172 278 C169 276 167 279 169 283" fill="none" stroke="rgba(0,0,0,0.2)" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="178" y1="292" x2="178" y2="302" stroke="rgba(0,0,0,0.18)" stroke-width="1.1" stroke-linecap="round"/>
+
+          <!-- GÖVDE & KALÇA BAZI -->
+          <path d="M66 174 C66 196 72 226 74 242 L74 258 C74 266 84 270 110 270 C136 270 146 266 146 258 L146 242 C148 226 154 196 154 174 Z" fill="#${skin}"/>
+
+          <!-- BACAKLAR (Ten rengi uyluklar, dizler, baldırlar ve bilekler) -->
+          <!-- Sol Bacak -->
+          <path d="M74 256 C74 274 76 294 77 312 C78 326 80 338 81 350 L101 350 C101 338 102 326 103 312 C104 294 107 274 108 266 Z" fill="#${skin}"/>
+          <!-- Sağ Bacak -->
+          <path d="M146 256 C146 274 144 294 143 312 C142 326 140 338 139 350 L119 350 C119 338 118 326 117 312 C116 294 113 274 112 266 Z" fill="#${skin}"/>
+          <!-- Diz Kapakları -->
+          <path d="M85 312 Q90 310 95 312" fill="none" stroke="rgba(0,0,0,0.12)" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M125 312 Q130 310 135 312" fill="none" stroke="rgba(0,0,0,0.12)" stroke-width="1.4" stroke-linecap="round"/>
+        </g>
+
+        <!-- ======================================================== -->
+        <!-- 2. ALT GİYİM OVERLAY (Pantolon / Etek / Şort)             -->
+        <!-- ======================================================== -->
         ${bottomDetails}
 
-        <!-- 5. Ayakkabılar (Sneakers) -->
+        <!-- ======================================================== -->
+        <!-- 3. ÜST GİYİM OVERLAY (T-Shirt / Bomber / Polo / Kazak)    -->
+        <!-- ======================================================== -->
+        ${topDetails}
+
+        <!-- ======================================================== -->
+        <!-- 4. AYAKKABI OVERLAY (Sneakers)                           -->
+        <!-- ======================================================== -->
         ${shoesDetails}
       </svg>
     `;
@@ -1875,6 +1911,8 @@ window.TDAMessaging = (function() {
   // Geriye dönük uyumluluk alias
   const renderOutfitSelector = renderGridCardSelector;
 
+  let currentAvatarStudioTab = 'face'; // 'face' | 'body'
+
   function renderAvatarCustomizerControls() {
     // 1. Sekmeler Arası Geçiş (Yüz Tasarımı & Vücut / Giyim)
     const tabBtnFace = document.getElementById('tabBtnFace');
@@ -1883,23 +1921,20 @@ window.TDAMessaging = (function() {
     const paneBody = document.getElementById('paneAvatarBody');
 
     if (tabBtnFace && tabBtnBody && paneFace && paneBody) {
-      tabBtnFace.onclick = () => {
-        tabBtnFace.classList.add('active');
-        tabBtnFace.setAttribute('aria-selected', 'true');
-        tabBtnBody.classList.remove('active');
-        tabBtnBody.setAttribute('aria-selected', 'false');
-        paneFace.style.display = 'flex';
-        paneBody.style.display = 'none';
+      const applyTab = (tab) => {
+        currentAvatarStudioTab = tab;
+        const isFace = tab === 'face';
+        tabBtnFace.classList.toggle('active', isFace);
+        tabBtnFace.setAttribute('aria-selected', String(isFace));
+        tabBtnBody.classList.toggle('active', !isFace);
+        tabBtnBody.setAttribute('aria-selected', String(!isFace));
+        paneFace.style.display = isFace ? 'flex' : 'none';
+        paneBody.style.display = isFace ? 'none' : 'flex';
       };
 
-      tabBtnBody.onclick = () => {
-        tabBtnBody.classList.add('active');
-        tabBtnBody.setAttribute('aria-selected', 'true');
-        tabBtnFace.classList.remove('active');
-        tabBtnFace.setAttribute('aria-selected', 'false');
-        paneFace.style.display = 'none';
-        paneBody.style.display = 'flex';
-      };
+      tabBtnFace.onclick = () => applyTab('face');
+      tabBtnBody.onclick = () => applyTab('body');
+      applyTab(currentAvatarStudioTab);
     }
 
     const currentSkin = (currentEditingAvatarConfig.skinColor || 'f8d9ce').replace('#', '');
@@ -2161,29 +2196,71 @@ window.TDAMessaging = (function() {
   const adventurerSvgCache = new Map();
 
   // Adventurer Göz İrisini ve Kaşlarını Doğrudan SVG İçinde Yeniden Renklendirme
+  // KRİTİK: Kaşlar SADECE hairColor ile boyanır, göz irisi SADECE eyeColor ile boyanır!
   function recolorAdventurerSvg(svgText, eyeColorHex, hairColorHex) {
     if (!svgText) return svgText;
     const eyeHex = (eyeColorHex || '3b2219').replace('#', '');
     const hairHex = (hairColorHex || '0e0e0e').replace('#', '');
 
-    // 1. Göz İrisi: Göz grubunda beyaz göz aklarının (fill="#fff") hemen ardından gelen irisin fill'ini boya
-    // Dış göz çizgileri (#000) ve göz akları (#fff) kesinlikle siyah/beyaz kalır
-    let result = svgText.replace(/(<g transform="translate\(-161 -83\)">[\s\S]*?fill="#fff"[\s\S]*?)(fill="#000"|fill="black")([\s\S]*?<\/g>)/i, (match, prefix, fillAttr, suffix) => {
-      const lastWhite = prefix.lastIndexOf('fill="#fff"');
-      if (lastWhite === -1) return match;
-      const beforeWhite = prefix.slice(0, lastWhite);
-      const afterWhite = prefix.slice(lastWhite) + fillAttr + suffix;
-      const replaced = afterWhite.replace(/(fill="#000"|fill="black")/i, `fill="#${eyeHex}"`);
-      return beforeWhite + replaced;
-    });
+    try {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(svgText, "image/svg+xml");
+      const featureGroups = doc.querySelectorAll('g[transform*="-161"]');
 
-    // 2. Kaşlar: Göz grubunun hemen ardından gelen ve y koordinatları kaş seviyesinde (350-420) olan kaş katmanını
-    // doğrudan saç rengine (hairColor) bağla
-    result = result.replace(/(<\/g>\s*<g transform="translate\(-161 -83\)">\s*<path d="[^"]*[34]\d{2}[^"]*"\s*)(fill="#000"|fill="black")/i, (match, prefix, fillAttr) => {
-      return `${prefix}fill="#${hairHex}"`;
-    });
+      featureGroups.forEach(group => {
+        const paths = Array.from(group.querySelectorAll('path'));
+        if (!paths.length) return;
 
-    return result;
+        // 1. GÖZ GRUBU KONTROLÜ: Beyaz göz akı (fill="#fff" veya #ffffff) içerir
+        const hasWhiteSclera = paths.some(p => {
+          const f = (p.getAttribute('fill') || '').toLowerCase();
+          return f === '#fff' || f === '#ffffff';
+        });
+
+        if (hasWhiteSclera) {
+          // Göz grubu kuralları:
+          // a. Beyaz göz akından (#fff) önceki çizgiler dış konturdur -> #000 kalır.
+          // b. Beyaz göz akı (#fff) -> #fff kalır.
+          // c. Beyaz göz akından sonraki iris/bebek yolları -> SADECE eyeHex ile boyanır!
+          let seenWhite = false;
+          paths.forEach(p => {
+            const f = (p.getAttribute('fill') || '').toLowerCase();
+            if (f === '#fff' || f === '#ffffff') {
+              seenWhite = true;
+            } else if (seenWhite && (f === '#000' || f === '#000000' || f === 'black')) {
+              p.setAttribute('fill', '#' + eyeHex);
+            }
+          });
+        } else {
+          // 2. KAŞ GRUBU KONTROLÜ: Göz grubunun hemen ardında, koordinatları 370-440 aralığında
+          // ve kırmızı/bordo dudak tonu (#8f2e45) içermeyen kaş katmanı
+          const hasEyebrowCoords = paths.some(p => {
+            const d = p.getAttribute('d') || '';
+            return /3[7-9]\d|4[0-3]\d/.test(d) && !/5[5-9]\d|6\d{2}/.test(d);
+          });
+          const isMouth = paths.some(p => {
+            const f = (p.getAttribute('fill') || '').toLowerCase();
+            return f.includes('8f2e45') || f.includes('mouth') || /5[5-9]\d|6\d{2}/.test(p.getAttribute('d') || '');
+          });
+
+          if (hasEyebrowCoords && !isMouth) {
+            // Kaşlar SADECE ve HER ZAMAN saç rengi (hairColor) state'ine bağlıdır!
+            paths.forEach(p => {
+              const f = (p.getAttribute('fill') || '').toLowerCase();
+              if (f === '#000' || f === '#000000' || f === 'black') {
+                p.setAttribute('fill', '#' + hairHex);
+              }
+            });
+          }
+        }
+      });
+
+      const serializer = new XMLSerializer();
+      return serializer.serializeToString(doc.documentElement);
+    } catch(err) {
+      console.warn("DOMParser recolor fallback", err);
+      return svgText;
+    }
   }
 
   function updateLiveAvatarPreview() {

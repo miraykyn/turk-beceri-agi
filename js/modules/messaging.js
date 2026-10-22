@@ -692,18 +692,18 @@ window.TDAMessaging = (function() {
   // 3. Vücut Tipi (bodyType): 'average' (Standart/Atletik), 'slim' (Zayıf) veya 'plump' (Geniş/Dolgun).
   // 4. Kıyafet (outfit): 20 model arasından modern 'casual_tshirt' (Bisiklet Yaka Basic Tişört).
   const DEFAULT_AVATAR_CONFIG = {
-    skinColor: 'f8d9ce', // Doğal Açık / Beyaz Ten (#F8D9CE) - Siyah ten bug'ı kesin olarak giderildi
+    skinColor: 'f8d9ce', // Doğal Açık / Beyaz Ten (#F8D9CE)
     skinTone: 'f8d9ce',  // Geriye dönük uyumluluk
     eyeColor: '3b2219',  // Koyu Kahverengi Doğal İris (#3b2219)
     bodyType: 'average', // Standart / Orta Vücut Tipi ('slim' | 'average' | 'plump')
-    outfit: 'casual_tshirt', // 20 Kıyafet Modelinden biri
+    outfit: 'basic_tshirt', // Modern Gardıroptan Basic T-Shirt
+    outfitColor: '102343', // Gece Mavisi / Lacivert Kumaş Rengi
+    backgroundColor: 'ffdfbf', // Parşömen Beji Sahne Fonu
     hair: 'long01',      // Saç Modeli
     hairColor: '0e0e0e', // Kuzuni Siyah Saç
     mood: 'variant01',    // Samimi Tebessüm
     eyes: 'variant01',    // Işıltılı Güleç Gözler
-    accessories: 'none',  // Aksesuarsız
-    outfitColor: 'ffdfbf',// Parşömen Beji Fon / Kıyafet Vurgu Rengi
-    backgroundColor: 'ffdfbf'
+    accessories: 'none'   // Aksesuarsız
   };
 
   function getMyAvatarConfig() {
@@ -713,7 +713,7 @@ window.TDAMessaging = (function() {
       const parsed = JSON.parse(raw);
       const merged = Object.assign({}, DEFAULT_AVATAR_CONFIG, parsed);
 
-      // Ten rengi doğrulama & Temizleme (Siyah veya tanımsız ten değerlerini açık ten #f8d9ce ile ez)
+      // Ten rengi doğrulama & Temizleme
       let sColor = merged.skinColor || merged.skinTone || 'f8d9ce';
       sColor = String(sColor).replace('#', '').trim().toLowerCase();
       if (!sColor || sColor === '000000' || sColor === 'undefined' || sColor.length !== 6) {
@@ -732,9 +732,20 @@ window.TDAMessaging = (function() {
         merged.bodyType = 'average';
       }
 
-      // Kıyafet modeli doğrulama
-      if (!merged.outfit) {
-        merged.outfit = 'casual_tshirt';
+      // Kıyafet modeli eşleme (Eski ID'leri yeni modern gardıroba dönüştür)
+      const modernOutfits = ['basic_tshirt', 'hoodie', 'sweatshirt', 'bomber_jacket', 'polo_shirt', 'turtleneck_sweater'];
+      if (!modernOutfits.includes(merged.outfit)) {
+        if (merged.outfit === 'casual_tshirt') merged.outfit = 'basic_tshirt';
+        else if (merged.outfit === 'casual_hoodie') merged.outfit = 'hoodie';
+        else if (merged.outfit === 'knit_sweater') merged.outfit = 'turtleneck_sweater';
+        else merged.outfit = 'basic_tshirt';
+      }
+
+      if (!merged.outfitColor || merged.outfitColor.length !== 6) {
+        merged.outfitColor = '102343';
+      }
+      if (!merged.backgroundColor || merged.backgroundColor.length !== 6) {
+        merged.backgroundColor = 'ffdfbf';
       }
 
       return merged;
@@ -758,7 +769,8 @@ window.TDAMessaging = (function() {
     const hairColor = c.hairColor || '0e0e0e';
     const eyes = c.eyes || 'variant01';
     const mouth = c.mood || 'variant01';
-    const bg = c.outfitColor || c.backgroundColor || 'ffdfbf';
+    // Arka plan rengi kesinlikle kıyafet rengiyle karışmaz
+    const bg = (c.backgroundColor || 'ffdfbf').replace('#', '');
 
     let url = `https://api.dicebear.com/7.x/adventurer/svg?seed=${seed}&skinColor=${encodeURIComponent(skin)}&hair=${encodeURIComponent(hair)}&hairProbability=100&hairColor=${encodeURIComponent(hairColor)}&eyes=${encodeURIComponent(eyes)}&mouth=${encodeURIComponent(mouth)}&backgroundColor=${encodeURIComponent(bg)}`;
 
@@ -1447,28 +1459,44 @@ window.TDAMessaging = (function() {
     }
   ];
 
-  // 2. Geniş ve Çeşitli Gardırop: 20 Farklı Kıyafet (Modern, Kültürel, Resmi)
+  // 2. Modern Gardırop: 6 Klasik ve Modern Parça
   const OUTFIT_MODELS = [
-    { id: 'casual_tshirt', label: 'Basic Tişört', category: 'Modern', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7l4 3h6l4-3 5 4-3 5-3-2v12H10V14l-3 2-3-5 5-4z"/></svg>` },
-    { id: 'casual_hoodie', label: 'Kapüşonlu Hoodie', category: 'Modern', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 8c0-3 3-5 6-5s6 2 6 5l5 3-3 5-3-2v13H8V14l-3 2-3-5 5-3h3zm6 2v7"/></svg>` },
-    { id: 'bomber_jacket', label: 'Bomber Ceket', category: 'Modern', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 8l4 2h8l4-2 5 4-3 5-2-1v12H8V16l-2 1-3-5 5-4z"/><line x1="16" y1="10" x2="16" y2="28"/></svg>` },
-    { id: 'polo_shirt', label: 'Klasik Polo Tişört', category: 'Modern', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7l4 3h6l4-3 5 4-3 5-3-2v12H10V14l-3 2-3-5 5-4z"/><path d="M13 10l3 5 3-5"/></svg>` },
-    { id: 'knit_sweater', label: 'Boğazlı Triko Kazak', category: 'Kışlık', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5h8v4h-8z"/><path d="M8 9l4 2h8l4-2 5 4-3 5-2-1v12H8V17l-2 1-3-5 5-4z"/></svg>` },
-    { id: 'blazer_formal', label: 'Klasik Blazer & Kravat', category: 'Resmi', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7l4 2h8l4-2 5 4-3 5-2-1v13H8V15l-2 1-3-5 5-4z"/><path d="M13 9l3 9 3-9"/><path d="M16 11l-1 5 1 4 1-4-1-5z"/></svg>` },
-    { id: 'plaid_shirt', label: 'Kareli Oduncu Gömlek', category: 'Modern', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7l4 2h6l4-2 5 4-3 5-3-1v13H10V15l-3 1-3-5 5-4z"/><line x1="16" y1="9" x2="16" y2="28"/><line x1="10" y1="18" x2="22" y2="18"/></svg>` },
-    { id: 'turkish_kaftan', label: 'Geleneksel Türk Kaftanı', category: 'Kültürel', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 6l5 3h8l5-3 5 5-3 6-3-2v14H5V14l-3 2-3-6 5-5z"/><path d="M14 9l2 5 2-5"/><line x1="16" y1="14" x2="16" y2="29"/><circle cx="16" cy="18" r="1" fill="currentColor"/><circle cx="16" cy="22" r="1" fill="currentColor"/></svg>` },
-    { id: 'kazakh_shapan', label: 'Kazak İşlemeli Çapanı', category: 'Kültürel', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l6 3h8l6-3 4 5-3 6-3-2v14H4V14l-3 2-3-6 4-5z"/><path d="M12 9c2 4 6 4 8 0"/><path d="M16 13v16"/></svg>` },
-    { id: 'uzbek_chapan', label: 'Özbek İpek Atlas Cübbe', category: 'Kültürel', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7l6 3h8l6-3 4 5-3 6-3-2v13H4V15l-3 2-3-6 4-5z"/><line x1="16" y1="10" x2="16" y2="29"/><line x1="12" y1="13" x2="20" y2="25"/></svg>` },
-    { id: 'kyrgyz_chepken', label: 'Kırgız Keçe Çepken', category: 'Kültürel', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 6l5 3h8l5-3 5 5-3 6-3-2v14H5V14l-3 2-3-6 5-5z"/><path d="M13 9l3 6 3-6"/></svg>` },
-    { id: 'azerbaijan_libas', label: 'Azerbaycan Milli Libası', category: 'Kültürel', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6l4 2h8l4-2 6 5-3 6-3-2v14H5V15l-3 2-3-6 6-5z"/><path d="M12 8l4 6 4-6"/><line x1="16" y1="14" x2="16" y2="29"/></svg>` },
-    { id: 'turkmen_don', label: 'Türkmen İpek Don / Çapan', category: 'Kültürel', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l6 3h8l6-3 4 5-3 6-3-2v14H4V14l-3 2-3-6 4-5z"/><line x1="16" y1="9" x2="16" y2="29"/><path d="M12 14l8 4"/></svg>` },
-    { id: 'denim_jacket', label: 'Klasik Kot Ceket', category: 'Modern', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 8l4 2h8l4-2 5 4-3 5-2-1v12H8V16l-2 1-3-5 5-4z"/><line x1="16" y1="10" x2="16" y2="28"/><rect x="10" y="13" width="3" height="3" fill="currentColor"/><rect x="19" y="13" width="3" height="3" fill="currentColor"/></svg>` },
-    { id: 'leather_jacket', label: 'Deri Biker Ceket', category: 'Modern', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 8l4 2h8l4-2 5 4-3 5-2-1v12H8V16l-2 1-3-5 5-4z"/><line x1="13" y1="10" x2="20" y2="28"/></svg>` },
-    { id: 'sport_jersey', label: 'Milli Spor Forması', category: 'Sportif', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6l3 2h6l3-2 5 4-3 5-3-2v13H8V13l-3 2-3-5 5-4z"/><circle cx="16" cy="15" r="3" fill="none"/></svg>` },
-    { id: 'winter_parka', label: 'Kışlık Kürklü Parka', category: 'Kışlık', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6c0-2 3-3 7-3s7 1 7 3l4 3-2 5-3-2v15H7V13l-3 2-2-5 4-3h3zm7 0v21"/></svg>` },
-    { id: 'academic_robe', label: 'Akademisyen & Bilim Cübbesi', category: 'Resmi', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7l4 2h8l4-2 5 5-3 5-2-1v14H8V16l-2 1-3-5 5-5z"/><path d="M13 9l3 6 3-6"/><line x1="16" y1="15" x2="16" y2="30"/></svg>` },
-    { id: 'linen_shirt', label: 'Düğmeli Keten Gömlek', category: 'Modern', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7l4 2h6l4-2 5 4-3 5-3-1v13H10V15l-3 1-3-5 5-4z"/><line x1="16" y1="9" x2="16" y2="28"/><circle cx="16" cy="13" r="0.8" fill="currentColor"/><circle cx="16" cy="18" r="0.8" fill="currentColor"/><circle cx="16" cy="23" r="0.8" fill="currentColor"/></svg>` },
-    { id: 'traditional_vest', label: 'Anadolu İşlemeli Yelek', category: 'Kültürel', iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7l4 3h6l4-3 2 4-2 4-2-1v13H11V15l-2 1-2-4 2-4z"/><path d="M13 10l3 5 3-5"/><line x1="16" y1="15" x2="16" y2="27"/></svg>` }
+    { 
+      id: 'basic_tshirt', 
+      label: 'Basic T-Shirt', 
+      category: 'Modern', 
+      iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7l4 3h6l4-3 5 4-3 5-3-2v12H10V14l-3 2-3-5 5-4z"/></svg>` 
+    },
+    { 
+      id: 'hoodie', 
+      label: 'Kapüşonlu (Hoodie)', 
+      category: 'Modern', 
+      iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 8c0-3 3-5 6-5s6 2 6 5l5 3-3 5-3-2v13H8V14l-3 2-3-5 5-3h3zm6 2v7"/></svg>` 
+    },
+    { 
+      id: 'sweatshirt', 
+      label: 'Sweatshirt', 
+      category: 'Modern', 
+      iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7l4 2h6l4-2 5 4-3 5-3-1v13H10V15l-3 1-3-5 5-4z"/><path d="M14 9l2 3 2-3"/></svg>` 
+    },
+    { 
+      id: 'bomber_jacket', 
+      label: 'Bomber Ceket', 
+      category: 'Modern', 
+      iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l4 2h8l4-2 5 4-3 5-2-1v12H8V16l-2 1-3-5 5-4z"/><line x1="16" y1="10" x2="16" y2="28"/></svg>` 
+    },
+    { 
+      id: 'polo_shirt', 
+      label: 'Klasik Polo T-Shirt', 
+      category: 'Modern', 
+      iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7l4 3h6l4-3 5 4-3 5-3-2v12H10V14l-3 2-3-5 5-4z"/><path d="M13 10l3 5 3-5"/></svg>` 
+    },
+    { 
+      id: 'turtleneck_sweater', 
+      label: 'Boğazlı Triko Kazak', 
+      category: 'Kışlık', 
+      iconSvg: `<svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5h8v4h-8z"/><path d="M8 9l4 2h8l4-2 5 4-3 5-2-1v12H8V17l-2 1-3-5 5-4z"/></svg>` 
+    }
   ];
 
   // 3. Karakter Gövdesi ve Seçilen Kıyafetin SVG Generator'ı
@@ -1477,227 +1505,127 @@ window.TDAMessaging = (function() {
     const cColor = (outfitColor || '102343').replace('#', '');
     const bType = bodyType || 'average';
 
-    // Vücut tipine göre omuz genişliği
-    let shoulderPoints = 'M24 180 L36 50 C58 32 88 28 120 28 C152 28 182 32 204 50 L216 180 Z';
+    // Vücut tipine göre orantılı ve estetik omuz/gövde hatları (Kutuyu taşırmaz)
+    let shoulderPoints = 'M32 180 L44 52 C64 32 90 28 120 28 C150 28 176 32 196 52 L208 180 Z';
     if (bType === 'slim') {
-      shoulderPoints = 'M38 180 L48 54 C66 38 92 34 120 34 C148 34 174 38 192 54 L202 180 Z';
+      shoulderPoints = 'M44 180 L54 55 C70 38 93 34 120 34 C147 34 170 38 186 55 L196 180 Z';
     } else if (bType === 'plump') {
-      shoulderPoints = 'M10 180 L24 46 C50 26 84 22 120 22 C156 22 190 26 216 46 L230 180 Z';
+      shoulderPoints = 'M24 180 L36 50 C58 30 88 26 120 26 C152 26 182 30 204 50 L216 180 Z';
     }
 
     let garmentDetails = '';
 
     switch(outfitId) {
-      case 'turkish_kaftan':
-        garmentDetails = `
-          <path d="M78 36 L120 105 L162 36" fill="none" stroke="#d4af37" stroke-width="12" stroke-linecap="round"/>
-          <path d="M78 36 L120 105 L162 36" fill="none" stroke="#78350f" stroke-width="2"/>
-          <line x1="120" y1="105" x2="120" y2="180" stroke="#d4af37" stroke-width="8"/>
-          <circle cx="120" cy="120" r="5" fill="#f59e0b" stroke="#78350f" stroke-width="1.5"/>
-          <circle cx="120" cy="144" r="5" fill="#f59e0b" stroke="#78350f" stroke-width="1.5"/>
-          <circle cx="120" cy="168" r="5" fill="#f59e0b" stroke="#78350f" stroke-width="1.5"/>
-          <path d="M92 70 Q80 85 95 95" fill="none" stroke="#d4af37" stroke-width="2.5"/>
-          <path d="M148 70 Q160 85 145 95" fill="none" stroke="#d4af37" stroke-width="2.5"/>
-        `;
-        break;
-
-      case 'kazakh_shapan':
-        garmentDetails = `
-          <path d="M72 32 L120 108 L168 32" fill="none" stroke="#fbbf24" stroke-width="14" stroke-linecap="round"/>
-          <line x1="120" y1="108" x2="120" y2="180" stroke="#fbbf24" stroke-width="10"/>
-          <path d="M88 65 C78 52 64 62 76 74 C86 84 102 78 98 64" fill="none" stroke="#b45309" stroke-width="3"/>
-          <path d="M152 65 C162 52 176 62 164 74 C154 84 138 78 142 64" fill="none" stroke="#b45309" stroke-width="3"/>
-          <circle cx="120" cy="126" r="4.5" fill="#78350f"/>
-          <circle cx="120" cy="154" r="4.5" fill="#78350f"/>
-        `;
-        break;
-
-      case 'uzbek_chapan':
-        garmentDetails = `
-          <path d="M76 34 L120 102 L164 34" fill="none" stroke="#f59e0b" stroke-width="11"/>
-          <line x1="120" y1="102" x2="120" y2="180" stroke="#f59e0b" stroke-width="8"/>
-          <path d="M50 80 L190 140 M50 120 L190 180" stroke="rgba(255,255,255,0.25)" stroke-width="6"/>
-          <path d="M190 80 L50 140 M190 120 L50 180" stroke="rgba(255,215,0,0.3)" stroke-width="4"/>
-        `;
-        break;
-
-      case 'kyrgyz_chepken':
-        garmentDetails = `
-          <path d="M82 34 L120 95 L158 34" fill="none" stroke="#f1f5f9" stroke-width="12"/>
-          <line x1="120" y1="95" x2="120" y2="180" stroke="#f1f5f9" stroke-width="8"/>
-          <circle cx="120" cy="115" r="4" fill="#0f172a"/>
-          <circle cx="120" cy="142" r="4" fill="#0f172a"/>
-          <path d="M96 68 Q88 85 104 88" fill="none" stroke="#dc2626" stroke-width="3"/>
-          <path d="M144 68 Q152 85 136 88" fill="none" stroke="#dc2626" stroke-width="3"/>
-        `;
-        break;
-
-      case 'azerbaijan_libas':
-        garmentDetails = `
-          <path d="M84 34 L120 85 L156 34" fill="none" stroke="#e2e8f0" stroke-width="8"/>
-          <line x1="120" y1="85" x2="120" y2="180" stroke="#cbd5e1" stroke-width="5"/>
-          <rect x="90" y="145" width="60" height="12" rx="3" fill="#64748b"/>
-          <rect x="112" y="142" width="16" height="18" rx="2" fill="#d4af37"/>
-        `;
-        break;
-
-      case 'turkmen_don':
-        garmentDetails = `
-          <path d="M78 32 L120 104 L162 32" fill="none" stroke="#b91c1c" stroke-width="12"/>
-          <path d="M78 32 L120 104 L162 32" fill="none" stroke="#fbbf24" stroke-width="3"/>
-          <line x1="120" y1="104" x2="120" y2="180" stroke="#fbbf24" stroke-width="6"/>
-          <circle cx="100" cy="72" r="3.5" fill="#fef08a"/>
-          <circle cx="140" cy="72" r="3.5" fill="#fef08a"/>
-        `;
-        break;
-
+      case 'hoodie':
       case 'casual_hoodie':
         garmentDetails = `
-          <path d="M72 26 C88 56 152 56 168 26" fill="none" stroke="#1e293b" stroke-width="14" stroke-linecap="round"/>
-          <path d="M78 30 C92 56 148 56 162 30" fill="none" stroke="#334155" stroke-width="4"/>
-          <line x1="108" y1="46" x2="108" y2="102" stroke="#f8fafc" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="108" cy="104" r="2.5" fill="#d4af37"/>
-          <line x1="132" y1="46" x2="132" y2="98" stroke="#f8fafc" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="132" cy="100" r="2.5" fill="#d4af37"/>
-          <path d="M70 148 Q120 135 170 148" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="2.5"/>
+          <!-- Kapüşon İç/Arka Kıvrımı (Doğal Gölgeli Döküm) -->
+          <path d="M84 20 C92 48 114 56 120 56 C126 56 148 48 156 20 C146 14 94 14 84 20 Z" fill="rgba(0,0,0,0.25)"/>
+          
+          <!-- Kapüşon Ön Dökümlü Yakası (Geniş & Rahat Dökümlü) -->
+          <path d="M76 22 C84 56 108 68 120 68 C132 68 156 56 164 22 C148 42 92 42 76 22 Z" fill="rgba(255,255,255,0.18)" stroke="rgba(0,0,0,0.2)" stroke-width="2"/>
+          <path d="M80 24 C90 52 110 60 120 60 C130 60 150 52 160 24" fill="none" stroke="rgba(0,0,0,0.12)" stroke-width="3"/>
+          
+          <!-- Kapüşon İpleri (Beyaz Kordon & Altın Uçluklar) -->
+          <line x1="110" y1="58" x2="108" y2="108" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round"/>
+          <rect x="106.5" y="104" width="3" height="7" rx="1.5" fill="#d4af37"/>
+          
+          <line x1="130" y1="58" x2="132" y2="104" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round"/>
+          <rect x="130.5" y="100" width="3" height="7" rx="1.5" fill="#d4af37"/>
+          
+          <!-- Kanguru Cep -->
+          <path d="M74 146 L86 118 L154 118 L166 146 Z" fill="rgba(0,0,0,0.12)" stroke="rgba(0,0,0,0.18)" stroke-width="1.5"/>
+          <line x1="86" y1="118" x2="80" y2="136" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="154" y1="118" x2="160" y2="136" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-linecap="round"/>
         `;
         break;
 
-      case 'blazer_formal':
+      case 'sweatshirt':
         garmentDetails = `
-          <polygon points="120,42 96,22 144,22" fill="#ffffff"/>
-          <polygon points="117,42 123,42 126,108 120,120 114,108" fill="#b91c1c"/>
-          <polygon points="82,28 116,102 100,114 62,56" fill="#0f172a"/>
-          <polygon points="158,28 124,102 140,114 178,56" fill="#0f172a"/>
-          <circle cx="120" cy="132" r="3.5" fill="#d4af37"/>
-          <circle cx="120" cy="158" r="3.5" fill="#d4af37"/>
+          <!-- Kalın Ribana Bisiklet Yaka -->
+          <path d="M94 28 C104 46 136 46 146 28" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="6" stroke-linecap="round"/>
+          <path d="M94 28 C104 46 136 46 146 28" fill="none" stroke="rgba(0,0,0,0.15)" stroke-width="1.5"/>
+          
+          <!-- Klasik Sweatshirt V-Stitch (Üçgen Dikiş) -->
+          <polygon points="113,44 127,44 120,55" fill="rgba(0,0,0,0.15)"/>
+          <path d="M113 44 L120 55 L127 44" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+          
+          <!-- Raglan Kol Dikişleri -->
+          <line x1="94" y1="28" x2="62" y2="76" stroke="rgba(0,0,0,0.16)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="146" y1="28" x2="178" y2="76" stroke="rgba(0,0,0,0.16)" stroke-width="2" stroke-linecap="round"/>
+          
+          <!-- Göğüs Kumaş Detayı -->
+          <path d="M78 100 Q120 90 162 100" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="2"/>
         `;
         break;
 
       case 'bomber_jacket':
         garmentDetails = `
-          <path d="M88 32 Q120 46 152 32" fill="none" stroke="#0f172a" stroke-width="10"/>
-          <line x1="120" y1="36" x2="120" y2="180" stroke="#cbd5e1" stroke-width="4"/>
-          <rect x="117" y="58" width="6" height="12" rx="2" fill="#d4af37"/>
-          <line x1="68" y1="120" x2="94" y2="140" stroke="rgba(0,0,0,0.3)" stroke-width="3" stroke-linecap="round"/>
-          <line x1="172" y1="120" x2="146" y2="140" stroke="rgba(0,0,0,0.3)" stroke-width="3" stroke-linecap="round"/>
+          <!-- Dik Triko Ribana Yaka -->
+          <path d="M88 30 Q120 48 152 30" fill="none" stroke="#1e293b" stroke-width="9" stroke-linecap="round"/>
+          <path d="M88 30 Q120 48 152 30" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-linecap="round"/>
+          
+          <!-- Metal Ön Fermuar & Fermuar Ucu -->
+          <line x1="120" y1="36" x2="120" y2="180" stroke="#cbd5e1" stroke-width="3.5"/>
+          <line x1="120" y1="36" x2="120" y2="180" stroke="#475569" stroke-width="1"/>
+          <rect x="117" y="56" width="6" height="12" rx="2" fill="#d4af37" stroke="#78350f" stroke-width="0.8"/>
+          
+          <!-- Sol Kol / Göğüs Yardımcı Cebi -->
+          <rect x="68" y="70" width="22" height="30" rx="3" fill="rgba(0,0,0,0.18)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          <line x1="72" y1="74" x2="86" y2="74" stroke="#cbd5e1" stroke-width="2"/>
+          
+          <!-- Yan Cepler -->
+          <line x1="68" y1="130" x2="94" y2="152" stroke="rgba(0,0,0,0.25)" stroke-width="3" stroke-linecap="round"/>
+          <line x1="172" y1="130" x2="146" y2="152" stroke="rgba(0,0,0,0.25)" stroke-width="3" stroke-linecap="round"/>
         `;
         break;
 
       case 'polo_shirt':
         garmentDetails = `
-          <polygon points="86,30 120,52 154,30 144,20 120,28 96,20" fill="#ffffff" stroke="rgba(0,0,0,0.1)"/>
-          <rect x="114" y="50" width="12" height="42" fill="#f8fafc"/>
-          <circle cx="120" cy="62" r="2.2" fill="#64748b"/>
-          <circle cx="120" cy="78" r="2.2" fill="#64748b"/>
+          <!-- Beyaz Polo Yaka Kanatları -->
+          <polygon points="86,28 120,48 108,56 80,34" fill="#ffffff" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+          <polygon points="154,28 120,48 132,56 160,34" fill="#ffffff" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+          
+          <!-- Düğme Patı (Placket) -->
+          <rect x="114" y="48" width="12" height="46" rx="2" fill="#f8fafc" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
+          <!-- Düğmeler -->
+          <circle cx="120" cy="58" r="2.5" fill="#64748b" stroke="#334155" stroke-width="0.5"/>
+          <circle cx="120" cy="74" r="2.5" fill="#64748b" stroke="#334155" stroke-width="0.5"/>
+          <circle cx="120" cy="88" r="2.5" fill="#64748b" stroke="#334155" stroke-width="0.5"/>
         `;
         break;
 
+      case 'turtleneck_sweater':
       case 'knit_sweater':
         garmentDetails = `
-          <rect x="92" y="8" width="56" height="38" rx="6" fill="#334155" stroke="rgba(0,0,0,0.2)"/>
-          <line x1="102" y1="10" x2="102" y2="44" stroke="#475569" stroke-width="2"/>
-          <line x1="111" y1="10" x2="111" y2="44" stroke="#475569" stroke-width="2"/>
-          <line x1="120" y1="10" x2="120" y2="44" stroke="#475569" stroke-width="2"/>
-          <line x1="129" y1="10" x2="129" y2="44" stroke="#475569" stroke-width="2"/>
-          <line x1="138" y1="10" x2="138" y2="44" stroke="#475569" stroke-width="2"/>
-          <path d="M80 80 Q120 70 160 80 M75 120 Q120 110 165 120" stroke="rgba(0,0,0,0.15)" stroke-width="2.5" fill="none"/>
+          <!-- Katlı Boğazlı Yaka (Turtleneck Roll) -->
+          <rect x="94" y="6" width="52" height="38" rx="5" fill="#${cColor}" filter="brightness(0.9)" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
+          <line x1="102" y1="8" x2="102" y2="42" stroke="rgba(255,255,255,0.2)" stroke-width="1.8"/>
+          <line x1="111" y1="8" x2="111" y2="42" stroke="rgba(255,255,255,0.2)" stroke-width="1.8"/>
+          <line x1="120" y1="8" x2="120" y2="42" stroke="rgba(255,255,255,0.2)" stroke-width="1.8"/>
+          <line x1="129" y1="8" x2="129" y2="42" stroke="rgba(255,255,255,0.2)" stroke-width="1.8"/>
+          <line x1="138" y1="8" x2="138" y2="42" stroke="rgba(255,255,255,0.2)" stroke-width="1.8"/>
+          <path d="M94 25 H146" stroke="rgba(0,0,0,0.18)" stroke-width="1.5"/>
+          
+          <!-- Kazak Örgü / Fitilli Kumaş Dokusu -->
+          <line x1="88" y1="65" x2="88" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+          <line x1="152" y1="65" x2="152" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+          <line x1="104" y1="60" x2="104" y2="180" stroke="rgba(0,0,0,0.08)" stroke-width="1.5"/>
+          <line x1="136" y1="60" x2="136" y2="180" stroke="rgba(0,0,0,0.08)" stroke-width="1.5"/>
         `;
         break;
 
-      case 'plaid_shirt':
-        garmentDetails = `
-          <polygon points="88,30 120,48 152,30 120,24" fill="#ffffff"/>
-          <line x1="120" y1="48" x2="120" y2="180" stroke="#ffffff" stroke-width="4"/>
-          <line x1="40" y1="90" x2="200" y2="90" stroke="rgba(0,0,0,0.3)" stroke-width="4"/>
-          <line x1="40" y1="140" x2="200" y2="140" stroke="rgba(0,0,0,0.3)" stroke-width="4"/>
-          <line x1="85" y1="40" x2="85" y2="180" stroke="rgba(0,0,0,0.3)" stroke-width="4"/>
-          <line x1="155" y1="40" x2="155" y2="180" stroke="rgba(0,0,0,0.3)" stroke-width="4"/>
-          <circle cx="120" cy="70" r="2.5" fill="#1e293b"/>
-          <circle cx="120" cy="105" r="2.5" fill="#1e293b"/>
-          <circle cx="120" cy="140" r="2.5" fill="#1e293b"/>
-        `;
-        break;
-
-      case 'denim_jacket':
-        garmentDetails = `
-          <polygon points="86,30 120,50 154,30 120,24" fill="#1d4ed8"/>
-          <line x1="120" y1="50" x2="120" y2="180" stroke="#f59e0b" stroke-width="3"/>
-          <rect x="68" y="75" width="34" height="24" rx="3" fill="#1e40af" stroke="#f59e0b" stroke-width="1.5"/>
-          <circle cx="85" cy="87" r="2.5" fill="#d97706"/>
-          <rect x="138" y="75" width="34" height="24" rx="3" fill="#1e40af" stroke="#f59e0b" stroke-width="1.5"/>
-          <circle cx="155" cy="87" r="2.5" fill="#d97706"/>
-        `;
-        break;
-
-      case 'leather_jacket':
-        garmentDetails = `
-          <polygon points="76,30 135,100 115,108 55,50" fill="#0f172a"/>
-          <polygon points="164,30 105,100 125,108 185,50" fill="#1e293b"/>
-          <line x1="130" y1="36" x2="105" y2="180" stroke="#cbd5e1" stroke-width="4"/>
-          <circle cx="85" cy="50" r="2.5" fill="#f8fafc"/>
-          <circle cx="155" cy="50" r="2.5" fill="#f8fafc"/>
-        `;
-        break;
-
-      case 'sport_jersey':
-        garmentDetails = `
-          <polygon points="98,34 120,62 142,34" fill="#ffffff"/>
-          <line x1="55" y1="58" x2="38" y2="120" stroke="#ffffff" stroke-width="4"/>
-          <line x1="185" y1="58" x2="202" y2="120" stroke="#ffffff" stroke-width="4"/>
-          <circle cx="85" cy="85" r="9" fill="#dc2626"/>
-          <path d="M85 80 A5 5 0 1 0 85 90 A4 4 0 1 1 85 80 Z" fill="#ffffff"/>
-        `;
-        break;
-
-      case 'winter_parka':
-        garmentDetails = `
-          <path d="M72 26 C90 52 150 52 168 26" fill="none" stroke="#e2e8f0" stroke-width="18" stroke-linecap="round"/>
-          <line x1="120" y1="44" x2="120" y2="180" stroke="#334155" stroke-width="6"/>
-          <circle cx="120" cy="75" r="3" fill="#cbd5e1"/>
-          <circle cx="120" cy="110" r="3" fill="#cbd5e1"/>
-          <circle cx="120" cy="145" r="3" fill="#cbd5e1"/>
-        `;
-        break;
-
-      case 'academic_robe':
-        garmentDetails = `
-          <polygon points="120,40 100,24 140,24" fill="#ffffff"/>
-          <path d="M88 30 L96 180" stroke="#b91c1c" stroke-width="16"/>
-          <path d="M88 30 L96 180" stroke="#d4af37" stroke-width="3"/>
-          <path d="M152 30 L144 180" stroke="#b91c1c" stroke-width="16"/>
-          <path d="M152 30 L144 180" stroke="#d4af37" stroke-width="3"/>
-        `;
-        break;
-
-      case 'linen_shirt':
-        garmentDetails = `
-          <path d="M96 28 C108 36 132 36 144 28" fill="none" stroke="#f8fafc" stroke-width="6"/>
-          <line x1="120" y1="36" x2="120" y2="180" stroke="#f1f5f9" stroke-width="3"/>
-          <circle cx="120" cy="55" r="2.5" fill="#94a3b8"/>
-          <circle cx="120" cy="85" r="2.5" fill="#94a3b8"/>
-          <circle cx="120" cy="115" r="2.5" fill="#94a3b8"/>
-        `;
-        break;
-
-      case 'traditional_vest':
-        garmentDetails = `
-          <polygon points="120,38 98,22 142,22" fill="#ffffff"/>
-          <polygon points="80,28 116,95 86,180 50,180 44,60" fill="#0f172a"/>
-          <polygon points="160,28 124,95 154,180 190,180 196,60" fill="#0f172a"/>
-          <path d="M80 28 L116 95" stroke="#d4af37" stroke-width="3"/>
-          <path d="M160 28 L124 95" stroke="#d4af37" stroke-width="3"/>
-          <circle cx="95" cy="65" r="3" fill="#f59e0b"/>
-          <circle cx="145" cy="65" r="3" fill="#f59e0b"/>
-        `;
-        break;
-
+      case 'basic_tshirt':
       case 'casual_tshirt':
       default:
         garmentDetails = `
-          <path d="M94 28 C104 46 136 46 146 28" fill="none" stroke="#ffffff" stroke-width="5"/>
-          <path d="M94 28 C104 46 136 46 146 28" fill="none" stroke="rgba(0,0,0,0.15)" stroke-width="1.5"/>
-          <path d="M75 90 Q120 78 165 90" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="2"/>
+          <!-- Yaka Ribana Hattı -->
+          <path d="M95 28 C105 46 135 46 145 28" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M95 28 C105 46 135 46 145 28" fill="none" stroke="rgba(0,0,0,0.18)" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Göğüs ve Kol Dikiş Çizgileri -->
+          <path d="M68 64 L50 115" stroke="rgba(0,0,0,0.15)" stroke-width="2" stroke-linecap="round"/>
+          <path d="M172 64 L190 115" stroke="rgba(0,0,0,0.15)" stroke-width="2" stroke-linecap="round"/>
+          <path d="M78 95 Q120 84 162 95" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="2"/>
         `;
         break;
     }
@@ -1822,9 +1750,26 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 4. Kıyafet & Gardırop (20 Farklı Model)
-    renderOutfitSelector('optOutfitModel', OUTFIT_MODELS, currentEditingAvatarConfig.outfit || 'casual_tshirt', val => {
+    // 4. Kıyafet & Gardırop (6 Modern ve Klasik Parça)
+    renderOutfitSelector('optOutfitModel', OUTFIT_MODELS, currentEditingAvatarConfig.outfit || 'basic_tshirt', val => {
       currentEditingAvatarConfig.outfit = val;
+      updateLiveAvatarPreview();
+    });
+
+    // 4.1 YENİ ÖZELLİK: Kıyafet Rengi (Bağımsız Kumaş Renk Paleti)
+    renderColorSwatches('optOutfitColor', [
+      { id: '102343', label: 'Gece Mavisi / Lacivert' },
+      { id: '1a1a1a', label: 'Klasik Kömür Siyahı' },
+      { id: 'f8fafc', label: 'Temiz Beyaz / Kar' },
+      { id: '64748b', label: 'Füme / Çelik Grisi' },
+      { id: '7f1d1d', label: 'Bordo / Şarap Kızılı' },
+      { id: '3f6212', label: 'Haki / Zeytin Yeşili' },
+      { id: '78350f', label: 'Sıcak Taba / Kahve' },
+      { id: 'd97706', label: 'Hardal / Kehribar Sarısı' },
+      { id: '0284c7', label: 'Okyanus / Buz Mavisi' },
+      { id: '4338ca', label: 'Kraliyet İndigo / Mor' }
+    ], currentEditingAvatarConfig.outfitColor || '102343', val => {
+      currentEditingAvatarConfig.outfitColor = val;
       updateLiveAvatarPreview();
     });
 
@@ -1957,49 +1902,98 @@ window.TDAMessaging = (function() {
       updateLiveAvatarPreview();
     });
 
-    // 10. Arka Plan & Kıyafet Rengi
-    renderColorSwatches('optOutfitColor', [
-      { id: '102343', label: 'Gece Mavisi / Lacivert' },
-      { id: 'b91c1c', label: 'Bordo / Kızıl' },
-      { id: '0f766e', label: 'Zümrüt Yeşili' },
-      { id: '78350f', label: 'Sıcak Kahve / Kehribar' },
-      { id: '334155', label: 'Füme / Kömür Grisi' },
-      { id: 'd4af37', label: 'Altın Sarısı' },
-      { id: '4338ca', label: 'Kraliyet Moru' },
-      { id: 'ffdfbf', label: 'Parşömen Beji' }
-    ], currentEditingAvatarConfig.outfitColor || currentEditingAvatarConfig.backgroundColor || '102343', val => {
-      currentEditingAvatarConfig.outfitColor = val;
+    // 10. Arka Plan Rengi (Sahne Fonu - Kıyafetten Tamamen Bağımsız)
+    renderColorSwatches('optBackgroundColor', [
+      { id: 'ffdfbf', label: 'Parşömen Beji' },
+      { id: 'b6e3f4', label: 'Buz / Gökyüzü Mavisi' },
+      { id: 'c0aede', label: 'Lavanta / Leylak' },
+      { id: 'bbf7d0', label: 'Nane Yeşili' },
+      { id: 'fed7aa', label: 'Sıcak Şeftali' },
+      { id: 'fef08a', label: 'Açık Güneş Sarısı' },
+      { id: 'fbcfe8', label: 'Pudra Pembe' },
+      { id: 'e2e8f0', label: 'Modern Açık Gri' },
+      { id: '102343', label: 'Gece Laciverti' },
+      { id: '450a0a', label: 'Derin Bordo' }
+    ], currentEditingAvatarConfig.backgroundColor || 'ffdfbf', val => {
       currentEditingAvatarConfig.backgroundColor = val;
       updateLiveAvatarPreview();
     });
   }
 
+  // Canlı SVG Önbelleği (Hızlı 60 FPS Geçişler)
+  const adventurerSvgCache = new Map();
+
+  // Adventurer Göz İrisini Doğrudan SVG İçinde Yeniden Renklendirme
+  function recolorAdventurerEyes(svgText, eyeColorHex) {
+    if (!svgText) return svgText;
+    const hex = (eyeColorHex || '3b2219').replace('#', '');
+    
+    // Adventurer göz grubu: Göz akı (fill="#fff") sonrasında gelen göz bebeği fill'ini renklendirir
+    return svgText.replace(/(<g transform="translate\(-161 -83\)">[\s\S]*?fill="#fff"[\s\S]*?)(fill="#000"|fill="black")([\s\S]*?<\/g>)/i, (match, prefix, fillAttr, suffix) => {
+      const lastWhite = prefix.lastIndexOf('fill="#fff"');
+      if (lastWhite === -1) return match;
+      const beforeWhite = prefix.slice(0, lastWhite);
+      const afterWhite = prefix.slice(lastWhite) + fillAttr + suffix;
+      const replaced = afterWhite.replace(/(fill="#000"|fill="black")/i, `fill="#${hex}"`);
+      return beforeWhite + replaced;
+    });
+  }
+
   function updateLiveAvatarPreview() {
-    const img = document.getElementById('liveAvatarPreviewImg');
     const skin = (currentEditingAvatarConfig.skinColor || 'f8d9ce').replace('#', '');
-    if (img) {
-      img.src = `https://api.dicebear.com/7.x/adventurer/svg?seed=TurkPenpal&skinColor=${encodeURIComponent(skin)}&hair=${encodeURIComponent(currentEditingAvatarConfig.hair || 'long01')}&hairProbability=100&hairColor=${encodeURIComponent(currentEditingAvatarConfig.hairColor || '0e0e0e')}&eyes=${encodeURIComponent(currentEditingAvatarConfig.eyes || 'variant01')}&mouth=${encodeURIComponent(currentEditingAvatarConfig.mood || 'variant01')}&backgroundColor=transparent${currentEditingAvatarConfig.accessories && currentEditingAvatarConfig.accessories !== 'none' ? `&glasses=${encodeURIComponent(currentEditingAvatarConfig.accessories)}&glassesProbability=100` : '&glassesProbability=0'}`;
+    const seed = 'TurkPenpal';
+    const headUrl = `https://api.dicebear.com/7.x/adventurer/svg?seed=${seed}&skinColor=${encodeURIComponent(skin)}&hair=${encodeURIComponent(currentEditingAvatarConfig.hair || 'long01')}&hairProbability=100&hairColor=${encodeURIComponent(currentEditingAvatarConfig.hairColor || '0e0e0e')}&eyes=${encodeURIComponent(currentEditingAvatarConfig.eyes || 'variant01')}&mouth=${encodeURIComponent(currentEditingAvatarConfig.mood || 'variant01')}&backgroundColor=transparent${currentEditingAvatarConfig.accessories && currentEditingAvatarConfig.accessories !== 'none' ? `&glasses=${encodeURIComponent(currentEditingAvatarConfig.accessories)}&glassesProbability=100` : '&glassesProbability=0'}`;
+
+    // 1. Canlı Baş Bölgesi ve Göz Rengi (SVG İris Katmanına Doğrudan Aktarım)
+    const headContainer = document.querySelector('.avatar-head-stage');
+    if (adventurerSvgCache.has(headUrl)) {
+      const rawSvg = adventurerSvgCache.get(headUrl);
+      if (headContainer) {
+        headContainer.innerHTML = recolorAdventurerEyes(rawSvg, currentEditingAvatarConfig.eyeColor);
+      }
+    } else {
+      if (headContainer && !headContainer.querySelector('img')) {
+        headContainer.innerHTML = `<img src="${headUrl}" id="liveAvatarPreviewImg" alt="Avatar Başı" class="live-avatar-head-img">`;
+      } else {
+        const existingImg = document.getElementById('liveAvatarPreviewImg');
+        if (existingImg) existingImg.src = headUrl;
+      }
+      fetch(headUrl)
+        .then(res => res.text())
+        .then(rawSvg => {
+          adventurerSvgCache.set(headUrl, rawSvg);
+          if (headContainer) {
+            headContainer.innerHTML = recolorAdventurerEyes(rawSvg, currentEditingAvatarConfig.eyeColor);
+          }
+        })
+        .catch(err => {
+          console.warn('DiceBear SVG live fetch fallback', err);
+        });
     }
 
-    // 1. Dikey Dikdörtgen Sahnesi & Vücut Tipi Sınıfları
+    // 2. Dikey Dikdörtgen Sahnesi, Arka Plan Rengi & Vücut Tipi Sınıfları
     const stage = document.getElementById('liveAvatarCircleContainer');
     if (stage) {
       stage.classList.remove('body-slim', 'body-average', 'body-plump');
       stage.classList.add(`body-${currentEditingAvatarConfig.bodyType || 'average'}`);
+
+      // Arka plan rengi sadece sahne fonunu etkiler
+      const bg = (currentEditingAvatarConfig.backgroundColor || 'ffdfbf').replace('#', '');
+      stage.style.background = `radial-gradient(circle at 50% 25%, #${bg} 0%, #${bg}ee 65%, #${bg}cc 100%)`;
     }
 
-    // 2. Omuz, Gövde ve Seçilen Kıyafetin Canlı Render'ı
+    // 3. Omuz, Gövde ve Seçilen Kıyafetin Canlı Render'ı
     const torsoEl = document.getElementById('avatarOutfitTorso');
     if (torsoEl) {
       torsoEl.innerHTML = renderTorsoSVG(
-        currentEditingAvatarConfig.outfit || 'casual_tshirt',
+        currentEditingAvatarConfig.outfit || 'basic_tshirt',
         currentEditingAvatarConfig.bodyType || 'average',
         currentEditingAvatarConfig.skinColor || 'f8d9ce',
         currentEditingAvatarConfig.outfitColor || '102343'
       );
     }
 
-    // 3. Rozetlerin Güncellenmesi
+    // 4. Rozetlerin Güncellenmesi
     const badgeOutfit = document.getElementById('badgeOutfitName');
     if (badgeOutfit) {
       const oModel = OUTFIT_MODELS.find(m => m.id === currentEditingAvatarConfig.outfit) || OUTFIT_MODELS[0];
@@ -2011,7 +2005,7 @@ window.TDAMessaging = (function() {
       const bLabels = {
         'slim': '🏃 Zayıf Yapı',
         'average': '⚖️ Standart Yapı',
-        'plump': '💪 Dolgun Yapı'
+        'plump': '💪 Geniş Yapı'
       };
       badgeBody.textContent = bLabels[currentEditingAvatarConfig.bodyType] || 'Standart Yapı';
     }
@@ -2028,7 +2022,7 @@ window.TDAMessaging = (function() {
         '1a1a1a': 'Kömür Siyah',
         '64748b': 'Buz Mavisi'
       };
-      const curColor = currentEditingAvatarConfig.eyeColor || '3b2219';
+      const curColor = (currentEditingAvatarConfig.eyeColor || '3b2219').replace('#', '');
       badgeEye.innerHTML = `<span class="badge-color-dot" style="background:#${curColor};"></span> ${eyeNames[curColor] || 'Göz Rengi'}`;
     }
   }
@@ -2038,25 +2032,26 @@ window.TDAMessaging = (function() {
     const eyeColors = ['3b2219', '6d4c41', '7d6b38', '2e7d32', '1565c0', 'b45309', '1a1a1a', '64748b'];
     const bodyTypes = ['slim', 'average', 'plump'];
     const outfits = OUTFIT_MODELS.map(o => o.id);
+    const outfitColors = ['102343', '1a1a1a', 'f8fafc', '64748b', '7f1d1d', '3f6212', '78350f', 'd97706', '0284c7', '4338ca'];
+    const backgroundColors = ['ffdfbf', 'b6e3f4', 'c0aede', 'bbf7d0', 'fed7aa', 'fef08a', 'fbcfe8', 'e2e8f0', '102343'];
     const hairs = ['short01', 'short02', 'short03', 'short04', 'short05', 'short06', 'short08', 'short12', 'short16', 'long01', 'long02', 'long03', 'long04', 'long05', 'long06', 'long10', 'long16', 'long26'];
     const hairColors = ['0e0e0e', '562306', '6a4e35', '796a45', 'b9a05f', 'e5d7a3', 'ab2a18', 'cb6820', 'afafaf', '3eac2c', '592454'];
     const moods = ['variant01', 'variant02', 'variant03', 'variant04', 'variant05', 'variant06', 'variant07', 'variant08', 'variant09', 'variant10'];
     const eyes = ['variant01', 'variant02', 'variant03', 'variant04', 'variant05', 'variant06', 'variant07', 'variant08'];
     const accs = ['none', 'variant01', 'variant02', 'variant03', 'variant04', 'variant05'];
-    const backgrounds = ['102343', 'b91c1c', '0f766e', '78350f', '334155', 'd4af37', '4338ca', 'ffdfbf'];
 
     currentEditingAvatarConfig = {
       skinColor: skins[Math.floor(Math.random() * skins.length)],
       eyeColor: eyeColors[Math.floor(Math.random() * eyeColors.length)],
       bodyType: bodyTypes[Math.floor(Math.random() * bodyTypes.length)],
       outfit: outfits[Math.floor(Math.random() * outfits.length)],
+      outfitColor: outfitColors[Math.floor(Math.random() * outfitColors.length)],
+      backgroundColor: backgroundColors[Math.floor(Math.random() * backgroundColors.length)],
       hair: hairs[Math.floor(Math.random() * hairs.length)],
       hairColor: hairColors[Math.floor(Math.random() * hairColors.length)],
       mood: moods[Math.floor(Math.random() * moods.length)],
       eyes: eyes[Math.floor(Math.random() * eyes.length)],
-      accessories: accs[Math.floor(Math.random() * accs.length)],
-      outfitColor: backgrounds[Math.floor(Math.random() * backgrounds.length)],
-      backgroundColor: backgrounds[Math.floor(Math.random() * backgrounds.length)]
+      accessories: accs[Math.floor(Math.random() * accs.length)]
     };
 
     renderAvatarCustomizerControls();

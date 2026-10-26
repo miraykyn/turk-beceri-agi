@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="./css/flags-ticker.css">
   <link rel="stylesheet" href="./css/turan.css">
   <link rel="stylesheet" href="./css/messaging.css">
+  <link rel="stylesheet" href="./css/study-room.css">
 </head>
 <body>
 <aside aria-label="Biliyor muydunuz? bilgi şeridi" data-i18n-aria="factTickerAria" class="fact-ticker" id="factTicker">
@@ -46,7 +47,7 @@
 <p class="flag-card-note" data-i18n="flagCardsNote">Bayrakların taşıdığı derin anlamları keşfetmek için üzerlerine tıklayabilirsiniz.</p>
 </section>
 
-<header><div class="logo"><span data-i18n="logoLead">TÜRK DÜNYASI</span> <span data-i18n="logoTail">BECERİ AĞI</span></div><div style="display:flex;align-items:center"><nav id="mainNav"><a href="#nasil" data-i18n="navHowItWorks">Nasıl Çalışır?</a><a href="#profil" data-i18n="navSampleProfile">Örnek Profil</a><a href="#eslesme" data-i18n="navMatching">Eşleşme</a><a href="#topluluk" data-i18n="navCommunity">Topluluk</a><a href="#makaleler" data-i18n="navArticles">Makaleler</a><a href="#mektuplar" class="nav-mektuplar-link" data-i18n="navLetters"><img src="assets/images/mektup-ikon.png" alt="Mektuplar" class="nav-mektup-icon"><span>Mektuplar</span><span class="nav-mektup-badge" id="navUnreadBadge" style="display:none">0</span></a><a href="#ai" data-i18n="navTuran" onclick="document.getElementById('turanPanel').classList.add('open'); document.getElementById('turanPanel').setAttribute('aria-hidden','false'); return false;">Turan AI</a><a href="#harita" data-i18n="navSkillMap">Beceri Haritası</a><a href="#yol" data-i18n="navRoadmap">Yol Haritası</a><div class="auth-actions"><button class="auth-btn" data-i18n="loginTitle" onclick="openAuth('login')" type="button">Giriş Yap</button><button class="auth-btn register" data-i18n="registerTitle" onclick="openAuth('register')" type="button">Kayıt Ol</button></div></nav><div class="lang-wrap"><span aria-hidden="true">🌐</span><select aria-label="Dil seçimi" data-i18n-aria="Dil seçimi" class="lang-select" id="languageSelect"><option value="tr">Türkçe</option><option value="az">Azərbaycanca</option><option value="uz">O‘zbekcha</option><option value="kk">Қазақша</option><option value="tk">Türkmençe</option><option value="ky">Кыргызча</option><option value="en">English</option></select></div><button aria-controls="mainNav" aria-expanded="false" aria-label="Menüyü aç" data-i18n-aria="menuOpenAria" class="menu-toggle" id="menuToggle" type="button">☰</button></div></header>
+<header><div class="logo"><span data-i18n="logoLead">TÜRK DÜNYASI</span> <span data-i18n="logoTail">BECERİ AĞI</span></div><div style="display:flex;align-items:center"><nav id="mainNav"><a href="#nasil" data-i18n="navHowItWorks">Nasıl Çalışır?</a><a href="#profil" data-i18n="navSampleProfile">Örnek Profil</a><a href="#eslesme" data-i18n="navMatching">Eşleşme</a><a href="#topluluk" data-i18n="navCommunity">Topluluk</a><a href="#makaleler" data-i18n="navArticles">Makaleler</a><a href="#mektuplar" class="nav-mektuplar-link" data-i18n="navLetters"><img src="assets/images/mektup-ikon.png" alt="Mektuplar" class="nav-mektup-icon"><span>Mektuplar</span><span class="nav-mektup-badge" id="navUnreadBadge" style="display:none">0</span></a><a href="#calisma-odasi" class="nav-study-link" data-i18n="navStudy">&#x00C7;al&#x0131;&#x015F;ma Odas&#x0131;</a><a href="#ai" data-i18n="navTuran" onclick="document.getElementById('turanPanel').classList.add('open'); document.getElementById('turanPanel').setAttribute('aria-hidden','false'); return false;">Turan AI</a><a href="#harita" data-i18n="navSkillMap">Beceri Haritası</a><a href="#yol" data-i18n="navRoadmap">Yol Haritası</a><div class="auth-actions"><button class="auth-btn" data-i18n="loginTitle" onclick="openAuth('login')" type="button">Giriş Yap</button><button class="auth-btn register" data-i18n="registerTitle" onclick="openAuth('register')" type="button">Kayıt Ol</button></div></nav><div class="lang-wrap"><span aria-hidden="true">🌐</span><select aria-label="Dil seçimi" data-i18n-aria="Dil seçimi" class="lang-select" id="languageSelect"><option value="tr">Türkçe</option><option value="az">Azərbaycanca</option><option value="uz">O‘zbekcha</option><option value="kk">Қазақша</option><option value="tk">Türkmençe</option><option value="ky">Кыргызча</option><option value="en">English</option></select></div><button aria-controls="mainNav" aria-expanded="false" aria-label="Menüyü aç" data-i18n-aria="menuOpenAria" class="menu-toggle" id="menuToggle" type="button">☰</button></div></header>
 <div class="hero">
 <div class="eyebrow" data-i18n="heroEyebrow" style="color:#f5cf79">Öğrenciler • Beceriler • Sınır ötesi öğrenme</div>
 <h1><span data-i18n="heroH1_1">Bildiğini paylaş.</span><br/><span data-i18n="heroH1_2">Öğrenmek istediğini öğren.</span></h1>
@@ -399,6 +400,261 @@
   </div>
 </div>
 </section>
+<!-- ===== SANAL CALISMA ODASI (AYDINLIK TEMA - 10 SALON & 50 MASA KAPASITELI KUTUPHANE) ===== -->
+<section class="feature-section study-room-section" id="calisma-odasi">
+  <div class="study-room-header">
+    <div class="study-room-eyebrow" data-i18n="studyEyebrow">D&#x0130;J&#x0130;TAL D&#x0130;VAN &bull; CANLI &#x00C7;ALI&#x015E;MA ALANI</div>
+    <h2 class="study-room-title" data-i18n="studyTitle">Ulu Bozk&#x0131;r Ayd&#x0131;nl&#x0131;k K&uuml;t&uuml;phanesi</h2>
+    <p class="study-room-subtitle" data-i18n="studySubtitle">
+      T&uuml;rk D&uuml;nyas&#x0131; gen&ccedil;leriyle ayn&#x0131; salonda bulu&#x015F;un. 10 farkl&#x0131; salondan diledi&#x011F;inizi se&ccedil;in, 50 masal&#x0131;k salonda bo&#x015F; bir yere oturun ve ortak odaklanma enerjisiyle &ccedil;al&#x0131;&#x015F;&#x0131;n.
+    </p>
+  </div>
+
+  <!-- 1. SALON SECIMI VE CANLI KAPASITE MENUSU (10 SALON) -->
+  <div class="room-selector-wrapper" id="roomSelectorWrapper">
+    <div class="room-selector-header">
+      <div class="room-selector-title">
+        <span>&#x1F3DB;&#xFE0F;</span>
+        <span>Salon Se&ccedil;imi &amp; Canl&#x0131; Kapasite (10 Salon &bull; 50 Masa/Salon)</span>
+      </div>
+      <div class="room-current-capacity-summary" id="roomCapacitySummary">Y&uuml;kleniyor...</div>
+    </div>
+    <div class="room-tabs-scroll" id="roomTabsScroll">
+      <!-- studyRoom.js renderRoomSelector() ile dinamik olusturulur -->
+    </div>
+  </div>
+
+  <!-- 2. FERAH AYDINLIK KUTUPHANE SALONU VIEWPORT -->
+  <div class="iso-library-viewport" id="isoLibraryViewport" data-scene-state="LOBBY">
+    
+    <!-- 2.1 Salon Kontrolleri (Zoom In / Out / Reset / Bos Masa Bul) -->
+    <div class="hall-controls-bar" id="hallControlsBar">
+      <button type="button" class="btn-hall-ctrl" id="btnHallFindEmpty" title="Bo&#x015F; Masa Bul">
+        <span>&#x1F50D;</span>
+        <span>Bo&#x015F; Masa Bul</span>
+      </button>
+      <button type="button" class="btn-hall-ctrl" id="btnHallZoomIn" title="Yak&#x0131;nla&#x015F; (+)">
+        <span>&#x2795;</span>
+      </button>
+      <button type="button" class="btn-hall-ctrl" id="btnHallZoomOut" title="Uzakla&#x015F; (-)">
+        <span>&#x2796;</span>
+      </button>
+      <button type="button" class="btn-hall-ctrl" id="btnHallResetView" title="G&ouml;r&uuml;n&uuml;m&uuml; S&#x0131;f&#x0131;rla">
+        <span>&#x21BA;</span>
+      </button>
+    </div>
+
+    <!-- 2.2 Ust HUD Bar: Masadan Ayril & Canli Durum -->
+    <div class="iso-hud-top-bar" id="isoHudTopBar">
+      <button type="button" class="btn-glass-nav" id="btnLeaveDesk" title="Salona Geri D&ouml;n" style="display:none;">
+        <span>&#x1F6AA;</span>
+        <span>Salona Geri D&ouml;n</span>
+      </button>
+      <div class="iso-live-status-pill">
+        <span class="live-pulse-dot"></span>
+        <span id="isoOnlineCountLabel">14 &Ouml;&#x011F;renci Odakta</span>
+      </div>
+    </div>
+
+    <!-- 2.3 50 Masalik Ferah Kutuphane Salonu (Pan & Zoom Kamera Alani) -->
+    <div class="grand-hall-viewport-inner" id="grandHallViewportInner">
+      <div class="grand-camera-rig" id="grandCameraRig">
+        <div class="grand-hall-floor">
+          <div class="grand-central-carpet"></div>
+          <div class="grand-desks-grid" id="grandDesksGrid">
+            <!-- studyRoom.js renderHallDesks() ile tam 50 masa olusturulur -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2.4 Hedef ve Seans Suresi Belirleme Modali -->
+    <div class="iso-goal-modal-backdrop" id="studyGoalModal" style="display:none;">
+      <div class="iso-goal-modal-card">
+        <div class="goal-modal-header">
+          <div class="goal-modal-icon-wrap">
+            <span class="goal-modal-icon">&#x1F4DA;</span>
+          </div>
+          <div>
+            <h3 class="goal-modal-title">&#x00C7;al&#x0131;&#x015F;ma Masas&#x0131; Se&ccedil;ildi</h3>
+            <p class="goal-modal-subtitle">Masa &bull; Ayd&#x0131;nl&#x0131;k K&uuml;t&uuml;phane Canl&#x0131; Odaklanma Alan&#x0131;</p>
+          </div>
+          <button type="button" class="btn-modal-close" id="btnCloseGoalModal" title="Kapat">&#x2715;</button>
+        </div>
+
+        <!-- Hedef / Konu Girisi -->
+        <div class="goal-form-group">
+          <label class="goal-form-label" for="studyGoalInput">Bug&uuml;nk&uuml; &#x00C7;al&#x0131;&#x015F;ma Hedefin / Konun:</label>
+          <input 
+            type="text" 
+            id="studyGoalInput" 
+            class="goal-text-input" 
+            placeholder="&Ouml;rn: &#x0130;pek Yolu Tarihi, React Algoritmalar&#x0131;..." 
+            autocomplete="off"
+            maxlength="80"
+          />
+          <div class="goal-quick-chips">
+            <button type="button" class="goal-chip" data-goal="&#x1F4BB; Kodlama &amp; Algoritma">&#x1F4BB; Kodlama</button>
+            <button type="button" class="goal-chip" data-goal="&#x1F4D6; Tarih &amp; Dilbilim">&#x1F4D6; Tarih &amp; Dil</button>
+            <button type="button" class="goal-chip" data-goal="&#x1F4D0; Matematik &amp; M&uuml;hendislik">&#x1F4D0; Matematik</button>
+            <button type="button" class="goal-chip" data-goal="&#x1F3A8; Tasar&#x0131;m &amp; G&ouml;rsel Sanatlar">&#x1F3A8; Tasar&#x0131;m</button>
+            <button type="button" class="goal-chip" data-goal="&#x1F4DA; S&#x0131;nav &amp; Makale Haz&#x0131;rl&#x0131;&#x011F;&#x0131;">&#x1F4DA; S&#x0131;nav</button>
+          </div>
+        </div>
+
+        <!-- Seans Suresi Secimi -->
+        <div class="goal-form-group">
+          <label class="goal-form-label">Seans S&uuml;resi:</label>
+          <div class="goal-duration-grid" id="goalDurationGrid">
+            <button type="button" class="btn-duration-card" data-mins="15">
+              <strong>15 dk</strong>
+              <small>H&#x0131;zl&#x0131; Odak</small>
+            </button>
+            <button type="button" class="btn-duration-card active" data-mins="25">
+              <strong>25 dk</strong>
+              <small>Klasik Pomodoro</small>
+            </button>
+            <button type="button" class="btn-duration-card" data-mins="30">
+              <strong>30 dk</strong>
+              <small>Standart Seans</small>
+            </button>
+            <button type="button" class="btn-duration-card" data-mins="45">
+              <strong>45 dk</strong>
+              <small>Derin &#x00C7;al&#x0131;&#x015F;ma</small>
+            </button>
+            <button type="button" class="btn-duration-card" data-mins="60">
+              <strong>60 dk</strong>
+              <small>&#x0130;leri Seviye</small>
+            </button>
+            <button type="button" class="btn-duration-card" data-mins="90">
+              <strong>90 dk</strong>
+              <small>Ultra Blok</small>
+            </button>
+          </div>
+        </div>
+
+        <!-- Aksiyon Butonlari -->
+        <div class="goal-modal-actions">
+          <button type="button" class="btn-cancel-goal" id="btnCancelGoalModal">Vazge&ccedil;</button>
+          <button type="button" class="btn-start-study" id="btnStartStudySession">
+            <span>&#x1F680;</span>
+            <span>Masaya Ge&ccedil; ve &#x00C7;al&#x0131;&#x015F;maya Ba&#x015F;la</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2.5 Sosyal Etkilesim Popover (Diger Ogrencilere Selam & Reaksiyon) -->
+    <div class="iso-social-popover" id="isoSocialPopover" style="display:none;">
+      <div class="social-popover-card">
+        <div class="social-card-top">
+          <div class="social-avatar-wrap">
+            <img id="socialPeerAvatar" src="" alt="" class="social-avatar-img" />
+            <span id="socialPeerFlag" class="social-peer-flag">&#x1F1F0;&#x1F1FF;</span>
+          </div>
+          <div class="social-info">
+            <h4 id="socialPeerName" class="social-peer-name">M&uuml;sl&uuml;me</h4>
+            <span id="socialPeerCity" class="social-peer-city">Almat&#x0131;, Kazakistan</span>
+            <div id="socialPeerStatus" class="social-peer-status">&#x1F4D6; Kazak Dili &amp; Dilbilim</div>
+          </div>
+          <button type="button" class="btn-popover-close" id="btnCloseSocialPopover" title="Kapat">&#x2715;</button>
+        </div>
+        <div class="social-reactions-row">
+          <button type="button" class="btn-reaction" data-reaction="&#x1F44F;" title="Tebrik Et">&#x1F44F; Tebrik</button>
+          <button type="button" class="btn-reaction" data-reaction="&#x1F44B;" title="Selam Ver">&#x1F44B; Selam</button>
+          <button type="button" class="btn-reaction" data-reaction="&#x2615;" title="&#x00C7;ay Ismarla">&#x2615; &#x00C7;ay</button>
+          <button type="button" class="btn-reaction" data-reaction="&#x1F525;" title="Harika Gidiyorsun">&#x1F525; Harika</button>
+          <button type="button" class="btn-reaction" data-reaction="&#x2728;" title="Kolay Gelsin">&#x2728; Destek</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2.6 Light Mode Floating Pomodoro Zamanlayici -->
+    <div class="iso-floating-pomodoro" id="isoFloatingPomodoro" style="display:none;">
+      <div class="floating-pomo-goal-bar">
+        <span class="pomo-goal-icon">&#x1F3AF;</span>
+        <span class="pomo-goal-text" id="pomoActiveGoalText">Hedef: Derin &#x00C7;al&#x0131;&#x015F;ma</span>
+        <button type="button" class="btn-edit-pomo-goal" id="btnEditPomoGoal" title="Hedefi De&#x011F;i&#x015F;tir">&#x270F;&#xFE0F;</button>
+      </div>
+
+      <div class="floating-pomo-main">
+        <div class="floating-pomo-ring-wrap">
+          <svg class="floating-pomo-svg" viewBox="0 0 120 120">
+            <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+            <circle class="ring-progress" id="isoPomoRingProgress" cx="60" cy="60" r="52"></circle>
+          </svg>
+          <div class="floating-pomo-digits" id="isoPomoClockDigits">25:00</div>
+        </div>
+
+        <div class="floating-pomo-ctrls">
+          <div class="floating-mode-tabs">
+            <button type="button" class="f-mode-btn active" data-mode="work">Odak</button>
+            <button type="button" class="f-mode-btn" data-mode="shortBreak">Mola</button>
+            <button type="button" class="f-mode-btn" data-mode="longBreak">Uzun Mola</button>
+          </div>
+
+          <div class="floating-actions-row">
+            <button type="button" class="btn-f-pomo-action" id="btnPomoReset" title="S&#x0131;f&#x0131;rla">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+              </svg>
+            </button>
+            <button type="button" class="btn-f-pomo-play" id="btnPomoPlay" title="Ba&#x015F;lat / Duraklat">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </button>
+            <div class="floating-streak-pill" title="Tamamlanan Seanslar">
+              <span class="f-streak-flame">&#x1F525;</span>
+              <strong id="isoPomoCompletedCount">0</strong>
+              <span class="f-streak-star">&#x2728;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2.7 Sol Alt: Gorev Yoneticisi (To-Do Drawer) -->
+    <div class="iso-corner-widget iso-corner-left" id="isoTodoWidget">
+      <button type="button" class="btn-iso-corner-toggle" id="btnToggleTodoDrawer" title="G&ouml;rev Listesini A&ccedil;/Kapat">
+        <span>&#x1F4DD;</span>
+        <span class="corner-badge" id="isoTodoCountBadge">0</span>
+      </button>
+      <div class="iso-drawer-glass" id="isoTodoDrawer" style="display:none;">
+        <div class="drawer-header">
+          <div class="drawer-title">
+            <span>&#x1F4DD;</span>
+            <span>G&uuml;nl&uuml;k Hedefler</span>
+          </div>
+          <button type="button" class="btn-drawer-close" id="btnCloseTodoDrawer" title="Kapat">&#x2715;</button>
+        </div>
+        <div class="todo-input-row">
+          <input type="text" id="todoInputClean" class="todo-input-clean" placeholder="Yeni g&ouml;rev ekle..." autocomplete="off" />
+          <button type="button" id="btnAddTodo" class="btn-add-todo">+</button>
+        </div>
+        <ul class="todo-list-scroll" id="todoListScroll"></ul>
+      </div>
+    </div>
+
+    <!-- 2.8 Sag Alt: Minimalist Ortam Sesleri (Ambient Mixer Drawer) -->
+    <div class="iso-corner-widget iso-corner-right" id="isoAmbientWidget">
+      <button type="button" class="btn-iso-corner-toggle" id="btnToggleAmbientDrawer" title="Ortam Sesleri Mikserini A&ccedil;/Kapat">
+        <span>&#x1F3A7;</span>
+      </button>
+      <div class="iso-drawer-glass" id="isoAmbientDrawer" style="display:none;">
+        <div class="drawer-header">
+          <div class="drawer-title">
+            <span>&#x1F3A7;</span>
+            <span>Ortam Sesleri Mikseri</span>
+          </div>
+          <button type="button" class="btn-drawer-close" id="btnCloseAmbientDrawer" title="Kapat">&#x2715;</button>
+        </div>
+        <div class="ambient-tracks-scroll" id="ambientTracksScroll"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
 <section id="harita">
 <div class="eyebrow" data-i18n="mapEyebrow">İkinci çıktı</div><h2 data-i18n="mapH2">Türk Dünyası Gençlik Beceri Haritası</h2>
 <p class="muted" data-i18n="mapDesc">Platform büyüdükçe anonimleştirilmiş toplu veriler, gençlerin hangi becerileri sunduğunu ve hangi becerilere ihtiyaç duyduğunu gösterebilir.</p>
@@ -709,6 +965,7 @@
   <script charset="utf-8" src="./js/modules/ticker.js"></script>
   <script charset="utf-8" src="./js/modules/turan.js"></script>
   <script charset="utf-8" src="./js/modules/messaging.js"></script>
+  <script charset="utf-8" src="./js/modules/studyRoom.js"></script>
 
   <!-- 4. Ana Uygulama Başlatıcı (Bootstrap) -->
   <script charset="utf-8" src="./js/app.js"></script>

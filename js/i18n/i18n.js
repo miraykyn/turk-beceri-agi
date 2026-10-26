@@ -40,6 +40,22 @@ window.TDAI18n = (function() {
     return 'auto_' + (h >>> 0).toString(16).padStart(8, '0');
   }
 
+  const STUDY_ROOM_I18N = {
+    tabStudy: { tr: "Çalışma Odası", az: "İş Otağı", uz: "O‘qish Xonasi", kk: "Оқу Бөлмесі", tk: "Okuw Otagy", ky: "Окуу Бөлмөсү", en: "Study Room" },
+    navStudy: { tr: "Çalışma Odası", az: "İş Otağı", uz: "O‘qish Xonasi", kk: "Оқу Бөлмесі", tk: "Okuw Otagy", ky: "Окуу Бөлмөсү", en: "Study Room" },
+    quickStudyTitle: { tr: "Lofi Çalışma Odası", az: "Lofi İş Otağı", uz: "Lofi O‘qish Xonasi", kk: "Lofi Оқу Бөлмесі", tk: "Lofi Okuw Otagy", ky: "Lofi Окуу Бөлмөсү", en: "Lofi Study Room" },
+    quickStudySub: { tr: "Pomodoro & Ortam Sesleri", az: "Pomodoro & Ətraf Səsləri", uz: "Pomodoro & Muhit Ovozlar", kk: "Помодоро & Фондық Дыбыстар", tk: "Pomodoro & Gurşaw Sesleri", ky: "Помодоро & Айлана Дыбыстары", en: "Pomodoro & Ambient Audio" },
+    studyEyebrow: { tr: "DİJİTAL KÜTÜPHANE • ODAKLANMA ALANI", az: "RƏQƏMSAL KİTABXANA • DİQQƏT MƏRKƏZİ", uz: "RAQAMLI KUTUBXONA • DIQQAT MARKAZI", kk: "САНДЫҚ КІТАПХАНА • ЗЕЙІН ҚОЮ АЛАНЫ", tk: "SANLY KITAPHANA • ÜNS MERKEZI", ky: "САНАРИП КИТЕПКАНА • КӨҢҮЛ БУРУУ АЙМАГЫ", en: "DIGITAL LIBRARY • FOCUS SPACE" },
+    studyTitle: { tr: "Sanal Çalışma Odası", az: "Virtual İş Otağı", uz: "Virtual O‘qish Xonasi", kk: "Виртуалды Оқу Бөлмесі", tk: "Wirtual Okuw Otagy", ky: "Виртуалдуу Окуу Бөлмөсү", en: "Virtual Study Room" },
+    studySubtitle: { tr: "Kendi oluşturduğun Bitmoji avatarınla çalışma masana geç, Pomodoro zamanlayıcı, yapılacak hedefler ve rahatlatıcı ortam sesleriyle odaklan.", az: "Öz yaratdığın Bitmoji avatarınla iş masana keç, Pomodoro sayğacı və sakitləşdirici fon səsləri ilə diqqətini topla.", uz: "O‘zingiz yaratgan Bitmoji avatar bilan ish stolingizga o‘tiring, Pomodoro taymeri va tinchlantiruvchi ovozlar bilan diqqatni jamlang.", kk: "Өзің жасаған Bitmoji аватарыңмен оқу үстеліңе отыр, Помодоро таймері және фондық дыбыстармен зейін қой.", tk: "Öz döreden Bitmoji awataryň bilen okuw stoluňa geç, Pomodoro wagty we dynç alyş sesleri bilen ünsüňi jemle.", ky: "Өзүң жараткан Bitmoji аватарың менен окуу столуңа отур, Помодоро таймери жана айлана дабыштары менен көңүл бур.", en: "Sit at your study desk with your personalized Bitmoji avatar, focus with Pomodoro timer, goals and soothing ambient sounds." },
+    pomodoroWork: { tr: "Odaklanma", az: "Diqqət", uz: "Fokus", kk: "Зейін", tk: "Üns", ky: "Көңүл", en: "Focus" },
+    pomodoroShortBreak: { tr: "Kısa Mola", az: "Qısa Fasilə", uz: "Qisqa Tanaffus", kk: "Қысқа Үзіліс", tk: "Gysga Arakesme", ky: "Кыска Тыныгуу", en: "Short Break" },
+    pomodoroLongBreak: { tr: "Uzun Mola", az: "Uzun Fasilə", uz: "Uzoq Tanaffus", kk: "Ұзақ Үзіліс", tk: "Uzak Arakesme", ky: "Узак Тыныгуу", en: "Long Break" },
+    todosTitle: { tr: "Günlük Hedefler ve Görevler", az: "Gündəlik Hədəflər və Tapşırıqlar", uz: "Kunlik Maqsadlar va Vazifalar", kk: "Күнделікті Мақсаттар мен Тапсырмалар", tk: "Gündelik Maksatlar we Tabşyryklar", ky: "Күндөлүк Максаттар жана Тапшырмалар", en: "Daily Goals & Tasks" },
+    ambientTitle: { tr: "Ortam Sesleri Mikseri", az: "Ətraf Səsləri Mikseri", uz: "Muhit Ovozlar Mikseri", kk: "Фондық Дыбыс Миксері", tk: "Gurşaw Sesleri Mikseri", ky: "Айлана Үндөр Миксери", en: "Ambient Audio Mixer" },
+    editAvatarTooltip: { tr: "Bitmoji Avatarımı Özelleştir", az: "Bitmoji Avatarımı Fərdiləşdir", uz: "Bitmoji Avatarimni O‘zgartirish", kk: "Bitmoji Аватарымды Баптау", tk: "Bitmoji Awatarymy Sazla", ky: "Bitmoji Аватарымды Ырастоо", en: "Customize My Bitmoji Avatar" }
+  };
+
   const MESSAGING_I18N = {
     tabMessages: { tr: "Mektuplar", az: "Məktublar", uz: "Maktublar", kk: "Хаттар", tk: "Hatlar", ky: "Каттар", en: "Letters" },
     navLetters: { tr: "Mektuplar", az: "Məktublar", uz: "Maktublar", kk: "Хаттар", tk: "Hatlar", ky: "Каттар", en: "Letters" },
@@ -71,6 +87,14 @@ window.TDAI18n = (function() {
     });
 
     for (const [key, trans] of Object.entries(MESSAGING_I18N)) {
+      supportedLanguages.forEach(lang => {
+        const v = trans[lang] || trans['tr'];
+        I18N[lang][key] = v;
+        translationRegistry[key] = stableKey(key);
+      });
+    }
+
+    for (const [key, trans] of Object.entries(STUDY_ROOM_I18N)) {
       supportedLanguages.forEach(lang => {
         const v = trans[lang] || trans['tr'];
         I18N[lang][key] = v;

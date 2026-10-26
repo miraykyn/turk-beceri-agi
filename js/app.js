@@ -46,7 +46,12 @@ document.addEventListener('DOMContentLoaded', () => {
     window.TDAMessaging.init();
   }
 
-  // 9. Sekmeli SPA Mimarisi (Tabs) ve Navigasyonu Başlat
+  // 9. Sanal Çalışma Odası (Lofi Study Room) Modülünü Başlat
+  if (window.TDAStudyRoom) {
+    window.TDAStudyRoom.init();
+  }
+
+  // 10. Sekmeli SPA Mimarisi (Tabs) ve Navigasyonu Başlat
   if (window.TDATabs) {
     window.TDATabs.init();
   }

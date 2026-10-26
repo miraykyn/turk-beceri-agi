@@ -3,14 +3,15 @@
  */
 
 window.TDATabs = (function() {
-  const tabKeys = ['tabHome', 'tabJourney', 'tabMatching', 'tabCommunity', 'tabArticles', 'tabMessages', 'tabProfile', 'tabTuran'];
+  const tabKeys = ['tabHome', 'tabJourney', 'tabMatching', 'tabCommunity', 'tabArticles', 'tabMessages', 'tabStudy', 'tabProfile', 'tabTuran'];
   const quickItems = [
     { id: 'journey', titleKey: 'quickJourneyTitle', descKey: 'quickJourneySub' },
     { id: 'matching', titleKey: 'quickMatchingTitle', descKey: 'quickMatchingSub' },
+    { id: 'study', titleKey: 'quickStudyTitle', descKey: 'quickStudySub' },
     { id: 'turan', titleKey: 'quickTuranTitle', descKey: 'quickTuranSub' }
   ];
 
-  const tabIds = ['home', 'journey', 'matching', 'community', 'articles', 'messages', 'profile', 'turan'];
+  const tabIds = ['home', 'journey', 'matching', 'community', 'articles', 'messages', 'study', 'profile', 'turan'];
   let buttons = [];
   let panels = {};
   let quickContainer = null;
@@ -27,6 +28,12 @@ window.TDATabs = (function() {
           <img src="assets/images/mektup-ikon.png" alt="" class="nav-mektup-icon">
           <span class="tab-btn-text">${text}</span>
           <span class="nav-mektup-badge" id="navTabUnreadBadge" style="${unreadCount > 0 ? '' : 'display:none'}">${unreadCount}</span>
+        `;
+      } else if (button.dataset.tab === 'study') {
+        button.className = 'tab-button tab-button-study' + (button.classList.contains('active') ? ' active' : '');
+        button.innerHTML = `
+          <span class="nav-study-icon" aria-hidden="true">🎧</span>
+          <span class="tab-btn-text">${text}</span>
         `;
       } else {
         button.textContent = text;
@@ -179,13 +186,14 @@ window.TDATabs = (function() {
       community: document.createElement('div'),
       articles: document.createElement('div'),
       messages: document.createElement('div'),
+      study: document.createElement('div'),
       profile: document.createElement('div')
     };
     Object.values(stack).forEach(node => { node.className = 'section-stack'; });
     if (hero) panels.home.appendChild(hero);
 
     const sectionOwners = {
-      nasil: 'journey', yol: 'journey', eslesme: 'matching', topluluk: 'community', makaleler: 'articles', mektuplar: 'messages', profil: 'profile',
+      nasil: 'journey', yol: 'journey', eslesme: 'matching', topluluk: 'community', makaleler: 'articles', mektuplar: 'messages', 'calisma-odasi': 'study', study: 'study', profil: 'profile',
       puan: 'home', harita: 'home', ekip: 'home'
     };
 
@@ -205,6 +213,7 @@ window.TDATabs = (function() {
     panels.community.appendChild(stack.community);
     panels.articles.appendChild(stack.articles);
     panels.messages.appendChild(stack.messages);
+    panels.study.appendChild(stack.study);
     panels.profile.appendChild(stack.profile);
 
     quickContainer = document.createElement('div');

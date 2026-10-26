@@ -1898,8 +1898,16 @@ window.TDAMessaging = (function() {
 
   function saveAvatar() {
     saveMyAvatarConfig(currentEditingAvatarConfig);
+    // Sanal Çalışma Odası ve diğer reaktif bileşenleri anında bilgilendir
+    try {
+      window.dispatchEvent(new CustomEvent('tda:avatar-changed', {
+        detail: Object.assign({}, currentEditingAvatarConfig)
+      }));
+    } catch (e) {
+      console.warn('Avatar event tetiklenemedi:', e);
+    }
     closeAvatarStudio();
-    alert('✓ Bitmoji avatarınız başarıyla kaydedildi! Gönderdiğiniz mektuplarda bu avatar kullanılacaktır.');
+    alert('✓ Bitmoji avatarınız başarıyla kaydedildi! Gönderdiğiniz mektuplarda ve Sanal Çalışma Odası\'nda bu avatar kullanılacaktır.');
   }
 
   // --- 17. AŞAMA GEÇİŞLERİ ---
@@ -2550,6 +2558,10 @@ window.TDAMessaging = (function() {
     calculateDeliveryEstimate,
     switchPane,
     goToComposeStep,
-    openAvatarStudio
+    openAvatarStudio,
+    getMyAvatarConfig,
+    saveMyAvatarConfig,
+    generateAvatarUrl,
+    DEFAULT_AVATAR_CONFIG
   };
 })();

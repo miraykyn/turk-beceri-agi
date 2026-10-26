@@ -2203,69 +2203,13 @@
 }
 
 /* ==========================================================================
-   23. YENİ AVATAR ÖZELLİKLERİ: PORTRAIT TAM VÜCUT, VÜCUT TİPİ & SEKME YAPISI
+   23. YENİ AVATAR ÖZELLİKLERİ: PORTRAIT DİKEY SAHNE & SABİT MINECRAFT GÖVDE
    ========================================================================== */
 
-/* Sekme Başlıkları ve Butonları (Yüz Tasarımı & Vücut / Giyim) */
-.avatar-tabs-header {
-  display: flex;
-  gap: 8px;
-  background: #f1f5f9;
-  padding: 5px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  border: 1.5px solid #e2e8f0;
-}
-
-.avatar-tab-btn {
-  flex: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  padding: 10px 14px;
-  font-size: 13.5px;
-  font-weight: 700;
-  color: #64748b;
-  background: transparent;
-  border: none;
-  border-radius: 9px;
-  cursor: pointer;
-  transition: all 0.22s ease;
-  user-select: none;
-}
-
-.avatar-tab-btn .avatar-tab-icon {
-  font-size: 16px;
-}
-
-.avatar-tab-btn:hover {
-  color: #102343;
-  background: rgba(255, 255, 255, 0.6);
-}
-
-.avatar-tab-btn.active {
-  background: #ffffff;
-  color: #102343;
-  box-shadow: 0 4px 12px rgba(16, 35, 67, 0.08);
-}
-
-.avatar-tab-pane {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  animation: fadeInPane 0.25s ease-out;
-}
-
-@keyframes fadeInPane {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Dikey Dikdörtgen (Portrait) Tam Vücut Önizleme Sahnesi */
+/* Dikey Dikdörtgen (Portrait) Önizleme Sahnesi */
 .avatar-portrait-stage {
   width: 220px;
-  height: 385px;
+  height: 380px;
   border-radius: 22px;
   border: 2.5px solid #d4af37;
   background: radial-gradient(circle at 50% 25%, #ffdfbf 0%, #fed7aa 65%, #f6ecd4 100%);
@@ -2276,14 +2220,14 @@
   transition: background 0.35s ease, box-shadow 0.3s ease;
 }
 
-/* Karakter Başı (DiceBear Adventurer Baş Bölgesi) - Çene boyuna kusursuz oturur */
+/* Karakter Başı (DiceBear Adventurer Baş Bölgesi) - Minecraft gövdesinin üstüne oturur */
 .avatar-head-stage {
   position: absolute;
-  top: 8px;
+  top: 10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 136px;
-  height: 136px;
+  width: 140px;
+  height: 140px;
   z-index: 4;
   display: flex;
   align-items: center;
@@ -2300,7 +2244,7 @@
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.12));
 }
 
-/* Karakter Tam Vücut Katmanı (Anatomi, Kollar, Eller, Gövde, Bacaklar, Kıyafet & Ayakkabılar) */
+/* Sabit Minecraft Tarzı Bloklu Gövde Katmanı */
 .avatar-torso-stage {
   position: absolute;
   top: 0;
@@ -2326,26 +2270,7 @@
   width: 100%;
   height: 100%;
   display: block;
-  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
-}
-
-/* Vücut Tipi (Body Type) Dönüşümleri: Tüm Vücut Anatomisi Orantılı ve Estetik Olarak Ölçeklenir */
-.avatar-portrait-stage.body-slim .avatar-outfit-render svg {
-  transform: scale(0.93, 1.0);
-  transform-origin: 110px 140px;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
-}
-
-.avatar-portrait-stage.body-average .avatar-outfit-render svg {
-  transform: scale(1, 1);
-  transform-origin: 110px 140px;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
-}
-
-.avatar-portrait-stage.body-plump .avatar-outfit-render svg {
-  transform: scale(1.08, 0.99);
-  transform-origin: 110px 140px;
-  filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.12));
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
 }
 
 /* Vücut Tipi Rozetleri ve Bilgilendiriciler */
@@ -2386,151 +2311,15 @@
   margin-left: 4px;
 }
 
-/* Vücut Tipi Seçim Izgarası (3 Silüet Seçeneği - Tamamen Hizalı Flexbox) */
-.body-type-grid {
-  display: flex !important;
-  align-items: stretch !important;
-  justify-content: center !important;
-  gap: 12px !important;
-  width: 100% !important;
-  margin-top: 4px !important;
-}
-
-.body-type-card-btn {
-  flex: 1 1 0 !important;
-  min-height: 96px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 12px 8px !important;
-  border: 2px solid #e2e8f0 !important;
-  border-radius: 14px !important;
-  background: #ffffff !important;
-  cursor: pointer !important;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  gap: 8px !important;
-  position: relative !important;
-  text-align: center !important;
-}
-
-.body-type-card-btn:hover {
-  border-color: #cbd5e1 !important;
-  background: #f8fafc !important;
-  transform: translateY(-2px) !important;
-}
-
-.body-type-card-btn.active {
-  border-color: #d4af37 !important;
-  background: #fffdf5 !important;
-  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.25) !important;
-}
-
-.body-type-card-btn.active::after {
-  content: '✓';
-  position: absolute;
-  top: 4px;
-  right: 6px;
-  font-size: 11px;
-  font-weight: 900;
-  color: #d4af37;
-}
-
-.body-type-svg-icon {
-  width: 40px;
-  height: 40px;
+/* Minecraft Blok Gövde SVG Optimize Edilmiş Çizim Stilleri */
+.minecraft-body-svg {
+  width: 100%;
+  height: 100%;
   display: block;
-  color: #334155;
-  transition: color 0.15s ease;
+  shape-rendering: geometricPrecision;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15));
 }
 
-.body-type-card-btn.active .body-type-svg-icon {
-  color: #b45309;
-}
-
-.body-type-btn-label {
-  font-size: 12px;
-  font-weight: 850;
-  color: #102343;
-}
-
-/* Kıyafet & Gardırop Seçim Izgarası (20 Farklı Model) */
-.outfit-grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(82px, 1fr));
-  gap: 8px;
-  max-height: 260px;
-  overflow-y: auto;
-  padding: 6px 4px;
-  border: 1px solid #f1f5f9;
-  border-radius: 14px;
-  background: #fafafa;
-}
-
-.outfit-card-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 4px;
-  min-height: 72px;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 12px;
-  background: #ffffff;
-  cursor: pointer;
-  transition: all 0.18s ease;
-  position: relative;
-  gap: 5px;
-}
-
-.outfit-card-btn:hover {
-  border-color: #94a3b8;
-  background: #f8fafc;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-}
-
-.outfit-card-btn.active {
-  border-color: #d4af37;
-  background: #fffdf5;
-  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.26);
-}
-
-.outfit-card-btn.active::after {
-  content: '✓';
-  position: absolute;
-  top: 2px;
-  right: 4px;
-  font-size: 9px;
-  font-weight: 900;
-  color: #d4af37;
-}
-
-.outfit-card-icon {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #102343;
-}
-
-.outfit-card-badge {
-  font-size: 9.5px;
-  font-weight: 750;
-  color: #475569;
-  text-align: center;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-  text-align: center;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
 /* ==========================================================================
    24. GELEN KUTUSU - İLK MEKTUP GÜVENLİK & TANIŞMA ONAY DUVARI (CONSENT)

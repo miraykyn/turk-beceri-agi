@@ -548,24 +548,21 @@
     <div class="avatar-studio-layout">
       <!-- Sol: Canlı Önizleme (Dikey Dikdörtgen Portrait Formatta Gövde & Kıyafet) -->
       <div class="avatar-preview-pane">
-        <div class="avatar-portrait-stage body-average" id="liveAvatarCircleContainer">
+        <div class="avatar-portrait-stage" id="liveAvatarCircleContainer">
           <!-- Üst: Karakter Başı (DiceBear Adventurer) -->
           <div class="avatar-head-stage">
             <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=TurkPenpal&skinColor=f8d9ce&backgroundColor=transparent" id="liveAvatarPreviewImg" alt="Avatar Başı" class="live-avatar-head-img">
           </div>
 
-          <!-- Alt: Karakter Omuzları, Gövdesi ve Seçilen Kıyafet (Full Torso & Garment) -->
+          <!-- Alt: Sabit Minecraft Tarzı Bloklu Gövde (Torso) -->
           <div class="avatar-torso-stage" id="avatarTorsoWrapper">
             <div class="avatar-outfit-render" id="avatarOutfitTorso"></div>
           </div>
         </div>
         
         <div class="avatar-badges-row">
-          <span class="avatar-badge-tag" id="badgeBodyType">⚖️ Standart</span>
-          <span class="avatar-badge-tag" id="badgeTopName">👕 Basic T-Shirt</span>
-          <span class="avatar-badge-tag" id="badgeBottomName">👖 Pantolon</span>
-          <span class="avatar-badge-tag" id="badgeShoesName">👟 Sneaker</span>
           <span class="avatar-badge-tag" id="badgeEyeColor"><span class="badge-color-dot" id="badgeEyeDot" style="background:#3b2219;"></span> Kahverengi</span>
+          <span class="avatar-badge-tag">⛏️ Minecraft Modeli</span>
         </div>
 
         <strong id="liveAvatarNameDisplay">Fahriye</strong>
@@ -573,112 +570,54 @@
         <button type="button" class="btn secondary" id="btnRandomAvatar" style="margin-top:12px;font-size:12px;padding:6px 14px;">🎲 Rastgele Karıştır</button>
       </div>
 
-      <!-- Sağ: Özelleştirme Kontrolleri (Sekmeli / Tabbed Yapı) -->
+      <!-- Sağ: Özelleştirme Kontrolleri (Sadece Yüz, Saç, Ten, Göz & Fon) -->
       <div class="avatar-controls-pane">
-        <!-- Sekme Başlıkları: Yüz Tasarımı & Vücut / Giyim -->
-        <div class="avatar-tabs-header" role="tablist">
-          <button type="button" class="avatar-tab-btn active" id="tabBtnFace" data-avatar-tab="face" role="tab" aria-selected="true">
-            <span class="avatar-tab-icon">👤</span> Yüz Tasarımı
-          </button>
-          <button type="button" class="avatar-tab-btn" id="tabBtnBody" data-avatar-tab="body" role="tab" aria-selected="false">
-            <span class="avatar-tab-icon">👕</span> Vücut &amp; Giyim
-          </button>
+        <!-- Ten Rengi -->
+        <div class="avatar-control-group">
+          <label>Ten Rengi <span class="group-hint">(Doğal Açık / Buğday / Esmer Tonlar)</span></label>
+          <div id="optSkinColor"></div>
         </div>
 
-        <!-- 1. SEKME: YÜZ TASARIMI (Ten, Saç, Göz, İfade, Aksesuar, Fon) -->
-        <div class="avatar-tab-pane active" id="paneAvatarFace" role="tabpanel">
-          <!-- Ten Rengi -->
-          <div class="avatar-control-group">
-            <label>Ten Rengi <span class="group-hint">(Doğal Açık / Buğday / Esmer Tonlar)</span></label>
-            <div id="optSkinColor"></div>
-          </div>
-
-          <!-- Saç Modeli -->
-          <div class="avatar-control-group">
-            <label>Saç Modeli</label>
-            <div id="optHairStyle"></div>
-          </div>
-
-          <!-- Saç Rengi -->
-          <div class="avatar-control-group">
-            <label>Saç Rengi <span class="group-hint">(Kaşlar Saç Rengiyle Eşzamanlı Boyanır)</span></label>
-            <div id="optHairColor"></div>
-          </div>
-
-          <!-- Göz Şekli -->
-          <div class="avatar-control-group">
-            <label>Göz Şekli &amp; Bakış</label>
-            <div id="optEyes"></div>
-          </div>
-
-          <!-- Göz Rengi (Sadece İris) -->
-          <div class="avatar-control-group">
-            <label>Göz Rengi <span class="group-hint">(Sadece İris Katmanı Boyanır)</span></label>
-            <div id="optEyeColor"></div>
-          </div>
-
-          <!-- Yüz İfadesi -->
-          <div class="avatar-control-group">
-            <label>Yüz İfadesi &amp; Tebessüm</label>
-            <div id="optMood"></div>
-          </div>
-
-          <!-- Gözlük & Aksesuar -->
-          <div class="avatar-control-group">
-            <label>Gözlük &amp; Aksesuar</label>
-            <div id="optAccessories"></div>
-          </div>
-
-          <!-- Arka Plan Rengi -->
-          <div class="avatar-control-group">
-            <label>Arka Plan Rengi <span class="group-hint">(Fon &amp; Sahne Rengi)</span></label>
-            <div id="optBackgroundColor"></div>
-          </div>
+        <!-- Saç Modeli -->
+        <div class="avatar-control-group">
+          <label>Saç Modeli</label>
+          <div id="optHairStyle"></div>
         </div>
 
-        <!-- 2. SEKME: VÜCUT & GİYİM (Vücut Tipi, Üst Giyim, Alt Giyim, Ayakkabı) -->
-        <div class="avatar-tab-pane" id="paneAvatarBody" role="tabpanel" style="display:none;">
-          <!-- Vücut Tipi -->
-          <div class="avatar-control-group">
-            <label>Vücut Tipi <span class="group-hint">(Orantılı ve Estetik Silüet Yapısı)</span></label>
-            <div id="optBodyType"></div>
-          </div>
+        <!-- Saç Rengi -->
+        <div class="avatar-control-group">
+          <label>Saç Rengi <span class="group-hint">(Kaşlar Saç Rengiyle Eşzamanlı Boyanır)</span></label>
+          <div id="optHairColor"></div>
+        </div>
 
-          <!-- Üst Giyim Modelleri -->
-          <div class="avatar-control-group">
-            <label>Üst Giyim <span class="group-hint">(Basic T-Shirt, Bomber, Polo, Boğazlı Kazak)</span></label>
-            <div id="optTopModel"></div>
-          </div>
+        <!-- Göz Şekli -->
+        <div class="avatar-control-group">
+          <label>Göz Şekli &amp; Bakış</label>
+          <div id="optEyes"></div>
+        </div>
 
-          <!-- Üst Giyim Rengi -->
-          <div class="avatar-control-group">
-            <label>Üst Giyim Rengi <span class="group-hint">(Kumaş &amp; Doku Tonu)</span></label>
-            <div id="optTopColor"></div>
-          </div>
+        <!-- Göz Rengi (Sadece İris) -->
+        <div class="avatar-control-group">
+          <label>Göz Rengi <span class="group-hint">(Her İki Gözün İrisi Eşzamanlı Boyanır)</span></label>
+          <div id="optEyeColor"></div>
+        </div>
 
-          <!-- Alt Giyim Modelleri -->
-          <div class="avatar-control-group">
-            <label>Alt Giyim <span class="group-hint">(Pantolon, Etek, Şort)</span></label>
-            <div id="optBottomModel"></div>
-          </div>
+        <!-- Yüz İfadesi -->
+        <div class="avatar-control-group">
+          <label>Yüz İfadesi &amp; Tebessüm</label>
+          <div id="optMood"></div>
+        </div>
 
-          <!-- Alt Giyim Rengi -->
-          <div class="avatar-control-group">
-            <label>Alt Giyim Rengi <span class="group-hint">(Kumaş / Denim / Keten Tonu)</span></label>
-            <div id="optBottomColor"></div>
-          </div>
+        <!-- Gözlük & Aksesuar -->
+        <div class="avatar-control-group">
+          <label>Gözlük &amp; Aksesuar</label>
+          <div id="optAccessories"></div>
+        </div>
 
-          <!-- Ayakkabı Modelleri -->
-          <div class="avatar-control-group">
-            <label>Ayakkabı <span class="group-hint">(Sneaker, Kalın Taban, Yüksek Bilek)</span></label>
-            <div id="optShoesModel"></div>
-          </div>
-
-          <!-- Ayakkabı Rengi -->
-          <div class="avatar-control-group">
-            <label>Ayakkabı Rengi <span class="group-hint">(Deri &amp; Taban Tonu)</span></label>
-            <div id="optShoesColor"></div>
-          </div>
+        <!-- Arka Plan Rengi -->
+        <div class="avatar-control-group">
+          <label>Arka Plan Rengi <span class="group-hint">(Fon &amp; Sahne Rengi)</span></label>
+          <div id="optBackgroundColor"></div>
         </div>
       </div>
     </div>

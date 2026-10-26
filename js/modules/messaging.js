@@ -1673,8 +1673,8 @@ window.TDAMessaging = (function() {
 
   // Adventurer Göz İrisini ve Kaşlarını Doğrudan SVG İçinde Yeniden Renklendirme
   // KRİTİK 1: Kaşlar SADECE hairColor ile boyanır, kesinlikle göz renginden etkilenmez!
-  // KRİTİK 2: "Dikkatli" (variant04) ve "Neşeli" (variant05) modellerinde iris katmanı
-  // doğrudan sclera arkasına circle enjeksiyonu ile render edilir, her iki göz eşzamanlı boyanır.
+  // KRİTİK 2: "Dikkatli" (variant04), "Neşeli" (variant05) ve "Derin/Odaklanmış" (variant08)
+  // modellerinde iris katmanları tam anatomik koordinatlarına göre milimetrik hizalanır ve boyanır.
   function recolorAdventurerSvg(svgText, eyeColorHex, hairColorHex) {
     if (!svgText) return svgText;
     const eyeHex = (eyeColorHex || '3b2219').replace('#', '');
@@ -1697,28 +1697,30 @@ window.TDAMessaging = (function() {
 
         if (whitePaths.length > 0) {
           // Göz grubu tespit edildi:
-          // A. VARIANT04: 2 path (0: #000, 1: #fff). Cutout iris delikli sclera
+          // A. VARIANT04 (Dikkatli / Zeki Bakış): 2 path (0: #000, 1: #fff). Cutout iris delikli sklera
+          // Sağ göz merkezi: cx=530, cy=492 | Sol göz merkezi: cx=409, cy=504
           if (paths.length === 2 && whitePaths.length === 1) {
             const circleRight = doc.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            circleRight.setAttribute('cx', '572');
+            circleRight.setAttribute('cx', '530');
             circleRight.setAttribute('cy', '492');
             circleRight.setAttribute('r', '26');
             circleRight.setAttribute('fill', '#' + eyeHex);
 
             const circleLeft = doc.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            circleLeft.setAttribute('cx', '408');
-            circleLeft.setAttribute('cy', '502');
+            circleLeft.setAttribute('cx', '409');
+            circleLeft.setAttribute('cy', '504');
             circleLeft.setAttribute('r', '24');
             circleLeft.setAttribute('fill', '#' + eyeHex);
 
             group.insertBefore(circleLeft, paths[1]);
             group.insertBefore(circleRight, paths[1]);
           }
-          // B. VARIANT05: 4 path (0: #000 sağ lid, 1: #fff sağ sclera, 2: #000 sol lid, 3: #fff sol sclera)
+          // B. VARIANT05 (Neşeli Gülen Gözler): 4 path (2 ayrı sklera)
+          // Sağ göz merkezi: cx=526, cy=488 | Sol göz merkezi: cx=410, cy=496
           else if (paths.length === 4 && whitePaths.length === 2) {
             // Sağ göz irisi: Path 1'in hemen öncesine
             const circleRight = doc.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            circleRight.setAttribute('cx', '570');
+            circleRight.setAttribute('cx', '526');
             circleRight.setAttribute('cy', '488');
             circleRight.setAttribute('r', '26');
             circleRight.setAttribute('fill', '#' + eyeHex);
@@ -1726,14 +1728,36 @@ window.TDAMessaging = (function() {
 
             // Sol göz irisi: Path 3'ün hemen öncesine
             const circleLeft = doc.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            circleLeft.setAttribute('cx', '408');
-            circleLeft.setAttribute('cy', '502');
+            circleLeft.setAttribute('cx', '410');
+            circleLeft.setAttribute('cy', '496');
             circleLeft.setAttribute('r', '24');
             circleLeft.setAttribute('fill', '#' + eyeHex);
             group.insertBefore(circleLeft, paths[3]);
           }
-          // C. STANDART VARYANTLAR (variant01, variant02, variant03, variant06, variant07, variant08):
-          // En son beyaz sclera yolundan sonra gelen siyah yollar dedicated iris/pupil katmanıdır!
+          // C. VARIANT08 (Derin / Odaklanmış Bakış): 9 path
+          // Path 4: Sağ iris, Path 5: Sağ parıltı, Path 6: Sağ kirpik + Sol iris, Path 7: Sol parıltı, Path 8: Sol kirpik
+          else if (paths.length === 9 && whitePaths.length === 4) {
+            // Sağ göz irisi: Path 4 (#000 -> eyeHex)
+            paths[4].setAttribute('fill', '#' + eyeHex);
+
+            // Sol göz irisi: Path 6 içinde 'M380.4 488.5' ile başlar; sağ kirpik 'M618.7' siyah kalır
+            const d6 = paths[6].getAttribute('d') || '';
+            const parts = d6.split(/Z(?=M)/i);
+            if (parts.length === 2) {
+              paths[6].setAttribute('d', parts[0] + 'Z');
+              paths[6].setAttribute('fill', '#000000');
+
+              const leftIris = doc.createElementNS('http://www.w3.org/2000/svg', 'path');
+              leftIris.setAttribute('d', parts[1]);
+              leftIris.setAttribute('fill', '#' + eyeHex);
+              group.insertBefore(leftIris, paths[7]);
+            } else {
+              paths[6].setAttribute('fill', '#' + eyeHex);
+            }
+            // Path 5 ve 7 beyaz parıltı olarak (#fff), Path 8 ise siyah sol kirpik olarak (#000) korunur.
+          }
+          // D. STANDART VARYANTLAR (variant01, variant02, variant03, variant06, variant07):
+          // En son beyaz sclera yolundan sonra gelen siyah yollar dedicated iris katmanıdır!
           else {
             let lastWhiteIndex = -1;
             paths.forEach((p, idx) => {

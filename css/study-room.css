@@ -1801,3 +1801,60 @@
   width: 60px;
   cursor: pointer;
 }
+
+
+/* ==========================================================================
+   10. MOLA SÃœRESÄ° SEÃ‡Ä°M STÄ°LLERÄ° (5, 10, 15, 20, 25, 30 DK)
+   ========================================================================== */
+.pomo-break-select {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 9px;
+  padding: 3px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #0f172a;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.pomo-break-select:focus {
+  border-color: #f59e0b;
+}
+
+.goal-break-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.btn-break-card {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 8px 4px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.btn-break-card:hover {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+.btn-break-card.active {
+  background: #0f172a;
+  border-color: #0f172a;
+  color: #f5cf79;
+}
+
+#isoPomoRingProgress.mode-break {
+  stroke: #10b981;
+}

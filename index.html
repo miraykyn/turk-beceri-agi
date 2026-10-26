@@ -417,7 +417,7 @@
         <span>&#x1F3DB;&#xFE0F;</span>
         <span>Salon Se&ccedil;imi &amp; Canl&#x0131; Kapasite (10 Salon &bull; 50 Masa/Salon)</span>
       </div>
-      <div class="room-current-capacity-summary" id="roomCapacitySummary">Y&uuml;kleniyor...</div>
+      
     </div>
     <div class="room-tabs-scroll" id="roomTabsScroll">
       <!-- studyRoom.js renderRoomSelector() ile dinamik olusturulur -->
@@ -499,6 +499,19 @@
             <button type="button" class="goal-chip" data-goal="&#x1F4D0; Matematik &amp; M&uuml;hendislik">&#x1F4D0; Matematik</button>
             <button type="button" class="goal-chip" data-goal="&#x1F3A8; Tasar&#x0131;m &amp; G&ouml;rsel Sanatlar">&#x1F3A8; Tasar&#x0131;m</button>
             <button type="button" class="goal-chip" data-goal="&#x1F4DA; S&#x0131;nav &amp; Makale Haz&#x0131;rl&#x0131;&#x011F;&#x0131;">&#x1F4DA; S&#x0131;nav</button>
+          </div>
+        </div>
+
+                <!-- Mola Suresi Secimi (5, 10, 15, 20, 25, 30 dk) -->
+        <div class="goal-form-group">
+          <label class="goal-form-label">Mola S&uuml;resi:</label>
+          <div class="goal-break-grid" id="goalBreakDurationGrid">
+            <button type="button" class="btn-break-card active" data-break-mins="5">5 dk</button>
+            <button type="button" class="btn-break-card" data-break-mins="10">10 dk</button>
+            <button type="button" class="btn-break-card" data-break-mins="15">15 dk</button>
+            <button type="button" class="btn-break-card" data-break-mins="20">20 dk</button>
+            <button type="button" class="btn-break-card" data-break-mins="25">25 dk</button>
+            <button type="button" class="btn-break-card" data-break-mins="30">30 dk</button>
           </div>
         </div>
 
@@ -589,8 +602,15 @@
         <div class="floating-pomo-ctrls">
           <div class="floating-mode-tabs">
             <button type="button" class="f-mode-btn active" data-mode="work">Odak</button>
-            <button type="button" class="f-mode-btn" data-mode="shortBreak">Mola</button>
-            <button type="button" class="f-mode-btn" data-mode="longBreak">Uzun Mola</button>
+            <button type="button" class="f-mode-btn" data-mode="break">Mola</button>
+            <select id="pomoBreakDurationSelect" class="pomo-break-select" title="Mola S&uuml;resi">
+              <option value="5" selected>5 dk</option>
+              <option value="10">10 dk</option>
+              <option value="15">15 dk</option>
+              <option value="20">20 dk</option>
+              <option value="25">25 dk</option>
+              <option value="30">30 dk</option>
+            </select>
           </div>
 
           <div class="floating-actions-row">

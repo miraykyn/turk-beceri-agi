@@ -70,6 +70,7 @@ window.TDAStudyRoom = (function() {
     sceneState: 'LOBBY', // 'LOBBY' | 'GOAL_MODAL' | 'TRANSITION' | 'FOCUS'
     activeGoal: 'Derin Odaklanma Seansı',
     selectedDurationMinutes: 25,
+    selectedBreakMinutes: 5,
     activePeerPopover: null,
     zoomLevel: 1.0,
 
@@ -94,11 +95,9 @@ window.TDAStudyRoom = (function() {
       audioCtx: null,
       isUnlocked: false,
       tracks: {
-        rain: { name: 'Bozkır Yağmuru', icon: '🌧️', active: false, volume: 50, nodes: null },
-        cafe: { name: 'Semerkant Çayhanesi', icon: '☕', active: false, volume: 40, nodes: null },
-        fire: { name: 'Otağ Ateşi', icon: '🔥', active: false, volume: 50, nodes: null },
-        nature: { name: 'Yayla Rüzgarı & Doğa', icon: '🍃', active: false, volume: 40, nodes: null },
-        lofi: { name: 'Lo-Fi Beats (Rhodes)', icon: '🎵', active: false, volume: 60, nodes: null }
+        rain: { name: 'Ya\u011Fmur', icon: '\uD83C\uDF27\uFE0F', active: false, volume: 50, nodes: null },
+        fire: { name: 'Ate\u015F', icon: '\uD83D\uDD25', active: false, volume: 50, nodes: null },
+        nature: { name: 'R\u00FCzgar', icon: '\uD83C\uDF43', active: false, volume: 45, nodes: null }
       }
     }
   };
@@ -204,7 +203,6 @@ window.TDAStudyRoom = (function() {
 
   function renderRoomSelector() {
     const tabsContainer = document.getElementById('roomTabsScroll');
-    const summaryLabel = document.getElementById('roomCurrentCapacitySummary');
     if (!tabsContainer) return;
 
     let totalOnlineAllRooms = 0;
@@ -246,9 +244,6 @@ window.TDAStudyRoom = (function() {
 
     const currentRoom = ROOMS.find(r => r.id === state.activeRoomId) || ROOMS[0];
     const currentOcc = getRoomOccupancy(currentRoom.id);
-    if (summaryLabel) {
-      summaryLabel.textContent = `${currentRoom.name} (${currentOcc}/${TOTAL_DESKS_PER_ROOM} Dolu) • Toplam ${totalOnlineAllRooms} Çevrim İçi`;
-    }
 
     // Salon Değiştirme Dinleyicileri
     tabsContainer.querySelectorAll('.btn-room-tab').forEach(btn => {
@@ -664,14 +659,16 @@ window.TDAStudyRoom = (function() {
     state.pomodoro.mode = mode;
 
     let mins = state.selectedDurationMinutes;
-    if (mode === 'shortBreak') mins = 5;
-    if (mode === 'longBreak') mins = 15;
+    if (mode === 'break' || mode === 'shortBreak' || mode === 'longBreak') {
+      mins = state.selectedBreakMinutes || 5;
+    }
 
     state.pomodoro.totalDuration = mins * 60;
     state.pomodoro.timeLeft = mins * 60;
 
     document.querySelectorAll('.f-mode-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.mode === mode);
+      const isThisMode = (btn.dataset.mode === mode) || (mode.includes('break') && btn.dataset.mode === 'break');
+      btn.classList.toggle('active', isThisMode);
     });
 
     const ring = document.getElementById('isoPomoRingProgress');
@@ -680,6 +677,22 @@ window.TDAStudyRoom = (function() {
     }
 
     updatePomodoroDisplay();
+  }
+
+  function setBreakDuration(mins) {
+    state.selectedBreakMinutes = mins;
+    const select = document.getElementById('pomoBreakDurationSelect');
+    if (select) select.value = String(mins);
+
+    document.querySelectorAll('.btn-break-card').forEach(card => {
+      card.classList.toggle('active', parseInt(card.dataset.breakMins, 10) === mins);
+    });
+
+    if (state.pomodoro.mode === 'break' || state.pomodoro.mode.includes('break')) {
+      state.pomodoro.totalDuration = mins * 60;
+      state.pomodoro.timeLeft = mins * 60;
+      updatePomodoroDisplay();
+    }
   }
 
   function startPomodoro() {
@@ -723,9 +736,9 @@ window.TDAStudyRoom = (function() {
         localStorage.setItem(STORAGE_POMO_KEY, String(state.pomodoro.completedSessions));
       } catch(e) {}
 
-      const nextMode = (state.pomodoro.completedSessions % 4 === 0) ? 'longBreak' : 'shortBreak';
-      showToast(`🎉 Tebrikler! Seansı tamamladın. Şimdi ${nextMode === 'longBreak' ? '15 dk Uzun Mola' : '5 dk Kısa Mola'} vakti.`);
-      setPomodoroMode(nextMode);
+      const breakMins = state.selectedBreakMinutes || 5;
+      showToast('ğŸ‰ Tebrikler! SeansÄ± tamamladÄ±n. Åimdi ' + breakMins + ' dk Mola vakti.');
+      setPomodoroMode('break');
     } else {
       showToast('☕ Mola sona erdi! Yeni bir çalışma seansına hazır mısın?');
       setPomodoroMode('work');
@@ -827,23 +840,6 @@ window.TDAStudyRoom = (function() {
       bandpass.connect(masterGain);
       crackle.start();
       nodes.source = crackle;
-    } else if (trackKey === 'cafe') {
-      const bufferSize = ctx.sampleRate * 2;
-      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-      const output = buffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) {
-        output[i] = (Math.random() * 2 - 1) * 0.055;
-      }
-      const cafe = ctx.createBufferSource();
-      cafe.buffer = buffer;
-      cafe.loop = true;
-      const filter = ctx.createBiquadFilter();
-      filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(420, ctx.currentTime);
-      cafe.connect(filter);
-      filter.connect(masterGain);
-      cafe.start();
-      nodes.source = cafe;
     } else if (trackKey === 'nature') {
       const bufferSize = ctx.sampleRate * 2;
       const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
@@ -870,37 +866,7 @@ window.TDAStudyRoom = (function() {
       wind.start();
       nodes.source = wind;
       nodes.lfo = lfo;
-    } else if (trackKey === 'lofi') {
-      const chords = [
-        [261.63, 311.13, 392.00, 466.16], // Cm7
-        [174.61, 261.63, 311.13, 392.00], // Fm7
-        [233.08, 293.66, 349.23, 440.00], // Bb7
-        [155.56, 196.00, 233.08, 311.13]  // Ebmaj7
-      ];
-      let chordIndex = 0;
-      const playChord = () => {
-        if (!state.ambient.tracks.lofi.active) return;
-        const currentChord = chords[chordIndex % chords.length];
-        chordIndex++;
-        const t = ctx.currentTime;
-        currentChord.forEach((freq, idx) => {
-          const osc = ctx.createOscillator();
-          const noteGain = ctx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, t + idx * 0.08);
-          noteGain.gain.setValueAtTime(0.001, t + idx * 0.08);
-          noteGain.gain.linearRampToValueAtTime(0.085, t + idx * 0.08 + 0.12);
-          noteGain.gain.exponentialRampToValueAtTime(0.0001, t + idx * 0.08 + 2.4);
-          osc.connect(noteGain);
-          noteGain.connect(masterGain);
-          osc.start(t + idx * 0.08);
-          osc.stop(t + idx * 0.08 + 2.5);
-        });
-      };
-      playChord();
-      nodes.timerId = setInterval(playChord, 2600);
     }
-
     track.nodes = nodes;
     track.active = true;
     updateTrackUI(trackKey);
@@ -1142,6 +1108,23 @@ window.TDAStudyRoom = (function() {
       });
     });
 
+    // Mola SÃ¼resi KartlarÄ± (Modal: 5, 10, 15, 20, 25, 30 dk)
+    document.querySelectorAll('.btn-break-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const mins = parseInt(card.dataset.breakMins, 10) || 5;
+        setBreakDuration(mins);
+      });
+    });
+
+    // Mola SÃ¼resi Dropdown (Floating Pomodoro: 5, 10, 15, 20, 25, 30 dk)
+    const breakSelect = document.getElementById('pomoBreakDurationSelect');
+    if (breakSelect) {
+      breakSelect.addEventListener('change', e => {
+        const mins = parseInt(e.target.value, 10) || 5;
+        setBreakDuration(mins);
+      });
+    }
+
     // Enter Tuşuyla Seansı Başlatma
     const goalInput = document.getElementById('studyGoalInput');
     if (goalInput) {
@@ -1341,6 +1324,7 @@ window.TDAStudyRoom = (function() {
     closeSocialPopover,
     sendReactionToPeer,
     setPomodoroMode,
+    setBreakDuration,
     startPomodoro,
     pausePomodoro,
     resetPomodoro,

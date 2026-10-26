@@ -286,73 +286,152 @@ window.TDAStudyRoom = (function() {
     let html = '';
 
     desks.forEach((deskItem, idx) => {
-      // Her 10 masada bir koridor bölücüsü ekle
+      // Her 10 masada bir koridor bolucusu ekle
       if (idx > 0 && idx % 10 === 0) {
         const rowNumber = Math.floor(idx / 10);
         html += `
           <div class="grand-hall-aisle-divider">
-            <span class="aisle-label">Koridor ${rowNumber} • Sessiz Çalışma Bölgesi</span>
+            <span class="aisle-label">Koridor ${rowNumber} &bull; Sessiz &#x00C7;al&#x0131;&#x015F;ma B&ouml;lgesi</span>
           </div>
         `;
       }
 
       const deskNo = deskItem.deskNo;
       const isUserDeskHere = (state.userDeskNumber === deskNo && state.userSeatedRoomId === state.activeRoomId);
+      const isOccupied = deskItem.occupied;
 
+      // 1. ZEMIN DUSEN GOLGE
+      const shadowHtml = `<div class="desk-floor-shadow"></div>`;
+
+      // 2. 2.5D FIZIKSEL SANDALYE (Z-Index 2: Masanin Arkasinda)
+      const chairHtml = `
+        <div class="chair-3d-unit">
+          <div class="chair-backrest"></div>
+          <div class="chair-seat"></div>
+          <div class="chair-legs"></div>
+          ${!isOccupied && !isUserDeskHere ? `
+            <div class="chair-empty-indicator">
+              <span>Masaya Otur</span>
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      // 3. BITMOJI AVATAR KATMANI (Z-Index 3: Sandalyenin Ustunde, Masanin Arkasinda)
+      let avatarHtml = '';
       if (isUserDeskHere) {
-        // 1. KULLANICININ OTURDUĞU MASA
         const userAvatarUrl = getUserAvatarUrl();
-        html += `
-          <div class="hall-desk-station user-occupied-desk" id="deskStation_${deskNo}" data-desk-no="${deskNo}">
-            <div class="desk-id-badge">Masa ${String(deskNo).padStart(2, '0')}</div>
-            <div class="station-avatar-preview">
-              <img src="${userAvatarUrl}" alt="Sen" class="station-avatar-img" />
-              <span class="station-country-flag">⭐</span>
-            </div>
-            <div class="occupied-student-name" style="color:#b45309;font-weight:800;">Sen</div>
-            <div class="user-status-pill">Odakta</div>
-            <div class="station-desk-surface-bar">
-              <span class="desk-prop-mini">💻</span>
-              <span class="desk-prop-mini">☕</span>
-              <span class="desk-prop-mini" style="color:#f59e0b;">💡</span>
+        avatarHtml = `
+          <div class="seated-avatar-layer">
+            <div class="avatar-seated-figure">
+              <img src="${userAvatarUrl}" alt="Sen" class="avatar-seated-img" />
+              <div class="student-name-tag">
+                <span class="country-flag">&#x2B50;</span>
+                <span class="student-name">Sen</span>
+              </div>
             </div>
           </div>
         `;
-      } else if (deskItem.occupied) {
-        // 2. ÇEVRİM İÇİ AKRANIN OTURDUĞU MASA
+      } else if (isOccupied) {
         const st = deskItem.student;
-        html += `
-          <div class="hall-desk-station occupied-desk" id="deskStation_${deskNo}" data-desk-no="${deskNo}" data-peer-data='${escapeHtml(JSON.stringify(st))}'>
-            <div class="desk-id-badge">Masa ${String(deskNo).padStart(2, '0')}</div>
-            <div class="station-avatar-preview">
-              <img src="${st.avatarUrl}" alt="${escapeHtml(st.name)}" class="station-avatar-img" loading="lazy" />
-              <span class="station-country-flag">${st.flag}</span>
-            </div>
-            <div class="occupied-student-name">${escapeHtml(st.name)}</div>
-            <div class="station-desk-surface-bar">
-              <span class="desk-prop-mini">📖</span>
-              <span class="desk-prop-mini">☕</span>
-              <span class="desk-prop-mini">💡</span>
-            </div>
-          </div>
-        `;
-      } else {
-        // 3. TIKLANABİLİR BOŞ MASA
-        html += `
-          <div class="hall-desk-station empty-desk" id="deskStation_${deskNo}" data-desk-no="${deskNo}" title="Masa ${deskNo} • Çalışmaya Başlamak İçin Tıkla">
-            <div class="desk-id-badge">Masa ${String(deskNo).padStart(2, '0')}</div>
-            <div class="empty-desk-indicator">
-              <span class="empty-chair-icon">🪑</span>
-              <span class="empty-action-label">Boş Masa</span>
-            </div>
-            <div class="station-desk-surface-bar">
-              <span class="desk-prop-mini">📐</span>
-              <span class="desk-prop-mini" style="opacity:0.35;">☕</span>
-              <span class="desk-prop-mini" style="opacity:0.35;">💡</span>
+        avatarHtml = `
+          <div class="seated-avatar-layer">
+            <div class="avatar-seated-figure">
+              <img src="${st.avatarUrl}" alt="${escapeHtml(st.name)}" class="avatar-seated-img" loading="lazy" />
+              <div class="student-name-tag">
+                <span class="country-flag">${st.flag}</span>
+                <span class="student-name">${escapeHtml(st.name)}</span>
+              </div>
             </div>
           </div>
         `;
       }
+
+      // 4. FIZIKSEL AHSAP MASA (Z-Index 5: Avatarin alt govdesini fiziksel olarak kapatir!)
+      const tableHtml = `
+        <div class="physical-wood-table">
+          <div class="tabletop-surface">
+            <div class="tabletop-front-lip"></div>
+            
+            <!-- Masa Ustu Fiziksel Objeler (Props) -->
+            <div class="desk-props-container">
+              <!-- 4.1 Acik Laptop -->
+              <div class="prop-laptop">
+                <div class="laptop-screen">
+                  <div class="screen-glow"></div>
+                  <div class="screen-code-lines"></div>
+                </div>
+                <div class="laptop-base">
+                  <div class="laptop-trackpad"></div>
+                </div>
+              </div>
+
+              <!-- 4.2 Klasik Bankaci Masa Lambasi & Sicak Isik Halesi -->
+              <div class="prop-lamp">
+                <div class="lamp-shade"></div>
+                <div class="lamp-stem"></div>
+                <div class="lamp-base"></div>
+                <div class="lamp-glow-cone"></div>
+              </div>
+
+              <!-- 4.3 Renkli Kitap Yigini & Defter -->
+              <div class="prop-books">
+                <div class="book-spine book-1"></div>
+                <div class="book-spine book-2"></div>
+                <div class="open-notebook"></div>
+              </div>
+
+              <!-- 4.4 Sicak Kupa -->
+              <div class="prop-mug">
+                <div class="mug-steam"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4.5 Kalin Masa Ayaklari & Destek Kirisi -->
+          <div class="table-legs-row">
+            <div class="desk-leg"></div>
+            <div class="desk-crossbar"></div>
+            <div class="desk-leg"></div>
+          </div>
+        </div>
+      `;
+
+      // 5. MASA PIRINC KUNYESI (01 - 50)
+      const brassPlateHtml = `<div class="desk-brass-plate">Masa ${String(deskNo).padStart(2, '0')}</div>`;
+
+      // Istasyon Sinifi
+      let unitClass = 'iso-game-desk-unit hall-desk-station';
+      let titleAttr = '';
+      let dataPeerAttr = '';
+
+      if (isUserDeskHere) {
+        unitClass += ' user-seated-desk user-occupied-desk';
+        titleAttr = `Masa ${deskNo} &bull; Senin Masan (Odakta)`;
+      } else if (isOccupied) {
+        unitClass += ' occupied-desk';
+        titleAttr = `Masa ${deskNo} &bull; ${escapeHtml(deskItem.student.name)} (${deskItem.student.country})`;
+        dataPeerAttr = `data-peer-data='${escapeHtml(JSON.stringify(deskItem.student))}'`;
+      } else {
+        unitClass += ' empty-desk';
+        titleAttr = `Masa ${deskNo} &bull; &#x00C7;al&#x0131;&#x015F;maya Ba&#x015F;lamak &#x0130;&ccedil;in Sandalyeye T&#x0131;kla`;
+      }
+
+      html += `
+        <div 
+          class="${unitClass}" 
+          id="deskStation_${deskNo}" 
+          data-desk-no="${deskNo}" 
+          ${dataPeerAttr}
+          title="${titleAttr}"
+        >
+          ${shadowHtml}
+          ${chairHtml}
+          ${avatarHtml}
+          ${tableHtml}
+          ${brassPlateHtml}
+        </div>
+      `;
     });
 
     grid.innerHTML = html;
@@ -360,16 +439,16 @@ window.TDAStudyRoom = (function() {
   }
 
   function bindDeskClickEvents() {
-    // 1. Boş Masalara Tıklama -> Aşama 2: Hedef Modalını Aç
-    document.querySelectorAll('.hall-desk-station.empty-desk').forEach(el => {
+    // 1. Bos Masalara Tiklama -> Asama 2: Hedef Modalini Ac
+    document.querySelectorAll('.iso-game-desk-unit.empty-desk').forEach(el => {
       el.addEventListener('click', () => {
         const deskNo = parseInt(el.dataset.deskNo, 10);
         openGoalModalForDesk(deskNo);
       });
     });
 
-    // 2. Dolu Masalara Tıklama -> Sosyal Reaksiyon Popover'ı Aç
-    document.querySelectorAll('.hall-desk-station.occupied-desk').forEach(el => {
+    // 2. Dolu Masalara Tiklama -> Sosyal Reaksiyon Popover'i Ac
+    document.querySelectorAll('.iso-game-desk-unit.occupied-desk').forEach(el => {
       el.addEventListener('click', e => {
         e.stopPropagation();
         try {
@@ -383,7 +462,7 @@ window.TDAStudyRoom = (function() {
     });
   }
 
-  // --- 8. AŞAMA 2 & 3: SİNEMATİK ZOOM VE SEANS BAŞLATMA ---
+  // --- 8. ASAMA 2 & 3: SINEMATIK ZOOM VE SEANS BASLATMA ---
 
   function openGoalModalForDesk(deskNo) {
     unlockAudioContext();
@@ -458,7 +537,7 @@ window.TDAStudyRoom = (function() {
 
     if (cameraRig) {
       // Kamerayı zarifçe %130 büyüt
-      cameraRig.style.transform = 'scale(1.28)';
+      cameraRig.style.transform = 'scale(1.75)';
     }
   }
 

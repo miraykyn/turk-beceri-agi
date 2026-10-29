@@ -43,8 +43,11 @@ window.TDAI18n = (function() {
   const STUDY_ROOM_I18N = {
     tabStudy: { tr: "Çalışma Odası", az: "İş Otağı", uz: "O‘qish Xonasi", kk: "Оқу Бөлмесі", tk: "Okuw Otagy", ky: "Окуу Бөлмөсү", en: "Study Room" },
     navStudy: { tr: "Çalışma Odası", az: "İş Otağı", uz: "O‘qish Xonasi", kk: "Оқу Бөлмесі", tk: "Okuw Otagy", ky: "Окуу Бөлмөсү", en: "Study Room" },
-    quickStudyTitle: { tr: "Lofi Çalışma Odası", az: "Lofi İş Otağı", uz: "Lofi O‘qish Xonasi", kk: "Lofi Оқу Бөлмесі", tk: "Lofi Okuw Otagy", ky: "Lofi Окуу Бөлмөсү", en: "Lofi Study Room" },
+    quickStudyTitle: { tr: "Çalışma Odası", az: "İş Otağı", uz: "O‘qish Xonasi", kk: "Оқу Бөлмесі", tk: "Okuw Otagy", ky: "Окуу Бөлмөсү", en: "Study Room" },
     quickStudySub: { tr: "Pomodoro & Ortam Sesleri", az: "Pomodoro & Ətraf Səsləri", uz: "Pomodoro & Muhit Ovozlar", kk: "Помодоро & Фондық Дыбыстар", tk: "Pomodoro & Gurşaw Sesleri", ky: "Помодоро & Айлана Дыбыстары", en: "Pomodoro & Ambient Audio" },
+    quickTuranSub: { tr: "Yapay Zekâ Desteği & Rehberlik", az: "Süni İntellekt Dəstəyi & Bələdçilik", uz: "Sun’iy Intellekt Yordami & Yo‘riqnoma", kk: "Жасанды Интеллект Қолдауы & Нұсқаулық", tk: "Emeli Aň Goldawy & Ýolbeletlik", ky: "Жасалма Интеллект Колдоосу & Багыттоо", en: "AI Support & Guidance" },
+    profileNotice: { tr: "Beceri doğrulaması; sertifika ve öğrenci değerlendirmeleri ile yapılabilir.", az: "Bacarıq doğrulaması; sertifikat və tələbə qiymətləndirmələri ilə edilə bilər.", uz: "Ko‘nikmani tasdiqlash; sertifikat va talabalar baholashlari orqali amalga oshirilishi mumkin.", kk: "Дағдыны растау; сертификат және студенттердің бағалауы арқылы жүзеге асырылуы мүмкін.", tk: "Başarnygy tassyklamak; şahadatnama we talyp baha bermeleri arkaly amala aşyrylyp bilner.", ky: "Көндүмдү тастыктоо; сертификат жана студенттердин баалоосу аркылуу жүргүзүлүшү мүмкүн.", en: "Skill verification can be performed through certificates and student reviews." },
+    articlePrototypeNotice: { tr: "Bu bir prototip olduğu için yazının içeriği şu an görüntülenememektedir.", az: "Bu bir prototip olduğu üçün yazının məzmunu hazırda göstərilə bilmir.", uz: "Bu prototip bo‘lgani uchun maqola matni hozircha ko‘rsatilmaydi.", kk: "Бұл прототип болғандықтан, мақаланың мазмұны қазір көрсетілмейді.", tk: "Bu prototip bolandygy üçin makalanyň mazmuny häzirlikçe görkezilmeýär.", ky: "Бул прототип болгондуктан, макаланын мазмуну азырынча көрсөтүлбөйт.", en: "Since this is a prototype, the content of the article cannot be displayed at the moment." },
     studyEyebrow: { tr: "DİJİTAL KÜTÜPHANE • ODAKLANMA ALANI", az: "RƏQƏMSAL KİTABXANA • DİQQƏT MƏRKƏZİ", uz: "RAQAMLI KUTUBXONA • DIQQAT MARKAZI", kk: "САНДЫҚ КІТАПХАНА • ЗЕЙІН ҚОЮ АЛАНЫ", tk: "SANLY KITAPHANA • ÜNS MERKEZI", ky: "САНАРИП КИТЕПКАНА • КӨҢҮЛ БУРУУ АЙМАГЫ", en: "DIGITAL LIBRARY • FOCUS SPACE" },
     studyTitle: { tr: "Sanal Çalışma Odası", az: "Virtual İş Otağı", uz: "Virtual O‘qish Xonasi", kk: "Виртуалды Оқу Бөлмесі", tk: "Wirtual Okuw Otagy", ky: "Виртуалдуу Окуу Бөлмөсү", en: "Virtual Study Room" },
     studySubtitle: { tr: "Kendi oluşturduğun Bitmoji avatarınla çalışma masana geç, Pomodoro zamanlayıcı, yapılacak hedefler ve rahatlatıcı ortam sesleriyle odaklan.", az: "Öz yaratdığın Bitmoji avatarınla iş masana keç, Pomodoro sayğacı və sakitləşdirici fon səsləri ilə diqqətini topla.", uz: "O‘zingiz yaratgan Bitmoji avatar bilan ish stolingizga o‘tiring, Pomodoro taymeri va tinchlantiruvchi ovozlar bilan diqqatni jamlang.", kk: "Өзің жасаған Bitmoji аватарыңмен оқу үстеліңе отыр, Помодоро таймері және фондық дыбыстармен зейін қой.", tk: "Öz döreden Bitmoji awataryň bilen okuw stoluňa geç, Pomodoro wagty we dynç alyş sesleri bilen ünsüňi jemle.", ky: "Өзүң жараткан Bitmoji аватарың менен окуу столуңа отур, Помодоро таймери жана айлана дабыштары менен көңүл бур.", en: "Sit at your study desk with your personalized Bitmoji avatar, focus with Pomodoro timer, goals and soothing ambient sounds." },
@@ -89,16 +92,20 @@ window.TDAI18n = (function() {
     for (const [key, trans] of Object.entries(MESSAGING_I18N)) {
       supportedLanguages.forEach(lang => {
         const v = trans[lang] || trans['tr'];
+        const sk = stableKey(key);
         I18N[lang][key] = v;
-        translationRegistry[key] = stableKey(key);
+        I18N[lang][sk] = v;
+        translationRegistry[key] = sk;
       });
     }
 
     for (const [key, trans] of Object.entries(STUDY_ROOM_I18N)) {
       supportedLanguages.forEach(lang => {
         const v = trans[lang] || trans['tr'];
+        const sk = stableKey(key);
         I18N[lang][key] = v;
-        translationRegistry[key] = stableKey(key);
+        I18N[lang][sk] = v;
+        translationRegistry[key] = sk;
       });
     }
   }
@@ -149,7 +156,7 @@ window.TDAI18n = (function() {
   }
 
   function cacheKey(sl, tl, text) {
-    return `tda:v2:${sl}:${tl}:${text}`;
+    return `tda:v3:${sl}:${tl}:${text}`;
   }
 
   function loadCached(sl, tl, text) {
@@ -214,7 +221,7 @@ window.TDAI18n = (function() {
   }
 
   async function translateTextNode(node, lang, allowOnline = false) {
-    if (!node?.parentElement || isExcluded(node.parentElement)) return;
+    if (!node?.parentElement || isExcluded(node.parentElement) || node.parentElement.hasAttribute('data-i18n')) return;
     const source = rememberTextNode(node);
     if (!cleanText(source)) return;
     if (lang === 'tr') {

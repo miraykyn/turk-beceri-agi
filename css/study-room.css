@@ -19,6 +19,7 @@
   position: relative;
   width: 100%;
   max-width: 1440px;
+  overflow-x: hidden;
   margin: 0 auto;
   padding: 24px 16px 56px;
   box-sizing: border-box;
@@ -1384,6 +1385,31 @@
 /* ==========================================================================
    8. ALT KISIM LIGHT MODE FLOATING POMODORO ZAMANLAYICI
    ========================================================================== */
+@keyframes pomoOpacityFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.iso-toast-message {
+  position: absolute;
+  top: 96px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 95;
+  max-width: calc(100% - 24px);
+  background: rgba(15, 23, 42, 0.94);
+  color: #ffffff;
+  padding: 10px 16px;
+  border-radius: 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
+  pointer-events: none;
+  box-sizing: border-box;
+  word-wrap: break-word;
+}
+
 .iso-floating-pomodoro {
   position: absolute;
   bottom: 24px;
@@ -1400,7 +1426,9 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  max-width: calc(100% - 24px);
+  box-sizing: border-box;
+  animation: pomoOpacityFade 0.25s ease-out;
 }
 
 .floating-pomo-goal-bar {
@@ -1891,24 +1919,33 @@
    11. MOBİL VE TABLET DUYARLILIK (RESPONSIVE) DÜZELTMELERİ - ÇALIŞMA ODASI
    ========================================================================== */
 @media (max-width: 900px) {
-  .study-room-page-container {
-    padding: 0 10px;
-  }
-
-  .study-room-header-compact {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .study-room-header-right {
+  .study-room-section,
+  #calisma-odasi.study-room-section {
+    padding: 18px 10px 40px;
     width: 100%;
-    justify-content: flex-start;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+
+  .room-selector-wrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .room-selector-header {
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
   .iso-library-viewport {
-    height: 760px;
+    width: 100%;
+    max-width: 100%;
+    height: 740px;
     border-radius: 18px;
+    overflow: hidden;
+    box-sizing: border-box;
   }
 
   .iso-hud-top-bar {
@@ -1917,46 +1954,85 @@
     right: 10px;
     flex-wrap: wrap;
     gap: 8px;
-  }
-
-  .hud-group {
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .hud-pill-btn {
-    padding: 7px 11px;
-    font-size: 12px;
+    justify-content: space-between;
   }
 
   .hall-controls-bar {
-    top: 56px;
+    top: 54px;
     left: 10px;
     right: 10px;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
+    justify-content: flex-start;
+  }
+
+  .btn-hall-ctrl {
+    padding: 6px 11px;
+    font-size: 11.5px;
   }
 
   .grand-hall-viewport-inner {
-    padding: 118px 90px 230px;
+    padding: 110px 60px 220px;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .iso-floating-pomodoro {
     bottom: 12px;
-    padding: 8px 14px;
-    gap: 10px;
-    max-width: calc(100% - 24px);
+    left: 10px;
+    right: 10px;
+    transform: none;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 10px 14px;
+    gap: 8px;
+    max-width: calc(100% - 20px);
     box-sizing: border-box;
-    flex-wrap: wrap;
-    justify-content: center;
+  }
+
+  .goal-text-input,
+  .todo-input-clean {
+    font-size: 16px;
   }
 
   .iso-corner-widget {
-    width: 240px;
+    width: auto;
+    bottom: 16px;
+  }
+
+  .iso-corner-left {
+    left: 12px;
+  }
+
+  .iso-corner-right {
+    right: 12px;
+  }
+
+  .iso-drawer-glass {
+    width: min(290px, calc(100vw - 44px));
+    box-sizing: border-box;
   }
 }
 
 @media (max-width: 600px) {
+  .study-room-section,
+  #calisma-odasi.study-room-section {
+    padding: 14px 8px 32px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .study-room-eyebrow {
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 5px 12px;
+    max-width: 100%;
+    box-sizing: border-box;
+    white-space: normal;
+    text-align: center;
+  }
+
   .study-room-title {
     font-size: 20px;
   }
@@ -1965,10 +2041,18 @@
     font-size: 12.5px;
   }
 
+  .room-selector-title {
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
   .iso-library-viewport {
-    height: 680px;
+    width: 100%;
+    max-width: 100%;
+    height: 640px;
     border-radius: 14px;
     border-width: 1.5px;
+    overflow: hidden;
   }
 
   .iso-hud-top-bar {
@@ -1978,148 +2062,177 @@
     gap: 6px;
   }
 
-  .hud-pill-btn {
-    padding: 6px 9px;
+  .btn-glass-nav {
+    padding: 6px 12px;
     font-size: 11px;
     gap: 5px;
   }
 
-  .hud-btn-label {
-    font-size: 11px;
-  }
-
-  .hall-controls-bar {
-    top: 50px;
-    left: 8px;
-    right: 8px;
-    gap: 6px;
-  }
-
-  .hall-zoom-controls {
-    padding: 3px 6px;
-    gap: 4px;
-  }
-
-  .btn-hall-zoom {
-    width: 26px;
-    height: 26px;
-    font-size: 14px;
-  }
-
-  .hall-live-counter-pill {
+  .iso-live-status-pill {
     padding: 5px 10px;
     font-size: 11px;
     gap: 6px;
   }
 
+  .hall-controls-bar {
+    top: 46px;
+    left: 8px;
+    right: 8px;
+    gap: 5px;
+  }
+
+  .btn-hall-ctrl {
+    padding: 5px 9px;
+    font-size: 11px;
+    border-radius: 10px;
+  }
+
   .grand-hall-viewport-inner {
-    padding: 106px 70px 220px;
+    padding: 96px 36px 210px;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .iso-floating-pomodoro {
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 16px);
-    max-width: 390px;
-    padding: 8px 12px;
-    gap: 8px;
-    border-radius: 18px;
-  }
-
-  .pomo-ring-box {
-    width: 46px;
-    height: 46px;
-  }
-
-  .pomo-ring-svg {
-    width: 46px;
-    height: 46px;
-  }
-
-  .pomo-ring-time {
-    font-size: 11px;
-  }
-
-  .pomo-meta-task {
-    max-width: 120px;
-    font-size: 12px;
-  }
-
-  .iso-corner-widget {
-    width: calc(100% - 20px);
-    max-width: 290px;
-    bottom: 84px;
-  }
-
-  .iso-todo-widget {
-    left: 10px;
-  }
-
-  .iso-ambient-widget {
-    right: 10px;
-  }
-
-  .iso-corner-widget.minimized {
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    transform: none;
     width: auto;
-    max-width: 48%;
-    bottom: 82px;
+    max-width: calc(100% - 16px);
+    padding: 10px 12px;
+    gap: 8px;
+    border-radius: 16px;
+    box-sizing: border-box;
   }
 
-  .iso-corner-widget.minimized .widget-glass-header {
-    padding: 8px 10px;
+  .floating-pomo-main {
+    gap: 10px;
+    justify-content: space-between;
+    flex-wrap: wrap;
   }
 
-  .iso-corner-widget.minimized .widget-title-left h4 {
+  .floating-pomo-ring-wrap,
+  .floating-pomo-svg {
+    width: 54px;
+    height: 54px;
+    flex-shrink: 0;
+  }
+
+  .floating-pomo-digits {
+    font-size: 12.5px;
+  }
+
+  .pomo-goal-text {
+    max-width: 175px;
     font-size: 11.5px;
   }
 
-  .iso-drawer-glass {
-    width: calc(100% - 16px);
-    right: 8px;
-    top: 8px;
-    bottom: 8px;
-    border-radius: 16px;
+  .floating-pomo-ctrls {
+    flex: 1 1 auto;
+    min-width: 0;
   }
 
-  .iso-modal-backdrop {
+  .floating-mode-tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .floating-actions-row {
+    justify-content: center;
+  }
+
+  .iso-corner-widget {
+    width: auto;
+    max-width: none;
+    bottom: 132px;
+  }
+
+  .iso-corner-left {
+    left: 8px;
+  }
+
+  .iso-corner-right {
+    right: 8px;
+  }
+
+  .btn-iso-corner-toggle {
+    width: 42px;
+    height: 42px;
+    font-size: 16px;
+  }
+
+  .iso-drawer-glass {
+    width: min(275px, calc(100vw - 36px));
+    bottom: 50px;
+    padding: 14px;
+    border-radius: 16px;
+    box-sizing: border-box;
+  }
+
+  .iso-goal-modal-backdrop {
     padding: 10px;
+    box-sizing: border-box;
   }
 
   .iso-goal-modal-card {
-    padding: 18px 16px;
+    width: 100%;
+    max-width: 100%;
+    padding: 16px 14px;
     border-radius: 18px;
-    max-height: calc(100vh - 24px);
-    max-height: calc(100dvh - 24px);
+    max-height: calc(100% - 16px);
     overflow-y: auto;
     box-sizing: border-box;
   }
 
-  .goal-modal-header h3 {
-    font-size: 17px;
+  .goal-modal-header {
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-right: 32px;
+  }
+
+  .goal-modal-title {
+    font-size: 16px;
+  }
+
+  .goal-modal-subtitle {
+    font-size: 11.5px;
+  }
+
+  .goal-text-input,
+  .todo-input-clean {
+    font-size: 16px;
+    padding: 10px 12px;
   }
 
   .goal-duration-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
   }
 
   .goal-break-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
   }
 
   .goal-modal-actions {
     flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 8px;
+    margin-top: 16px;
   }
 
-  .btn-goal-cancel,
-  .btn-goal-start {
+  .btn-cancel-goal,
+  .btn-start-study {
     width: 100%;
-    flex: none;
+    justify-content: center;
+    text-align: center;
     box-sizing: border-box;
+    padding: 11px 14px;
   }
 
   .social-popover-card {
-    width: min(280px, calc(100vw - 24px));
-    left: 12px !important;
+    width: min(280px, calc(100vw - 32px));
+    box-sizing: border-box;
   }
 }

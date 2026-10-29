@@ -52,7 +52,7 @@
   display: inline-block;
 }
 
-/* Sanal Çalışma Odası (Lofi Study Room) Sekme Stilleri */
+/* Sanal Çalışma Odası (Study Room) Sekme Stilleri */
 .tab-button-study, .nav-study-link:not(.legacy-nav-link) {
   display: inline-flex !important;
   align-items: center;
@@ -79,17 +79,18 @@
   color: #f5cf79 !important;
   border-bottom: 2px solid #f5cf79 !important;
 }
-.quick-access{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:20px 6%;max-width:1220px;margin:auto;background:#f7f8fb}
+.quick-access{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;padding:20px 6%;max-width:1220px;margin:auto;background:#f7f8fb}
 .quick-access button{border:1px solid #dfe5ee;border-radius:14px;background:#fff;color:#172033;text-align:left;padding:16px;cursor:pointer;box-shadow:0 5px 18px #18233b0b;font:inherit;font-weight:800;line-height:1.3}
 .quick-access button:hover,.quick-access button:focus-visible{border-color:#f5b942;box-shadow:0 0 0 3px #f5b94233;outline:0}
 .quick-access small{display:block;color:#667085;font-size:11px;font-weight:500;margin-top:5px}
-#tabApp{min-height:45vh}
-.tab-panel{display:none;min-height:45vh}
+#tabApp{min-height:45vh;width:100%;max-width:100%;overflow-x:hidden;box-sizing:border-box}
+.tab-panel{display:none;min-height:45vh;width:100%;max-width:100%;overflow-x:hidden;box-sizing:border-box}
+.section-stack{width:100%;max-width:100%;overflow-x:hidden;box-sizing:border-box}
 .tab-panel:first-child{display:block}
 .tab-panel:not(.active){display:none!important}
 .tab-panel.active{display:block;animation:tabReveal .18s ease-out}
 .tab-panel>.hero{margin:0}
-.tab-panel>.section-stack>section{max-width:1220px}
+.tab-panel>.section-stack>section{max-width:1220px;margin-left:auto;margin-right:auto}
 .tab-panel>.section-stack>section:first-child{padding-top:58px}
 .tab-panel .turan-panel.embedded{position:fixed;right:22px;bottom:94px;width:min(390px,calc(100vw - 28px));max-height:min(620px,calc(100vh - 120px));display:none;border-radius:20px;box-shadow:0 20px 55px #10234330;border:1px solid #dfe5ee;background:#fff;z-index:9998}
 .tab-panel .turan-panel.embedded.open{display:block}

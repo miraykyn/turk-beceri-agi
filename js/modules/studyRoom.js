@@ -588,7 +588,9 @@ window.TDAStudyRoom = (function() {
     if (sub) sub.textContent = `${room.subtitle} • Canlı Odaklanma Alanı`;
     if (input) {
       input.value = state.activeGoal !== 'Derin Odaklanma Seansı' ? state.activeGoal : '';
-      setTimeout(() => input.focus(), 150);
+      if (window.innerWidth > 900) {
+        setTimeout(() => input.focus(), 150);
+      }
     }
 
     if (modal) modal.style.display = 'flex';
@@ -605,6 +607,9 @@ window.TDAStudyRoom = (function() {
     unlockAudioContext();
 
     const input = document.getElementById('studyGoalInput');
+    if (input && typeof input.blur === 'function') {
+      input.blur();
+    }
     const goalText = (input && input.value.trim()) ? input.value.trim() : 'Derin Çalışma & Odaklanma';
     state.activeGoal = goalText;
     state.userDeskNumber = state.targetDeskNumber || state.userDeskNumber || 1;
@@ -613,6 +618,10 @@ window.TDAStudyRoom = (function() {
 
     const modal = document.getElementById('studyGoalModal');
     if (modal) modal.style.display = 'none';
+
+    if (window.scrollX !== 0) {
+      window.scrollTo(0, window.scrollY);
+    }
 
     // 1. Masaları tekrar çiz (Kullanıcı avatarı masaya oturur)
     renderHallDesks();
@@ -691,7 +700,7 @@ window.TDAStudyRoom = (function() {
       if (btnLeave) btnLeave.style.display = 'none';
     } else if (newState === 'FOCUS') {
       if (header) header.classList.add('hidden-in-focus');
-      if (floatingPomo) floatingPomo.style.display = 'block';
+      if (floatingPomo) floatingPomo.style.display = 'flex';
       if (btnLeave) btnLeave.style.display = 'flex';
     }
   }

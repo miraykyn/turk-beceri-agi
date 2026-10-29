@@ -79,48 +79,6 @@ window.TDATuran = (function() {
     }
   }
 
-  function detect() {
-    const textEl = $('turanDetectorText');
-    const out = $('turanDetectorResult');
-    if (!textEl || !out) return;
-
-    const text = textEl.value.trim();
-    if (text.length < 80) {
-      out.style.display = 'block';
-      out.textContent = featureT('detectorIntro') + ' (En az 80 karakter giriniz)';
-      return;
-    }
-
-    const words = text.toLocaleLowerCase('tr-TR').match(/[\p{L}\p{N}’'-]+/gu) || [];
-    const uniqueCount = new Set(words).size;
-    const sentences = text.split(/[.!?]+/).map(x => x.trim()).filter(Boolean);
-    const avgLen = sentences.length ? words.length / sentences.length : 0;
-    const phrases = ['sonuç olarak', 'önemli bir rol oynamaktadır', 'bu bağlamda', 'bununla birlikte', 'genel olarak', 'özetlemek gerekirse', 'etkili bir şekilde'];
-
-    let score = 0;
-    if (words.length > 180) score += 18;
-    if (words.length - uniqueCount > words.length * 0.42) score += 20;
-    if (avgLen > 28) score += 15;
-    if (phrases.filter(p => text.toLocaleLowerCase('tr-TR').includes(p)).length >= 2) score += 25;
-
-    if (sentences.length >= 5) {
-      const lens = sentences.map(x => (x.match(/[\p{L}\p{N}’'-]+/gu) || []).length);
-      const m = lens.reduce((x, y) => x + y, 0) / lens.length;
-      const v = lens.reduce((x, y) => x + (y - m) ** 2, 0) / lens.length;
-      if (Math.sqrt(v) < 5) score += 18;
-    }
-
-    score = Math.min(96, score);
-    const label = score < 35 ? featureT('detectorLow') : score < 65 ? featureT('detectorMedium') : featureT('detectorHigh');
-
-    out.style.display = 'block';
-    out.innerHTML = `
-      <strong>${label}</strong><br>
-      ${featureT('detectorResult')}: %${score}<br>
-      <span style="color:#7a8497">${featureT('detectorDisclaimer')}</span>
-    `;
-  }
-
   function init() {
     const panel = $('turanPanel');
     const fab = $('turanFab');
@@ -158,18 +116,8 @@ window.TDATuran = (function() {
 
     document.querySelectorAll('.turan-tab').forEach(tab => {
       tab.addEventListener('click', () => {
-        document.querySelectorAll('.turan-tab').forEach(x => x.classList.remove('active'));
-        document.querySelectorAll('.turan-pane').forEach(x => x.classList.remove('active'));
-        tab.classList.add('active');
-        $(tab.dataset.turanTab === 'assistant' ? 'turanAssistantPane' : 'turanDetectorPane')?.classList.add('active');
         show();
       });
-    });
-
-    $('turanDetectorRun')?.addEventListener('click', detect);
-    $('turanDetectorClear')?.addEventListener('click', () => {
-      if ($('turanDetectorText')) $('turanDetectorText').value = '';
-      if ($('turanDetectorResult')) $('turanDetectorResult').style.display = 'none';
     });
   }
 

@@ -25,13 +25,8 @@ window.TDATicker = (function() {
   function fitMessage() {
     const message = document.getElementById('factTickerMessage');
     if (!message) return;
-    const isMobile = window.matchMedia('(max-width:600px)').matches;
-    const maximum = isMobile ? 15 : 18;
-    const minimum = isMobile ? 11 : 13;
-    message.style.fontSize = maximum + 'px';
-    while (message.scrollHeight > message.clientHeight && parseFloat(message.style.fontSize) > minimum) {
-      message.style.fontSize = (parseFloat(message.style.fontSize) - 0.5) + 'px';
-    }
+    const isMobile = window.matchMedia('(max-width:768px)').matches;
+    message.style.fontSize = isMobile ? '14px' : '17px';
   }
 
   function showFact() {

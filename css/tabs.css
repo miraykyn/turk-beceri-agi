@@ -9,7 +9,7 @@
 .tab-nav button.active{color:#f5cf79;border-bottom-color:#f5cf79}
 
 /* Mektuplar / Haberleşme Sekmesi & İkon Tasarımı (Büyük ve Dikkat Çekici) */
-.tab-button-mektuplar, .nav-mektuplar-link {
+.tab-button-mektuplar, .nav-mektuplar-link:not(.legacy-nav-link) {
   display: inline-flex !important;
   align-items: center;
   gap: 9px;
@@ -52,15 +52,15 @@
   display: inline-block;
 }
 
-.legacy-nav-link{display:none!important}
-
 /* Sanal Çalışma Odası (Lofi Study Room) Sekme Stilleri */
-.tab-button-study, .nav-study-link {
+.tab-button-study, .nav-study-link:not(.legacy-nav-link) {
   display: inline-flex !important;
   align-items: center;
   gap: 7px;
   vertical-align: middle;
 }
+
+.legacy-nav-link{display:none!important}
 
 .nav-study-icon {
   font-size: 16px;

@@ -99,6 +99,8 @@ window.TDATabs = (function() {
 
     const nav = document.getElementById('mainNav');
     if (nav) nav.classList.remove('open');
+
+    window.dispatchEvent(new CustomEvent('tda:tab-changed', { detail: { tab: id } }));
   }
 
   function initMobileNav() {

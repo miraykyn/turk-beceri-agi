@@ -266,8 +266,13 @@ window.TDAStudyRoom = (function() {
     // Eğer kullanıcı bu salonda oturmuyorsa lobiye al
     if (state.userSeatedRoomId !== roomId) {
       setSceneState('LOBBY');
+      resetCameraZoom();
+      centerHallOverview(true);
     } else {
       setSceneState('FOCUS');
+      if (state.userDeskNumber) {
+        smoothZoomToDesk(state.userDeskNumber);
+      }
     }
   }
 
@@ -292,8 +297,8 @@ window.TDAStudyRoom = (function() {
       }
 
       const deskNo = deskItem.deskNo;
-      const isUserDeskHere = (state.userDeskNumber === deskNo && state.userSeatedRoomId === state.activeRoomId);
-      const isOccupied = deskItem.occupied;
+      const isUserDeskHere = (state.userDeskNumber === deskNo && state.userSeatedRoomId === state.activeRoomId) || (state.targetDeskNumber === deskNo);
+      const isOccupied = deskItem.occupied && !isUserDeskHere;
 
       // 1. ZEMIN DUSEN GOLGE
       const shadowHtml = `<div class="desk-floor-shadow"></div>`;
@@ -434,7 +439,7 @@ window.TDAStudyRoom = (function() {
   }
 
   function bindDeskClickEvents() {
-    // 1. Bos Masalara Tiklama -> Asama 2: Hedef Modalini Ac
+    // 1. Bos Masalara Tiklama -> Asama 2: Hedef Modalini Ac & Masaya Odaklan
     document.querySelectorAll('.iso-game-desk-unit.empty-desk').forEach(el => {
       el.addEventListener('click', () => {
         const deskNo = parseInt(el.dataset.deskNo, 10);
@@ -442,7 +447,16 @@ window.TDAStudyRoom = (function() {
       });
     });
 
-    // 2. Dolu Masalara Tiklama -> Sosyal Reaksiyon Popover'i Ac
+    // 2. Kullanicinin Kendi Masasina Tiklama -> Tekrar Odaklan & Hedef Duzenle
+    document.querySelectorAll('.iso-game-desk-unit.user-seated-desk').forEach(el => {
+      el.addEventListener('click', () => {
+        const deskNo = parseInt(el.dataset.deskNo, 10);
+        smoothZoomToDesk(deskNo);
+        openGoalModalForDesk(deskNo);
+      });
+    });
+
+    // 3. Dolu Masalara Tiklama -> Sosyal Reaksiyon Popover'i Ac
     document.querySelectorAll('.iso-game-desk-unit.occupied-desk').forEach(el => {
       el.addEventListener('click', e => {
         e.stopPropagation();
@@ -459,9 +473,109 @@ window.TDAStudyRoom = (function() {
 
   // --- 8. ASAMA 2 & 3: SINEMATIK ZOOM VE SEANS BASLATMA ---
 
+  let cameraAnimFrameId = null;
+
+  function cancelCameraAnimation() {
+    if (cameraAnimFrameId) {
+      cancelAnimationFrame(cameraAnimFrameId);
+      cameraAnimFrameId = null;
+    }
+  }
+
+  function syncCameraRigBounds(scale) {
+    const cameraRig = document.getElementById('grandCameraRig');
+    if (!cameraRig) return;
+    const baseW = cameraRig.offsetWidth || 1400;
+    const baseH = cameraRig.offsetHeight || 1100;
+    cameraRig.style.transformOrigin = '0 0';
+    cameraRig.style.transform = `scale(${scale})`;
+    cameraRig.style.marginRight = `${Math.round((scale - 1) * baseW)}px`;
+    cameraRig.style.marginBottom = `${Math.round((scale - 1) * baseH)}px`;
+  }
+
+  function getDeskCenterInRig(deskEl, cameraRig) {
+    let x = deskEl.offsetLeft + (deskEl.offsetWidth / 2);
+    let y = deskEl.offsetTop + (deskEl.offsetHeight / 2);
+    let el = deskEl.offsetParent;
+    while (el && el !== cameraRig && cameraRig.contains(el)) {
+      x += el.offsetLeft;
+      y += el.offsetTop;
+      el = el.offsetParent;
+    }
+    return { x, y };
+  }
+
+  function animateCameraToDesk(deskNo, targetScale, durationMs = 680) {
+    const deskEl = document.getElementById(`deskStation_${deskNo}`);
+    const viewportInner = document.getElementById('grandHallViewportInner');
+    const cameraRig = document.getElementById('grandCameraRig');
+    if (!deskEl || !viewportInner || !cameraRig) return;
+
+    cancelCameraAnimation();
+
+    const startScale = state.zoomLevel || 1.0;
+    const endScale = typeof targetScale === 'number' ? targetScale : startScale;
+    const startScrollLeft = viewportInner.scrollLeft;
+    const startScrollTop = viewportInner.scrollTop;
+
+    const deskPos = getDeskCenterInRig(deskEl, cameraRig);
+    const rigLeft = cameraRig.offsetLeft || 0;
+    const rigTop = cameraRig.offsetTop || 0;
+
+    // Yakınlaşma sırasında scrollWidth/scrollHeight sınırlarının dar kalmaması için hedef boyutu uygula
+    if (endScale > startScale) {
+      syncCameraRigBounds(endScale);
+    }
+
+    const viewW = viewportInner.clientWidth || 800;
+    const viewH = viewportInner.clientHeight || 600;
+
+    const targetScrollLeft = Math.max(0, (rigLeft + deskPos.x * endScale) - (viewW / 2));
+    const targetScrollTop = Math.max(0, (rigTop + deskPos.y * endScale) - (viewH * 0.43));
+
+    if (durationMs <= 0) {
+      state.zoomLevel = endScale;
+      syncCameraRigBounds(endScale);
+      viewportInner.scrollLeft = targetScrollLeft;
+      viewportInner.scrollTop = targetScrollTop;
+      return;
+    }
+
+    const startTime = performance.now();
+    function step(now) {
+      const elapsed = now - startTime;
+      const t = Math.min(1, elapsed / durationMs);
+      const ease = 1 - Math.pow(1 - t, 3);
+
+      const currentScale = startScale + (endScale - startScale) * ease;
+      state.zoomLevel = currentScale;
+      syncCameraRigBounds(currentScale);
+
+      viewportInner.scrollLeft = startScrollLeft + (targetScrollLeft - startScrollLeft) * ease;
+      viewportInner.scrollTop = startScrollTop + (targetScrollTop - startScrollTop) * ease;
+
+      if (t < 1) {
+        cameraAnimFrameId = requestAnimationFrame(step);
+      } else {
+        cameraAnimFrameId = null;
+        state.zoomLevel = endScale;
+        syncCameraRigBounds(endScale);
+        viewportInner.scrollLeft = targetScrollLeft;
+        viewportInner.scrollTop = targetScrollTop;
+      }
+    }
+
+    cameraAnimFrameId = requestAnimationFrame(step);
+  }
+
   function openGoalModalForDesk(deskNo) {
     unlockAudioContext();
     state.targetDeskNumber = deskNo;
+
+    // Tıklanan masada kullanıcı avatarını hemen göster ve haritayı o masaya kaydır
+    renderHallDesks();
+    const previewScale = Math.max(state.zoomLevel || 1.0, window.innerWidth <= 768 ? 1.12 : 1.25);
+    animateCameraToDesk(deskNo, previewScale, 480);
 
     const modal = document.getElementById('studyGoalModal');
     const title = document.querySelector('.goal-modal-title');
@@ -484,6 +598,7 @@ window.TDAStudyRoom = (function() {
     const modal = document.getElementById('studyGoalModal');
     if (modal) modal.style.display = 'none';
     state.targetDeskNumber = null;
+    renderHallDesks();
   }
 
   function onConfirmStartSession() {
@@ -492,10 +607,12 @@ window.TDAStudyRoom = (function() {
     const input = document.getElementById('studyGoalInput');
     const goalText = (input && input.value.trim()) ? input.value.trim() : 'Derin Çalışma & Odaklanma';
     state.activeGoal = goalText;
-    state.userDeskNumber = state.targetDeskNumber || 1;
+    state.userDeskNumber = state.targetDeskNumber || state.userDeskNumber || 1;
     state.userSeatedRoomId = state.activeRoomId;
+    state.targetDeskNumber = null;
 
-    closeGoalModal();
+    const modal = document.getElementById('studyGoalModal');
+    if (modal) modal.style.display = 'none';
 
     // 1. Masaları tekrar çiz (Kullanıcı avatarı masaya oturur)
     renderHallDesks();
@@ -515,32 +632,21 @@ window.TDAStudyRoom = (function() {
       const goalLabel = document.getElementById('pomoActiveGoalText');
       if (goalLabel) goalLabel.textContent = `Hedef: ${goalText}`;
       showToast(`🎯 Masa ${state.userDeskNumber}'de seans başladı. Verimli çalışmalar!`);
-    }, 900);
+    }, 760);
 
     saveActiveSession();
   }
 
   function smoothZoomToDesk(deskNo) {
-    const deskEl = document.getElementById(`deskStation_${deskNo}`);
-    const viewportInner = document.getElementById('grandHallViewportInner');
-    const cameraRig = document.getElementById('grandCameraRig');
-
-    if (deskEl && viewportInner) {
-      // Masayı görünür alanın merkezine akıcı bir şekilde kaydır
-      deskEl.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-    }
-
-    if (cameraRig) {
-      // Kamerayı zarifçe %130 büyüt
-      cameraRig.style.transform = 'scale(1.75)';
-    }
+    const isMobile = window.innerWidth <= 768;
+    const targetScale = isMobile ? 1.22 : 1.48;
+    animateCameraToDesk(deskNo, targetScale, 700);
   }
 
   function resetCameraZoom() {
-    const cameraRig = document.getElementById('grandCameraRig');
-    if (cameraRig) {
-      cameraRig.style.transform = 'scale(1.0)';
-    }
+    cancelCameraAnimation();
+    state.zoomLevel = 1.0;
+    syncCameraRigBounds(1.0);
   }
 
   function onUserLeaveDesk() {
@@ -1166,26 +1272,39 @@ window.TDAStudyRoom = (function() {
     const btnZoomIn = document.getElementById('btnHallZoomIn');
     if (btnZoomIn) {
       btnZoomIn.addEventListener('click', () => {
-        state.zoomLevel = Math.min(1.8, state.zoomLevel + 0.2);
-        applyCameraZoom();
+        const nextScale = Math.min(1.85, Math.round(((state.zoomLevel || 1.0) + 0.2) * 100) / 100);
+        const activeDesk = state.targetDeskNumber || (state.userSeatedRoomId === state.activeRoomId ? state.userDeskNumber : null);
+        if (activeDesk) {
+          animateCameraToDesk(activeDesk, nextScale, 280);
+        } else {
+          applyCameraZoom(nextScale);
+        }
       });
     }
 
     const btnZoomOut = document.getElementById('btnHallZoomOut');
     if (btnZoomOut) {
       btnZoomOut.addEventListener('click', () => {
-        state.zoomLevel = Math.max(0.7, state.zoomLevel - 0.2);
-        applyCameraZoom();
+        const nextScale = Math.max(0.7, Math.round(((state.zoomLevel || 1.0) - 0.2) * 100) / 100);
+        const activeDesk = state.targetDeskNumber || (state.userSeatedRoomId === state.activeRoomId ? state.userDeskNumber : null);
+        if (activeDesk) {
+          animateCameraToDesk(activeDesk, nextScale, 280);
+        } else {
+          applyCameraZoom(nextScale);
+        }
       });
     }
 
     const btnResetView = document.getElementById('btnHallResetView');
     if (btnResetView) {
       btnResetView.addEventListener('click', () => {
-        state.zoomLevel = 1.0;
-        applyCameraZoom();
-        const viewportInner = document.getElementById('grandHallViewportInner');
-        if (viewportInner) viewportInner.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        const activeDesk = state.userSeatedRoomId === state.activeRoomId ? state.userDeskNumber : null;
+        if (activeDesk) {
+          animateCameraToDesk(activeDesk, 1.0, 380);
+        } else {
+          resetCameraZoom();
+          centerHallOverview(true);
+        }
       });
     }
 
@@ -1193,18 +1312,20 @@ window.TDAStudyRoom = (function() {
     if (btnFindEmpty) {
       btnFindEmpty.addEventListener('click', () => {
         const desks = generateRoomAllocations(state.activeRoomId);
-        const emptyDesk = desks.find(d => !d.occupied);
+        const emptyDesk = desks.find(d => !d.occupied && d.deskNo !== state.userDeskNumber);
         if (emptyDesk) {
           const el = document.getElementById(`deskStation_${emptyDesk.deskNo}`);
+          animateCameraToDesk(emptyDesk.deskNo, Math.max(state.zoomLevel || 1.0, 1.15), 480);
           if (el) {
-            el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-            el.style.transform = 'scale(1.2)';
-            setTimeout(() => { el.style.transform = ''; }, 600);
+            el.style.transform = 'scale(1.18)';
+            setTimeout(() => { el.style.transform = ''; }, 650);
             showToast(`🪑 Masa ${emptyDesk.deskNo} müsait!`);
           }
         }
       });
     }
+
+    initMapPanning();
 
     // 6. Köşe Çekmeceleri (To-Do & Ambient)
     const btnToggleTodo = document.getElementById('btnToggleTodoDrawer');
@@ -1266,6 +1387,20 @@ window.TDAStudyRoom = (function() {
       }
     });
 
+    // Sekme değişiminde Çalışma Odası açıldığında kamerayı hizala
+    window.addEventListener('tda:tab-changed', e => {
+      if (e.detail && e.detail.tab === 'study') {
+        setTimeout(() => {
+          if (state.userDeskNumber && state.userSeatedRoomId === state.activeRoomId) {
+            smoothZoomToDesk(state.userDeskNumber);
+          } else {
+            syncCameraRigBounds(state.zoomLevel || 1.0);
+            centerHallOverview(false);
+          }
+        }, 60);
+      }
+    });
+
     // Popover dışına tıklandığında kapatma
     document.addEventListener('click', e => {
       const popover = document.getElementById('isoSocialPopover');
@@ -1275,11 +1410,113 @@ window.TDAStudyRoom = (function() {
     });
   }
 
-  function applyCameraZoom() {
-    const cameraRig = document.getElementById('grandCameraRig');
-    if (cameraRig) {
-      cameraRig.style.transform = `scale(${state.zoomLevel})`;
+  function centerHallOverview(smooth = false) {
+    const viewportInner = document.getElementById('grandHallViewportInner');
+    if (!viewportInner) return;
+    const maxScrollLeft = Math.max(0, viewportInner.scrollWidth - viewportInner.clientWidth);
+    const targetLeft = Math.round(maxScrollLeft / 2);
+    if (smooth) {
+      viewportInner.scrollTo({ top: 0, left: targetLeft, behavior: 'smooth' });
+    } else {
+      viewportInner.scrollLeft = targetLeft;
+      viewportInner.scrollTop = 0;
     }
+  }
+
+  function initMapPanning() {
+    const viewportInner = document.getElementById('grandHallViewportInner');
+    if (!viewportInner || viewportInner.dataset.panBound === 'true') return;
+    viewportInner.dataset.panBound = 'true';
+
+    let isPointerDown = false;
+    let hasDragged = false;
+    let suppressNextClick = false;
+    let startX = 0;
+    let startY = 0;
+    let startScrollLeft = 0;
+    let startScrollTop = 0;
+
+    viewportInner.addEventListener('dragstart', e => {
+      e.preventDefault();
+    });
+
+    viewportInner.addEventListener('mousedown', e => {
+      if (e.button !== 0) return;
+      if (e.target.closest('button, input, select, textarea, a')) return;
+      isPointerDown = true;
+      hasDragged = false;
+      startX = e.clientX;
+      startY = e.clientY;
+      startScrollLeft = viewportInner.scrollLeft;
+      startScrollTop = viewportInner.scrollTop;
+    });
+
+    window.addEventListener('mousemove', e => {
+      if (!isPointerDown) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      if (!hasDragged && Math.hypot(dx, dy) > 5) {
+        hasDragged = true;
+        suppressNextClick = true;
+        cancelCameraAnimation();
+        viewportInner.classList.add('is-dragging');
+      }
+      if (hasDragged) {
+        e.preventDefault();
+        viewportInner.scrollLeft = startScrollLeft - dx;
+        viewportInner.scrollTop = startScrollTop - dy;
+      }
+    });
+
+    const stopDragging = () => {
+      if (!isPointerDown) return;
+      isPointerDown = false;
+      viewportInner.classList.remove('is-dragging');
+      if (hasDragged) {
+        setTimeout(() => {
+          suppressNextClick = false;
+        }, 60);
+      }
+      hasDragged = false;
+    };
+
+    window.addEventListener('mouseup', stopDragging);
+    viewportInner.addEventListener('mouseleave', stopDragging);
+
+    // Sürükleme sonrası yanlışlıkla masaya tıklama modalının açılmasını engelle
+    viewportInner.addEventListener('click', e => {
+      if (suppressNextClick) {
+        e.stopPropagation();
+        e.preventDefault();
+        suppressNextClick = false;
+      }
+    }, true);
+  }
+
+  function applyCameraZoom(newScale) {
+    const viewportInner = document.getElementById('grandHallViewportInner');
+    const cameraRig = document.getElementById('grandCameraRig');
+    const prevScale = state.zoomLevel || 1.0;
+    const targetScale = typeof newScale === 'number' ? newScale : prevScale;
+    state.zoomLevel = targetScale;
+
+    if (!cameraRig || !viewportInner) return;
+
+    cancelCameraAnimation();
+
+    const rigLeft = cameraRig.offsetLeft || 0;
+    const rigTop = cameraRig.offsetTop || 0;
+    const viewW = viewportInner.clientWidth || 800;
+    const viewH = viewportInner.clientHeight || 600;
+
+    // Görünüm merkezindeki noktanın rig içindeki koordinatını koru
+    const centerRigX = (viewportInner.scrollLeft + viewW / 2 - rigLeft) / prevScale;
+    const centerRigY = (viewportInner.scrollTop + viewH / 2 - rigTop) / prevScale;
+
+    syncCameraRigBounds(targetScale);
+
+    viewportInner.scrollLeft = Math.max(0, rigLeft + centerRigX * targetScale - viewW / 2);
+    viewportInner.scrollTop = Math.max(0, rigTop + centerRigY * targetScale - viewH / 2);
   }
 
   function init() {
@@ -1309,6 +1546,10 @@ window.TDAStudyRoom = (function() {
       setTimeout(() => smoothZoomToDesk(state.userDeskNumber), 300);
     } else {
       setSceneState('LOBBY');
+      setTimeout(() => {
+        syncCameraRigBounds(1.0);
+        centerHallOverview(false);
+      }, 150);
     }
 
     console.log('✓ Aydınlık Tema 10 Salonlu & 50 Masalı Sanal Çalışma Odası başarıyla yüklendi.');

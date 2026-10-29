@@ -52,3 +52,29 @@
 #ekip .team{display:flex;justify-content:center}
 #ekip .team-card-combined{width:min(560px,100%);text-align:center}
 #ekip .team-role{margin-top:6px}
+
+/* Genel Mobil Duyarlılık ve Taşma (Overflow-X) Önleme Kuralları */
+@media(max-width:768px){
+  section{padding:40px 4%;max-width:100%;overflow-x:hidden}
+  .hero{padding:44px 4%}
+  .hero h1{font-size:clamp(28px,7.5vw,42px);line-height:1.12;word-wrap:break-word;overflow-wrap:break-word}
+  .hero p{font-size:15.5px;line-height:1.55}
+  h2{font-size:clamp(22px,6vw,30px);line-height:1.2;word-wrap:break-word}
+  .panel,.kutu,.card,.step{padding:16px;border-radius:16px;min-width:0;max-width:100%}
+  .developer-footer{grid-template-columns:1fr;gap:14px;align-items:start}
+  .developer-chip{min-width:0;flex:1 1 140px}
+  .footer-project{max-width:100%}
+  .modal-backdrop{padding:12px}
+  .modal{padding:18px 16px;border-radius:18px;max-height:calc(100dvh - 24px)}
+  .modal-head h2{font-size:21px}
+  .table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .table th,.table td{padding:10px 8px;font-size:12px}
+  .form-actions{flex-wrap:wrap}
+  .form-actions .btn{flex:1 1 130px;text-align:center}
+}
+@media(max-width:480px){
+  .steps{grid-template-columns:1fr}
+  .map{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .ülke{padding:12px 8px;min-height:136px}
+  .buttons .btn{width:100%;text-align:center}
+}

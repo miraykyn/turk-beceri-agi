@@ -29,6 +29,11 @@ window.TDATabs = (function() {
           <span class="tab-btn-text">${text}</span>
           <span class="nav-mektup-badge" id="navTabUnreadBadge" style="${unreadCount > 0 ? '' : 'display:none'}">${unreadCount}</span>
         `;
+        const mobileBadge = document.getElementById('mobileMailUnreadBadge');
+        if (mobileBadge) {
+          mobileBadge.textContent = unreadCount;
+          mobileBadge.style.display = unreadCount > 0 ? 'inline-block' : 'none';
+        }
       } else if (button.dataset.tab === 'study') {
         button.className = 'tab-button tab-button-study' + (button.classList.contains('active') ? ' active' : '');
         button.innerHTML = `
@@ -97,42 +102,73 @@ window.TDATabs = (function() {
       history.replaceState(null, '', '#' + id);
     }
 
-    const nav = document.getElementById('mainNav');
-    if (nav) nav.classList.remove('open');
+    const mobileMailBtn = document.getElementById('mobileMailBtn');
+    if (mobileMailBtn) {
+      mobileMailBtn.classList.toggle('active', id === 'messages');
+    }
+
+    setMobileMenuOpen(false);
 
     window.dispatchEvent(new CustomEvent('tda:tab-changed', { detail: { tab: id } }));
   }
 
-  function initMobileNav() {
+  function setMobileMenuOpen(open) {
     const toggle = document.getElementById('menuToggle');
     const nav = document.getElementById('mainNav');
-    if (!toggle || !nav) return;
-
-    const setMenuState = open => {
-      nav.classList.toggle('open', open);
+    const backdrop = document.getElementById('mobileNavBackdrop');
+    if (nav) nav.classList.toggle('open', open);
+    if (backdrop) {
+      backdrop.classList.toggle('open', open);
+      backdrop.setAttribute('aria-hidden', String(!open));
+    }
+    if (toggle) {
       toggle.setAttribute('aria-expanded', String(open));
       toggle.setAttribute('aria-label', open 
         ? (window.TDAI18n ? window.TDAI18n.t('menuCloseAria') : 'Menüyü kapat') 
         : (window.TDAI18n ? window.TDAI18n.t('menuOpenAria') : 'Menüyü aç'));
       toggle.textContent = open ? '×' : '☰';
-    };
+    }
+  }
+
+  function initMobileNav() {
+    const toggle = document.getElementById('menuToggle');
+    const nav = document.getElementById('mainNav');
+    const backdrop = document.getElementById('mobileNavBackdrop');
+    const mobileMailBtn = document.getElementById('mobileMailBtn');
+    if (!toggle || !nav) return;
 
     toggle.addEventListener('click', e => {
       e.preventDefault();
-      setMenuState(!nav.classList.contains('open'));
+      setMobileMenuOpen(!nav.classList.contains('open'));
     });
 
+    if (mobileMailBtn) {
+      mobileMailBtn.addEventListener('click', e => {
+        e.preventDefault();
+        setMobileMenuOpen(false);
+        setTab('messages');
+      });
+    }
+
+    if (backdrop) {
+      backdrop.addEventListener('click', () => {
+        setMobileMenuOpen(false);
+      });
+    }
+
     nav.addEventListener('click', event => {
-      if (event.target.closest('a')) setMenuState(false);
+      if (event.target.closest('a, button')) setMobileMenuOpen(false);
     });
     document.addEventListener('click', event => {
-      if (!event.target.closest('header')) setMenuState(false);
+      if (!event.target.closest('header') && !event.target.closest('#mobileNavBackdrop')) {
+        setMobileMenuOpen(false);
+      }
     });
     document.addEventListener('keydown', event => {
-      if (event.key === 'Escape') setMenuState(false);
+      if (event.key === 'Escape') setMobileMenuOpen(false);
     });
     window.addEventListener('resize', () => {
-      if (window.innerWidth > 900) setMenuState(false);
+      if (window.innerWidth > 900) setMobileMenuOpen(false);
     });
   }
 
@@ -263,7 +299,7 @@ window.TDATabs = (function() {
 
     window.addEventListener('tda:unreadCountChanged', event => {
       const count = event.detail?.unread ?? 0;
-      const badges = document.querySelectorAll('#navTabUnreadBadge, #navUnreadBadge');
+      const badges = document.querySelectorAll('#navTabUnreadBadge, #navUnreadBadge, #mobileMailUnreadBadge');
       badges.forEach(b => {
         b.textContent = count;
         b.style.display = count > 0 ? 'inline-block' : 'none';

@@ -793,7 +793,7 @@ window.TDAMessaging = (function() {
   function notifyUnread() {
     const unread = getUnreadCount();
     window.dispatchEvent(new CustomEvent('tda:unreadCountChanged', { detail: { unread } }));
-    const badges = document.querySelectorAll('#navUnreadBadge, #navTabUnreadBadge, #inboxCountBadge');
+    const badges = document.querySelectorAll('#navUnreadBadge, #navTabUnreadBadge, #mobileMailUnreadBadge, #inboxCountBadge');
     badges.forEach(b => {
       b.textContent = unread;
       if (b.id !== 'inboxCountBadge') {

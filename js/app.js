@@ -51,7 +51,17 @@ document.addEventListener('DOMContentLoaded', () => {
     window.TDAStudyRoom.init();
   }
 
-  // 10. Sekmeli SPA Mimarisi (Tabs) ve Navigasyonu Başlat
+  // 10. Dijital Kültür Arşivi Modülünü Başlat
+  if (window.TDACultureArchive) {
+    window.TDACultureArchive.init();
+  }
+
+  // 11. Çok Oyunculu Online Kelime Oyunu Modülünü Başlat
+  if (window.TDAWordGame) {
+    window.TDAWordGame.init();
+  }
+
+  // 12. Sekmeli SPA Mimarisi (Tabs) ve Navigasyonu Başlat
   if (window.TDATabs) {
     window.TDATabs.init();
   }

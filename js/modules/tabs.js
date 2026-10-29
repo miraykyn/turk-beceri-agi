@@ -3,15 +3,17 @@
  */
 
 window.TDATabs = (function() {
-  const tabKeys = ['tabHome', 'tabJourney', 'tabMatching', 'tabCommunity', 'tabArticles', 'tabMessages', 'tabStudy', 'tabProfile', 'tabTuran'];
+  const tabKeys = ['tabHome', 'tabJourney', 'tabMatching', 'tabWordGame', 'tabCommunity', 'tabArticles', 'tabCulture', 'tabMessages', 'tabStudy', 'tabProfile', 'tabTuran'];
   const quickItems = [
     { id: 'journey', titleKey: 'quickJourneyTitle', descKey: 'quickJourneySub' },
     { id: 'matching', titleKey: 'quickMatchingTitle', descKey: 'quickMatchingSub' },
+    { id: 'wordgame', titleKey: 'quickWordGameTitle', descKey: 'quickWordGameSub' },
+    { id: 'culture', titleKey: 'quickCultureTitle', descKey: 'quickCultureSub' },
     { id: 'study', titleKey: 'quickStudyTitle', descKey: 'quickStudySub' },
     { id: 'turan', titleKey: 'quickTuranTitle', descKey: 'quickTuranSub' }
   ];
 
-  const tabIds = ['home', 'journey', 'matching', 'community', 'articles', 'messages', 'study', 'profile', 'turan'];
+  const tabIds = ['home', 'journey', 'matching', 'wordgame', 'community', 'articles', 'culture', 'messages', 'study', 'profile', 'turan'];
   let buttons = [];
   let panels = {};
   let quickContainer = null;
@@ -20,7 +22,7 @@ window.TDATabs = (function() {
   function setLabels(lang = window.TDAI18n?.language || 'tr') {
     buttons.forEach((button, index) => {
       const k = tabKeys[index];
-      const text = (window.TDAI18n ? window.TDAI18n.t(k) : '') || (k === 'tabMessages' ? 'Mektuplar' : button.textContent || '');
+      const text = (window.TDAI18n ? window.TDAI18n.t(k) : '') || (k === 'tabMessages' ? 'Mektuplar' : (k === 'tabCulture' ? 'Dijital Kültür Arşivi' : button.textContent || ''));
       if (button.dataset.tab === 'messages') {
         const unreadCount = window.TDAMessaging ? window.TDAMessaging.getUnreadCount() : 0;
         button.className = 'tab-button tab-button-mektuplar' + (button.classList.contains('active') ? ' active' : '');
@@ -39,6 +41,12 @@ window.TDATabs = (function() {
         button.innerHTML = `
           <span class="nav-study-icon" aria-hidden="true">🎧</span>
           <span class="tab-btn-text">${text}</span>
+        `;
+      } else if (button.dataset.tab === 'wordgame') {
+        button.className = 'tab-button tab-button-wordgame' + (button.classList.contains('active') ? ' active' : '');
+        button.innerHTML = `
+          <span class="nav-wordgame-icon" aria-hidden="true">🎮</span>
+          <span class="tab-btn-text">${text || 'Kelime Oyunu'}</span>
         `;
       } else {
         button.textContent = text;
@@ -221,8 +229,10 @@ window.TDATabs = (function() {
       home: document.createElement('div'),
       journey: document.createElement('div'),
       matching: document.createElement('div'),
+      wordgame: document.createElement('div'),
       community: document.createElement('div'),
       articles: document.createElement('div'),
+      culture: document.createElement('div'),
       messages: document.createElement('div'),
       study: document.createElement('div'),
       profile: document.createElement('div')
@@ -231,7 +241,10 @@ window.TDATabs = (function() {
     if (hero) panels.home.appendChild(hero);
 
     const sectionOwners = {
-      nasil: 'journey', eslesme: 'matching', topluluk: 'community', makaleler: 'articles', mektuplar: 'messages', 'calisma-odasi': 'study', study: 'study', profil: 'profile',
+      nasil: 'journey', eslesme: 'matching', 'kelime-oyunu': 'wordgame', wordgame: 'wordgame',
+      topluluk: 'community', makaleler: 'articles',
+      'kultur-arsivi': 'culture', culture: 'culture',
+      mektuplar: 'messages', 'calisma-odasi': 'study', study: 'study', profil: 'profile',
       puan: 'home', harita: 'home', ekip: 'home'
     };
 
@@ -248,8 +261,10 @@ window.TDATabs = (function() {
     panels.home.appendChild(stack.home);
     panels.journey.appendChild(stack.journey);
     panels.matching.appendChild(stack.matching);
+    panels.wordgame.appendChild(stack.wordgame);
     panels.community.appendChild(stack.community);
     panels.articles.appendChild(stack.articles);
+    panels.culture.appendChild(stack.culture);
     panels.messages.appendChild(stack.messages);
     panels.study.appendChild(stack.study);
     panels.profile.appendChild(stack.profile);
@@ -285,7 +300,7 @@ window.TDATabs = (function() {
     });
 
     window.addEventListener('hashchange', () => {
-      const hash = location.hash.replace('#', '');
+      const hash = location.hash.replace('#', '').split('?')[0];
       if (panels[hash]) {
         setTab(hash, false);
         return;
@@ -316,7 +331,7 @@ window.TDATabs = (function() {
     setLabels(initLang);
     setQuickLabels(initLang);
 
-    const initialHash = location.hash.replace('#', '');
+    const initialHash = location.hash.replace('#', '').split('?')[0];
     const initialTarget = initialHash && document.getElementById(initialHash);
     const initialPanel = initialTarget?.closest('.tab-panel');
     setTab(panels[initialHash] ? initialHash : (initialPanel ? initialPanel.id.replace('tab-', '') : 'home'), false);

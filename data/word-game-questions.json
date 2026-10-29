@@ -1,0 +1,458 @@
+{
+  "version": "1.0.0",
+  "title": "Türk Dünyası Beceri Ağı - Çok Oyunculu Kelime Oyunu Soru Havuzu",
+  "description": "Mini görevler ve Türk lehçeleri (Kazakça, Kırgızca, Özbekçe, Türkmence, Azerbaycan Türkçesi, Kıbrıs Türkçesi) ortak kelime hazinesi.",
+  "timePerQuestionSeconds": 15,
+  "questions": [
+    {
+      "id": "wg-01",
+      "dialect": "Kazakça",
+      "country": "Kazakistan",
+      "word": "arkadaş / dost",
+      "question": "Kazakçada 'arkadaş / dost' kelimesinin karşılığı hangisidir?",
+      "options": ["Dos (Дос)", "Tamır (Тамыр)", "Bala (Бала)"],
+      "correctIndex": 0,
+      "hint": "Ortak Türkçe 'dost' kelimesinin Kazak Türkçesindeki ses uyumuna uğramış biçimidir."
+    },
+    {
+      "id": "wg-02",
+      "dialect": "Azerbaycan Türkçesi",
+      "country": "Azerbaycan",
+      "word": "kardeş",
+      "question": "Azerbaycan Türkçesinde 'kardeş' kelimesinin karşılığı hangisidir?",
+      "options": ["Qonşu", "Qardaş", "Yoldaş"],
+      "correctIndex": 1,
+      "hint": "Eski Türkçe 'karındaş' (aynı karından olan) kökünden gelir."
+    },
+    {
+      "id": "wg-03",
+      "dialect": "Özbekçe",
+      "country": "Özbekistan",
+      "word": "teşekkür ederim",
+      "question": "Özbekçede 'teşekkür ederim / sağ ol' anlamında en sık kullanılan ifade hangisidir?",
+      "options": ["Marhamat", "Rahmat", "Xayr"],
+      "correctIndex": 1,
+      "hint": "Orta Asya Türk Cumhuriyetlerinin tamamında 'Rahmat / Rakhmet' teşekkür anlamında kullanılır."
+    },
+    {
+      "id": "wg-04",
+      "dialect": "Kırgızca",
+      "country": "Kırgızistan",
+      "word": "kardeş / ağabey",
+      "question": "Kırgızcada 'birader / erkek kardeş / dost' anlamında kullanılan hitap hangisidir?",
+      "options": ["Boorum / Bayke", "Çon ata", "Mugalim"],
+      "correctIndex": 0,
+      "hint": "'Boor' (bağır/ciğer) kökünden gelen 'boorum' candan kardeşi, 'bayke' ise ağabeyi ifade eder."
+    },
+    {
+      "id": "wg-05",
+      "dialect": "Türkmence",
+      "country": "Türkmenistan",
+      "word": "nasılsın",
+      "question": "Türkmencede 'Nasılsın?' sorusunun karşılığı hangisidir?",
+      "options": ["Nirede ýaşaýarsyň?", "Ýagdaýlaryňyz nähili?", "Adyňyz näme?"],
+      "correctIndex": 1,
+      "hint": "'Ýagdaý' durum/hal, 'nähili' ise nasıl demektir."
+    },
+    {
+      "id": "wg-06",
+      "dialect": "Kazakça",
+      "country": "Kazakistan",
+      "word": "elma",
+      "question": "Kazakçada 'elma' kelimesinin karşılığı hangisidir?",
+      "options": ["Almurt (Алмұрт)", "Alma (Алма)", "Jüzim (Жүзім)"],
+      "correctIndex": 1,
+      "hint": "Almatı şehrinin adı da 'elmalı yer' anlamındaki 'Alma-Ata'dan gelir."
+    },
+    {
+      "id": "wg-07",
+      "dialect": "Azerbaycan Türkçesi",
+      "country": "Azerbaycan",
+      "word": "öğrenci",
+      "question": "Azerbaycan Türkçesinde 'üniversite öğrencisi / talebe' kelimesinin karşılığı hangisidir?",
+      "options": ["Müəllim", "Tələbə", "Şagird"],
+      "correctIndex": 1,
+      "hint": "Yükseköğretim öğrencileri için 'tələbə', ilk ve ortaöğretim için 'şagird' kullanılır."
+    },
+    {
+      "id": "wg-08",
+      "dialect": "Özbekçe",
+      "country": "Özbekistan",
+      "word": "kitap",
+      "question": "Özbekçede 'kitap' kelimesinin yazılışı ve söylenişi hangisidir?",
+      "options": ["Kitob", "Qalam", "Daftar"],
+      "correctIndex": 0,
+      "hint": "Özbek Türkçesinde kalın 'a' sesleri çoğu kelimede 'o'ya yakın telaffuz edilir (Kitob, Toshkent)."
+    },
+    {
+      "id": "wg-09",
+      "dialect": "Kırgızca",
+      "country": "Kırgızistan",
+      "word": "öğretmen",
+      "question": "Kırgızcada 'öğretmen' kelimesinin karşılığı hangisidir?",
+      "options": ["Okuuçu (Окуучу)", "Mugalim (Мугалим)", "kitep (Китеп)"],
+      "correctIndex": 1,
+      "hint": "'Okuuçu' öğrenci, 'Mugalim' ise öğretmen demektir."
+    },
+    {
+      "id": "wg-10",
+      "dialect": "Türkmence",
+      "country": "Türkmenistan",
+      "word": "su",
+      "question": "Türkmencede 'su' kelimesinin karşılığı hangisidir?",
+      "options": ["Suw", "Od", "Ýel"],
+      "correctIndex": 0,
+      "hint": "Eski Türkçedeki 'sub/suv' biçimini koruyarak 'suw' şeklinde yazılır."
+    },
+    {
+      "id": "wg-11",
+      "dialect": "KKTC / Kıbrıs Ağzı",
+      "country": "Kuzey Kıbrıs Türk Cumhuriyeti",
+      "word": "nasılsın",
+      "question": "Kıbrıs Türkçesinde samimi olarak 'Nasılsın?' anlamında kullanılan yaygın ifade hangisidir?",
+      "options": ["Napan?", "Nereye giden?", "Ne işler?"],
+      "correctIndex": 0,
+      "hint": "'Ne yaparsın?' ifadesinin Kıbrıs ağzında kısalmış ve kalıplaşmış halidir."
+    },
+    {
+      "id": "wg-12",
+      "dialect": "Kazakça",
+      "country": "Kazakistan",
+      "word": "okul",
+      "question": "Kazakçada 'okul' kelimesinin karşılığı hangisidir?",
+      "options": ["Mektep (Мектеп)", "Kitaphana (Кітапхана)", "Dükön (Дүкен)"],
+      "correctIndex": 0,
+      "hint": "Kazakça, Kırgızca, Özbekçe ve Azerbaycan Türkçesinde okul için 'Mektep / Məktəb' kullanılır."
+    },
+    {
+      "id": "wg-13",
+      "dialect": "Azerbaycan Türkçesi",
+      "country": "Azerbaycan",
+      "word": "konuşmak",
+      "question": "Azerbaycan Türkçesinde 'konuşmak' fiilinin karşılığı hangisidir?",
+      "options": ["Danışmaq", "Dinləmək", "Soruşmaq"],
+      "correctIndex": 0,
+      "hint": "Türkiye Türkçesinde 'fikir almak' anlamındaki 'danışmak', Azerbaycan'da 'konuşmak' demektir."
+    },
+    {
+      "id": "wg-14",
+      "dialect": "Özbekçe",
+      "country": "Özbekistan",
+      "word": "günaydın / hayırlı sabahlar",
+      "question": "Özbekçede 'Günaydın / Hayırlı sabahlar' nasıl söylenir?",
+      "options": ["Xayrli tong", "Xayrli tun", "Xush kelibsiz"],
+      "correctIndex": 0,
+      "hint": "Eski Türkçe 'tan' (şafak vakti) kelimesi Özbekçede 'tong' olarak yaşar."
+    },
+    {
+      "id": "wg-15",
+      "dialect": "Kırgızca",
+      "country": "Kırgızistan",
+      "word": "göl",
+      "question": "Kırgızcada 'Issık Göl' adında da geçen 'göl' kelimesinin karşılığı hangisidir?",
+      "options": ["Too (Тоо)", "Köl (Көл)", "Talаa (Талаа)"],
+      "correctIndex": 1,
+      "hint": "'Too' dağ, 'Köl' ise göl demektir (Issık Köl = Sıcak Göl)."
+    },
+    {
+      "id": "wg-16",
+      "dialect": "Türkmence",
+      "country": "Türkmenistan",
+      "word": "at",
+      "question": "Türkmencede milli simge olan 'at' için kullanılan edebi/geleneksel kelime hangisidir?",
+      "options": ["Bedew", "Düýe", "Guş"],
+      "correctIndex": 0,
+      "hint": "Ahal-Teke küheylanları Türkmen edebiyatında 'Behişdi Bedew' (Cennet Atı) olarak anılır."
+    },
+    {
+      "id": "wg-17",
+      "dialect": "Kazakça",
+      "country": "Kazakistan",
+      "word": "teşekkürler",
+      "question": "Kazakçada 'Teşekkür ederim' nasıl söylenir?",
+      "options": ["Rahmet (Рақмет)", "Keşiriñiz (Кешіріңіз)", "Sälem (Сәлем)"],
+      "correctIndex": 0,
+      "hint": "'Keşiriñiz' affedersiniz, 'Sälem' merhaba, 'Rahmet' ise teşekkürler demektir."
+    },
+    {
+      "id": "wg-18",
+      "dialect": "Azerbaycan Türkçesi",
+      "country": "Azerbaycan",
+      "word": "sabah",
+      "question": "Azerbaycan Türkçesinde 'sabah' kelimesi hangi anlamda kullanılır?",
+      "options": ["Dün", "Yarın", "Akşam"],
+      "correctIndex": 1,
+      "hint": "Azerbaycan Türkçesinde 'sabah' yarın, 'səhər' ise sabah vakti demektir."
+    },
+    {
+      "id": "wg-19",
+      "dialect": "Özbekçe",
+      "country": "Özbekistan",
+      "word": "hoş geldiniz",
+      "question": "Özbekçede 'Hoş geldiniz' ifadesinin karşılığı hangisidir?",
+      "options": ["Xush kelibsiz", "Oq yo‘l", "Salomat bo‘ling"],
+      "correctIndex": 0,
+      "hint": "'Oq yo‘l' iyi yolculuklar, 'Xush kelibsiz' ise hoş geldiniz demektir."
+    },
+    {
+      "id": "wg-20",
+      "dialect": "Kırgızca",
+      "country": "Kırgızistan",
+      "word": "geleneksel çadır",
+      "question": "Kırgızcada geleneksel keçe Türk çadırına (yurt) ne ad verilir?",
+      "options": ["Boz üy (Боз үй)", "Saray (Сарай)", "Korgon (Коргон)"],
+      "correctIndex": 0,
+      "hint": "Doğal keçe renginden dolayı 'Boz ev' anlamında 'Boz üy' denir."
+    },
+    {
+      "id": "wg-21",
+      "dialect": "Türkmence",
+      "country": "Türkmenistan",
+      "word": "halı",
+      "question": "Türkmencede UNESCO mirası olan 'halı' kelimesinin karşılığı hangisidir?",
+      "options": ["Haly", "Keçe", "Ýüpek"],
+      "correctIndex": 0,
+      "hint": "Türkmen bayrağında da 5 boyun 'haly gölleri' (halı motifleri) yer alır."
+    },
+    {
+      "id": "wg-22",
+      "dialect": "Kazakça",
+      "country": "Kazakistan",
+      "word": "bilgi / ilim",
+      "question": "Kazakçada 'bilim / bilgi / eğitim' anlamındaki kelime hangisidir?",
+      "options": ["Bilim (Білім)", "Öner (Өнер)", "Jol (Жол)"],
+      "correctIndex": 0,
+      "hint": "'Bil-' fiil kökünden türeyen ortak Türkçe kelimedir; 'Öner' ise sanat/hüner demektir."
+    },
+    {
+      "id": "wg-23",
+      "dialect": "Azerbaycan Türkçesi",
+      "country": "Azerbaycan",
+      "word": "güzel / çok iyi",
+      "question": "Azerbaycan Türkçesinde 'iyi / güzel / hoş' anlamında çok sık kullanılan kelime hangisidir?",
+      "options": ["Yaxşı", "Pis", "Çətin"],
+      "correctIndex": 0,
+      "hint": "Ortak Türkçe 'yahşi' (iyi, güzel) kelimesi hemen tüm Türk lehçelerinde yaşar."
+    },
+    {
+      "id": "wg-24",
+      "dialect": "Özbekçe",
+      "country": "Özbekistan",
+      "word": "arkadaş / dost",
+      "question": "Özbekçede 'arkadaş / ortak / dost' anlamında kullanılan kelime hangisidir?",
+      "options": ["O‘rtoq / Do‘st", "Ustoz", "Qo‘shni"],
+      "correctIndex": 0,
+      "hint": "'Ustoz' üstat/öğretmen, 'Qo‘shni' komşu, 'O‘rtoq / Do‘st' ise arkadaş demektir."
+    },
+    {
+      "id": "wg-25",
+      "dialect": "Kırgızca",
+      "country": "Kırgızistan",
+      "word": "dağ",
+      "question": "Kırgızcada 'Ala-Too' (Aladağlar) adında da geçen 'dağ' kelimesinin karşılığı hangisidir?",
+      "options": ["Too (Тоо)", "Suu (Суу)", "Jer (Жер)"],
+      "correctIndex": 0,
+      "hint": "Eski Türkçe 'tağ' kelimesi Kırgız Türkçesinde uzun ünlülü 'too' biçimine dönüşmüştür."
+    },
+    {
+      "id": "wg-26",
+      "dialect": "Türkmence",
+      "country": "Türkmenistan",
+      "word": "öğrenci",
+      "question": "Türkmencede 'üniversite öğrencisi' anlamına gelen kelime hangisidir?",
+      "options": ["Talyp", "Mugallym", "Lukman"],
+      "correctIndex": 0,
+      "hint": "'Talyp' öğrenci, 'Mugallym' öğretmen, 'Lukman' ise doktor/hekim demektir."
+    },
+    {
+      "id": "wg-27",
+      "dialect": "KKTC / Kıbrıs Ağzı",
+      "country": "Kuzey Kıbrıs Türk Cumhuriyeti",
+      "word": "peynir",
+      "question": "Kuzey Kıbrıs mutfağının dünyaca ünlü geleneksel ızgara peyniri hangisidir?",
+      "options": ["Hellim", "Tulum", "Kaşar"],
+      "correctIndex": 0,
+      "hint": "Kıbrıs kültürünün en önemli gastronomi sembollerinden biridir."
+    },
+    {
+      "id": "wg-28",
+      "dialect": "Kazakça",
+      "country": "Kazakistan",
+      "word": "enstrüman",
+      "question": "Kazak bozkır kültürünün iki telli geleneksel müzik aleti hangisidir?",
+      "options": ["Dombra (Домбыра)", "Kemençe", "Kanun"],
+      "correctIndex": 0,
+      "hint": "Kazakistan'da her yıl Temmuz ayının ilk pazar günü 'Ulusal Dombra Günü' olarak kutlanır."
+    },
+    {
+      "id": "wg-29",
+      "dialect": "Özbekçe",
+      "country": "Özbekistan",
+      "word": "şehir / başkent",
+      "question": "Özbekçede 'Taşkent' (Toshkent) adındaki 'kent' kelimesinin anlamı nedir?",
+      "options": ["Şehir / Kale", "Nehir / Irmak", "Orman"],
+      "correctIndex": 0,
+      "hint": "Kaşgarlı Mahmud'un Divânu Lügati't-Türk eserinde de belirtildiği üzere 'Taş Şehir' demektir."
+    },
+    {
+      "id": "wg-30",
+      "dialect": "Azerbaycan Türkçesi",
+      "country": "Azerbaycan",
+      "word": "beceri / yetenek",
+      "question": "Azerbaycan Türkçesinde 'beceri / yetenek' kelimesinin karşılığı hangisidir?",
+      "options": ["Bacarıq", "Səfər", "Xəbər"],
+      "correctIndex": 0,
+      "hint": "Platformumuzun Azerbaycan Türkçesindeki adı da 'Türk Dünyası Bacarıq Şəbəkəsi'dir."
+    },
+    {
+      "id": "wg-31",
+      "dialect": "Kazakça",
+      "country": "Kazakistan",
+      "word": "iyi yolculuklar",
+      "question": "Kazakçada yola çıkan birine 'İyi yolculuklar / Yolun açık olsun' demek için hangi ifade kullanılır?",
+      "options": ["Aq jol (Ақ жол)", "Qayyrly tün (Қайырлы түн)", "As bolsyn (Ас болсын)"],
+      "correctIndex": 0,
+      "hint": "Türk kültüründe 'ak' uğur ve iyiliği simgeler; 'Aq jol' (Ak yol) açık ve uğurlu yolculuk dileğidir."
+    },
+    {
+      "id": "wg-32",
+      "dialect": "Kırgızca",
+      "country": "Kırgızistan",
+      "word": "ekmek",
+      "question": "Kırgızcada ve Orta Asya Türk lehçelerinde 'ekmek' kelimesinin yaygın karşılığı hangisidir?",
+      "options": ["Nan (Нан)", "Et (Эт)", "May (Май)"],
+      "correctIndex": 0,
+      "hint": "Tandırlarda pişirilen geleneksel yuvarlak ekmeğe Kazak, Kırgız, Özbek ve Türkmen Türkçelerinde 'nan / non' denir."
+    },
+    {
+      "id": "wg-33",
+      "dialect": "Özbekçe",
+      "country": "Özbekistan",
+      "word": "aile",
+      "question": "Özbekçede 'aile' kelimesinin yazılışı ve söylenişi hangisidir?",
+      "options": ["Oila", "Mahalla", "Bozor"],
+      "correctIndex": 0,
+      "hint": "Özbek toplumunda 'Oila' (aile) ve 'Mahalla' (mahalle dayanışması) kültürel yapının temel taşlarıdır."
+    },
+    {
+      "id": "wg-34",
+      "dialect": "Türkmence",
+      "country": "Türkmenistan",
+      "word": "kardeş",
+      "question": "Türkmencede 'kardeş' kelimesinin karşılığı hangisidir?",
+      "options": ["Dogan", "Goňşy", "Myhman"],
+      "correctIndex": 0,
+      "hint": "'Aynı anneden doğan' anlamındaki Eski Türkçe kök, Türkmencede 'dogan' (kardeş) olarak yaşar."
+    },
+    {
+      "id": "wg-35",
+      "dialect": "Azerbaycan Türkçesi",
+      "country": "Azerbaycan",
+      "word": "nasılsın",
+      "question": "Azerbaycan Türkçesinde 'Nasılsın?' sorusunun karşılığı hangisidir?",
+      "options": ["Necəsən?", "Haradasan?", "Kimsən?"],
+      "correctIndex": 0,
+      "hint": "Anadolu ağızlarında da yaşayan 'nice / nicesin' kelimesi Azerbaycan Türkçesinde 'Necəsən?' biçimindedir."
+    },
+    {
+      "id": "wg-36",
+      "dialect": "Kazakça",
+      "country": "Kazakistan",
+      "word": "kalp / yürek",
+      "question": "Kazakçada 'yürek / kalp' kelimesinin karşılığı hangisidir?",
+      "options": ["Jürek (Жүрек)", "Bilek (Білек)", "Tilek (Тілек)"],
+      "correctIndex": 0,
+      "hint": "Ortak Türkçe kelime başındaki 'y-' sesleri Kazakçada düzenli olarak 'j-' sesine dönüşür: Yürek -> Jürek, Yol -> Jol."
+    },
+    {
+      "id": "wg-37",
+      "dialect": "Kırgızca",
+      "country": "Kırgızistan",
+      "word": "merhaba / selam",
+      "question": "Kırgızcada günlük dilde 'Merhaba / Sağlıklı mısınız?' anlamında kullanılan selamlaşma hangisidir?",
+      "options": ["Salamatsızbı (Саламатсызбы)", "Körüşkönçö (Көрүшкөнчө)", "Jakşı kalıñız (Жакшы калыңыз)"],
+      "correctIndex": 0,
+      "hint": "'Körüşkönçö' görüşmek üzere, 'Salamatsızbı' ise merhaba / esen misiniz demektir."
+    },
+    {
+      "id": "wg-38",
+      "dialect": "Özbekçe",
+      "country": "Özbekistan",
+      "word": "öğretmen / üstat",
+      "question": "Özbekçede 'öğretmen / hoca' için büyük saygı ifade eden kelime hangisidir?",
+      "options": ["Ustoz", "Talaba", "Shifokor"],
+      "correctIndex": 0,
+      "hint": "Özbekistan'da 1 Ekim günü 'Ustoz va murabbiylar kuni' (Öğretmenler ve Rehberler Günü) olarak kutlanır."
+    },
+    {
+      "id": "wg-39",
+      "dialect": "Türkmence",
+      "country": "Türkmenistan",
+      "word": "misafir",
+      "question": "Türkmencede 'misafir / konuk' kelimesinin karşılığı hangisidir?",
+      "options": ["Myhman", "Ýolagçy", "Söwdagär"],
+      "correctIndex": 0,
+      "hint": "Türkmen atasözünde 'Myhman ataňdan uly' (Misafir babandan büyüktür/azizdir) denilerek konukseverlik vurgulanır."
+    },
+    {
+      "id": "wg-40",
+      "dialect": "KKTC / Kıbrıs Ağzı",
+      "country": "Kuzey Kıbrıs Türk Cumhuriyeti",
+      "word": "sevimli / güzel",
+      "question": "Kıbrıs Türkçesinde çocuklara veya sevilen kişilere söylenen 'sevimli, tatlı, güzel' anlamındaki hitap hangisidir?",
+      "options": ["Gancelli", "Bulli", "Gonnara"],
+      "correctIndex": 1,
+      "hint": "Kıbrıs ağzında 'Gancelli' bahçe kapısı, 'Bulli' ise civciv/sevimli/tatlı anlamında çok yaygın bir sevgi sözcüğüdür."
+    },
+    {
+      "id": "wg-41",
+      "dialect": "Azerbaycan Türkçesi",
+      "country": "Azerbaycan",
+      "word": "uçak",
+      "question": "Azerbaycan Türkçesinde 'uçak' kelimesinin karşılığı hangisidir?",
+      "options": ["Təyyarə", "Qatar", "Gəmi"],
+      "correctIndex": 0,
+      "hint": "'Qatar' tren, 'Gəmi' gemi, 'Təyyarə' ise uçak demektir."
+    },
+    {
+      "id": "wg-42",
+      "dialect": "Kazakça",
+      "country": "Kazakistan",
+      "word": "bayram / şölen",
+      "question": "Kazakçada ve genel Türk dünyasında 'düğün, şölen, büyük kutlama' anlamına gelen kadim kelime hangisidir?",
+      "options": ["Toy (Той)", "Kün (Күн)", "Ay (Ай)"],
+      "correctIndex": 0,
+      "hint": "Dede Korkut hikayelerinden bugünkü Kazak, Kırgız ve Özbek Türkçelerine kadar 'Toy' şölen ve düğün demektir."
+    },
+    {
+      "id": "wg-43",
+      "dialect": "Kırgızca",
+      "country": "Kırgızistan",
+      "word": "geleneksel şapka",
+      "question": "Kırgız erkeklerinin giydiği, UNESCO mirası beyaz keçeden yapılan milli başlık hangisidir?",
+      "options": ["Ak Kalpak (Ак калпак)", "Börk (Бөрк)", "Tebetey (Тебетей)"],
+      "correctIndex": 0,
+      "hint": "Kırgızistan'da her yıl 5 Mart günü 'Ak Kalpak Günü' olarak milli gururla kutlanır."
+    },
+    {
+      "id": "wg-44",
+      "dialect": "Özbekçe",
+      "country": "Özbekistan",
+      "word": "pilav",
+      "question": "Özbek mutfağının UNESCO mirası olan dünyaca ünlü milli pilav yemeğine ne ad verilir?",
+      "options": ["Palov (Osh)", "Somsa", "Lag‘mon"],
+      "correctIndex": 0,
+      "hint": "Özbek kültüründe dostluk sofralarının baş tacı olan pilava 'Palov' veya 'Osh' (Aş) denir."
+    },
+    {
+      "id": "wg-45",
+      "dialect": "Türkmence",
+      "country": "Türkmenistan",
+      "word": "barış / huzur",
+      "question": "Türkmencede 'barış, huzur, esenlik' anlamına gelen kelime hangisidir?",
+      "options": ["Parahatçylyk", "Gahrymançylyk", "Zähmet"],
+      "correctIndex": 0,
+      "hint": "'Parahat' (rahat/huzurlu) kökünden türeyen 'Parahatçylyk', Türkmenistan'ın tarafsızlık ve barış ilkesini simgeler."
+    }
+  ]
+}

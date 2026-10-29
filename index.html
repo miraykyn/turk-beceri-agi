@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="./css/turan.css?v=20261029-5">
   <link rel="stylesheet" href="./css/messaging.css?v=20261029-5">
   <link rel="stylesheet" href="./css/study-room.css?v=20261029-5">
+  <link rel="stylesheet" href="./css/culture-archive.css?v=20261029-6">
+  <link rel="stylesheet" href="./css/word-game.css?v=20261029-9">
 </head>
 <body>
 <aside aria-label="Biliyor muydunuz? bilgi şeridi" data-i18n-aria="factTickerAria" class="fact-ticker" id="factTicker">
@@ -47,7 +49,7 @@
 <p class="flag-card-note" data-i18n="flagCardsNote">Bayrakların taşıdığı derin anlamları keşfetmek için üzerlerine tıklayabilirsiniz.</p>
 </section>
 
-<header><div class="logo"><span data-i18n="logoLead">TÜRK DÜNYASI</span> <span data-i18n="logoTail">BECERİ AĞI</span></div><div style="display:flex;align-items:center"><nav id="mainNav"><a href="#nasil" data-i18n="navHowItWorks">Nasıl Çalışır?</a><a href="#profil" data-i18n="navSampleProfile">Örnek Profil</a><a href="#eslesme" data-i18n="navMatching">Eşleşme</a><a href="#topluluk" data-i18n="navCommunity">Topluluk</a><a href="#makaleler" data-i18n="navArticles">Makaleler</a><a href="#mektuplar" class="nav-mektuplar-link" data-i18n="navLetters"><img src="assets/images/mektup-ikon.png" alt="Mektuplar" class="nav-mektup-icon"><span>Mektuplar</span><span class="nav-mektup-badge" id="navUnreadBadge" style="display:none">0</span></a><a href="#ai" data-i18n="navTuran" onclick="document.getElementById('turanPanel').classList.add('open'); document.getElementById('turanPanel').setAttribute('aria-hidden','false'); return false;">Turan AI</a><a href="#harita" data-i18n="navSkillMap">Beceri Haritası</a><div class="auth-actions"><button class="auth-btn" data-i18n="loginTitle" onclick="openAuth('login')" type="button">Giriş Yap</button><button class="auth-btn register" data-i18n="registerTitle" onclick="openAuth('register')" type="button">Kayıt Ol</button></div></nav><div class="lang-wrap"><span aria-hidden="true">🌐</span><select aria-label="Dil seçimi" data-i18n-aria="Dil seçimi" class="lang-select" id="languageSelect"><option value="tr">Türkçe</option><option value="az">Azərbaycanca</option><option value="uz">O‘zbekcha</option><option value="kk">Қазақша</option><option value="tk">Türkmençe</option><option value="ky">Кыргызча</option><option value="en">English</option></select></div><div class="mobile-header-actions"><button aria-label="Dijital Mektuplaşma" class="mobile-mail-btn" id="mobileMailBtn" title="Dijital Mektuplaşma" type="button"><img alt="Dijital Mektuplaşma" class="mobile-mail-img" src="assets/images/mektup-ikon.png"/><span class="mobile-mail-badge" id="mobileMailUnreadBadge" style="display:none">0</span></button><button aria-controls="mainNav" aria-expanded="false" aria-label="Menüyü aç" data-i18n-aria="menuOpenAria" class="menu-toggle" id="menuToggle" type="button">☰</button></div></div></header>
+<header><div class="logo"><span data-i18n="logoLead">TÜRK DÜNYASI</span> <span data-i18n="logoTail">BECERİ AĞI</span></div><div style="display:flex;align-items:center"><nav id="mainNav"><a href="#nasil" data-i18n="navHowItWorks">Nasıl Çalışır?</a><a href="#profil" data-i18n="navSampleProfile">Örnek Profil</a><a href="#eslesme" data-i18n="navMatching">Eşleşme</a><a href="#kelime-oyunu" data-i18n="navWordGame">Kelime Oyunu</a><a href="#topluluk" data-i18n="navCommunity">Topluluk</a><a href="#makaleler" data-i18n="navArticles">Makaleler</a><a href="#kultur-arsivi" data-i18n="navCultureArchive">Dijital Kültür Arşivi</a><a href="#mektuplar" class="nav-mektuplar-link" data-i18n="navLetters"><img src="assets/images/mektup-ikon.png" alt="Mektuplar" class="nav-mektup-icon"><span>Mektuplar</span><span class="nav-mektup-badge" id="navUnreadBadge" style="display:none">0</span></a><a href="#ai" data-i18n="navTuran" onclick="document.getElementById('turanPanel').classList.add('open'); document.getElementById('turanPanel').setAttribute('aria-hidden','false'); return false;">Turan AI</a><a href="#harita" data-i18n="navSkillMap">Beceri Haritası</a><div class="auth-actions"><button class="auth-btn" data-i18n="loginTitle" onclick="openAuth('login')" type="button">Giriş Yap</button><button class="auth-btn register" data-i18n="registerTitle" onclick="openAuth('register')" type="button">Kayıt Ol</button></div></nav><div class="lang-wrap"><span aria-hidden="true">🌐</span><select aria-label="Dil seçimi" data-i18n-aria="Dil seçimi" class="lang-select" id="languageSelect"><option value="tr">Türkçe</option><option value="az">Azərbaycanca</option><option value="uz">O‘zbekcha</option><option value="kk">Қазақша</option><option value="tk">Türkmençe</option><option value="ky">Кыргызча</option><option value="en">English</option></select></div><div class="mobile-header-actions"><button aria-label="Dijital Mektuplaşma" class="mobile-mail-btn" id="mobileMailBtn" title="Dijital Mektuplaşma" type="button"><img alt="Dijital Mektuplaşma" class="mobile-mail-img" src="assets/images/mektup-ikon.png"/><span class="mobile-mail-badge" id="mobileMailUnreadBadge" style="display:none">0</span></button><button aria-controls="mainNav" aria-expanded="false" aria-label="Menüyü aç" data-i18n-aria="menuOpenAria" class="menu-toggle" id="menuToggle" type="button">☰</button></div></div></header>
 <div aria-hidden="true" class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
 <div class="hero">
 <div class="eyebrow" data-i18n="heroEyebrow" style="color:#f5cf79">Öğrenciler • Beceriler • Sınır ötesi öğrenme</div>
@@ -61,7 +63,7 @@
 <div class="card"><div class="icon">✅</div><h3 data-i18n="Doğrulanmış topluluk">Doğrulanmış topluluk</h3><p data-i18n="Öğrenci kimliği veya üniversite bilgisi doğrulanır. Gerçek kişi ve öğrenci olma durumu için güven katmanı oluşturulur.">Öğrenci kimliği veya üniversite bilgisi doğrulanır. Gerçek kişi ve öğrenci olma durumu için güven katmanı oluşturulur.</p></div>
 <div class="card"><div class="icon">⏱️</div><h3 data-i18n="Zaman temelli puan">Zaman temelli puan</h3><p data-i18n="1 saatlik beceri paylaşımı = 1 Beceri Puanı. 30 dakikalık paylaşım = 0,5 puan gibi süreye dayalı bir sistem kullanılır.">1 saatlik beceri paylaşımı = 1 Beceri Puanı. 30 dakikalık paylaşım = 0,5 puan gibi süreye dayalı bir sistem kullanılır.</p></div>
 <div class="card"><div class="icon">🤝</div><h3 data-i18n="Beceri eşleştirme">Beceri eşleştirme</h3><p data-i18n="Öğretmek istediğin ve öğrenmek istediğin beceriler ülke, seviye ve uygunluk durumuna göre eşleştirilir.">Öğretmek istediğin ve öğrenmek istediğin beceriler ülke, seviye ve uygunluk durumuna göre eşleştirilir.</p></div>
-<div class="card"><div class="icon">🗣️</div><h3 data-i18n="Mikro dil öğrenimi">Mikro dil öğrenimi</h3><p data-i18n="Her gün kısa ve isteğe bağlı sorularla farklı Türk dillerinden kelime ve ifadeler öğrenilir.">Her gün kısa ve isteğe bağlı sorularla farklı Türk dillerinden kelime ve ifadeler öğrenilir.</p></div>
+<div class="card"><div class="icon">🗣️</div><h3 data-i18n="Mikro dil öğrenimi">Mikro dil öğrenimi</h3><p data-i18n="Her gün kısa ve isteğe bağlı sorularla farklı Türk dillerinden kelime ve ifadeler öğrenilir.">Her gün kısa ve isteğe bağlı sorularla farklı Türk dillerinden kelime ve ifadeler öğrenilir.</p><button type="button" class="btn primary" style="margin-top:12px;width:100%;font-size:13px;padding:10px 14px;" onclick="window.TDAWordGame && window.TDAWordGame.openGameTab()">🎮 Online Kelime Oyunu Oyna</button></div>
 <div class="card"><div class="icon">🛡️</div><h3 data-i18n="Güvenli iletişim">Güvenli iletişim</h3><p data-i18n="İlk iletişim ağ içinde gerçekleşir. Telefon ve adres gibi kişisel bilgiler herkese açık tutulmaz; bildirme ve engelleme seçenekleri bulunur.">İlk iletişim ağ içinde gerçekleşir. Telefon ve adres gibi kişisel bilgiler herkese açık tutulmaz; bildirme ve engelleme seçenekleri bulunur.</p></div>
 <div class="card"><div class="icon">📊</div><h3 data-i18n="Gençlik beceri haritası">Gençlik beceri haritası</h3><p data-i18n="Toplu ve anonim verilerle hangi ülkede hangi becerilerin sunulduğu ve hangi becerilere ihtiyaç duyulduğu görülebilir.">Toplu ve anonim verilerle hangi ülkede hangi becerilerin sunulduğu ve hangi becerilere ihtiyaç duyulduğu görülebilir.</p></div>
 </div>
@@ -71,7 +73,7 @@
 <div class="cards">
 <div class="card"><div class="icon">🎓</div><h3 data-i18n="Beceri öğret">Beceri öğret</h3><p data-i18n="Asıl puan kaynağıdır. Gerçek bir öğrenme oturumu gerçekleştir ve ayırdığın zamana göre puan kazan.">Asıl puan kaynağıdır. Gerçek bir öğrenme oturumu gerçekleştir ve ayırdığın zamana göre puan kazan.</p></div>
 <div class="card"><div class="icon">🌱</div><h3 data-i18n="Başlangıç puanı">Başlangıç puanı</h3><p data-i18n="Yeni kullanıcıya sistemi deneyebilmesi ve ilk eşleşmesini yapabilmesi için sınırlı başlangıç puanı verilebilir.">Yeni kullanıcıya sistemi deneyebilmesi ve ilk eşleşmesini yapabilmesi için sınırlı başlangıç puanı verilebilir.</p></div>
-<div class="card"><div class="icon">🧩</div><h3 data-i18n="Günlük mini görev">Günlük mini görev</h3><p data-i18n="“Kazakçada arkadaş ne demek?” gibi kısa görevler 0,2 Beceri Puanı kazandırır. Amaç tam dil öğretimi değil, günlük temas sağlamaktır.">“Kazakçada arkadaş ne demek?” gibi kısa görevler 0,2 Beceri Puanı kazandırır. Amaç tam dil öğretimi değil, günlük temas sağlamaktır.</p><div class="daily-note"><strong data-i18n="dailyLimitLabel">Günlük sınır:</strong> <span data-i18n="Bu görev günde yalnızca 1 kez yapılabilir.">Bu görev günde yalnızca 1 kez yapılabilir.</span></div></div>
+<div class="card"><div class="icon">🧩</div><h3 data-i18n="Günlük mini görev">Günlük mini görev</h3><p data-i18n="“Kazakçada arkadaş ne demek?” gibi kısa görevler 0,2 Beceri Puanı kazandırır. Amaç tam dil öğretimi değil, günlük temas sağlamaktır.">“Kazakçada arkadaş ne demek?” gibi kısa görevler 0,2 Beceri Puanı kazandırır. Amaç tam dil öğretimi değil, günlük temas sağlamaktır.</p><div class="daily-note"><strong data-i18n="dailyLimitLabel">Günlük sınır:</strong> <span data-i18n="Bu görev günde yalnızca 1 kez yapılabilir.">Bu görev günde yalnızca 1 kez yapılabilir.</span></div><button type="button" class="btn primary" style="margin-top:12px;width:100%;font-size:13px;padding:10px 14px;" onclick="window.TDAWordGame && window.TDAWordGame.openGameTab()">🎮 Online Kelime Düellosuna Katıl</button></div>
 <div class="card"><div class="icon">🎬</div><h3 data-i18n="İsteğe bağlı ödüllü reklam">İsteğe bağlı ödüllü reklam</h3><p data-i18n="Puanı biten kullanıcı, yalnızca kendi isteğiyle günlük 0,2 Beceri Puanı kazanabilir.">Puanı biten kullanıcı, yalnızca kendi isteğiyle günlük 0,2 Beceri Puanı kazanabilir.</p><div class="daily-note"><strong data-i18n="dailyLimitLabel">Günlük sınır:</strong> <span data-i18n="Bu ödül günde yalnızca 1 kez kullanılabilir.">Bu ödül günde yalnızca 1 kez kullanılabilir.</span></div></div>
 <div class="card"><div class="icon">🎁</div><h3 data-i18n="Puan bağışı">Puan bağışı</h3><p data-i18n="Kullanıcılar ihtiyaç duyan başka bir öğrenciye puan aktarabilir. Böylece sistem içinde dayanışma oluşur.">Kullanıcılar ihtiyaç duyan başka bir öğrenciye puan aktarabilir. Böylece sistem içinde dayanışma oluşur.</p></div>
 
@@ -126,7 +128,14 @@
 <div class="review-card"><strong data-i18n="reviewMatchLabel">Eşleşme:</strong> <span data-i18n="demoReviewMatch">Python &amp; İngilizce Değişimi</span> (Aibek M. &amp; Leyla S.) <br><strong data-i18n="reviewScoreLabel">Puan:</strong> ⭐⭐⭐⭐⭐ (5/5) <br><strong data-i18n="reviewCommentStaticLabel">Yorum:</strong> <span data-i18n="demoReviewText">"Harika bir çalışma oldu! Aibek bana Python temellerini çok net anlattı, ben de ona İngilizce pratik konusunda destek oldum. Kesinlikle tavsiye ederim."</span> <br><em><span data-i18n="reviewDateLabel">Tarih:</span> <span data-i18n="demoReviewDate">2 gün önce</span></em></div>
 <div class="review-list" id="reviewList"><div class="review-item"><div class="review-item-head"><strong>Eşleşme: Python &amp; İngilizce Değişimi</strong><span>⭐⭐⭐⭐⭐ (5/5)</span></div><div class="review-item-meta">Aibek M. &amp; Leyla S. · 2 gün önce</div><p>"Harika bir çalışma oldu! Aibek bana Python temellerini çok net anlattı, ben de ona İngilizce pratik konusunda destek oldum. Kesinlikle tavsiye ederim."</p></div></div>
 </div>
-</section><section class="feature-section" id="topluluk">
+</section>
+
+<!-- ===== ÇOK OYUNCULU ONLİNE KELİME OYUNU (MİNİ GÖREVLER & TÜRK LEHÇELERİ DÜELLOSU) ===== -->
+<section class="feature-section word-game-section" id="kelime-oyunu">
+  <div id="wordGameAppRoot" aria-live="polite"></div>
+</section>
+
+<section class="feature-section" id="topluluk">
 <div class="eyebrow" data-i18n="communityEyebrow">Ülke toplulukları</div>
 <h2 data-i18n="communityTitle">Destek iste, puanla dayanış</h2>
 <p class="muted" data-i18n="communityIntro">Bu alan serbest sohbet forumu değildir. Sıfır puanlı kullanıcılar yapılandırılmış destek talebi oluşturabilir; diğer kullanıcılar puan bağışlayabilir.</p>
@@ -168,7 +177,54 @@
 </form>
 <div class="feature-note" id="articleStatus" style="display:none"></div>
 </div>
-</section><section class="feature-section mektup-section" id="mektuplar">
+</section>
+
+<!-- ===== DİJİTAL KÜLTÜR ARŞİVİ (7 TÜRK DEVLETİ ETKİLEŞİMLİ FOTOĞRAF GALERİSİ) ===== -->
+<section class="feature-section culture-archive-section" id="kultur-arsivi">
+  <!-- Üst Tanıtım ve "Kültür Arşivine Ekle / Fotoğraf Paylaş" Aksiyon Alanı -->
+  <div class="culture-hero-banner">
+    <div class="culture-hero-content">
+      <div class="culture-hero-eyebrow">
+        <span aria-hidden="true">🏛️</span>
+        <span>TÜRK DÜNYASI ORTAK MİRASI • DİJİTAL KÜLTÜR ARŞİVİ</span>
+      </div>
+      <h2 data-i18n="navCultureArchive">Dijital Kültür Arşivi</h2>
+      <p>
+        Anadolu’dan Ulu Bozkır’a, Hazar kıyılarından Semerkant ve Girne’ye kadar 7 Türk Devleti’nin tarihi eserlerini, doğal güzelliklerini ve geleneksel lezzetlerini keşfedin; kendi çektiğiniz kültür karelerini arşive ekleyin.
+      </p>
+    </div>
+    <div class="culture-hero-actions">
+      <button type="button" class="btn-culture-share" id="btnOpenCultureShare">
+        <span class="btn-culture-share-icon" aria-hidden="true">📸</span>
+        <span>Kültür Arşivine Ekle / Fotoğraf Paylaş</span>
+      </button>
+      <div class="culture-stats-pill" id="cultureTotalStatsPill">7 Türk Devleti • 35 Kültür Mirası Kaydı</div>
+    </div>
+  </div>
+
+  <!-- Yatay Ülke Filtreleme Çubuğu (Türkiye, Azerbaycan, Kazakistan, Özbekistan, Kırgızistan, Türkmenistan, KKTC) -->
+  <div class="culture-filter-wrapper">
+    <div class="culture-filter-top-row">
+      <div class="culture-filter-label">
+        <span aria-hidden="true">🧭</span>
+        <span>Ülkeye Göre Filtrele:</span>
+      </div>
+      <div class="culture-active-summary" id="cultureActiveSummary">
+        Gösterilen: <strong>Tüm Türk Dünyası (35 fotoğraf)</strong>
+      </div>
+    </div>
+    <div class="culture-country-bar" id="cultureCountryBar" role="toolbar" aria-label="Ülke filtreleme butonları">
+      <!-- cultureArchive.js tarafından dinamik olarak oluşturulur -->
+    </div>
+  </div>
+
+  <!-- Dinamik Fotoğraf Galerisi Grid Sistemi -->
+  <div class="culture-gallery-grid" id="cultureGalleryGrid" aria-live="polite">
+    <!-- cultureArchive.js tarafından her ülke için 5'er adet başlangıç verisi ve kullanıcı paylaşımları ile doldurulur -->
+  </div>
+</section>
+
+<section class="feature-section mektup-section" id="mektuplar">
 <!-- 1. Sayfa Başı: 150x150px Büyük Renkli Amblem & Odak Alanı (Temiz ve Yalın Tasarım) -->
 <div class="mektup-hero-center">
   <div class="mektup-grand-emblem-wrap" title="Türk Dünyası Mektuplaşma ve Kültürel Birlik Amblemi">
@@ -701,7 +757,7 @@
 </section><section id="ekip">
 <div class="eyebrow" data-i18n="teamEyebrow">Proje ekibi</div><h2 data-i18n="teamH2">Türk Dünyası Beceri Ağı'nın geliştiricileri</h2>
 <p class="muted" data-i18n="teamDesc">Bu proje iki üniversite öğrencisi tarafından geliştirilmiş bir konsept ve prototip çalışmasıdır.</p>
-<div class="team"><div class="team-card team-card-combined"><strong>Miray Kayan &amp; Cemre Erden</strong><div class="team-role" data-i18n="developerRoleCombined">Türk Dünyası Beceri Ağı • Ürün geliştiricileri</div></div></div>
+<div class="team"><div class="team-card team-card-combined"><strong>Miray KAYAN &amp; Cemre ERDEN</strong><div class="team-role" data-i18n="developerRoleCombined">Türk Dünyası Beceri Ağı • Ürün geliştiricileri</div></div></div>
 </section>
 <!-- ===== v5 FEATURES ===== -->
 
@@ -767,9 +823,9 @@
 <footer>
 <div class="developer-footer">
 <div>
-<strong style="color:#fff;font-size:16px" data-i18n="logoLead">Türk Dünyası Beceri Ağı</strong>
+<strong style="color:#fff;font-size:16px" data-i18n="footerDevelopersTitle">Türk Dünyası Beceri Ağı Geliştiricileri</strong>
 <div class="developer-list">
-<div class="developer-chip"><strong>Miray Kayan &amp; Cemre Erden</strong><span data-i18n="developerRoleCombined">Türk Dünyası Beceri Ağı • Ürün geliştiricileri</span></div>
+<div class="developer-chip"><strong>Miray KAYAN &amp; Cemre ERDEN</strong><span data-i18n="developerRoleCombined">Türk Dünyası Beceri Ağı • Ürün geliştiricileri</span></div>
 </div>
 </div>
 <div class="footer-project" data-i18n="footerProject">Bildiğini paylaş, öğrenmek istediğini öğren. Bu sayfa yarışma projesi için hazırlanmış etkileşimli konsept prototipidir. Kullanıcılar, puanlar ve beceri verileri örnektir; gerçek kullanıcı verisi değildir.</div>
@@ -943,6 +999,101 @@
   </div>
 </div>
 
+<!-- 7. DİJİTAL KÜLTÜR ARŞİVİ FOTOĞRAF PAYLAŞIM MODALI (MAXLENGTH="40" KARAKTER SINIRLI) -->
+<div class="culture-modal-backdrop" id="cultureShareModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cultureShareModalTitle">
+  <div class="culture-modal-card">
+    <div class="culture-modal-header">
+      <div>
+        <h3 id="cultureShareModalTitle">📸 Kültür Arşivine Fotoğraf Ekle</h3>
+        <p>Türk Dünyası’ndan bir kültür mirasını, doğal güzelliği veya lezzeti arşive kazandırın.</p>
+      </div>
+      <button type="button" class="culture-modal-close" id="btnCloseCultureShare" aria-label="Kapat">×</button>
+    </div>
+
+    <div class="culture-form-error" id="cultureFormError" role="alert"></div>
+
+    <form id="cultureShareForm" novalidate>
+      <!-- 1. Ülke Seçimi -->
+      <div class="culture-form-group">
+        <label for="cultureInputCountry">Hangi Türk Devleti?</label>
+        <select id="cultureInputCountry" class="culture-form-select" required>
+          <option value="Türkiye">Türkiye</option>
+          <option value="Azerbaycan">Azerbaycan</option>
+          <option value="Kazakistan">Kazakistan</option>
+          <option value="Özbekistan">Özbekistan</option>
+          <option value="Kırgızistan">Kırgızistan</option>
+          <option value="Türkmenistan">Türkmenistan</option>
+          <option value="Kuzey Kıbrıs Türk Cumhuriyeti">Kuzey Kıbrıs Türk Cumhuriyeti</option>
+        </select>
+      </div>
+
+      <!-- 2. Fotoğraf Yükleme (Dosya veya Görsel URL) -->
+      <div class="culture-form-group">
+        <label for="cultureInputFile">Fotoğraf Yükle</label>
+        <div class="culture-upload-dropzone" id="cultureUploadDropzone">
+          <input type="file" id="cultureInputFile" accept="image/*"/>
+          <span class="culture-upload-icon" aria-hidden="true">🖼️</span>
+          <span class="culture-upload-title">Bilgisayardan veya Telefondan Fotoğraf Seçin</span>
+          <span class="culture-upload-sub">JPG, PNG, WEBP desteklenir (veya aşağıya görsel bağlantısı yapıştırın)</span>
+        </div>
+
+        <div style="margin-top:10px;">
+          <input type="url" id="cultureInputUrl" class="culture-form-input" placeholder="Veya doğrudan görsel URL’si yapıştırın (https://...)" autocomplete="off"/>
+        </div>
+
+        <div class="culture-preview-box" id="culturePreviewBox">
+          <img src="" alt="Yüklenen fotoğraf önizlemesi" id="culturePreviewImg"/>
+          <button type="button" class="culture-preview-remove" id="btnRemoveCulturePreview">✕ Görseli Kaldır</button>
+        </div>
+      </div>
+
+      <!-- 3. Nereden / Hangi Şehirden (KRİTİK KURAL: maxLength="40" + Kalan Karakter: X) -->
+      <div class="culture-form-group">
+        <label for="cultureInputCaption">Nereden / Hangi Şehirden? (Eser veya Konum Adı)</label>
+        <input
+          type="text"
+          id="cultureInputCaption"
+          class="culture-form-input"
+          maxlength="40"
+          placeholder="Örn: Sümela Manastırı (Trabzon)"
+          autocomplete="off"
+          required
+        />
+        <div class="culture-char-progress" aria-hidden="true">
+          <div class="culture-char-progress-bar" id="cultureCharProgressBar"></div>
+        </div>
+        <div class="culture-char-counter-row">
+          <span class="culture-char-hint">Maksimum 40 karakter ile kısa ve öz belirtiniz.</span>
+          <span class="culture-char-badge" id="cultureCharBadge" aria-live="polite">
+            Kalan Karakter: <strong id="cultureCharRemaining">40</strong>
+          </span>
+        </div>
+      </div>
+
+      <div class="culture-modal-actions">
+        <button type="button" class="ghost-btn" id="btnCancelCultureShare">Vazgeç</button>
+        <button type="submit" class="btn primary">✓ Kültür Arşivine Ekle</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- 8. KÜLTÜR ARŞİVİ FOTOĞRAF BÜYÜTME (LIGHTBOX) MODALI -->
+<div class="culture-modal-backdrop" id="cultureLightboxModal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="culture-lightbox-card">
+    <div class="culture-lightbox-media">
+      <img src="" alt="" id="cultureLightboxImg"/>
+      <button type="button" class="culture-lightbox-close" id="btnCloseCultureLightbox" aria-label="Kapat">×</button>
+    </div>
+    <div class="culture-lightbox-footer">
+      <div>
+        <h4 id="cultureLightboxTitle">Kültür Mirası</h4>
+        <p id="cultureLightboxSub">Ülke • Konum</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div aria-hidden="true" class="turan-panel" id="turanPanel">
 <div class="turan-head"><div class="turan-head-main"><div class="turan-avatar"><span class="turan-avatar-star">✦</span></div><div><strong data-i18n="turanName">Turan</strong><small data-i18n="turanGreeting">Türk Dünyası Beceri Ağı asistanı • Buradayım.</small></div><span aria-hidden="true" class="turan-status">●</span></div><button class="turan-close" id="turanClose" type="button">×</button></div>
 <div class="turan-tabs"><button class="turan-tab active" data-i18n="turanTabAI" data-turan-tab="assistant" type="button" style="grid-column:1/-1">Yapay zekâ desteği</button></div>
@@ -958,7 +1109,7 @@
   <script charset="utf-8" src="./js/config.js?v=20261029-4"></script>
 
   <!-- 3. Çoklu Dil Motoru (i18n) -->
-  <script charset="utf-8" src="./js/i18n/i18n.js?v=20261029-4"></script>
+  <script charset="utf-8" src="./js/i18n/i18n.js?v=20261029-10"></script>
 
   <!-- 3. Fonksiyonel Modüller -->
   <script charset="utf-8" src="./js/modules/auth.js?v=20261029-4"></script>
@@ -970,8 +1121,10 @@
   <script charset="utf-8" src="./js/modules/turan.js?v=20261029-4"></script>
   <script charset="utf-8" src="./js/modules/messaging.js?v=20261029-4"></script>
   <script charset="utf-8" src="./js/modules/studyRoom.js?v=20261029-4"></script>
+  <script charset="utf-8" src="./js/modules/cultureArchive.js?v=20261029-7"></script>
+  <script charset="utf-8" src="./js/modules/wordGame.js?v=20261029-10"></script>
 
   <!-- 4. Ana Uygulama Başlatıcı (Bootstrap) -->
-  <script charset="utf-8" src="./js/app.js?v=20261029-4"></script>
+  <script charset="utf-8" src="./js/app.js?v=20261029-9"></script>
 </body>
 </html>

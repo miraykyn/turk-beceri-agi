@@ -1,5 +1,7 @@
 $port = 8080
 $rootDir = $PSScriptRoot
+$wordGameRooms = @{}
+$wordGameQueue = [System.Collections.ArrayList]::new()
 
 $listener = New-Object System.Net.HttpListener
 $prefix = "http://localhost:$port/"
@@ -74,6 +76,54 @@ window.TDA_TRANSLATIONS['$lang'] = $dictJson;
 
             $respObj = @{ reply = $reply }
             $respJson = $respObj | ConvertTo-Json -Compress
+            $buffer = [System.Text.Encoding]::UTF8.GetBytes($respJson)
+            $response.ContentType = "application/json; charset=utf-8"
+            $response.ContentLength64 = $buffer.Length
+            $response.OutputStream.Write($buffer, 0, $buffer.Length)
+            $response.OutputStream.Close()
+            continue
+        }
+
+        # Online Kelime Oyunu Gercek Zamanli Oda & Eslestirme Senkronizasyon API'si
+        if ($path -eq "/api/wordgame" -and $request.HttpMethod -eq "POST") {
+            $reader = New-Object System.IO.StreamReader($request.InputStream, [System.Text.Encoding]::UTF8)
+            $body = $reader.ReadToEnd()
+            $payload = $null
+            try { $payload = $body | ConvertFrom-Json } catch {}
+            $respData = @{ status = "ok" }
+
+            if ($payload -and $payload.action) {
+                $act = $payload.action
+                $roomId = if ($payload.roomId) { [string]$payload.roomId.ToUpper() } else { "" }
+
+                if ($act -eq "sync_room" -and $roomId) {
+                    $wordGameRooms[$roomId] = $payload.room
+                    $respData = @{ status = "ok"; room = $wordGameRooms[$roomId] }
+                } elseif ($act -eq "get_room" -and $roomId) {
+                    if ($wordGameRooms.ContainsKey($roomId)) {
+                        $respData = @{ status = "ok"; room = $wordGameRooms[$roomId] }
+                    } else {
+                        $respData = @{ status = "not_found" }
+                    }
+                } elseif ($act -eq "find_by_host" -and $payload.hostId) {
+                    $targetHost = [string]$payload.hostId.ToUpper()
+                    $foundRoom = $null
+                    foreach ($k in $wordGameRooms.Keys) {
+                        $r = $wordGameRooms[$k]
+                        if ($r -and $r.host -and ([string]$r.host.playerId).ToUpper() -eq $targetHost -and $r.status -eq "waiting") {
+                            $foundRoom = $r
+                            break
+                        }
+                    }
+                    if ($foundRoom) {
+                        $respData = @{ status = "ok"; room = $foundRoom }
+                    } else {
+                        $respData = @{ status = "not_found" }
+                    }
+                }
+            }
+
+            $respJson = $respData | ConvertTo-Json -Depth 10 -Compress
             $buffer = [System.Text.Encoding]::UTF8.GetBytes($respJson)
             $response.ContentType = "application/json; charset=utf-8"
             $response.ContentLength64 = $buffer.Length

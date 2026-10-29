@@ -43,6 +43,14 @@ window.TDAI18n = (function() {
   const STUDY_ROOM_I18N = {
     tabStudy: { tr: "Çalışma Odası", az: "İş Otağı", uz: "O‘qish Xonasi", kk: "Оқу Бөлмесі", tk: "Okuw Otagy", ky: "Окуу Бөлмөсү", en: "Study Room" },
     navStudy: { tr: "Çalışma Odası", az: "İş Otağı", uz: "O‘qish Xonasi", kk: "Оқу Бөлмесі", tk: "Okuw Otagy", ky: "Окуу Бөлмөсү", en: "Study Room" },
+    tabCulture: { tr: "Dijital Kültür Arşivi", az: "Rəqəmsal Mədəniyyət Arxivi", uz: "Raqamli Madaniyat Arxivi", kk: "Сандық Мәдениет Мұрағаты", tk: "Sanly Medeniýet Arhiwi", ky: "Санарип Маданият Архивы", en: "Digital Culture Archive" },
+    navCultureArchive: { tr: "Dijital Kültür Arşivi", az: "Rəqəmsal Mədəniyyət Arxivi", uz: "Raqamli Madaniyat Arxivi", kk: "Сандық Мәдениет Мұрағаты", tk: "Sanly Medeniýet Arhiwi", ky: "Санарип Маданият Архивы", en: "Digital Culture Archive" },
+    tabWordGame: { tr: "Kelime Oyunu", az: "Söz Oyunu", uz: "So‘z O‘yini", kk: "Сөз Ойыны", tk: "Söz Oýny", ky: "Сөз Оюну", en: "Word Game" },
+    navWordGame: { tr: "Kelime Oyunu", az: "Söz Oyunu", uz: "So‘z O‘yini", kk: "Сөз Ойыны", tk: "Söz Oýny", ky: "Сөз Оюну", en: "Word Game" },
+    quickWordGameTitle: { tr: "Online Kelime Oyunu", az: "Onlayn Söz Oyunu", uz: "Onlayn So‘z O‘yini", kk: "Онлайн Сөз Ойыны", tk: "Onlaýn Söz Oýny", ky: "Онлайн Сөз Оюну", en: "Online Word Game" },
+    quickWordGameSub: { tr: "Çok Oyunculu 3 Şıklı Türk Lehçeleri Düellosu", az: "Çox Oyunçulu 3 Variantlı Türk Ləhcələri Duellosu", uz: "Ko‘p O‘yinchili 3 Variantli Turkiy Lahjalar Bellashuvi", kk: "Көп Ойыншылы 3 Нұсқалы Түркі Диалектілері Дуэлі", tk: "Köp Oýunçyly 3 Şahaly Türk Şiweleri Bäsleşigi", ky: "Көп Оюнчулуу 3 Варианттуу Түрк Диалектилери Татайлашуусу", en: "Multiplayer 3-Choice Turkic Dialects Duel" },
+    quickCultureTitle: { tr: "Dijital Kültür Arşivi", az: "Rəqəmsal Mədəniyyət Arxivi", uz: "Raqamli Madaniyat Arxivi", kk: "Сандық Мәдениет Мұрағаты", tk: "Sanly Medeniýet Arhiwi", ky: "Санарип Маданият Архивы", en: "Digital Culture Archive" },
+    quickCultureSub: { tr: "7 Türk Devleti Fotoğraf & Kültür Galerisi", az: "7 Türk Dövləti Foto & Mədəniyyət Qalereyası", uz: "7 Turk Davlati Foto & Madaniyat Galereyasi", kk: "7 Түркі Мемлекеті Фото & Мәдениет Галереясы", tk: "7 Türk Döwleti Foto & Medeniýet Galereýasy", ky: "7 Түрк Мамлекети Фото & Маданият Галереясы", en: "7 Turkic States Photo & Culture Gallery" },
     quickStudyTitle: { tr: "Çalışma Odası", az: "İş Otağı", uz: "O‘qish Xonasi", kk: "Оқу Бөлмесі", tk: "Okuw Otagy", ky: "Окуу Бөлмөсү", en: "Study Room" },
     quickStudySub: { tr: "Pomodoro & Ortam Sesleri", az: "Pomodoro & Ətraf Səsləri", uz: "Pomodoro & Muhit Ovozlar", kk: "Помодоро & Фондық Дыбыстар", tk: "Pomodoro & Gurşaw Sesleri", ky: "Помодоро & Айлана Дыбыстары", en: "Pomodoro & Ambient Audio" },
     quickTuranSub: { tr: "Yapay Zekâ Desteği & Rehberlik", az: "Süni İntellekt Dəstəyi & Bələdçilik", uz: "Sun’iy Intellekt Yordami & Yo‘riqnoma", kk: "Жасанды Интеллект Қолдауы & Нұсқаулық", tk: "Emeli Aň Goldawy & Ýolbeletlik", ky: "Жасалма Интеллект Колдоосу & Багыттоо", en: "AI Support & Guidance" },
@@ -56,7 +64,8 @@ window.TDAI18n = (function() {
     pomodoroLongBreak: { tr: "Uzun Mola", az: "Uzun Fasilə", uz: "Uzoq Tanaffus", kk: "Ұзақ Үзіліс", tk: "Uzak Arakesme", ky: "Узак Тыныгуу", en: "Long Break" },
     todosTitle: { tr: "Günlük Hedefler ve Görevler", az: "Gündəlik Hədəflər və Tapşırıqlar", uz: "Kunlik Maqsadlar va Vazifalar", kk: "Күнделікті Мақсаттар мен Тапсырмалар", tk: "Gündelik Maksatlar we Tabşyryklar", ky: "Күндөлүк Максаттар жана Тапшырмалар", en: "Daily Goals & Tasks" },
     ambientTitle: { tr: "Ortam Sesleri Mikseri", az: "Ətraf Səsləri Mikseri", uz: "Muhit Ovozlar Mikseri", kk: "Фондық Дыбыс Миксері", tk: "Gurşaw Sesleri Mikseri", ky: "Айлана Үндөр Миксери", en: "Ambient Audio Mixer" },
-    editAvatarTooltip: { tr: "Bitmoji Avatarımı Özelleştir", az: "Bitmoji Avatarımı Fərdiləşdir", uz: "Bitmoji Avatarimni O‘zgartirish", kk: "Bitmoji Аватарымды Баптау", tk: "Bitmoji Awatarymy Sazla", ky: "Bitmoji Аватарымды Ырастоо", en: "Customize My Bitmoji Avatar" }
+    editAvatarTooltip: { tr: "Bitmoji Avatarımı Özelleştir", az: "Bitmoji Avatarımı Fərdiləşdir", uz: "Bitmoji Avatarimni O‘zgartirish", kk: "Bitmoji Аватарымды Баптау", tk: "Bitmoji Awatarymy Sazla", ky: "Bitmoji Аватарымды Ырастоо", en: "Customize My Bitmoji Avatar" },
+    footerDevelopersTitle: { tr: "Türk Dünyası Beceri Ağı Geliştiricileri", az: "Türk Dünyası Bacarıq Şəbəkəsi Tərtibatçıları", uz: "Turk Dunyosi Ko‘nikmalar Tarmog‘i Dasturchilari", kk: "Түркі Әлемі Дағдылар Желісінің Әзірлеушілері", tk: "Türk Dünýäsi Başarnyk Ulgamynyň Düzüjileri", ky: "Түрк Дүйнөсү Көндүмдөр Тармагынын Иштеп Чыгуучулары", en: "Turkic World Skill Network Developers" }
   };
 
   const MESSAGING_I18N = {

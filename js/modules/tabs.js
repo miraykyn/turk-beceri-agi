@@ -195,7 +195,7 @@ window.TDATabs = (function() {
     if (hero) panels.home.appendChild(hero);
 
     const sectionOwners = {
-      nasil: 'journey', yol: 'journey', eslesme: 'matching', topluluk: 'community', makaleler: 'articles', mektuplar: 'messages', 'calisma-odasi': 'study', study: 'study', profil: 'profile',
+      nasil: 'journey', eslesme: 'matching', topluluk: 'community', makaleler: 'articles', mektuplar: 'messages', 'calisma-odasi': 'study', study: 'study', profil: 'profile',
       puan: 'home', harita: 'home', ekip: 'home'
     };
 

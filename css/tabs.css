@@ -3,7 +3,7 @@
    ========================================================= */
 
 /* Sekmeli uygulama kabuğu: mevcut bölümleri silmeden tek odaklı gezinme sağlar. */
-.tab-nav{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.tab-nav{display:flex;align-items:center;gap:3px;flex-wrap:nowrap}
 .tab-nav button{border:0;background:transparent;color:#dce5f5;border-bottom:2px solid transparent;padding:9px 11px;cursor:pointer;font:inherit;font-size:13px;font-weight:750;white-space:nowrap}
 .tab-nav button:hover,.tab-nav button:focus-visible{color:#fff;background:#172a4b;border-radius:8px;outline:0}
 .tab-nav button.active{color:#f5cf79;border-bottom-color:#f5cf79}
@@ -152,4 +152,301 @@
   .logo .logo-text-tail{font-size:9px!important;letter-spacing:.5px!important}
   .lang-select{max-width:50px;font-size:10px}
   .quick-access{grid-template-columns:1fr}
+}
+
+/* =========================================================
+   Masaüstü (Desktop) Header & Menü Mimarisi
+   - Kesinlikle flex-wrap: nowrap; tek düzgün sırada yan yana
+   - Butonlar ve 9 menü elemanı üst üste binmeden, taşma yapmadan konumlanır
+   - Sadece masaüstünü hedefler (@media min-width: 901px)
+   ========================================================= */
+@media (min-width: 901px) {
+  header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+    height: 64px !important;
+    padding: 0 clamp(10px, 1.8vw, 32px) !important;
+    gap: clamp(8px, 1.2vw, 20px) !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Logo: Tek sırada, net ve orantılı */
+  header > .logo, .logo {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+    font-size: clamp(13px, 0.95vw, 15.5px) !important;
+    white-space: nowrap !important;
+    text-decoration: none !important;
+    line-height: 1 !important;
+  }
+  .logo .logo-text-lead {
+    color: #ffffff !important;
+    font-weight: 850 !important;
+    letter-spacing: .3px !important;
+  }
+  .logo .logo-text-tail {
+    color: #f5b942 !important;
+    font-weight: 850 !important;
+    letter-spacing: .3px !important;
+  }
+
+  /* Header Sağ Taraf Konteyneri: Menü + Butonlar + Dil */
+  header > div:last-child, .header-right {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    flex-wrap: nowrap !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    gap: clamp(4px, 0.6vw, 10px) !important;
+  }
+
+  /* Masaüstü Navigasyonu: Flex, tek sıra, boşluksuz entegrasyon */
+  header nav, #mainNav {
+    display: flex !important;
+    align-items: center !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-end !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: static !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    max-width: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* 9 Menü Elemanını Barındıran Sekme Grubu: wrap asla yok */
+  .tab-nav {
+    display: flex !important;
+    align-items: center !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: clamp(1px, 0.2vw, 3px) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    min-width: 0 !important;
+    flex-shrink: 1 !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  .tab-nav::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* Masaüstü Menü Butonları: Tek satırda, ezilmeden ve taşmadan */
+  .tab-nav button, .tab-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: #dce5f5 !important;
+    border-bottom: 2px solid transparent !important;
+    border-left: 0 !important;
+    border-radius: 6px !important;
+    padding: clamp(5px, 0.4vw, 7px) clamp(4px, 0.52vw, 8px) !important;
+    font-size: clamp(11px, 0.76vw, 12.8px) !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.12px !important;
+    cursor: pointer !important;
+    line-height: 1.2 !important;
+    transition: color .15s ease, background .15s ease, border-color .15s ease !important;
+  }
+
+  .tab-nav button:hover, .tab-nav button:focus-visible {
+    color: #ffffff !important;
+    background: #172a4b !important;
+    outline: 0 !important;
+  }
+
+  .tab-nav button.active {
+    color: #f5cf79 !important;
+    background: rgba(245, 207, 121, 0.09) !important;
+    border-bottom: 2px solid #f5cf79 !important;
+  }
+
+  /* Mektuplar Butonu İkonu (Masaüstünde orantılı 19x19px) */
+  .tab-button-mektuplar {
+    gap: 4px !important;
+  }
+  .nav-mektup-icon {
+    width: 19px !important;
+    height: 19px !important;
+    border-radius: 50% !important;
+    border: 1.5px solid #d4af37 !important;
+    box-shadow: 0 0 6px rgba(212, 175, 55, 0.4) !important;
+    flex-shrink: 0 !important;
+    display: inline-block !important;
+  }
+  .nav-mektup-badge {
+    font-size: 9.5px !important;
+    font-weight: 850 !important;
+    padding: 1px 5px !important;
+    min-width: 15px !important;
+    height: 15px !important;
+    line-height: 13px !important;
+    margin-left: 2px !important;
+  }
+
+  /* Çalışma Odası & Kelime Oyunu İkonları */
+  .tab-button-study {
+    gap: 4px !important;
+  }
+  .nav-study-icon {
+    font-size: 13.5px !important;
+    line-height: 1 !important;
+    margin-right: 2px !important;
+    flex-shrink: 0 !important;
+  }
+  .tab-button-wordgame {
+    gap: 4px !important;
+  }
+  .nav-wordgame-icon {
+    font-size: 13.5px !important;
+    line-height: 1 !important;
+    margin-right: 2px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Giriş Yap ve Kayıt Ol Butonları: Menünün akışında, sabit ve tek sırada */
+  header nav .auth-actions, .auth-actions {
+    display: inline-flex !important;
+    align-items: center !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    flex-shrink: 0 !important;
+    gap: 6px !important;
+    margin: 0 0 0 clamp(6px, 0.8vw, 12px) !important;
+    padding: 0 0 0 clamp(6px, 0.8vw, 12px) !important;
+    border-top: none !important;
+    border-left: 1px solid rgba(245, 207, 121, 0.28) !important;
+  }
+
+  header nav .auth-btn, .auth-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+    padding: 0 clamp(8px, 0.65vw, 13px) !important;
+    font-size: clamp(11px, 0.74vw, 12.5px) !important;
+    font-weight: 750 !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(96, 119, 155, 0.6) !important;
+    background: rgba(23, 42, 75, 0.6) !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+    box-sizing: border-box !important;
+    line-height: 1 !important;
+    transition: background .15s ease, border-color .15s ease, transform .15s ease !important;
+  }
+
+  header nav .auth-btn:hover, .auth-btn:hover {
+    background: #1e3660 !important;
+    border-color: #f5b942 !important;
+    transform: translateY(-1px) !important;
+  }
+
+  header nav .auth-btn.register, .auth-btn.register {
+    background: #f5b942 !important;
+    border-color: #f5b942 !important;
+    color: #0e1b33 !important;
+    font-weight: 800 !important;
+    box-shadow: 0 2px 8px rgba(245, 185, 66, 0.3) !important;
+  }
+
+  header nav .auth-btn.register:hover, .auth-btn.register:hover {
+    background: #ffc85a !important;
+    border-color: #ffc85a !important;
+    transform: translateY(-1px) !important;
+  }
+
+  /* Dil Seçici (Lang Wrap) */
+  .lang-wrap {
+    display: inline-flex !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+    gap: 3px !important;
+    margin: 0 0 0 clamp(4px, 0.5vw, 8px) !important;
+    padding: 2px 6px !important;
+    height: 32px !important;
+    box-sizing: border-box !important;
+    border-radius: 8px !important;
+    background: #172a4b !important;
+    border: 1px solid rgba(96, 119, 155, 0.55) !important;
+  }
+
+  .lang-select {
+    font-size: clamp(11px, 0.72vw, 12px) !important;
+    max-width: 72px !important;
+    padding: 2px 4px !important;
+    border: none !important;
+    background: transparent !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+  }
+}
+
+/* 901px - 1180px arası orta boy masaüstü ekranlar için ince ayar */
+@media (min-width: 901px) and (max-width: 1180px) {
+  header {
+    padding: 0 8px !important;
+    gap: 6px !important;
+  }
+  header > .logo, .logo {
+    font-size: 13px !important;
+    gap: 4px !important;
+  }
+  .tab-nav {
+    gap: 0 !important;
+  }
+  .tab-nav button, .tab-button {
+    padding: 4px 4px !important;
+    font-size: 11px !important;
+    letter-spacing: -0.22px !important;
+  }
+  .tab-button-mektuplar {
+    gap: 3px !important;
+  }
+  .nav-mektup-icon {
+    width: 17px !important;
+    height: 17px !important;
+  }
+  header nav .auth-actions, .auth-actions {
+    margin-left: 5px !important;
+    padding-left: 5px !important;
+    gap: 4px !important;
+  }
+  header nav .auth-btn, .auth-btn {
+    height: 29px !important;
+    min-height: 29px !important;
+    max-height: 29px !important;
+    padding: 0 7px !important;
+    font-size: 11px !important;
+  }
+  .lang-wrap {
+    margin-left: 4px !important;
+    padding: 1px 4px !important;
+    height: 29px !important;
+  }
+  .lang-select {
+    max-width: 60px !important;
+    font-size: 10.5px !important;
+  }
 }

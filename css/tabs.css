@@ -79,10 +79,10 @@
   color: #f5cf79 !important;
   border-bottom: 2px solid #f5cf79 !important;
 }
-.quick-access{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:18px 0 4px;max-width:1220px;margin:20px auto 0;background:transparent}
-.quick-access button{border:1px solid rgba(245,207,121,.24);border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.05));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#ffffff;text-align:left;padding:16px;cursor:pointer;box-shadow:0 8px 24px rgba(6,14,29,.22);font:inherit;font-size:14.5px;font-weight:800;line-height:1.3;transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease;display:flex;flex-direction:column;justify-content:space-between}
-.quick-access button:hover,.quick-access button:focus-visible{border-color:#f5b942;background:linear-gradient(145deg,rgba(245,185,66,.2),rgba(255,255,255,.08));transform:translateY(-2px);box-shadow:0 12px 28px rgba(6,14,29,.32),0 0 0 2px rgba(245,185,66,.28);outline:0}
-.quick-access small{display:block;color:#cbd5e1;font-size:11.5px;font-weight:500;margin-top:6px;line-height:1.35}
+.quick-access{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:24px 5% 8px;max-width:1220px;margin:0 auto;background:#f7f8fb}
+.quick-access button{border:1.5px solid #cbd5e1;border-left:4px solid #102343;border-radius:16px;background:#ffffff;color:#0f172a!important;text-align:left;padding:18px 20px;cursor:pointer;box-shadow:0 8px 22px rgba(15,23,42,.07);font:inherit;font-size:15.5px;font-weight:850;line-height:1.3;transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease;display:flex;flex-direction:column;justify-content:space-between}
+.quick-access button:hover,.quick-access button:focus-visible{border-color:#d97706;border-left-color:#f5b942;background:#fffdf5;color:#0f172a!important;transform:translateY(-2px);box-shadow:0 12px 28px rgba(15,23,42,.12),0 0 0 3px rgba(245,185,66,.25);outline:0}
+.quick-access small{display:block;color:#334155!important;font-size:12.5px;font-weight:600;margin-top:6px;line-height:1.4}
 #tabApp{min-height:45vh;width:100%;max-width:100%;overflow-x:hidden;box-sizing:border-box}
 .tab-panel{display:none;min-height:45vh;width:100%;max-width:100%;overflow-x:hidden;box-sizing:border-box}
 .section-stack{width:100%;max-width:100%;overflow-x:hidden;box-sizing:border-box}
@@ -139,9 +139,9 @@
   .lang-select{max-width:68px;font-size:11.5px}
   .mobile-header-actions{gap:6px}
   .mobile-mail-btn,.menu-toggle{width:38px;height:38px}
-  .quick-access{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:14px 0 2px;margin-top:16px}
-  .quick-access button{padding:13px 12px;border-radius:14px;font-size:13px;min-height:88px}
-  .quick-access small{font-size:11px;margin-top:5px}
+  .quick-access{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:16px 4% 4px;margin-top:0}
+  .quick-access button{padding:14px 12px;border-radius:14px;font-size:13.5px;min-height:88px;color:#0f172a!important;background:#ffffff}
+  .quick-access small{font-size:11.5px;margin-top:5px;color:#334155!important}
   .tab-panel>.hero{padding:26px 4% 30px}
   .tab-panel>.section-stack>section{padding:28px 4%}
   .tab-panel>.section-stack>section:first-child{padding-top:28px}

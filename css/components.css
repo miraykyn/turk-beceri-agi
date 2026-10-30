@@ -53,12 +53,28 @@
 #ekip .team-card-combined{width:min(560px,100%);text-align:center}
 #ekip .team-role{margin-top:6px}
 
-/* Genel Mobil Duyarlılık, UI/UX İyileştirmeleri ve Taşma (Overflow-X) Önleme Kuralları */
+/* Genel Kontrast, Mobil Duyarlılık ve UI/UX İyileştirmeleri */
+.hero{background:linear-gradient(135deg,#0d1b34 0%,#142d55 55%,#1b3d70 100%);color:#ffffff}
+.hero h1{color:#ffffff}
+.hero p{color:#f1f5f9;font-weight:500}
 .btn{transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn.primary,.primary{background:#f5b942;color:#0f172a!important;font-weight:850;border:1.5px solid #e0a326}
+.btn.secondary,.secondary{border:1.5px solid #f5cf79;color:#ffffff!important;background:rgba(15,23,42,.5);font-weight:800}
+.btn.secondary:hover,.secondary:hover{background:rgba(245,185,66,.2);border-color:#ffd700}
 .btn:hover{transform:translateY(-1px);filter:brightness(1.03)}
 .btn:active{transform:translateY(0)}
-.card,.panel,.kutu,.step,.ülke{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
-.card:hover,.step:hover,.ülke:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(24,35,59,.09);border-color:#d5dfec}
+h2,h3,h4{color:#0f172a}
+.eyebrow{color:#92400e;font-weight:850}
+.muted{color:#334155;font-weight:500;line-height:1.65}
+.card,.panel,.kutu,.step,.ülke,.flow,.team-card{background:#ffffff;color:#0f172a;border:1.5px solid #cbd5e1;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.card h3,.kutu h3,.panel h3,.step strong,.ülke b,.team-card strong{color:#0f172a}
+.card p,.step,.ülke small,.notice,.daily-note,.harita-notu,.team-role,.form-note,.certificate-box p,.certificate-note,.skill-hint{color:#334155;font-weight:500}
+.bubble{background:#f1f5f9;border:1.5px solid #cbd5e1;color:#0f172a;font-weight:800}
+.tag,.etiket{background:#e0f2fe;color:#0c4a6e;border:1px solid #bae6fd;font-weight:750}
+.table{border:1.5px solid #cbd5e1}
+.table th{background:#0f172a;color:#f5cf79;font-weight:800}
+.table td{color:#0f172a;font-weight:500;border-bottom:1px solid #e2e8f0}
+.card:hover,.step:hover,.ülke:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(15,23,42,.1);border-color:#94a3b8}
 
 @media(max-width:768px){
   section{padding:36px 4%;max-width:100%;overflow-x:hidden}

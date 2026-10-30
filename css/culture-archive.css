@@ -309,12 +309,15 @@
   transform: scale(1);
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
   will-change: transform;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  filter: contrast(1.05) brightness(1.02) saturate(1.04);
 }
 
 .culture-card:hover .culture-card-img,
 .culture-card:focus-visible .culture-card-img {
   transform: scale(1.09);
-  filter: saturate(1.06) contrast(1.02);
+  filter: contrast(1.08) brightness(1.04) saturate(1.08);
 }
 
 /* Kart Üzeri Ülke Rozeti ve Büyütme İkonu */
@@ -738,7 +741,7 @@
 
 /* --- Lightbox (Fotoğraf Büyütme Modalı) --- */
 .culture-lightbox-card {
-  width: min(760px, 100%);
+  width: min(960px, 94vw);
   background: #0e1b33;
   color: #ffffff;
   border-radius: 22px;
@@ -750,7 +753,7 @@
 .culture-lightbox-media {
   position: relative;
   width: 100%;
-  max-height: 68vh;
+  max-height: 75vh;
   background: #071020;
   display: flex;
   align-items: center;
@@ -759,9 +762,11 @@
 
 .culture-lightbox-media img {
   width: 100%;
-  max-height: 68vh;
+  max-height: 75vh;
   object-fit: contain;
   display: block;
+  image-rendering: -webkit-optimize-contrast;
+  filter: contrast(1.04) brightness(1.02);
 }
 
 .culture-lightbox-close {

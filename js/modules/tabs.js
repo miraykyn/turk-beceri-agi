@@ -3,17 +3,17 @@
  */
 
 window.TDATabs = (function() {
-  const tabKeys = ['tabHome', 'tabJourney', 'tabMatching', 'tabWordGame', 'tabCommunity', 'tabArticles', 'tabCulture', 'tabMessages', 'tabStudy', 'tabProfile', 'tabTuran'];
+  const tabKeys = ['tabHome', 'tabJourney', 'tabMatching', 'tabCommunity', 'tabArticles', 'tabMessages', 'tabStudy', 'tabWordGame', 'tabCulture', 'tabProfile', 'tabTuran'];
   const quickItems = [
     { id: 'journey', titleKey: 'quickJourneyTitle', descKey: 'quickJourneySub' },
     { id: 'matching', titleKey: 'quickMatchingTitle', descKey: 'quickMatchingSub' },
+    { id: 'study', titleKey: 'quickStudyTitle', descKey: 'quickStudySub' },
     { id: 'wordgame', titleKey: 'quickWordGameTitle', descKey: 'quickWordGameSub' },
     { id: 'culture', titleKey: 'quickCultureTitle', descKey: 'quickCultureSub' },
-    { id: 'study', titleKey: 'quickStudyTitle', descKey: 'quickStudySub' },
     { id: 'turan', titleKey: 'quickTuranTitle', descKey: 'quickTuranSub' }
   ];
 
-  const tabIds = ['home', 'journey', 'matching', 'wordgame', 'community', 'articles', 'culture', 'messages', 'study', 'profile', 'turan'];
+  const tabIds = ['home', 'journey', 'matching', 'community', 'articles', 'messages', 'study', 'wordgame', 'culture', 'profile', 'turan'];
   let buttons = [];
   let panels = {};
   let quickContainer = null;

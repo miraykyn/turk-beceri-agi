@@ -270,6 +270,15 @@ window.TDAMessaging = (function() {
   const CULTURAL_STAMPS = {
     tr: [
       { 
+        id: 'tr_ataturk', 
+        countryId: 'tr', 
+        country: 'Türkiye', 
+        flag: '🇹🇷', 
+        name: 'Gazi Mustafa Kemal Atatürk Pulu', 
+        landmark: 'Cumhuriyetimizin Kurucusu • Ebedi Başkomutan', 
+        image: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Kemal_Ataturk_on_Turkish_Stamp%2C_1940.jpg' 
+      },
+      { 
         id: 'tr_anitkabir', 
         countryId: 'tr', 
         country: 'Türkiye', 

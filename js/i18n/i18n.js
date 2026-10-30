@@ -41,12 +41,18 @@ window.TDAI18n = (function() {
   }
 
   const STUDY_ROOM_I18N = {
+    tabHome: { tr: "Ana Sayfa", az: "Ana Səhifə", uz: "Bosh Sahifa", kk: "Басты Бет", tk: "Baş Sahypa", ky: "Башкы Бет", en: "Home" },
+    tabJourney: { tr: "Nasıl Çalışır?", az: "Necə İşləyir?", uz: "Qanday Ishlaydi?", kk: "Қалай Жұмыс Істейді?", tk: "Nähili Işleýär?", ky: "Кандай Иштейт?", en: "How It Works" },
+    tabMatching: { tr: "Eşleşme", az: "Uyğunlaşma", uz: "Moslashuv", kk: "Сәйкестендіру", tk: "Gabatlanyş", ky: "Дал Келүү", en: "Matching" },
+    tabCommunity: { tr: "Topluluk", az: "İcma", uz: "Hamjamiyat", kk: "Қоғамдастық", tk: "Jemgyýet", ky: "Коомчулук", en: "Community" },
+    tabArticles: { tr: "Makaleler", az: "Məqalələr", uz: "Maqolalar", kk: "Мақалалар", tk: "Makalalar", ky: "Макалалар", en: "Articles" },
+    tabMessages: { tr: "Mektuplar", az: "Məktublar", uz: "Maktublar", kk: "Хаттар", tk: "Hatlar", ky: "Каттар", en: "Letters" },
     tabStudy: { tr: "Çalışma Odası", az: "İş Otağı", uz: "O‘qish Xonasi", kk: "Оқу Бөлмесі", tk: "Okuw Otagy", ky: "Окуу Бөлмөсү", en: "Study Room" },
     navStudy: { tr: "Çalışma Odası", az: "İş Otağı", uz: "O‘qish Xonasi", kk: "Оқу Бөлмесі", tk: "Okuw Otagy", ky: "Окуу Бөлмөсү", en: "Study Room" },
-    tabCulture: { tr: "Dijital Kültür Arşivi", az: "Rəqəmsal Mədəniyyət Arxivi", uz: "Raqamli Madaniyat Arxivi", kk: "Сандық Мәдениет Мұрағаты", tk: "Sanly Medeniýet Arhiwi", ky: "Санарип Маданият Архивы", en: "Digital Culture Archive" },
-    navCultureArchive: { tr: "Dijital Kültür Arşivi", az: "Rəqəmsal Mədəniyyət Arxivi", uz: "Raqamli Madaniyat Arxivi", kk: "Сандық Мәдениет Мұрағаты", tk: "Sanly Medeniýet Arhiwi", ky: "Санарип Маданият Архивы", en: "Digital Culture Archive" },
     tabWordGame: { tr: "Kelime Oyunu", az: "Söz Oyunu", uz: "So‘z O‘yini", kk: "Сөз Ойыны", tk: "Söz Oýny", ky: "Сөз Оюну", en: "Word Game" },
     navWordGame: { tr: "Kelime Oyunu", az: "Söz Oyunu", uz: "So‘z O‘yini", kk: "Сөз Ойыны", tk: "Söz Oýny", ky: "Сөз Оюну", en: "Word Game" },
+    tabCulture: { tr: "Dijital Kültür Arşivi", az: "Rəqəmsal Mədəniyyət Arxivi", uz: "Raqamli Madaniyat Arxivi", kk: "Сандық Мәдениет Мұрағаты", tk: "Sanly Medeniýet Arhiwi", ky: "Санарип Маданият Архивы", en: "Digital Culture Archive" },
+    navCultureArchive: { tr: "Dijital Kültür Arşivi", az: "Rəqəmsal Mədəniyyət Arxivi", uz: "Raqamli Madaniyat Arxivi", kk: "Сандық Мәдениет Мұрағаты", tk: "Sanly Medeniýet Arhiwi", ky: "Санарип Маданияt Архивы", en: "Digital Culture Archive" },
     quickWordGameTitle: { tr: "Online Kelime Oyunu", az: "Onlayn Söz Oyunu", uz: "Onlayn So‘z O‘yini", kk: "Онлайн Сөз Ойыны", tk: "Onlaýn Söz Oýny", ky: "Онлайн Сөз Оюну", en: "Online Word Game" },
     quickWordGameSub: { tr: "Çok Oyunculu 3 Şıklı Türk Lehçeleri Düellosu", az: "Çox Oyunçulu 3 Variantlı Türk Ləhcələri Duellosu", uz: "Ko‘p O‘yinchili 3 Variantli Turkiy Lahjalar Bellashuvi", kk: "Көп Ойыншылы 3 Нұсқалы Түркі Диалектілері Дуэлі", tk: "Köp Oýunçyly 3 Şahaly Türk Şiweleri Bäsleşigi", ky: "Көп Оюнчулуу 3 Варианттуу Түрк Диалектилери Татайлашуусу", en: "Multiplayer 3-Choice Turkic Dialects Duel" },
     quickCultureTitle: { tr: "Dijital Kültür Arşivi", az: "Rəqəmsal Mədəniyyət Arxivi", uz: "Raqamli Madaniyat Arxivi", kk: "Сандық Мәдениет Мұрағаты", tk: "Sanly Medeniýet Arhiwi", ky: "Санарип Маданият Архивы", en: "Digital Culture Archive" },

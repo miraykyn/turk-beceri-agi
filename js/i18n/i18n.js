@@ -71,7 +71,9 @@ window.TDAI18n = (function() {
     todosTitle: { tr: "Günlük Hedefler ve Görevler", az: "Gündəlik Hədəflər və Tapşırıqlar", uz: "Kunlik Maqsadlar va Vazifalar", kk: "Күнделікті Мақсаттар мен Тапсырмалар", tk: "Gündelik Maksatlar we Tabşyryklar", ky: "Күндөлүк Максаттар жана Тапшырмалар", en: "Daily Goals & Tasks" },
     ambientTitle: { tr: "Ortam Sesleri Mikseri", az: "Ətraf Səsləri Mikseri", uz: "Muhit Ovozlar Mikseri", kk: "Фондық Дыбыс Миксері", tk: "Gurşaw Sesleri Mikseri", ky: "Айлана Үндөр Миксери", en: "Ambient Audio Mixer" },
     editAvatarTooltip: { tr: "Bitmoji Avatarımı Özelleştir", az: "Bitmoji Avatarımı Fərdiləşdir", uz: "Bitmoji Avatarimni O‘zgartirish", kk: "Bitmoji Аватарымды Баптау", tk: "Bitmoji Awatarymy Sazla", ky: "Bitmoji Аватарымды Ырастоо", en: "Customize My Bitmoji Avatar" },
-    footerDevelopersTitle: { tr: "Türk Dünyası Beceri Ağı Geliştiricileri", az: "Türk Dünyası Bacarıq Şəbəkəsi Tərtibatçıları", uz: "Turk Dunyosi Ko‘nikmalar Tarmog‘i Dasturchilari", kk: "Түркі Әлемі Дағдылар Желісінің Әзірлеушілері", tk: "Türk Dünýäsi Başarnyk Ulgamynyň Düzüjileri", ky: "Түрк Дүйнөсү Көндүмдөр Тармагынын Иштеп Чыгуучулары", en: "Turkic World Skill Network Developers" }
+    footerDevelopersTitle: { tr: "Türk Dünyası Beceri Ağı Geliştiricileri", az: "Türk Dünyası Bacarıq Şəbəkəsi Tərtibatçıları", uz: "Turk Dunyosi Ko‘nikmalar Tarmog‘i Dasturchilari", kk: "Түркі Әлемі Дағдылар Желісінің Әзірлеушілері", tk: "Türk Dünýäsi Başarnyk Ulgamynyň Düzüjileri", ky: "Түрк Дүйнөсү Көндүмдөр Тармагынын Иштеп Чыгуучулары", en: "Turkic World Skill Network Developers" },
+    logoLead: { tr: "TÜRK DÜNYASI", az: "TÜRK DÜNYASI", uz: "TURK DUNYOSI", kk: "ТҮРКІ ӘЛЕМІ", tk: "TÜRK DÜNÝÄSI", ky: "ТҮРК ДҮЙНӨСҮ", en: "TURKIC WORLD" },
+    logoTail: { tr: "BECERİ AĞI", az: "BACARIQ ŞƏBƏKƏSİ", uz: "KO‘NIKMALAR TARMOG‘I", kk: "ДАҒДЫЛАР ЖЕЛІСІ", tk: "BAŞARNYK ULGAMY", ky: "КӨНДҮМДӨР ТАРМАГЫ", en: "SKILL NETWORK" }
   };
 
   const MESSAGING_I18N = {

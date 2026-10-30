@@ -3,7 +3,20 @@
  */
 
 window.TDATabs = (function() {
-  const tabKeys = ['tabHome', 'tabJourney', 'tabMatching', 'tabCommunity', 'tabArticles', 'tabMessages', 'tabStudy', 'tabWordGame', 'tabCulture', 'tabProfile', 'tabTuran'];
+  const navTabs = [
+    { key: 'tabHome', id: 'home' },
+    { key: 'tabJourney', id: 'journey' },
+    { key: 'tabMatching', id: 'matching' },
+    { key: 'tabCommunity', id: 'community' },
+    { key: 'tabArticles', id: 'articles' },
+    { key: 'tabMessages', id: 'messages' },
+    { key: 'tabStudy', id: 'study' },
+    { key: 'tabWordGame', id: 'wordgame' },
+    { key: 'tabCulture', id: 'culture' }
+  ];
+  const tabKeys = navTabs.map(t => t.key);
+  const tabIds = navTabs.map(t => t.id);
+  const allPanelIds = ['home', 'journey', 'matching', 'community', 'articles', 'messages', 'study', 'wordgame', 'culture', 'profile', 'turan'];
   const quickItems = [
     { id: 'journey', titleKey: 'quickJourneyTitle', descKey: 'quickJourneySub' },
     { id: 'matching', titleKey: 'quickMatchingTitle', descKey: 'quickMatchingSub' },
@@ -12,8 +25,6 @@ window.TDATabs = (function() {
     { id: 'culture', titleKey: 'quickCultureTitle', descKey: 'quickCultureSub' },
     { id: 'turan', titleKey: 'quickTuranTitle', descKey: 'quickTuranSub' }
   ];
-
-  const tabIds = ['home', 'journey', 'matching', 'community', 'articles', 'messages', 'study', 'wordgame', 'culture', 'profile', 'turan'];
   let buttons = [];
   let panels = {};
   let quickContainer = null;
@@ -214,7 +225,7 @@ window.TDATabs = (function() {
     const app = document.createElement('main');
     app.id = 'tabApp';
 
-    tabIds.forEach(id => {
+    allPanelIds.forEach(id => {
       const panel = document.createElement('div');
       panel.id = 'tab-' + id;
       panel.className = 'tab-panel' + (id === 'home' ? ' active' : '');
@@ -224,6 +235,8 @@ window.TDATabs = (function() {
       panels[id] = panel;
     });
 
+    const ticker = document.getElementById('factTicker');
+    const flagCards = document.getElementById('flagCards');
     const hero = document.querySelector('.hero');
     const stack = {
       home: document.createElement('div'),
@@ -238,6 +251,8 @@ window.TDATabs = (function() {
       profile: document.createElement('div')
     };
     Object.values(stack).forEach(node => { node.className = 'section-stack'; });
+    if (ticker) panels.home.appendChild(ticker);
+    if (flagCards) panels.home.appendChild(flagCards);
     if (hero) panels.home.appendChild(hero);
 
     const sectionOwners = {
@@ -250,6 +265,7 @@ window.TDATabs = (function() {
 
     document.querySelectorAll('body > section').forEach(section => {
       const id = section.id;
+      if (id === 'flagCards') return;
       const owner = sectionOwners[id] || 'home';
       const target = stack[owner];
       if (target) {
@@ -275,6 +291,14 @@ window.TDATabs = (function() {
     panels.home.insertBefore(quickContainer, stack.home);
 
     header.after(app);
+
+    const logoLink = document.getElementById('siteLogoLink') || document.querySelector('.logo');
+    if (logoLink) {
+      logoLink.addEventListener('click', e => {
+        e.preventDefault();
+        setTab('home');
+      });
+    }
 
     tabNav.addEventListener('keydown', event => {
       if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;

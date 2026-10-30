@@ -1,4 +1,4 @@
-﻿Ключ,Türkçe (турецкий),Azərbaycanca,Oʻzbekcha,Қазақша,Türkmençe,Кыргызча,English
+Ключ,Türkçe (турецкий),Azərbaycanca,Oʻzbekcha,Қазақша,Türkmençe,Кыргызча,English
 matchEyebrow,Akıllı beceri eşleştirme,Ağıllı bacarıq uyğunlaşdırması,Aqlli ko‘nikmalarni moslashtirish,Ақылды қабілет сәйкестігі,Akylly başarnyk gabatlaşdyrmasy,Акылдуу көндүмдөрдү дал келтирүү,Smart Skill Matching
 matchTitle,İhtiyacına göre öğrenci bul,Ehtiyacına uyğun tələbə tap,Ehtiyojingizga mos talaba toping,Қажеттілігіңізге сай студент табыңыз,Zerurlygyňa görä talyp tap,Муктаждыгыңызга жараша студент табыңыз,Find a student based on your needs
 matchIntro,"Filtreleri kullanabilir veya otomatik eşleştirmeyi açabilirsin. Skor; beceri uyumu, dil, ülke, seviye ve uygunluk sinyallerinden hesaplanır.","Filtrlərdən istifadə edə və ya avtomatik uyğunlaşdırmanı aça bilərsən. Xal bacarıq uyğunluğu, dil, ölkə, səviyyə və cədvəl siqnallarından hesablanır.","Filtrlardan foydalaning yoki avtomatik moslashtirishni yoqing. Ball ko‘nikma, til, mamlakat, daraja va vaqt signallaridan hisoblanadi.","Сүзгілерді қолданыңыз немесе автоматты сәйкестікті қосыңыз. Ұпай қабілет, тіл, ел, деңгей және уақыт сәйкестігі көрсеткіштерінен есептеледі.","Süzgüçleri ulanyp ýa-da awtomatik gabatlaşdyrmany açyp bilersiň. Bal; başarnyk gabatlygy, dil, ýurt, dereje we elýeterlilik alamatlaryndan hasaplanýar.","Чыпкаларды колдоно аласыз же автоматтык дал келтирүүнү күйгүзсөңүз болот. Упай көндүмдөрдүн шайкештиги, тил, өлкө, деңгээл жана убакыттын ыңгайлуулугу боюнча эсептелет.","Use filters or enable auto matching. The score is calculated from skill fit, language, country, level, and availability signals."
@@ -19,7 +19,7 @@ evenings,Akşam,Axşam,Kechqurun,Кешке,Agşam,Кечки убакыт,Eveni
 matchingMode,Eşleştirme modu,Uyğunlaşdırma rejimi,Moslashtirish rejimi,Сәйкестік режимі,Gabatlaşdyrma tertibi,Дал келтирүү режими,Matching mode
 manualMode,Manuel seçim,Əl ilə seçim,Qo‘lda tanlash,Қолмен таңдау,El bilen saýlamak,Кол менен тандоо,Manual selection
 autoMode,Otomatik öneri,Avtomatik tövsiyə,Avtomatik tavsiya,Автоматты ұсыныс,Awtomatik teklip,Автоматтык сунуш,Auto recommendation
-sortBy,Sıralama,Sıralama,Saralash,Сұрыптау,Tertiplemek,Иреттөө,Sort by
+sortBy,Sıralama,Çeşidləmə,Saralash,Сұрыптау,Tertiplemek,Иреттөө,Sort by
 scoreSort,Uyum skoruna göre,Uyğunluq xalına görə,Moslik balli bo‘yicha,Сәйкестік ұпайы бойынша,Gabatlaşyk baly boýunça,Шайкештик упайы боюнча,By match score
 ratingSort,Değerlendirmeye göre,Qiymətləndirməyə görə,Baholash bo‘yicha,Баға бойынша,Bahalandyrma boýunça,Баалоо боюнча,By rating
 findMatches,Eşleşmeleri bul,Uyğun tələbələri tap,Mos sheriklarni topish,Сәйкестіктерді табу,Gabat gelýänleri tap,Дал келүүлөрдү табуу,Find Matches
@@ -50,7 +50,7 @@ aiPlaceholder,Bir şey sor…,Sualını yaz…,Savolingizni yozing…,Сұрағ
 send,Gönder,Göndər,Yuborish,Жіберу,Iber,Жөнөтүү,Send
 aiBackendStatus,AI_BACKEND_ENDPOINT tanımlı değil. Gerçek yapay zekâ yanıtları için /api/ai gibi güvenli bir sunucu endpoint'i bağlanmalıdır.,AI_BACKEND_ENDPOINT təyin edilməyib. Real süni intellekt cavabları üçün təhlükəsiz server endpoint-i qoşulmalıdır.,AI_BACKEND_ENDPOINT aniqlanmagan. Haqiqiy sun’iy intellekt javoblari uchun /api/ai kabi xavfsiz server endpointi ulanishi kerak.,AI_BACKEND_ENDPOINT орнатылмаған. Нақты жасанды интеллект жауаптары үшін /api/ai сияқты қауіпсіз серверлік нүкте қосылуы қажет.,AI_BACKEND_ENDPOINT kesgitlenmedi. Hakyky emeli aň jogaplary üçin /api/ai ýaly howpsuz serwer nokady birikdirilmelidir.,AI_BACKEND_ENDPOINT аныкталган эмес. Чыныгы жасалма интеллект жооптору үчүн /api/ai сыяктуу коопсуз сервердик endpoint туташтырылышы керек.,AI_BACKEND_ENDPOINT is not defined. Connect a secure server endpoint like /api/ai for real AI responses.
 allArticles,Tümü,Hamısı,Barchasi,Барлығы,Ählisi,Баары,All
-articlePublished,Yazı yayımlandı.,Yazı yayımlandı.,Maqola e’lon qilindi.,Жазба жарияланды.,Ýazgy çap edildi.,Макала жарыяланды.,Article published.
+articlePublished,Yazı yayımlandı.,Məqalə dərc olundu.,Maqola e’lon qilindi.,Жазба жарияланды.,Ýazgy çap edildi.,Макала жарыяланды.,Article published.
 profileRequired,Bu işlemi yapmak için önce profil/kayıt bilgisi gerekir.,Bu əməliyyat üçün əvvəlcə profil/qeydiyyat məlumatı lazımdır.,Bu amalni bajarish uchun avval ro‘yxatdan o‘tish yoki profil ma’lumotlari kerak.,Бұл әрекет үшін профиль/тіркелу ақпараты қажет.,Bu amaly ýerine ýetirmek üçin ilki profil/hasaba alyş maglumaty gerekdir.,Бул аракетти аткаруу үчүн алгач профиль/каттоо маалыматы керек.,Please create a profile or sign in before doing this.
 requestCreated,Destek talebin oluşturuldu.,Dəstək tələbin yaradıldı.,Yordam so‘rovingiz yaratildi.,Қолдау сұранысыңыз жасалды.,Goldaw haýyşyň döredildi.,Колдоо өтүнүчүңүз түзүлдү.,Support request created.
 requestDenied,Destek talebi oluşturmak için puanın 0 olmalı.,Dəstək tələbi yaratmaq üçün xalın 0 olmalıdır.,Yordam so‘rovini yaratish uchun ballingiz 0 bo‘lishi kerak.,Қолдау сұранысын жасау үшін ұпайыңыз 0 болуы керек.,Goldaw haýyşyny döretmek üçin balyň 0 bolmaly.,Колдоо өтүнүчүн түзүү үчүн упайыңыз 0 болушу керек.,Your balance must be 0 points to create a support request.
@@ -71,7 +71,7 @@ availabilityMatch,Uygunluk uyumu,Cədvəl uyğunluğu,Vaqt mosligi,Уақыт с
 verified,Doğrulanmış,Təsdiqlənmiş,Tasdiqlangan,Расталған,Tassyklanan,Тастыкталган,Verified
 demo,Prototip profili,Prototip profili,Prototip profili,Прототип профилі,Prototip profili,Прототип профили,Prototype profile
 supportLimitReached,Bu ayın 2 puanlık alma limiti doldu.,Bu ayın 2 xal alma limiti dolub.,Bu oygi 2 ball olish limiti to‘ldi.,Осы айдағы 2 ұпай алу шегі толды.,Şu aýky 2 ballyk goldaw çägi doldy.,Бул айдагы 2 упайлык колдоо чеги толду.,Monthly 2-point limit has been reached.
-donationDone,Bağış tamamlandı.,Bağış tamamlandı.,Ball muvaffaqiyatli ulashildi.,Ұпай сәтті жіберілді.,Bal üstünlikli geçirildi.,Упай белекке берилди.,Donation completed.
+donationDone,Bağış tamamlandı.,İanə tamamlandı.,Ball muvaffaqiyatli ulashildi.,Ұпай сәтті жіберілді.,Bal üstünlikli geçirildi.,Упай белекке берилди.,Donation completed.
 insufficientPoints,Bağış için yeterli puanın yok.,Bağış üçün kifayət qədər xalın yoxdur.,Ball ulashish uchun yetarli ballingiz yo‘q.,Ұпай сыйлау үшін теңгеріміңіз жеткіліксіз.,Bal sowgat etmek üçin ýeterlik balyň ýok.,Упай белек кылуу үчүн упайыңыз жетишсиз.,You do not have enough points to donate.
 reviewSaved,Değerlendirmen kaydedildi.,Qiymətləndirmən yadda saxlanıldı.,Baholashingiz saqlandi.,Бағаңыз сақталды.,Bahalandyrmaň ýazga alyndy.,Баалооңуз сакталды.,Review saved.
 aiNotConnected,AI sunucusu bağlı değil. API anahtarını frontend’e eklemek yerine güvenli backend endpoint’i bağla.,"Süni intellekt serveri qoşulmayıb. API açarını interfeysə əlavə etmək əvəzinə, təhlükəsiz backend endpoint-i qoş.",Sun’iy intellekt serveri ulanmagan. API kalitini frontendga joylashtirmang; xavfsiz backend endpointini ulang.,"Жасанды интеллект сервері қосылмаған. API кілтін интерфейске қоспай, қауіпсіз серверлік нүктені жалғаңыз.",Emeli aň serweri birikdirilmedik. API açaryny frontend-e goşmagyň deregine howpsuz backend nokadyny birikdiriň.,"Жасалма интеллект сервери туташкан эмес. API ачкычын фронтендге кошпостон, коопсуз сервердик endpoint'ти туташтырыңыз.",AI server is not connected. Connect a secure backend endpoint instead of adding an API key to the frontend.
@@ -302,8 +302,8 @@ Giriş Yap,Giriş Yap,Daxil ol,Kirish,Кіру,Giriş,Кирүү,Sign In
 Kayıt Ol,Kayıt Ol,Qeydiyyatdan keç,Ro‘yxatdan o‘tish,Тіркелу,Hasaba dur,Катталуу,Register
 Proje ekibi,Proje ekibi,Layihə komandası,Loyiha jamoasi,Жоба командасы,Taslama topary,Долбоор командасы,Project team
 Türk Dünyası Beceri Ağı'nın geliştiricileri,Türk Dünyası Beceri Ağı'nın geliştiricileri,Türk Dünyası Bacarıq Şəbəkəsinin yaradıcıları,Turkiy dunyo ko‘nikmalar tarmog‘i yaratuvchilari,Түркі әлемі қабілеттер желісін әзірлеушілер,Türki dünýäsi başarnyklar torunyň işläp düzüjileri,Түрк дүйнөсү көндүмдөр тармагынын иштеп чыгуучулары,Developers of the Turkic World Skill Network
-Miray Kayan,Miray Kayan,Miray Kayan,,,,,Miray Kayan
-Cemre Erden,Cemre Erden,Cemre Erden,,,,,Cemre Erden
+Miray Kayan,Miray Kayan,Miray Kayan,Miray Kayan,Мирай Каян,Miraý Kaýan,Мирай Каян,Miray Kayan
+Cemre Erden,Cemre Erden,Cemre Erden,Cemre Erden,Джемре Эрден,Jemre Erden,Джемре Эрден,Cemre Erden
 İsim,İsim,Ad,Ism,Аты,Ady,Аты,First name
 Soyisim,Soyisim,Soyad,Familiya,Тегі,Familiýasy,Фамилиясы,Last name
 Öğrenci maili,Öğrenci maili,Tələbə e-poçtu,Talaba elektron pochtasi,Студенттік электрондық пошта,Talyp e-poçtasy,Студенттик электрондук почта,Student email
@@ -399,7 +399,7 @@ Beceri Arzı:,Beceri Arzı:,Bacarıq təklifi:,Ko‘nikma taklifi:,Қабіле�
 Öğrenme İhtiyacı:,Öğrenme İhtiyacı:,Öyrənmə ehtiyacı:,O‘rganish ehtiyoji:,Үйрену қажеттілігі:,Öwrenmek zerurlygy:,Үйрөнүү муктаждыгы:,Learning need:
 İngilizce,İngilizce,İngilis dili,Ingliz tili,Ағылшын тілі,Iňlis dili,Англис тили,English
 Grafik tasarım,Grafik tasarım,Qrafik dizayn,Grafik dizayn,Графикалық дизайн,Grafiki dizaýn,Графикалык дизайн,Graphic design
-Kodlama,Kodlama,Kodlaşdırma,Kodlash,Кодтау,Kodlama,Коддоо,Coding
+Kodlama,Kodlama,Kodlaşdırma,Kodlash,Кодтау,Programmirleme,Коддоо,Coding
 Girişimcilik,Girişimcilik,Sahibkarlıq,Tadbirkorlik,Кәсіпкерлік,Telekeçilik,Ишкердик,Entrepreneurship
 Medya,Medya,Media,Media,Медиа,Media,Медиа,Media
 Video düzenleme,Video düzenleme,Video montajı,Videomontaj,Бейне өңдеу,Wideo redaktirlemek,Видео монтаждоо,Video editing
@@ -407,7 +407,6 @@ Akademik yazım,Akademik yazım,Akademik yazı,Akademik yozish,Академия�
 Sunum ve hitabet,Sunum ve hitabet,Təqdimat və natiqlik,Taqdimot va notiqlik,Презентация және шешендік өнер,Tanyşdyryş we sözleýiş,Презентация жана чечендик өнөр,Public speaking and presentation
 Kültür,Kültür,Mədəniyyət,Madaniyat,Мәдениет,Medeniýet,Маданият,Culture
 Veri analizi,Veri analizi,Məlumatların təhlili,Ma’lumotlarni tahlil qilish,Деректерді талдау,Maglumat seljermesi,Маалыматтарды талдоо,Data analysis
-
 — подписи вкладок —
 Вкладка 1 (главная),Ana Sayfa / Hakkında,Ana səhifə / Haqqında,Bosh sahifa / Loyiha haqida,Басты бет / Жоба туралы,Baş sahypa / Taslama barada,Башкы бет / Долбоор жөнүндө,Home / About
 Вкладка 2 (путь студента),Nasıl Çalışır? / Öğrenci Yolculuğu,Necə işləyir? / Tələbə səyahəti,Qanday ishlaydi? / Talabaning yoʻli,Қалай жұмыс істейді? / Студенттің жолы,Nähili işleýär? / Talybyň ýoly,Кантип иштейт? / Студенттин жолу,How It Works / Student Journey
@@ -416,3 +415,15 @@ Veri analizi,Veri analizi,Məlumatların təhlili,Ma’lumotlarni tahlil qilish,
 Вкладка 5 (статьи),Makaleler,Məqalələr,Maqolalar,Мақалалар,Makalalar,Макалалар,Articles
 Вкладка 6 (профиль),Öğrenci Profilim,Tələbə profilim,Talaba profilim,Студент профилім,Talyp profilim,Студент профилим,My Student Profile
 Вкладка 7 (Turan AI),Turan AI Asistanı,Turan AI köməkçisi,Turan AI yordamchisi,Turan AI көмекшісі,Turan AI kömekçisi,Turan AI жардамчысы,Turan AI Assistant
+sealDivanTitle,Bozkır Kartalı Taşıyor,Bozqır Qartalı Daşıyır,Dasht Burguti Yetkazmoqda,Дала Бүркіті Жеткізуде,Sähra Bürgüdi Daşaýar,Талаа Бүркүтү Жеткирүүдө,Carried by the Steppe Eagle
+sealDivanDesc,Mektuplar şehirler arası ortalama uçuş süresinin tam 2 katı sürede teslim edilir. Erken teslim seçeneği bulunmaz.,Məktublar şəhərlərarası orta uçuş müddətinin düz 2 qatı vaxtda çatdırılır. Erkən çatdırılma seçimi yoxdur.,Maktublar shaharlararo o‘rtacha parvoz vaqtining roppa-rosa 2 barobari vaqtida yetkaziladi. Erta yetkazish tanlovi mavjud emas.,Хаттар қалааралық орташа ұшу уақытынан тура 2 есе көп уақытта жеткізіледі. Ерте жеткізу таңдауы жоқ.,Hatlar şäherara ortaça uçuş wagtynyň dogry 2 esse möhletinde gowşurylýar. Ir gowşurmak saýlawy ýokdur.,Каттар шаарлар аралык орточо учуу убактысынан так 2 эсе көп убакытта жеткирилет. Эрте жеткирүү тандоосу жок.,Letters are delivered in exactly twice the average flight time between cities. Early delivery is not available.
+footerDevelopersTitle,Türk Dünyası Beceri Ağı Geliştiricileri,Türk Dünyası Bacarıq Şəbəkəsi Tərtibatçıları,Turk Dunyosi Ko‘nikmalar Tarmog‘i Dasturchilari,Түркі Әлемі Дағдылар Желісінің Әзірлеушілері,Türk Dünýäsi Başarnyk Ulgamynyň Düzüjileri,Түрк Дүйнөсү Көндүмдөр Тармагынын Иштеп Чыгуучулары,Turkic World Skill Network Developers
+navLetters,Mektuplar,Məktublar,Maktublar,Хаттар,Hatlar,Каттар,Letters
+navStudy,Çalışma Odası,İş Otağı,O‘qish Xonasi,Оқу Бөлмесі,Okuw Otagy,Окуу Бөлмөсү,Study Room
+navWordGame,Kelime Oyunu,Söz Oyunu,So‘z O‘yini,Сөз Ойыны,Söz Oýny,Сөз Оюну,Word Game
+navCultureArchive,Dijital Kültür Arşivi,Rəqəmsal Mədəniyyət Arxivi,Raqamli Madaniyat Arxivi,Сандық Мәдениет Мұрағаты,Sanly Medeniýet Arhiwi,Санарип Маданият Архивы,Digital Culture Archive
+messagingEyebrow,DİJİTAL MEKTUPLAŞMA • SINIR ÖTESİ HABERLEŞME,RƏQƏMSAL MƏKTUBLAŞMA • SƏRHƏDLƏRARASI XƏBƏRLƏŞMƏ,RAQAMLI MAKTUBLASHUV • CHEGARALARARO ALOQA,САНДЫҚ ХАТ АЛМАСУ • ШЕКАРААРАЛЫҚ БАЙЛАНЫС,SANLY HAT ALYŞYGY • SERHETARA HABARLAŞYK,САНАРИП КАТ АЛЫШУУ • ЧЕК АРАСЫЗ БАЙЛАНЫШ,DIGITAL CORRESPONDENCE • CROSS-BORDER COMMUNICATION
+messagingSubtitle,"Türk Dünyası'ndaki 7 bağımsız devletin öğrencileri arasında dostluk, beceri takası ve kültürel miras mektuplaşması. Mektubunu yaz, seçtiğin Türk devletinin hatıra pulu ve dostluk mührüyle sınırları aş.","Türk Dünyasındakı 7 müstəqil dövlətin tələbələri arasında dostluq, bacarıq mübadiləsi və mədəni irs məktublaşması.","Turk Dunyosidagi 7 ta mustaqil davlat talabalari o‘rtasida do‘stlik, ko‘nikmalar almashinuvi va madaniy meros maktublashuvi.","Түркі Әлеміндегі 7 тәуелсіз мемлекет студенттері арасындағы достық, дағды алмасу және мәдени мұра хат алмасуы.","Türk Dünýäsindäki 7 garaşsyz döwletiň talyplarynyň arasynda dostluk, başarnyk alyş-çalşygy we medeni miras hat alyşygy.","Түрк Дүйнөсүндөгү 7 көз карандысыз мамлекеттин студенттеринин ортосундагы достук, көндүм алмашуу жана маданий мурас кат алышуусу.","Friendship, skill exchange, and cultural heritage correspondence among students across the 7 independent Turkic states."
+studyEyebrow,DİJİTAL KÜTÜPHANE • ODAKLANMA ALANI,RƏQƏMSAL KİTABXANA • DİQQƏT MƏRKƏZİ,RAQAMLI KUTUBXONA • DIQQAT MARKAZI,САНДЫҚ КІТАПХАНА • ЗЕЙІН ҚОЮ АЛАҢЫ,SANLY KITAPHANA • ÜNS MERKEZI,САНАРИП КИТЕПКАНА • КӨҢҮЛ БУРУУ АЙМАГЫ,DIGITAL LIBRARY • FOCUS SPACE
+studyTitle,Sanal Çalışma Odası,Virtual İş Otağı,Virtual O‘qish Xonasi,Виртуалды Оқу Бөлмесі,Wirtual Okuw Otagy,Виртуалдуу Окуу Бөлмөсү,Virtual Study Room
+studySubtitle,"Kendi oluşturduğun Bitmoji avatarınla çalışma masana geç, Pomodoro zamanlayıcı, yapılacak hedefler ve rahatlatıcı ortam sesleriyle odaklan.","Öz yaratdığın Bitmoji avatarınla iş masana keç, Pomodoro sayğacı və sakitləşdirici fon səsləri ilə diqqətini topla.","O‘zingiz yaratgan Bitmoji avatar bilan ish stolingizga o‘tiring, Pomodoro taymeri va tinchlantiruvchi ovozlar bilan diqqatni jamlang.","Өзің жасаған Bitmoji аватарыңмен оқу үстеліне отыр, Pomodoro таймері және жайлы фондық дыбыстармен зейін қой.","Öz döreden Bitmoji awataryň bilen iş stoluňa geç, Pomodoro wagtyölçeri we rahatlandyryjy gurşaw sesleri bilen ünsüňi jemle.","Өзүң түзгөн Bitmoji аватарың менен окуу партаңа өт, Pomodoro таймери жана эс алдыруучу айлана үндөрү менен көңүл бур.","Take a seat at your desk with your custom Bitmoji avatar, and stay focused with the Pomodoro timer, tasks, and ambient soundscapes."

@@ -4,8 +4,8 @@ Add-Type -AssemblyName System.Web.Extensions
 $ser = New-Object System.Web.Script.Serialization.JavaScriptSerializer
 $ser.MaxJsonLength = 2147483647
 
-$projectDir = "C:\Users\Lenovo\.gemini\antigravity\scratch\turk-dunyasi-beceri-agi"
-$uploadsDir = "C:\Users\Lenovo\.gemini\antigravity\brain\e9369e65-06ab-497c-a5f8-d0d692e6e4e3\.user_uploaded"
+$projectDir = (Get-Location).Path
+$uploadsDir = $projectDir
 $i18nDir = "$projectDir\js\i18n"
 
 $langs = @('tr', 'az', 'uz', 'kk', 'tk', 'ky', 'en')
@@ -19,8 +19,8 @@ function Set-Translation($l, $k, $v) {
     $allData[$l][$k] = [string]$v
 }
 
-Write-Host "1. Loading window.TDA_I18N_DATA from uploaded JS..."
-$jsPath = "$uploadsDir\media_1792421483222_ae7b77b0.js"
+Write-Host "1. Loading window.TDA_I18N_DATA from master JS data..."
+$jsPath = (Get-ChildItem -Path $projectDir -Filter "*i18n-data.js" | Select-Object -First 1).FullName
 if (Test-Path $jsPath) {
     $jsContent = [System.IO.File]::ReadAllText($jsPath, [System.Text.Encoding]::UTF8)
     $startIdx = $jsContent.IndexOf("window.TDA_I18N_DATA =")
@@ -42,7 +42,10 @@ if (Test-Path $jsPath) {
 }
 
 Write-Host "2. Loading dictionaries from original HTML..."
-$htmlPath = "$uploadsDir\media_1792416859293_405821ba.html"
+$htmlPath = "C:\Users\Lenovo\.gemini\antigravity\brain\e9369e65-06ab-497c-a5f8-d0d692e6e4e3\.user_uploaded\media_1792416859293_405821ba.html"
+if (-not (Test-Path $htmlPath)) {
+    $htmlPath = "$projectDir\index.html"
+}
 if (Test-Path $htmlPath) {
     $htmlContent = [System.IO.File]::ReadAllText($htmlPath, [System.Text.Encoding]::UTF8)
     
@@ -115,11 +118,8 @@ if (Test-Path $htmlPath) {
     }
 }
 
-Write-Host "3. Loading CSV rows from raw_translations.csv..."
-$csvPath = "$projectDir\raw_translations.csv"
-if (-not (Test-Path $csvPath)) {
-    $csvPath = "$uploadsDir\media_1792421483054_cb2ddd82.csv"
-}
+Write-Host "3. Loading CSV rows from CSV file..."
+$csvPath = (Get-ChildItem -Path $projectDir -Filter "*.csv" | Select-Object -First 1).FullName
 
 if (Test-Path $csvPath) {
     $rawCsv = [System.IO.File]::ReadAllText($csvPath, [System.Text.Encoding]::UTF8)

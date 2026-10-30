@@ -1420,5 +1420,896 @@
     "tk": "TDA-XXXXXX",
     "ky": "TDA-XXXXXX",
     "en": "TDA-XXXXXX"
+  },
+  "navStudy": {
+    "tr": "Çalışma Odası",
+    "az": "İş Otağı",
+    "uz": "O‘qish Xonasi",
+    "kk": "Оқу Бөлмесі",
+    "tk": "Okuw Otagy",
+    "ky": "Окуу Бөлмөсү",
+    "en": "Study Room"
+  },
+  "sealDivanTitle": {
+    "tr": "Bozkır Kartalı Taşıyor",
+    "az": "Bozqır Qartalı Daşıyır",
+    "uz": "Dasht Burguti Yetkazmoqda",
+    "kk": "Дала Бүркіті Жеткізуде",
+    "tk": "Sähra Bürgüdi Daşaýar",
+    "ky": "Талаа Бүркүтү Жеткирүүдө",
+    "en": "Carried by the Steppe Eagle"
+  },
+  "messagingSubtitle": {
+    "tr": "Türk Dünyası'ndaki 7 bağımsız devletin öğrencileri arasında dostluk, beceri takası ve kültürel miras mektuplaşması. Mektubunu yaz, seçtiğin Türk devletinin hatıra pulu ve dostluk mührüyle sınırları aş.",
+    "az": "Türk Dünyasındakı 7 müstəqil dövlətin tələbələri arasında dostluq, bacarıq mübadiləsi və mədəni irs məktublaşması.",
+    "uz": "Turk Dunyosidagi 7 ta mustaqil davlat talabalari o‘rtasida do‘stlik, ko‘nikmalar almashinuvi va madaniy meros maktublashuvi.",
+    "kk": "Түркі Әлеміндегі 7 тәуелсіз мемлекет студенттері арасындағы достық, дағды алмасу және мәдени мұра хат алмасуы.",
+    "tk": "Türk Dünýäsindäki 7 garaşsyz döwletiň talyplarynyň arasynda dostluk, başarnyk alyş-çalşygy we medeni miras hat alyşygy.",
+    "ky": "Түрк Дүйнөсүндөгү 7 көз карандысыз мамлекеттин студенттеринин ортосундагы достук, көндүм алмашуу жана маданий мурас кат алышуусу.",
+    "en": "Friendship, skill exchange, and cultural heritage correspondence among students across the 7 independent Turkic states."
+  },
+  "studySubtitle": {
+    "tr": "Kendi oluşturduğun Bitmoji avatarınla çalışma masana geç, Pomodoro zamanlayıcı, yapılacak hedefler ve rahatlatıcı ortam sesleriyle odaklan.",
+    "az": "Öz yaratdığın Bitmoji avatarınla iş masana keç, Pomodoro sayğacı və sakitləşdirici fon səsləri ilə diqqətini topla.",
+    "uz": "O‘zingiz yaratgan Bitmoji avatar bilan ish stolingizga o‘tiring, Pomodoro taymeri va tinchlantiruvchi ovozlar bilan diqqatni jamlang.",
+    "kk": "Өзің жасаған Bitmoji аватарыңмен оқу үстеліне отыр, Pomodoro таймері және жайлы фондық дыбыстармен зейін қой.",
+    "tk": "Öz döreden Bitmoji awataryň bilen iş stoluňa geç, Pomodoro wagtyölçeri we rahatlandyryjy gurşaw sesleri bilen ünsüňi jemle.",
+    "ky": "Өзүң түзгөн Bitmoji аватарың менен окуу партаңа өт, Pomodoro таймери жана эс алдыруучу айлана үндөрү менен көңүл бур.",
+    "en": "Take a seat at your desk with your custom Bitmoji avatar, and stay focused with the Pomodoro timer, tasks, and ambient soundscapes."
+  },
+  "navLetters": {
+    "tr": "Mektuplar",
+    "az": "Məktublar",
+    "uz": "Maktublar",
+    "kk": "Хаттар",
+    "tk": "Hatlar",
+    "ky": "Каттар",
+    "en": "Letters"
+  },
+  "navWordGame": {
+    "tr": "Kelime Oyunu",
+    "az": "Söz Oyunu",
+    "uz": "So‘z O‘yini",
+    "kk": "Сөз Ойыны",
+    "tk": "Söz Oýny",
+    "ky": "Сөз Оюну",
+    "en": "Word Game"
+  },
+  "messagingEyebrow": {
+    "tr": "DİJİTAL MEKTUPLAŞMA • SINIR ÖTESİ HABERLEŞME",
+    "az": "RƏQƏMSAL MƏKTUBLAŞMA • SƏRHƏDLƏRARASI XƏBƏRLƏŞMƏ",
+    "uz": "RAQAMLI MAKTUBLASHUV • CHEGARALARARO ALOQA",
+    "kk": "САНДЫҚ ХАТ АЛМАСУ • ШЕКАРААРАЛЫҚ БАЙЛАНЫС",
+    "tk": "SANLY HAT ALYŞYGY • SERHETARA HABARLAŞYK",
+    "ky": "САНАРИП КАТ АЛЫШУУ • ЧЕК АРАСЫЗ БАЙЛАНЫШ",
+    "en": "DIGITAL CORRESPONDENCE • CROSS-BORDER COMMUNICATION"
+  },
+  "Kodlama": {
+    "tr": "Kodlama",
+    "az": "Kodlaşdırma",
+    "uz": "Dasturlash",
+    "kk": "Бағдарламалау",
+    "tk": "Programmirleme",
+    "ky": "Программалоо",
+    "en": "Coding"
+  },
+  "navCultureArchive": {
+    "tr": "Dijital Kültür Arşivi",
+    "az": "Rəqəmsal Mədəniyyət Arxivi",
+    "uz": "Raqamli Madaniyat Arxivi",
+    "kk": "Сандық Мәдениет Мұрағаты",
+    "tk": "Sanly Medeniýet Arhiwi",
+    "ky": "Санарип Маданият Архивы",
+    "en": "Digital Culture Archive"
+  },
+  "donationDone": {
+    "tr": "Bağış tamamlandı.",
+    "az": "İanə tamamlandı.",
+    "uz": "Xayriya yakunlandi.",
+    "kk": "Қайырымдылық жасалды.",
+    "tk": "Hemaýat tamamlandy.",
+    "ky": "Кайрымдуулук аяктады.",
+    "en": "Donation completed."
+  },
+  "sortBy": {
+    "tr": "Sıralama",
+    "az": "Çeşidləmə",
+    "uz": "Saralash",
+    "kk": "Сұрыптау",
+    "tk": "Tertipleme",
+    "ky": "Иреттөө",
+    "en": "Sort by"
+  },
+  "studyEyebrow": {
+    "tr": "DİJİTAL KÜTÜPHANE • ODAKLANMA ALANI",
+    "az": "RƏQƏMSAL KİTABXANA • DİQQƏT MƏRKƏZİ",
+    "uz": "RAQAMLI KUTUBXONA • DIQQAT MARKAZI",
+    "kk": "САНДЫҚ КІТАПХАНА • ЗЕЙІН ҚОЮ АЛАҢЫ",
+    "tk": "SANLY KITAPHANA • ÜNS MERKEZI",
+    "ky": "САНАРИП КИТЕПКАНА • КӨҢҮЛ БУРУУ АЙМАГЫ",
+    "en": "DIGITAL LIBRARY • FOCUS SPACE"
+  },
+  "sealDivanDesc": {
+    "tr": "Mektuplar şehirler arası ortalama uçuş süresinin tam 2 katı sürede teslim edilir. Erken teslim seçeneği bulunmaz.",
+    "az": "Məktublar şəhərlərarası orta uçuş müddətinin düz 2 qatı vaxtda çatdırılır. Erkən çatdırılma seçimi yoxdur.",
+    "uz": "Maktublar shaharlararo o‘rtacha parvoz vaqtining roppa-rosa 2 barobari vaqtida yetkaziladi. Erta yetkazish tanlovi mavjud emas.",
+    "kk": "Хаттар қалааралық орташа ұшу уақытынан тура 2 есе көп уақытта жеткізіледі. Ерте жеткізу таңдауы жоқ.",
+    "tk": "Hatlar şäherara ortaça uçuş wagtynyň dogry 2 esse möhletinde gowşurylýar. Ir gowşurmak saýlawy ýokdur.",
+    "ky": "Каттар шаарлар аралык орточо учуу убактысынан так 2 эсе көп убакытта жеткирилет. Эрте жеткирүү тандоосу жок.",
+    "en": "Letters are delivered in exactly twice the average flight time between cities. Early delivery is not available."
+  },
+  "articlePublished": {
+    "tr": "Yazı yayımlandı.",
+    "az": "Məqalə dərc olundu.",
+    "uz": "Maqola chop etildi.",
+    "kk": "Мақала жарияланды.",
+    "tk": "Makala çap edildi.",
+    "ky": "Макала жарыяланды.",
+    "en": "Article published."
+  },
+  "studyTitle": {
+    "tr": "Sanal Çalışma Odası",
+    "az": "Virtual İş Otağı",
+    "uz": "Virtual O‘qish Xonasi",
+    "kk": "Виртуалды Оқу Бөлмесі",
+    "tk": "Wirtual Okuw Otagy",
+    "ky": "Виртуалдуу Окуу Бөлмөсү",
+    "en": "Virtual Study Room"
+  },
+  "footerDevelopersTitle": {
+    "tr": "Türk Dünyası Beceri Ağı Geliştiricileri",
+    "az": "Türk Dünyası Bacarıq Şəbəkəsi Tərtibatçıları",
+    "uz": "Turk Dunyosi Ko‘nikmalar Tarmog‘i Dasturchilari",
+    "kk": "Түркі Әлемі Дағдылар Желісінің Әзірлеушілері",
+    "tk": "Türk Dünýäsi Başarnyk Ulgamynyň Düzüjileri",
+    "ky": "Түрк Дүйнөсү Көндүмдөр Тармагынын Иштеп Чыгуучулары",
+    "en": "Turkic World Skill Network Developers"
+  },
+  "Gazetecilik": {
+    "tr": "Gazetecilik",
+    "az": "Jurnalistika",
+    "uz": "Jurnalistika",
+    "kk": "Журналистика",
+    "tk": "Žurnalistika",
+    "ky": "Журналистика",
+    "en": "Journalism"
+  },
+  "Müzik": {
+    "tr": "Müzik",
+    "az": "Musiqi",
+    "uz": "Musiqa",
+    "kk": "Музыка",
+    "tk": "Aýdym-saz",
+    "ky": "Музыка",
+    "en": "Music"
+  },
+  "CV hazırlama": {
+    "tr": "CV hazırlama",
+    "az": "CV hazırlama",
+    "uz": "CV tayyorlash",
+    "kk": "Түйіндеме дайындау",
+    "tk": "CV taýýarlamak",
+    "ky": "CV даярдоо",
+    "en": "Resume / CV preparation"
+  },
+  "Türkçe • Tasarım": {
+    "tr": "Türkçe • Tasarım",
+    "az": "Türkcə • Dizayn",
+    "uz": "Turk tili • Dizayn",
+    "kk": "Түрік тілі • Дизайн",
+    "tk": "Türk dili • Dizaýn",
+    "ky": "Түрк тили • Дизайн",
+    "en": "Turkish • Design"
+  },
+  "Pazarlama": {
+    "tr": "Pazarlama",
+    "az": "Marketinq",
+    "uz": "Marketing",
+    "kk": "Маркетинг",
+    "tk": "Marketing",
+    "ky": "Маркетинг",
+    "en": "Marketing"
+  },
+  "Kişisel finans": {
+    "tr": "Kişisel finans",
+    "az": "Şəxsi maliyyə",
+    "uz": "Shaxsiy moliya",
+    "kk": "Жеке қаржы",
+    "tk": "Şahsy maliýe",
+    "ky": "Жеке каржы",
+    "en": "Personal finance"
+  },
+  "Çizim": {
+    "tr": "Çizim",
+    "az": "Rəsm",
+    "uz": "Rasm chizish",
+    "kk": "Сурет салу",
+    "tk": "Surat çekmek",
+    "ky": "Сүрөт тартуу",
+    "en": "Drawing"
+  },
+  "Fotoğrafçılık": {
+    "tr": "Fotoğrafçılık",
+    "az": "Fotoqrafçılıq",
+    "uz": "Fotografiya",
+    "kk": "Фотосурет",
+    "tk": "Fotosuratçylyk",
+    "ky": "Сүрөт тартуу",
+    "en": "Photography"
+  },
+  "Muhasebe": {
+    "tr": "Muhasebe",
+    "az": "Mühasibatlıq",
+    "uz": "Buxgalteriya",
+    "kk": "Бухгалтерлік есеп",
+    "tk": "Hasapçylyk",
+    "ky": "Бухгалтердик эсеп",
+    "en": "Accounting"
+  },
+  "Mülakat becerileri": {
+    "tr": "Mülakat becerileri",
+    "az": "Müsahibə bacarıqları",
+    "uz": "Suhbat ko‘nikmalari",
+    "kk": "Сұхбаттасу дағдылары",
+    "tk": "Söhbetdeşlik endikleri",
+    "ky": "Маектешүү көндүмдөрү",
+    "en": "Interview skills"
+  },
+  "Hukuk": {
+    "tr": "Hukuk",
+    "az": "Hüquq",
+    "uz": "Huquq",
+    "kk": "Құқық",
+    "tk": "Hukuk",
+    "ky": "Укук",
+    "en": "Law"
+  },
+  "Psikoloji": {
+    "tr": "Psikoloji",
+    "az": "Psixologiya",
+    "uz": "Psixologiya",
+    "kk": "Психология",
+    "tk": "Psihologiýa",
+    "ky": "Психология",
+    "en": "Psychology"
+  },
+  "Finans": {
+    "tr": "Finans",
+    "az": "Maliyyə",
+    "uz": "Moliya",
+    "kk": "Қаржы",
+    "tk": "Maliýe",
+    "ky": "Каржы",
+    "en": "Finance"
+  },
+  "Siber güvenlik": {
+    "tr": "Siber güvenlik",
+    "az": "Kibertəhlükəsizlik",
+    "uz": "Kiberxavfsizlik",
+    "kk": "Киберқауіпсіздік",
+    "tk": "Kiberhowpsuzlyk",
+    "ky": "Киберкоопсуздук",
+    "en": "Cybersecurity"
+  },
+  "Spor": {
+    "tr": "Spor",
+    "az": "İdman",
+    "uz": "Sport",
+    "kk": "Спорт",
+    "tk": "Sport",
+    "ky": "Спорт",
+    "en": "Sports"
+  },
+  "El sanatları": {
+    "tr": "El sanatları",
+    "az": "Əl işləri",
+    "uz": "Amaliy sanʼat",
+    "kk": "Қолөнер",
+    "tk": "El işleri",
+    "ky": "Кол өнөрчүлүк",
+    "en": "Handicrafts"
+  },
+  "Araştırma": {
+    "tr": "Araştırma",
+    "az": "Tədqiqat",
+    "uz": "Tadqiqot",
+    "kk": "Зерттеу",
+    "tk": "Gözleg",
+    "ky": "Изилдөө",
+    "en": "Research"
+  },
+  "Matematik": {
+    "tr": "Matematik",
+    "az": "Riyaziyyat",
+    "uz": "Matematika",
+    "kk": "Математика",
+    "tk": "Matematika",
+    "ky": "Математика",
+    "en": "Mathematics"
+  },
+  "Satranç": {
+    "tr": "Satranç",
+    "az": "Şahmat",
+    "uz": "Shaxmat",
+    "kk": "Шахмат",
+    "tk": "Şahmat",
+    "ky": "Шахмат",
+    "en": "Chess"
+  },
+  "Coğrafya": {
+    "tr": "Coğrafya",
+    "az": "Coğrafiya",
+    "uz": "Geografiya",
+    "kk": "География",
+    "tk": "Geografiýa",
+    "ky": "География",
+    "en": "Geography"
+  },
+  "Türkçe • Kültür": {
+    "tr": "Türkçe • Kültür",
+    "az": "Türkcə • Mədəniyyət",
+    "uz": "Turk tili • Madaniyat",
+    "kk": "Түрік тілі • Мәдениет",
+    "tk": "Türk dili • Medeniýet",
+    "ky": "Түрк тили • Маданият",
+    "en": "Turkish • Culture"
+  },
+  "Sosyal medya": {
+    "tr": "Sosyal medya",
+    "az": "Sosial media",
+    "uz": "Ijtimoiy tarmoqlar",
+    "kk": "Әлеуметтік желілер",
+    "tk": "Sosial media",
+    "ky": "Социалдык тармактар",
+    "en": "Social media"
+  },
+  "Oyun geliştirme": {
+    "tr": "Oyun geliştirme",
+    "az": "Oyun inkişafı",
+    "uz": "O‘yin yaratish",
+    "kk": "Ойын әзірлеу",
+    "tk": "Oýun döretmek",
+    "ky": "Оюн иштеп чыгуу",
+    "en": "Game development"
+  },
+  "Sosyoloji": {
+    "tr": "Sosyoloji",
+    "az": "Sosiologiya",
+    "uz": "Sotsiologiya",
+    "kk": "Әлеуметтану",
+    "tk": "Sosiologiýa",
+    "ky": "Социология",
+    "en": "Sociology"
+  },
+  "Elektronik": {
+    "tr": "Elektronik",
+    "az": "Elektronika",
+    "uz": "Elektronika",
+    "kk": "Электроника",
+    "tk": "Elektronika",
+    "ky": "Электроника",
+    "en": "Electronics"
+  },
+  "Şarkı söyleme": {
+    "tr": "Şarkı söyleme",
+    "az": "Mahnı oxuma",
+    "uz": "Qo‘shiq kuylash",
+    "kk": "Ән айту",
+    "tk": "Aýdym aýtmak",
+    "ky": "Ырдоо",
+    "en": "Singing"
+  },
+  "Robotik": {
+    "tr": "Robotik",
+    "az": "Robototexnika",
+    "uz": "Robototexnika",
+    "kk": "Робототехника",
+    "tk": "Robototehnika",
+    "ky": "Робототехника",
+    "en": "Robotics"
+  },
+  "Yemek yapma": {
+    "tr": "Yemek yapma",
+    "az": "Yemək bişirmə",
+    "uz": "Ovqat tayyorlash",
+    "kk": "Тамақ дайындау",
+    "tk": "Nahary taýýarlamak",
+    "ky": "Тамак жасоо",
+    "en": "Cooking"
+  },
+  "Web geliştirme": {
+    "tr": "Web geliştirme",
+    "az": "Veb inkişafı",
+    "uz": "Veb dasturlash",
+    "kk": "Веб әзірлеу",
+    "tk": "Web işläp düzmek",
+    "ky": "Веб иштеп чыгуу",
+    "en": "Web development"
+  },
+  "Örgü": {
+    "tr": "Örgü",
+    "az": "Toxuculuq",
+    "uz": "To‘qish",
+    "kk": "Тоқу",
+    "tk": "Örmek",
+    "ky": "Токуу",
+    "en": "Knitting"
+  },
+  "Proje yönetimi": {
+    "tr": "Proje yönetimi",
+    "az": "Layihələrin idarə edilməsi",
+    "uz": "Loyihalarni boshqarish",
+    "kk": "Жобаларды басқару",
+    "tk": "Taslamalary dolandyrmak",
+    "ky": "Долбоорлорду башкаруу",
+    "en": "Project management"
+  },
+  "Öğretmenlik / eğitim": {
+    "tr": "Öğretmenlik / eğitim",
+    "az": "Müəllimlik / təhsil",
+    "uz": "O‘qituvchilik / taʼlim",
+    "kk": "Мұғалімдік / білім беру",
+    "tk": "Mugallymçylyk / bilim",
+    "ky": "Мугалимдик / билим берүү",
+    "en": "Teaching / education"
+  },
+  "Liderlik": {
+    "tr": "Liderlik",
+    "az": "Liderlik",
+    "uz": "Liderlik",
+    "kk": "Көшбасшылық",
+    "tk": "Liderlik",
+    "ky": "Лидерлик",
+    "en": "Leadership"
+  },
+  "Tarih": {
+    "tr": "Tarih",
+    "az": "Tarix",
+    "uz": "Tarix",
+    "kk": "Тарих",
+    "tk": "Taryh",
+    "ky": "Тарых",
+    "en": "History"
+  },
+  "Dikiş": {
+    "tr": "Dikiş",
+    "az": "Tikiş",
+    "uz": "Tikuvchilik",
+    "kk": "Тігін тігу",
+    "tk": "Tikinçilik",
+    "ky": "Тигүү",
+    "en": "Sewing"
+  },
+  "Enstrüman": {
+    "tr": "Enstrüman",
+    "az": "Musiqi aləti",
+    "uz": "Musiqa asbobi",
+    "kk": "Музыкалық аспап",
+    "tk": "Saz guraly",
+    "ky": "Музыкалык аспап",
+    "en": "Musical instrument"
+  },
+  "Dil • Girişimcilik": {
+    "tr": "Dil • Girişimcilik",
+    "az": "Dil • Sahibkarlıq",
+    "uz": "Til • Tadbirkorlik",
+    "kk": "Тіл • Кәсіпкерлік",
+    "tk": "Dil • Telekeçilik",
+    "ky": "Тил • Ишкердик",
+    "en": "Language • Entrepreneurship"
+  },
+  "Animasyon": {
+    "tr": "Animasyon",
+    "az": "Animasiya",
+    "uz": "Animatsiya",
+    "kk": "Анимация",
+    "tk": "Animasiýa",
+    "ky": "Анимация",
+    "en": "Animation"
+  },
+  "Kazakça • Kodlama": {
+    "tr": "Kazakça • Kodlama",
+    "az": "Qazax dili • Kodlaşdırma",
+    "uz": "Qozoq tili • Dasturlash",
+    "kk": "Қазақ тілі • Кодтау",
+    "tk": "Gazak dili • Kodlaşdyrma",
+    "ky": "Казак тили • Коддоо",
+    "en": "Kazakh • Coding"
+  },
+  "Zaman yönetimi": {
+    "tr": "Zaman yönetimi",
+    "az": "Vaxtın idarə edilməsi",
+    "uz": "Vaqtni boshqarish",
+    "kk": "Уақытты басқару",
+    "tk": "Wagty dolandyrmak",
+    "ky": "Убакытты башкаруу",
+    "en": "Time management"
+  },
+  "İş geliştirme": {
+    "tr": "İş geliştirme",
+    "az": "Biznesin inkişafı",
+    "uz": "Biznesni rivojlantirish",
+    "kk": "Бизнесті дамыту",
+    "tk": "Biznesi ösdürmek",
+    "ky": "Бизнести өнүктүрүү",
+    "en": "Business development"
+  },
+  "Kodlama ve yazılım": {
+    "tr": "Kodlama ve yazılım",
+    "az": "Kodlaşdırma və proqramlaşdırma",
+    "uz": "Kodlash va dasturlash",
+    "kk": "Бағдарламалау және кодтау",
+    "tk": "Kodlaşdyrma we programma üpjünçiligi",
+    "ky": "Программалоо жана код жазуу",
+    "en": "Coding & software"
+  },
+  "Yaratıcı yazarlık": {
+    "tr": "Yaratıcı yazarlık",
+    "az": "Yaradıcı yazıçılıq",
+    "uz": "Ijodiy yozuvchilik",
+    "kk": "Шығармашылық жазу",
+    "tk": "Döredijilikli ýazuw",
+    "ky": "Чыгармачыл жазуу",
+    "en": "Creative writing"
+  },
+  "Video çekimi": {
+    "tr": "Video çekimi",
+    "az": "Video çəkilişi",
+    "uz": "Video suratga olish",
+    "kk": "Бейне түсіру",
+    "tk": "Wideo düşürmek",
+    "ky": "Видео тартуу",
+    "en": "Videography"
+  },
+  "Takım çalışması": {
+    "tr": "Takım çalışması",
+    "az": "Komanda işi",
+    "uz": "Jamoaviy ish",
+    "kk": "Командалық жұмыс",
+    "tk": "Toparlaýyn iş",
+    "ky": "Командалык иш",
+    "en": "Teamwork"
+  },
+  "Dans": {
+    "tr": "Dans",
+    "az": "Rəqs",
+    "uz": "Raqs",
+    "kk": "Би",
+    "tk": "Tans",
+    "ky": "Бий",
+    "en": "Dancing"
+  },
+  "Türkçe • Medya": {
+    "tr": "Türkçe • Medya",
+    "az": "Türkcə • Media",
+    "uz": "Turk tili • Media",
+    "kk": "Түрік тілі • Медиа",
+    "tk": "Türk dili • Media",
+    "ky": "Түрк тили • Медиа",
+    "en": "Turkish • Media"
+  },
+  "Mobil uygulama geliştirme": {
+    "tr": "Mobil uygulama geliştirme",
+    "az": "Mobil tətbiq inkişafı",
+    "uz": "Mobil ilovalar yaratish",
+    "kk": "Мобильді қосымша әзірлеу",
+    "tk": "Mobil goşundy işläp düzmek",
+    "ky": "Мобилдик тиркеме иштеп чыгуу",
+    "en": "Mobile app development"
+  },
+  "İletişim": {
+    "tr": "İletişim",
+    "az": "Ünsiyyət",
+    "uz": "Muloqot",
+    "kk": "Қарым-қатынас",
+    "tk": "Aragatnaşyk",
+    "ky": "Баарлашуу",
+    "en": "Communication"
+  },
+  "Fen bilimleri": {
+    "tr": "Fen bilimleri",
+    "az": "Təbiət elmləri",
+    "uz": "Tabiiy fanlar",
+    "kk": "Жаратылыстану ғылымдары",
+    "tk": "Tebigat ylymlary",
+    "ky": "Табигый илимдер",
+    "en": "Natural sciences"
+  },
+  "İçerik üretimi": {
+    "tr": "İçerik üretimi",
+    "az": "Məzmun yaradılması",
+    "uz": "Kontent yaratish",
+    "kk": "Мазмұн жасау",
+    "tk": "Mazmun döretmek",
+    "ky": "Мазмун түзүү",
+    "en": "Content creation"
+  },
+  "Kariyer planlama": {
+    "tr": "Kariyer planlama",
+    "az": "Karyera planlaşdırılması",
+    "uz": "Karyerani rejalashtirish",
+    "kk": "Мансапты жоспарлау",
+    "tk": "Kärýerany meýilleşdirmek",
+    "ky": "Карьераны пландаштыруу",
+    "en": "Career planning"
+  },
+  "İllüstrasyon": {
+    "tr": "İllüstrasyon",
+    "az": "İllüstrasiya",
+    "uz": "Illustratsiya",
+    "kk": "Иллюстрация",
+    "tk": "Illustrasiýa",
+    "ky": "Иллюстрация",
+    "en": "Illustration"
+  },
+  "Fitness": {
+    "tr": "Fitness",
+    "az": "Fitnes",
+    "uz": "Fitnes",
+    "kk": "Фитнес",
+    "tk": "Fitnes",
+    "ky": "Фитнес",
+    "en": "Fitness"
+  },
+  "UI/UX tasarım": {
+    "tr": "UI/UX tasarım",
+    "az": "UI/UX dizaynı",
+    "uz": "UI/UX dizayn",
+    "kk": "UI/UX дизайны",
+    "tk": "UI/UX dizaýny",
+    "ky": "UI/UX дизайны",
+    "en": "UI/UX design"
+  },
+  "Excel • İngilizce": {
+    "tr": "Excel • İngilizce",
+    "az": "Excel • İngilis dili",
+    "uz": "Excel • Ingliz tili",
+    "kk": "Excel • Ағылшын тілі",
+    "tk": "Excel • Iňlis dili",
+    "ky": "Excel • Англис тили",
+    "en": "Excel • English"
+  },
+  "Yapay zekâ": {
+    "tr": "Yapay zekâ",
+    "az": "Süni intellekt",
+    "uz": "Sunʼiy intellekt",
+    "kk": "Жасанды интеллект",
+    "tk": "Emeli aň",
+    "ky": "Жасалма интеллект",
+    "en": "Artificial intelligence"
+  },
+  "Kırmızı renk şehitlerimizin kanını, hilal ve yıldız ise bağımsızlığı ve Türklüğü simgeler.": {
+    "tr": "Kırmızı renk şehitlerimizin kanını, hilal ve yıldız ise bağımsızlığı ve Türklüğü simgeler.",
+    "az": "Qırmızı rəng şəhidlərimizin qanını, aypara və ulduz isə müstəqilliyi və türklüyü simvollaşdırır.",
+    "uz": "Qizil rang shahidlarimiz qonini, hilol va yulduz esa mustaqillik hamda turkiylikni anglatadi.",
+    "kk": "Қызыл түс шәһидтеріміздің қанын, жарты ай мен жұлдыз тәуелсіздік пен түркілікті білдіреді.",
+    "tk": "Gyzyl reňk şehitlerimiziň ganyny, ýarymaý we ýyldyz bolsa garaşsyzlygy we türkligi aňladýar.",
+    "ky": "Кызыл түс шейиттерибиздин канын, жарым ай менен жылдыз эгемендикти жана түрктүктү билдирет.",
+    "en": "The red represents the blood of our martyrs, while the crescent and star represent independence and Turkish identity."
+  },
+  "Mavi Türklüğü, kırmızı çağdaşlaşmayı, yeşil İslamiyet'i temsil eder. 8 köşeli yıldız, Türk boylarının sekiz kolunu ifade eder.": {
+    "tr": "Mavi Türklüğü, kırmızı çağdaşlaşmayı, yeşil İslamiyet'i temsil eder. 8 köşeli yıldız, Türk boylarının sekiz kolunu ifade eder.",
+    "az": "Mavi türklüyü, qırmızı müasirləşməni, yaşıl İslamı təmsil edir. 8 guşəli ulduz türk tayfalarının səkkiz qolunu ifadə edir.",
+    "uz": "Ko‘k rang turkiylikni, qizil zamonaviylikni, yashil islomni anglatadi. 8 qirrali yulduz turkiy qabilalarning sakkiz tarmog‘ini bildiradi.",
+    "kk": "Көк түс түркілікті, қызыл жаңғыруды, жасыл Исламды білдіреді. Сегіз бұрышты жұлдыз түркі руларының сегіз тармағын сипаттайды.",
+    "tk": "Mawy reňk türkligi, gyzyl döwrebaplygy, ýaşyl Yslamy aňladýar. Sekizburçly ýyldyz türkmen we türki taýpalaryny alamatlandyrýar.",
+    "ky": "Көк түс түрктүктү, кызыл заманбаптыкты, жашыл Исламды билдирет. Сегиз бурчтуу жылдыз түрк урууларынын сегиз тармагын чагылдырат.",
+    "en": "Blue represents Turkic identity, red modernisation, and green Islam. The eight-pointed star represents the eight branches of the Turkic tribes."
+  },
+  "Gök mavisi sonsuz gökyüzünü ve barışı, güneş bereketi, uçan bozkır kartalı ise özgürlüğü ve gücü temsil eder.": {
+    "tr": "Gök mavisi sonsuz gökyüzünü ve barışı, güneş bereketi, uçan bozkır kartalı ise özgürlüğü ve gücü temsil eder.",
+    "az": "Göy mavisi sonsuz səmanı və sülhü, günəş bərəkəti, uçan çöl qartalı isə azadlığı və gücü təmsil edir.",
+    "uz": "Osmonrang cheksiz osmon va tinchlikni, quyosh barakani, uchayotgan dasht burguti esa erkinlik va kuchni anglatadi.",
+    "kk": "Көгілдір түс ашық аспан мен бейбітшілікті, күн берекені, қыран бүркіт еркіндік пен қуатты білдіреді.",
+    "tk": "Gök mawy asmany we parahatçylygy, gün berekedi, sähra bürgüdi bolsa azatlygy we güýji alamatlandyrýar.",
+    "ky": "Көгүлтүр түс ачык асман менен тынчтыкты, күн берекени, бүркүт эркиндик менен күчтү билдирет.",
+    "en": "Sky blue represents the endless sky and peace, the sun abundance, and the steppe eagle freedom and strength."
+  },
+  "Kırmızı cesareti, 40 ışınlı güneş Manas'ın birleştirdiği 40 boyu, ortadaki motif ise Kırgız çadırının (Yurt) tavanını (tündük) simgeler.": {
+    "tr": "Kırmızı cesareti, 40 ışınlı güneş Manas'ın birleştirdiği 40 boyu, ortadaki motif ise Kırgız çadırının (Yurt) tavanını (tündük) simgeler.",
+    "az": "Qırmızı cəsarəti, 40 şüalı günəş Manasın birləşdirdiyi 40 tayfanı, ortadakı motiv isə qırğız çadırının (yurdun) tavanını simvollaşdırır.",
+    "uz": "Qizil jasoratni, 40 nurli quyosh Manas birlashtirgan 40 urug‘ni, markazdagi belgi esa qirg‘iz o‘tovining tomini anglatadi.",
+    "kk": "Қызыл түс ерлікті, 40 сәулелі күн Манас біріктірген 40 руды, ортасындағы өрнек киіз үй шаңырағын (түндік) білдіреді.",
+    "tk": "Gyzyl reňk edermenligi, 40 şöhleli gün Manasyň birleşdiren 40 taýpasyny, ortadaky nagyş bolsa gyrgyz çadyrynyň (tündük) tammyny aňladýar.",
+    "ky": "Кызыл эрдикти, 40 нурлуу күн Манас бириктирген 40 урууну, ортодогу оймо боз үйдүн түндүгүн чагылдырат.",
+    "en": "Red represents courage, the 40-rayed sun the 40 tribes united by Manas, and the central motif the roof (tunduk) of a Kyrgyz yurt."
+  },
+  "Mavi gökyüzünü, beyaz barışı, yeşil doğayı simgeler. Hilal yeni cumhuriyeti, 12 yıldız ise 12 ayı ve kadim astronomiyi ifade eder.": {
+    "tr": "Mavi gökyüzünü, beyaz barışı, yeşil doğayı simgeler. Hilal yeni cumhuriyeti, 12 yıldız ise 12 ayı ve kadim astronomiyi ifade eder.",
+    "az": "Mavi səmanı, ağ sülhü, yaşıl təbiəti simvollaşdırır. Aypara yeni respublikanı, 12 ulduz isə 12 ayı və qədim astronomiyanı ifadə edir.",
+    "uz": "Ko‘k rang osmonni, oq rang tinchlikni, yashil tabiatni anglatadi. Hilol yangi respublikani, 12 yulduz esa 12 oyni va qadimiy astronomiyani bildiradi.",
+    "kk": "Көгілдір түс аспанды, ақ түс бейбітшілікті, жасыл түс табиғатты білдіреді. Жарты ай жаңа республиканы, 12 жұлдыз 12 ай мен көне астрономияны сипаттайды.",
+    "tk": "Mawy reňk asmany, ak parahatçylygy, ýaşyl tebigaty aňladýar. Ýarymaý täze respublikany, 12 ýyldyz 12 aýy we gadymy astronomiýany alamatlandyrýar.",
+    "ky": "Көк түс асманды, ак тынчтыкты, жашыл жаратылышты билдирет. Жарым ай жаңы республиканы, 12 жылдыз 12 айды жана байыркы астрономияны чагылдырат.",
+    "en": "Blue represents the sky, white peace, and green nature. The crescent represents the new republic, and the 12 stars the 12 months and ancient astronomy."
+  },
+  "Yeşil renk ve hilal İslam'ı ve umudu temsil eder. 5 farklı halı deseni ülkedeki 5 ana Türkmen boyunu simgeler.": {
+    "tr": "Yeşil renk ve hilal İslam'ı ve umudu temsil eder. 5 farklı halı deseni ülkedeki 5 ana Türkmen boyunu simgeler.",
+    "az": "Yaşıl rəng və aypara İslamı və ümidi təmsil edir. 5 fərqli xalça naxışı ölkədəki 5 əsas türkmən tayfasını ifadə edir.",
+    "uz": "Yashil rang va hilol islom hamda umidni bildiradi. 5 xil gilam guli mamlakatdagi 5 asosiy turkman qabilasini anglatadi.",
+    "kk": "Жасыл түс пен жарты ай Ислам мен үмітті білдіреді. 5 түрлі кілем өрнегі елдегі 5 негізгі түрікмен руын сипаттайды.",
+    "tk": "Ýaşyl reňk we ýarymaý Yslamy we umydy alamatlandyrýar. 5 dürli haly göli ýurtdaky 5 esasy türkmen taýpasyny aňladýar.",
+    "ky": "Жашыл түс жана жарым ай Ислам менен үмүттү билдирет. 5 түрдүү килем оюму өлкөдөгү 5 негизги түркмөн уруусун чагылдырат.",
+    "en": "The green colour and crescent represent Islam and hope. The 5 carpet motifs represent the 5 main Turkmen tribes."
+  },
+  "Beyaz barışı, kırmızı hilal ve yıldız Türklüğü temsil eder. Çizgiler ise Türkiye'nin koruyuculuğunu ve Kıbrıs Türkü'nün sonsuz varlığını simgeler.": {
+    "tr": "Beyaz barışı, kırmızı hilal ve yıldız Türklüğü temsil eder. Çizgiler ise Türkiye'nin koruyuculuğunu ve Kıbrıs Türkü'nün sonsuz varlığını simgeler.",
+    "az": "Ağ sülhü, qırmızı aypara və ulduz türklüyü təmsil edir. Zolaqlar isə Türkiyənin himayədarlığını və Kipr türkünün əbədi varlığını simvollaşdırır.",
+    "uz": "Oq rang tinchlikni, qizil hilol va yulduz turkiylikni anglatadi. Chiziqlar esa Turkiyaning homiyligini va Kipr turklarining abadiy mavjudligini bildiradi.",
+    "kk": "Ақ түс бейбітшілікті, қызыл жарты ай мен жұлдыз түркілікті білдіреді. Сызықтар Түркияның қорғауын және Кипр түріктерінің мәңгілік болмысын сипаттайды.",
+    "tk": "Ak reňk parahatçylygy, gyzyl ýarymaý we ýyldyz türkligi aňladýar. Çyzyklar Türkiýäniň goraýjysyny we Kipr türkiniň ebedi barlygyny alamatlandyrýar.",
+    "ky": "Ак түс тынчтыкты, кызыл жарым ай менен жылдыз түрктүктү билдирет. Сызыктар Түркиянын коргоосун жана Кипр түркүнүн түбөлүктүү бар экендигин чагылдырат.",
+    "en": "White represents peace, and the red crescent and star Turkish identity. The bars symbolise Türkiye's guardianship and the eternal existence of the Turkish Cypriot people."
+  },
+  "Excel": {
+    "tr": "Excel",
+    "az": "Excel",
+    "uz": "Excel",
+    "kk": "Excel",
+    "tk": "Excel",
+    "ky": "Excel",
+    "en": "Excel"
+  },
+  "Veri Analizi": {
+    "tr": "Veri Analizi",
+    "az": "Məlumatların analizi",
+    "uz": "Maʼlumotlar tahlili",
+    "kk": "Деректерді талдау",
+    "tk": "Maglumatlar derňewi",
+    "ky": "Маалыматтарды талдоо",
+    "en": "Data analysis"
+  },
+  "flagCardAriaTK": {
+    "tr": "Türkmenistan bayrağı kartı",
+    "az": "Türkmənistan bayrağı kartı",
+    "uz": "Turkmaniston bayrog‘i kartasi",
+    "kk": "Түрікменстан байрағы картасы",
+    "tk": "Türkmenistan baýdagy kartasy",
+    "ky": "Түркмөнстан желегинин картасы",
+    "en": "Flag of Turkmenistan card"
+  },
+  "flagCardAriaUZ": {
+    "tr": "Özbekistan bayrağı kartı",
+    "az": "Özbəkistan bayrağı kartı",
+    "uz": "O‘zbekiston bayrog‘i kartasi",
+    "kk": "Өзбекстан байрағы картасы",
+    "tk": "Özbegistan baýdagy kartasy",
+    "ky": "Өзбекстан желегинин картасы",
+    "en": "Flag of Uzbekistan card"
+  },
+  "reviewMatchLabel": {
+    "tr": "Eşleşme:",
+    "az": "Uyğunlaşma:",
+    "uz": "Moslashuv:",
+    "kk": "Сәйкестік:",
+    "tk": "Gabatlaşma:",
+    "ky": "Дал келүү:",
+    "en": "Match:"
+  },
+  "flagCardAriaKY": {
+    "tr": "Kırgızistan bayrağı kartı",
+    "az": "Qırğızıstan bayrağı kartı",
+    "uz": "Qirg‘iziston bayrog‘i kartasi",
+    "kk": "Қырғызстан байрағы картасы",
+    "tk": "Gyrgyzystan baýdagy kartasy",
+    "ky": "Кыргызстан желегинин картасы",
+    "en": "Flag of Kyrgyzstan card"
+  },
+  "flagCardAriaKK": {
+    "tr": "Kazakistan bayrağı kartı",
+    "az": "Qazaxıstan bayrağı kartı",
+    "uz": "Qozog‘iston bayrog‘i kartasi",
+    "kk": "Қазақстан байрағы картасы",
+    "tk": "Gazagystan baýdagy kartasy",
+    "ky": "Казакстан желегинин картасы",
+    "en": "Flag of Kazakhstan card"
+  },
+  "reviewDateLabel": {
+    "tr": "Tarih:",
+    "az": "Tarix:",
+    "uz": "Sana:",
+    "kk": "Күні:",
+    "tk": "Sene:",
+    "ky": "Күнү:",
+    "en": "Date:"
+  },
+  "Video Düzenleme": {
+    "tr": "Video Düzenleme",
+    "az": "Video redaktəsi",
+    "uz": "Video montaj",
+    "kk": "Видео монтаждау",
+    "tk": "Wideo redaktirlemek",
+    "ky": "Видео монтаждоо",
+    "en": "Video editing"
+  },
+  "Python": {
+    "tr": "Python",
+    "az": "Python",
+    "uz": "Python",
+    "kk": "Python",
+    "tk": "Python",
+    "ky": "Python",
+    "en": "Python"
+  },
+  "reviewCommentStaticLabel": {
+    "tr": "Yorum:",
+    "az": "Rəy:",
+    "uz": "Sharh:",
+    "kk": "Пікір:",
+    "tk": "Syn:",
+    "ky": "Пикир:",
+    "en": "Review:"
+  },
+  "reviewScoreLabel": {
+    "tr": "Puan:",
+    "az": "Xal:",
+    "uz": "Ball:",
+    "kk": "Ұпай:",
+    "tk": "Bal:",
+    "ky": "Упай:",
+    "en": "Score:"
+  },
+  "factTickerAria": {
+    "tr": "Biliyor muydunuz? bilgi şeridi",
+    "az": "Bilirsinizmi? məlumat lenti",
+    "uz": "Bilasizmi? maʼlumot tasmasi",
+    "kk": "Білесіз бе? ақпараттық жолағы",
+    "tk": "Bilýärsiňizmi? maglumat zolagy",
+    "ky": "Билчү белеңиз? маалымат тилкеси",
+    "en": "Did you know? information ticker"
+  },
+  "flagCardAriaTR": {
+    "tr": "Türkiye bayrağı kartı",
+    "az": "Türkiyə bayrağı kartı",
+    "uz": "Turkiya bayrog‘i kartasi",
+    "kk": "Түркия байрағы картасы",
+    "tk": "Türkiýe baýdagy kartasy",
+    "ky": "Түркия желегинин картасы",
+    "en": "Flag of Türkiye card"
+  },
+  "flagCardsAria": {
+    "tr": "Dönen bayrak kartları",
+    "az": "Fırlanan bayraq kartları",
+    "uz": "Aylanuvchi bayroq kartalari",
+    "kk": "Айналмалы байрақ карталары",
+    "tk": "Aýlanýan baýdak kartlary",
+    "ky": "Айлануучу желек карталары",
+    "en": "Rotating flag cards"
+  },
+  "flagCardAriaKKTC": {
+    "tr": "Kuzey Kıbrıs Türk Cumhuriyeti bayrağı kartı",
+    "az": "Şimali Kipr Türk Respublikası bayrağı kartı",
+    "uz": "Shimoliy Kipr Turk Respublikasi bayrog‘i kartasi",
+    "kk": "Солтүстік Кипр Түрік Республикасы байрағы картасы",
+    "tk": "Demirgazyk Kipr Türk Respublikasy baýdagy kartasy",
+    "ky": "Түндүк Кипр Түрк Республикасы желегинин картасы",
+    "en": "Flag of Turkish Republic of Northern Cyprus card"
+  },
+  "Sunum ve Hitabet": {
+    "tr": "Sunum ve Hitabet",
+    "az": "Təqdimat və natiqlik",
+    "uz": "Taqdimot va notiqlik",
+    "kk": "Таныстырылым және шешендік",
+    "tk": "Tanyşdyryş we çeper söz",
+    "ky": "Презентация жана чечендик өнөр",
+    "en": "Presentation and public speaking"
+  },
+  "flagCardAriaAZ": {
+    "tr": "Azerbaycan bayrağı kartı",
+    "az": "Azərbaycan bayrağı kartı",
+    "uz": "Ozarbayjon bayrog‘i kartasi",
+    "kk": "Әзербайжан байрағы картасы",
+    "tk": "Azerbaýjan baýdagy kartasy",
+    "ky": "Азербайжан желегинин картасы",
+    "en": "Flag of Azerbaijan card"
+  },
+  "Akademik Yazım": {
+    "tr": "Akademik Yazım",
+    "az": "Akademik yazı",
+    "uz": "Akademik yozuv",
+    "kk": "Академиялық жазу",
+    "tk": "Akademiki ýazuw",
+    "ky": "Академиялык жазуу",
+    "en": "Academic writing"
   }
 }

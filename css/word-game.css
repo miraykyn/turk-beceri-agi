@@ -393,14 +393,17 @@
   margin-bottom: 16px;
 }
 
-.wg-friend-input-row {
+.wg-friend-input-row,
+.wg-lobby-invite-row {
   display: flex;
   gap: 8px;
   margin-top: 8px;
+  align-items: center;
 }
 
 .wg-friend-input {
   flex: 1;
+  min-width: 0;
   border: 1.5px solid #cbd5e1;
   border-radius: 11px;
   padding: 10px 13px;
@@ -409,12 +412,23 @@
   color: #102343;
   background: #ffffff;
   text-transform: uppercase;
+  box-sizing: border-box;
 }
 
 .wg-friend-input:focus {
   border-color: #f5b942;
   outline: none;
   box-shadow: 0 0 0 3px rgba(245, 185, 66, 0.25);
+}
+
+.wg-friend-input-row #wgBtnJoinByCode,
+.wg-lobby-invite-row #wgBtnLobbyInviteId {
+  width: auto;
+  padding: 10px 18px;
+  font-size: 13.5px;
+  font-weight: 750;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .wg-btn-primary {
@@ -1341,7 +1355,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 680px) {
   .word-game-section {
     padding: 24px 4% 36px;
   }
@@ -1361,14 +1375,35 @@
     padding: 18px 16px;
     border-radius: 18px;
   }
-  .wg-room-join-row {
-    flex-direction: column;
-    align-items: stretch;
+  .wg-room-join-row,
+  .wg-friend-input-row,
+  .wg-lobby-invite-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+    width: 100% !important;
   }
-  .wg-room-code-input {
-    font-size: 16px;
-    min-height: 44px;
-    width: 100%;
+  .wg-room-code-input,
+  .wg-friend-input {
+    font-size: 14px !important;
+    min-height: 44px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+  }
+  .wg-friend-input-row #wgBtnJoinByCode,
+  .wg-lobby-invite-row #wgBtnLobbyInviteId {
+    width: 100% !important;
+    min-height: 44px !important;
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+    margin: 0 !important;
   }
   .wg-room-code-banner {
     padding: 16px;

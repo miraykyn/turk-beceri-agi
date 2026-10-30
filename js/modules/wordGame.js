@@ -1540,7 +1540,7 @@ window.TDAWordGame = (function() {
                   maxlength="24"
                   autocomplete="off"
                 />
-                <button type="button" class="wg-btn-navy" id="wgBtnJoinByCode" style="width:auto;padding:10px 16px;white-space:nowrap;">
+                <button type="button" class="wg-btn-navy" id="wgBtnJoinByCode">
                   Maça Bağlan →
                 </button>
               </div>
@@ -1679,9 +1679,9 @@ window.TDAWordGame = (function() {
                 <strong style="font-size:13.5px;color:#102343;">⚡ Arkadaş ID'si ile Doğrudan Odaya Davet Et:</strong>
                 <div style="font-size:12px;color:#64748b;">Arkadaşının Oyuncu ID'sini yazabilir veya çevrim içi arkadaş listesinden seçebilirsin.</div>
               </div>
-              <div style="display:flex;gap:8px;flex:1;max-width:420px;">
+              <div class="wg-lobby-invite-row" style="display:flex;gap:8px;flex:1;max-width:420px;">
                 <input type="text" id="wgLobbyInviteIdInput" class="wg-friend-input" placeholder="Arkadaş ID gir (Örn: TDA-KZ-301)" style="padding:8px 12px;font-size:13px;" />
-                <button type="button" class="wg-btn-navy" id="wgBtnLobbyInviteId" style="width:auto;padding:8px 14px;font-size:13px;white-space:nowrap;">
+                <button type="button" class="wg-btn-navy" id="wgBtnLobbyInviteId">
                   + Odaya Davet Et
                 </button>
               </div>

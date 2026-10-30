@@ -513,6 +513,7 @@ window.TDACultureArchive = (function() {
                  alt="${escapeHtml(item.caption)}"
                  class="culture-card-img"
                  loading="lazy"
+                 decoding="async"
                  referrerpolicy="no-referrer"
                  data-fallback-caption="${escapeHtml(item.caption)}"
                  data-fallback-country="${escapeHtml(item.country)}"/>

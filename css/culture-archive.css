@@ -299,25 +299,34 @@
   aspect-ratio: 4 / 3;
   overflow: hidden;
   background: linear-gradient(135deg, #162a4a, #244370);
+  border-top-left-radius: 17px;
+  border-top-right-radius: 17px;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 .culture-card-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
-  transform: scale(1);
+  transform: scale(1) translateZ(0);
+  -webkit-transform: scale(1) translateZ(0);
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
-  will-change: transform;
+  will-change: transform, filter;
   image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-  filter: contrast(1.05) brightness(1.02) saturate(1.04);
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  filter: contrast(1.04) brightness(1.02) saturate(1.03);
 }
 
 .culture-card:hover .culture-card-img,
 .culture-card:focus-visible .culture-card-img {
-  transform: scale(1.09);
-  filter: contrast(1.08) brightness(1.04) saturate(1.08);
+  transform: scale(1.08) translateZ(0);
+  -webkit-transform: scale(1.08) translateZ(0);
+  filter: contrast(1.07) brightness(1.04) saturate(1.06);
 }
 
 /* Kart Üzeri Ülke Rozeti ve Büyütme İkonu */
@@ -850,8 +859,15 @@
     font-size: 13px;
   }
   .culture-gallery-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 16px;
+  }
+  .culture-card-media {
+    aspect-ratio: 16 / 10;
+  }
+  .culture-card-img {
+    image-rendering: auto;
+    filter: contrast(1.05) brightness(1.02);
   }
   .culture-modal-backdrop {
     padding: 10px;

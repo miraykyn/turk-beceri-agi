@@ -19,7 +19,7 @@
 </head>
 <body>
 <header id="siteHeader">
-  <a href="#home" class="logo" id="siteLogoLink" aria-label="Türk Dünyası Beceri Ağı">
+  <a href="#home" class="logo" id="siteLogoLink" aria-label="Türk Dünyası Beceri Ağı" data-i18n-aria="siteLogoAria">
     <span class="logo-text-lead" data-i18n="logoLead">TÜRK DÜNYASI</span>
     <span class="logo-text-tail" data-i18n="logoTail">BECERİ AĞI</span>
   </a>
@@ -30,8 +30,8 @@
       <a href="#eslesme" data-i18n="navMatching">Eşleşme</a>
       <a href="#topluluk" data-i18n="navCommunity">Topluluk</a>
       <a href="#makaleler" data-i18n="navArticles">Makaleler</a>
-      <a href="#mektuplar" class="nav-mektuplar-link" data-i18n="navLetters"><img src="assets/images/mektup-ikon.png" alt="Mektuplar" class="nav-mektup-icon"><span>Mektuplar</span><span class="nav-mektup-badge" id="navUnreadBadge" style="display:none">0</span></a>
-      <a href="#calisma-odasi" class="nav-study-link" data-i18n="navStudy"><span class="nav-study-icon" aria-hidden="true">🎧</span><span>Çalışma Odası</span></a>
+      <a href="#mektuplar" class="nav-mektuplar-link"><img src="assets/images/mektup-ikon.png" alt="Mektuplar" class="nav-mektup-icon"><span data-i18n="navLetters">Mektuplar</span><span class="nav-mektup-badge" id="navUnreadBadge" style="display:none">0</span></a>
+      <a href="#calisma-odasi" class="nav-study-link"><span class="nav-study-icon" aria-hidden="true">🎧</span><span data-i18n="navStudy">Çalışma Odası</span></a>
       <a href="#kelime-oyunu" data-i18n="navWordGame">Kelime Oyunu</a>
       <a href="#kultur-arsivi" data-i18n="navCultureArchive">Dijital Kültür Arşivi</a>
       <div class="auth-actions">
@@ -52,8 +52,8 @@
       </select>
     </div>
     <div class="mobile-header-actions">
-      <button aria-label="Dijital Mektuplaşma" class="mobile-mail-btn" id="mobileMailBtn" title="Dijital Mektuplaşma" type="button">
-        <img alt="Dijital Mektuplaşma" class="mobile-mail-img" src="assets/images/mektup-ikon.png"/>
+      <button aria-label="Mektuplar" class="mobile-mail-btn" id="mobileMailBtn" title="Mektuplar" data-i18n-aria="navLetters" data-i18n-title="navLetters" type="button">
+        <img alt="Mektuplar" class="mobile-mail-img" src="assets/images/mektup-ikon.png"/>
         <span class="mobile-mail-badge" id="mobileMailUnreadBadge" style="display:none">0</span>
       </button>
       <button aria-controls="mainNav" aria-expanded="false" aria-label="Menüyü aç" data-i18n-aria="menuOpenAria" class="menu-toggle" id="menuToggle" type="button">☰</button>
@@ -255,7 +255,7 @@
         Gösterilen: <strong>Tüm Türk Dünyası (35 fotoğraf)</strong>
       </div>
     </div>
-    <div class="culture-country-bar" id="cultureCountryBar" role="toolbar" aria-label="Ülke filtreleme butonları">
+    <div class="culture-country-bar" id="cultureCountryBar" role="toolbar" aria-label="Ülke filtreleme butonları" data-i18n-aria="cultureFilterToolbarAria">
       <!-- cultureArchive.js tarafından dinamik olarak oluşturulur -->
     </div>
   </div>
@@ -311,7 +311,7 @@
 
     <button class="btn-avatar-studio-sidebar" id="btnOpenAvatarStudio" type="button">
       <span class="avatar-studio-icon">🎨</span>
-      <span>Bitmoji Avatarını Tasarla</span>
+      <span data-i18n="btnAvatarStudioSidebar">Bitmoji Avatarını Tasarla</span>
     </button>
 
     <hr class="mailbox-divider"/>
@@ -333,10 +333,10 @@
       <div class="mailbox-pane-header">
         <div>
           <h3 data-i18n="inbox">Gelen Kutusu</h3>
-          <p class="muted">Diğer Türk devletlerindeki mektup arkadaşlarınızdan gelen mühürlü mektuplar.</p>
+          <p class="muted" data-i18n="inboxSubtitle">Diğer Türk devletlerindeki mektup arkadaşlarınızdan gelen mühürlü mektuplar.</p>
         </div>
         <div class="mailbox-search-box">
-          <input autocomplete="off" id="mektupSearchInput" placeholder="Mektup veya arkadaş ara..." type="search"/>
+          <input autocomplete="off" id="mektupSearchInput" placeholder="Mektup veya arkadaş ara..." data-i18n-placeholder="searchPlaceholderMektup" type="search"/>
         </div>
       </div>
       <div class="letter-list" id="inboxLetterList"></div>
@@ -360,17 +360,17 @@
       <div class="compose-step-nav">
         <div class="compose-step-item active" data-step="1">
           <span class="compose-step-num">1</span>
-          <span>Ülke Seç</span>
+          <span data-i18n="step1Label">Ülke Seç</span>
         </div>
         <span class="compose-step-sep">➔</span>
         <div class="compose-step-item" data-step="2">
           <span class="compose-step-num">2</span>
-          <span>Mektup Arkadaşı Seç</span>
+          <span data-i18n="step2Label">Mektup Arkadaşı Seç</span>
         </div>
         <span class="compose-step-sep">➔</span>
         <div class="compose-step-item" data-step="3">
           <span class="compose-step-num">3</span>
-          <span>Mektubu Yaz & Postala</span>
+          <span data-i18n="step3Label">Mektubu Yaz & Postala</span>
         </div>
       </div>
 
@@ -378,10 +378,10 @@
       <div id="composeStep1">
         <div class="mailbox-pane-header" style="margin-bottom:14px;">
           <div>
-            <h3 style="font-size:17px;color:#102343;">1. Aşama: Mektup Göndermek İstediğiniz Ülkeyi Seçiniz</h3>
-            <p class="muted">Mektup arkadaşı edinmek istediğiniz Türk devletini belirleyiniz.</p>
+            <h3 style="font-size:17px;color:#102343;" data-i18n="step1Title">1. Aşama: Mektup Göndermek İstediğiniz Ülkeyi Seçiniz</h3>
+            <p class="muted" data-i18n="step1Desc">Mektup arkadaşı edinmek istediğiniz Türk devletini belirleyiniz.</p>
           </div>
-          <button class="ghost-btn" id="btnCancelCompose" type="button">Vazgeç</button>
+          <button class="ghost-btn" id="btnCancelCompose" type="button" data-i18n="cancel">Vazgeç</button>
         </div>
         <div class="country-selection-grid" id="countrySelectionGrid"></div>
       </div>
@@ -390,8 +390,8 @@
       <div id="composeStep2" style="display:none">
         <div class="mailbox-pane-header" style="margin-bottom:14px;">
           <div>
-            <h3 id="step2CountryTitle" style="font-size:17px;color:#102343;">Potansiyel Mektup Arkadaşları</h3>
-            <p class="muted">Kesinlikle gerçek fotoğraf kullanılmaz; tüm profiller Bitmoji tarzı çizim karakterlerdir.</p>
+            <h3 id="step2CountryTitle" style="font-size:17px;color:#102343;" data-i18n="step2Title">Potansiyel Mektup Arkadaşları</h3>
+            <p class="muted" data-i18n="step2Desc">Kesinlikle gerçek fotoğraf kullanılmaz; tüm profiller Bitmoji tarzı çizim karakterlerdir.</p>
           </div>
         </div>
         <div class="penpal-profile-grid" id="penpalProfileGrid"></div>
@@ -408,8 +408,8 @@
           <!-- Kağıt Seçimi: SADELEŞTİRİLMİŞ 2 SEÇENEK (Düz Beyaz Kağıt & Eskitilmiş Kağıt) -->
           <div style="margin-bottom:16px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-              <strong style="font-size:13px;color:#102343;">1. Mektup Kağıdı Seçimi</strong>
-              <small class="muted">Sade Düz Beyaz veya Tarihi Parşömen dokusu</small>
+              <strong style="font-size:13px;color:#102343;" data-i18n="paperThemeChoice">1. Mektup Kağıdı Seçimi</strong>
+              <small class="muted" data-i18n="paperThemeDesc">Sade Düz Beyaz veya Tarihi Parşömen dokusu</small>
             </div>
             <div class="paper-theme-selector-dual" id="paperThemeSelector"></div>
           </div>
@@ -421,14 +421,14 @@
                 <div class="stamp-summary-thumb" id="stampSummaryThumb"></div>
                 <div>
                   <div style="display:flex;align-items:center;gap:8px;">
-                    <strong style="font-size:13px;color:#102343;">2. Posta Pulu Seçimi:</strong>
-                    <span class="free-stamp-badge">Ücretsiz Kültür Pulu</span>
+                    <strong style="font-size:13px;color:#102343;" data-i18n="stampChoiceTitle">2. Posta Pulu Seçimi:</strong>
+                    <span class="free-stamp-badge" data-i18n="stampBadgeFree">Ücretsiz Kültür Pulu</span>
                   </div>
                   <div id="selectedStampTitle" style="font-size:12.5px;color:#8c5d00;font-weight:800;margin-top:2px;"></div>
                 </div>
               </div>
               <button type="button" class="btn-toggle-stamp-drawer" id="btnToggleStampDrawer">
-                <span id="stampDrawerToggleText">▾ Pulu Değiştir / Ülke Seç</span>
+                <span id="stampDrawerToggleText" data-i18n="btnChangeStamp">▾ Pulu Değiştir / Ülke Seç</span>
               </button>
             </div>
 
@@ -436,7 +436,7 @@
             <div class="stamp-drawer-panel" id="stampDrawerPanel" style="display:none;">
               <div class="stamp-drawer-inner">
                 <div class="stamp-drawer-intro">
-                  <span>Kültürel mirasını yansıtan pulları görmek için bir ülkeye tıklayın:</span>
+                  <span data-i18n="stampDrawerIntro">Kültürel mirasını yansıtan pulları görmek için bir ülkeye tıklayın:</span>
                 </div>
                 <div class="stamp-country-filter-tabs" id="stampCountryFilterTabs"></div>
                 <div class="realistic-stamps-carousel" id="realisticStampsCarousel"></div>
@@ -446,21 +446,21 @@
 
           <!-- İnteraktif Mektup Kağıdı Alanı (Seçilen Kağıda Göre Şekillenir) -->
           <div style="margin-bottom:16px;">
-            <strong style="font-size:13px;color:#102343;display:block;margin-bottom:8px;">3. Mektup Metni</strong>
+            <strong style="font-size:13px;color:#102343;display:block;margin-bottom:8px;" data-i18n="letterTextHeading">3. Mektup Metni</strong>
             <div class="interactive-letter-sheet paper-minimal" id="interactiveLetterSheet">
               <div class="letter-sheet-top-row">
-                <label for="penpalLetterSubject" class="letter-sheet-subject-label">Mektup Başlığı / Konusu <span style="font-weight:normal;color:#64748b;font-size:11px;">(İsteğe bağlı)</span></label>
+                <label for="penpalLetterSubject" class="letter-sheet-subject-label"><span data-i18n="letterSubjectTitle">Mektup Başlığı / Konusu</span> <span style="font-weight:normal;color:#64748b;font-size:11px;" data-i18n="optionalLabel">(İsteğe bağlı)</span></label>
                 <div class="affixed-stamp-container" id="affixedStampContainer"></div>
               </div>
-              <input type="text" id="penpalLetterSubject" class="letter-sheet-subject" placeholder="Örn: Bozkır Edebiyatı ve İstanbul'dan Dostça Selamlar..." maxlength="120" autocomplete="off"/>
+              <input type="text" id="penpalLetterSubject" class="letter-sheet-subject" placeholder="Örn: Bozkır Edebiyatı ve İstanbul'dan Dostça Selamlar..." data-i18n-placeholder="letterSubjectPlaceholder" maxlength="120" autocomplete="off"/>
               
-              <label for="penpalLetterBody" class="letter-sheet-body-label">Mektubunuz:</label>
-              <textarea id="penpalLetterBody" class="letter-sheet-textarea" placeholder="Hürmetli mektup arkadaşım,&#10;&#10;Ben Türkiye'den yazıyorum. Şehrimden, üniversitemden ve ilgi alanlarımdan bahsederek seninle tanışmak istedim..." rows="8"></textarea>
+              <label for="penpalLetterBody" class="letter-sheet-body-label" data-i18n="letterBodyLabel">Mektubunuz:</label>
+              <textarea id="penpalLetterBody" class="letter-sheet-textarea" placeholder="Hürmetli mektup arkadaşım,&#10;&#10;Ben Türkiye'den yazıyorum. Şehrimden, üniversitemden ve ilgi alanlarımdan bahsederek seninle tanışmak istedim..." data-i18n-placeholder="letterBodyPlaceholder" rows="8"></textarea>
               
               <div class="letter-sheet-footer">
                 <span id="letterValidationHint" class="letter-validation-hint" style="display:none;color:#b91c1c;font-size:12px;font-weight:700;"></span>
                 <div style="text-align:right;font-size:11px;color:#786445;margin-left:auto;">
-                  <span id="penpalCharCount">0</span> karakter
+                  <span id="penpalCharCount">0</span> <span data-i18n="charCountLabel">karakter</span>
                 </div>
               </div>
             </div>
@@ -472,11 +472,11 @@
           <!-- Gönderim ve Bozkır Kartalı Teslimat Bilgilendirmesi (Erken Buton Kesinlikle Yok) -->
           <div class="delivery-calculation-card">
             <div class="delivery-calc-formula">
-              <strong>🦅 Teslimat Kuralı:</strong> Mektubunuzu Bozkır Kartalı taşımaktadır. İki şehir arasındaki uçak süresinin <strong>tam 2 katı</strong> dolduğunda teslim edilecektir.
+              <strong data-i18n="deliveryRuleTitle">🦅 Teslimat Kuralı:</strong> <span data-i18n="deliveryRuleDesc">Mektubunuzu Bozkır Kartalı taşımaktadır. İki şehir arasındaki uçak süresinin <strong>tam 2 katı</strong> dolduğunda teslim edilecektir.</span>
             </div>
             <button type="submit" class="btn primary btn-seal-post" id="btnSealAndSendLetter">
               <span class="wax-seal-bullet">🦅</span>
-              <span>Mektubu Mühürle ve Bozkır Kartalı ile Gönder</span>
+              <span data-i18n="btnSealAndPost">Mektubu Mühürle ve Bozkır Kartalı ile Gönder</span>
             </button>
           </div>
 
@@ -488,9 +488,9 @@
     <!-- 4. MEKTUP OKUMA GÖRÜNÜMÜ (READER VIEW) -->
     <div class="mailbox-pane" id="paneReader" style="display:none">
       <div class="reader-back-bar">
-        <button class="ghost-btn" id="btnBackToInbox" type="button">← Gelen Kutusuna Dön</button>
+        <button class="ghost-btn" id="btnBackToInbox" type="button" data-i18n="backToInboxBtn">← Gelen Kutusuna Dön</button>
         <div class="reader-actions">
-          <button class="btn secondary" id="btnReplyLetter" style="background:#102343;color:#fff;" type="button">↩ Yanıtla</button>
+          <button class="btn secondary" id="btnReplyLetter" style="background:#102343;color:#fff;" type="button" data-i18n="replyLetterBtn">↩ Yanıtla</button>
         </div>
       </div>
       <article id="letterPaperView"></article>
@@ -1002,7 +1002,7 @@
           <img src="assets/images/mektup-ikon.png" id="letterModalStampImg" alt="Pul">
           <span id="letterModalStampName">Posta Pulu</span>
         </div>
-        <button type="button" class="letter-modal-close" id="btnCloseLetterModal" aria-label="Kapat">×</button>
+        <button type="button" class="letter-modal-close" id="btnCloseLetterModal" aria-label="Kapat" data-i18n-aria="close">×</button>
       </div>
     </div>
 
@@ -1015,7 +1015,7 @@
       <div class="letter-modal-body" id="letterModalBody"></div>
       
       <div class="letter-modal-photos" id="letterModalPhotosSection" style="display:none;">
-        <h5 id="letterModalPhotosTitle">📷 Mektuba Eklenen Fotoğraflar</h5>
+        <h5 id="letterModalPhotosTitle" data-i18n="letterModalPhotosTitle">📷 Mektuba Eklenen Fotoğraflar</h5>
         <div class="letter-modal-photos-grid" id="letterModalPhotosGrid"></div>
       </div>
     </div>
@@ -1025,17 +1025,17 @@
       <div class="letter-modal-consent-footer" id="letterModalConsentFooter" style="display:none;">
         <div class="footer-consent-info">
           <span class="footer-consent-shield">🛡️</span>
-          <span class="footer-consent-text">Yeni mektup arkadaşlığı talebi: Bu öğrenciyle tanışmayı onaylıyor musunuz?</span>
+          <span class="footer-consent-text" data-i18n="consentAlertPending">Yeni mektup arkadaşlığı talebi: Bu öğrenciyle tanışmayı onaylıyor musunuz?</span>
         </div>
         <div class="footer-consent-actions">
-          <button type="button" class="btn-consent-reject" id="btnRejectConsent">✕ Reddet ve Engelle</button>
-          <button type="button" class="btn-consent-accept" id="btnAcceptConsent">✓ Mektup Arkadaşlığını Kabul Et</button>
+          <button type="button" class="btn-consent-reject" id="btnRejectConsent" data-i18n="rejectPenpalBtn">✕ Reddet ve Engelle</button>
+          <button type="button" class="btn-consent-accept" id="btnAcceptConsent" data-i18n="acceptPenpalBtn">✓ Mektup Arkadaşlığını Kabul Et</button>
         </div>
       </div>
 
       <div class="letter-modal-normal-footer" id="letterModalNormalFooter">
-        <button type="button" class="ghost-btn" id="btnCloseLetterModalBtn">Kapat</button>
-        <button type="button" class="btn primary" id="btnReplyFromModal" style="background:#102343;color:#ffffff;">↩ Mektuba Yanıt Yaz</button>
+        <button type="button" class="ghost-btn" id="btnCloseLetterModalBtn" data-i18n="close">Kapat</button>
+        <button type="button" class="btn primary" id="btnReplyFromModal" style="background:#102343;color:#ffffff;" data-i18n="replyLetterBtn">↩ Mektuba Yanıt Yaz</button>
       </div>
     </div>
   </div>
@@ -1049,7 +1049,7 @@
         <h3 id="cultureShareModalTitle">📸 Kültür Arşivine Fotoğraf Ekle</h3>
         <p>Türk Dünyası’ndan bir kültür mirasını, doğal güzelliği veya lezzeti arşive kazandırın.</p>
       </div>
-      <button type="button" class="culture-modal-close" id="btnCloseCultureShare" aria-label="Kapat">×</button>
+      <button type="button" class="culture-modal-close" id="btnCloseCultureShare" aria-label="Kapat" data-i18n-aria="close">×</button>
     </div>
 
     <div class="culture-form-error" id="cultureFormError" role="alert"></div>
@@ -1125,7 +1125,7 @@
   <div class="culture-lightbox-card">
     <div class="culture-lightbox-media">
       <img src="" alt="" id="cultureLightboxImg"/>
-      <button type="button" class="culture-lightbox-close" id="btnCloseCultureLightbox" aria-label="Kapat">×</button>
+      <button type="button" class="culture-lightbox-close" id="btnCloseCultureLightbox" aria-label="Kapat" data-i18n-aria="close">×</button>
     </div>
     <div class="culture-lightbox-footer">
       <div>

@@ -319,15 +319,16 @@ window.TDAStudyRoom = (function() {
 
       // 3. BITMOJI AVATAR KATMANI (Z-Index 3: Sandalyenin Ustunde, Masanin Arkasinda)
       let avatarHtml = '';
+      const youLabel = window.TDAI18n ? window.TDAI18n.t('youLabel', { fallback: 'Sen' }) : 'Sen';
       if (isUserDeskHere) {
         const userAvatarUrl = getUserAvatarUrl();
         avatarHtml = `
           <div class="seated-avatar-layer">
             <div class="avatar-seated-figure">
-              <img src="${userAvatarUrl}" alt="Sen" class="avatar-seated-img" />
+              <img src="${userAvatarUrl}" alt="${escapeHtml(youLabel)}" class="avatar-seated-img" />
               <div class="student-name-tag">
                 <span class="country-flag">&#x2B50;</span>
-                <span class="student-name">Sen</span>
+                <span class="student-name">${escapeHtml(youLabel)}</span>
               </div>
             </div>
           </div>
@@ -340,7 +341,7 @@ window.TDAStudyRoom = (function() {
               <img src="${st.avatarUrl}" alt="${escapeHtml(st.name)}" class="avatar-seated-img" loading="lazy" />
               <div class="student-name-tag">
                 <span class="country-flag">${st.flag}</span>
-                <span class="student-name">${escapeHtml(st.name)}</span>
+                <span class="student-name" data-no-translate>${escapeHtml(st.name)}</span>
               </div>
             </div>
           </div>
@@ -398,7 +399,8 @@ window.TDAStudyRoom = (function() {
       `;
 
       // 5. MASA PIRINC KUNYESI (01 - 50)
-      const brassPlateHtml = `<div class="desk-brass-plate">Masa ${String(deskNo).padStart(2, '0')}</div>`;
+      const brassPlateText = window.TDAI18n ? window.TDAI18n.t('deskPlateLabel', { n: String(deskNo).padStart(2, '0') }) : `Masa ${String(deskNo).padStart(2, '0')}`;
+      const brassPlateHtml = `<div class="desk-brass-plate">${escapeHtml(brassPlateText)}</div>`;
 
       // Istasyon Sinifi
       let unitClass = 'iso-game-desk-unit hall-desk-station';
@@ -407,14 +409,14 @@ window.TDAStudyRoom = (function() {
 
       if (isUserDeskHere) {
         unitClass += ' user-seated-desk user-occupied-desk';
-        titleAttr = `Masa ${deskNo} &bull; Senin Masan (Odakta)`;
+        titleAttr = window.TDAI18n ? window.TDAI18n.t('deskTitleUser', { n: deskNo }) : `Masa ${deskNo} &bull; Senin Masan (Odakta)`;
       } else if (isOccupied) {
         unitClass += ' occupied-desk';
-        titleAttr = `Masa ${deskNo} &bull; ${escapeHtml(deskItem.student.name)} (${deskItem.student.country})`;
+        titleAttr = window.TDAI18n ? window.TDAI18n.t('deskTitleOccupied', { n: deskNo, name: deskItem.student.name, country: deskItem.student.country }) : `Masa ${deskNo} &bull; ${escapeHtml(deskItem.student.name)} (${deskItem.student.country})`;
         dataPeerAttr = `data-peer-data='${escapeHtml(JSON.stringify(deskItem.student))}'`;
       } else {
         unitClass += ' empty-desk';
-        titleAttr = `Masa ${deskNo} &bull; &#x00C7;al&#x0131;&#x015F;maya Ba&#x015F;lamak &#x0130;&ccedil;in Sandalyeye T&#x0131;kla`;
+        titleAttr = window.TDAI18n ? window.TDAI18n.t('deskTitleEmpty', { n: deskNo }) : `Masa ${deskNo} &bull; &#x00C7;al&#x0131;&#x015F;maya Ba&#x015F;lamak &#x0130;&ccedil;in Sandalyeye T&#x0131;kla`;
       }
 
       html += `
@@ -640,7 +642,8 @@ window.TDAStudyRoom = (function() {
       startPomodoro();
       const goalLabel = document.getElementById('pomoActiveGoalText');
       if (goalLabel) goalLabel.textContent = `Hedef: ${goalText}`;
-      showToast(`🎯 Masa ${state.userDeskNumber}'de seans başladı. Verimli çalışmalar!`);
+      const toastMsg = window.TDAI18n ? window.TDAI18n.t('sessionStartedToast', { n: state.userDeskNumber }) : `🎯 Masa ${state.userDeskNumber}'de seans başladı. Verimli çalışmalar!`;
+      showToast(toastMsg);
     }, 760);
 
     saveActiveSession();
@@ -668,7 +671,8 @@ window.TDAStudyRoom = (function() {
     renderHallDesks();
     renderRoomSelector();
     setSceneState('LOBBY');
-    showToast('🚪 Masadan kalkıldı ve salona dönüldü.');
+    const leaveMsg = window.TDAI18n ? window.TDAI18n.t('leftDeskToast') : '🚪 Masadan kalkıldı ve salona dönüldü.';
+    showToast(leaveMsg);
   }
 
   function saveActiveSession() {
@@ -1328,7 +1332,8 @@ window.TDAStudyRoom = (function() {
           if (el) {
             el.style.transform = 'scale(1.18)';
             setTimeout(() => { el.style.transform = ''; }, 650);
-            showToast(`🪑 Masa ${emptyDesk.deskNo} müsait!`);
+            const deskToast = window.TDAI18n ? window.TDAI18n.t('deskAvailableToast', { n: emptyDesk.deskNo }) : `🪑 Masa ${emptyDesk.deskNo} müsait!`;
+            showToast(deskToast);
           }
         }
       });

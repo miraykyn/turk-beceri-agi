@@ -861,24 +861,26 @@ window.TDAMessaging = (function() {
 
     // Uçak simgesi yerine Bozkır Kartalı (Steppe Eagle) ikonu kullanılır.
     // Kesin kural: "Hızlı Gönder" veya "Süreyi Atla" butonu yoktur.
+    const widgetTitle = window.TDAI18n ? window.TDAI18n.t('transitWidgetTitle') : 'Bozkır Kartalı Mektubunuzu Taşıyor! (Teslimat Simülasyonu)';
+    const remainingTitle = window.TDAI18n ? window.TDAI18n.t('transitRemaining') : '⏳ Teslimata Kalan Süre:';
     container.innerHTML = `
       <div class="transit-delivery-widget">
         <div class="transit-header">
           <div class="transit-title">
             <span style="font-size:22px;">🦅</span>
-            <span>Bozkır Kartalı Mektubunuzu Taşıyor! (Teslimat Simülasyonu)</span>
+            <span>${escapeHtml(widgetTitle)}</span>
           </div>
           <div class="transit-countdown-badge">
-            <span>⏳ Teslimata Kalan Süre:</span>
-            <strong>${timeStr}</strong>
+            <span>${escapeHtml(remainingTitle)}</span>
+            <strong data-no-translate>${timeStr}</strong>
           </div>
         </div>
 
         <div class="flight-route-track">
           <div class="flight-city-node">
             <div class="flight-city-dot"></div>
-            <span class="flight-city-name">${inTransitLetter.fromCity || 'İstanbul'}</span>
-            <span class="flight-city-country">${inTransitLetter.fromCountry || 'Türkiye'}</span>
+            <span class="flight-city-name" data-no-translate>${escapeHtml(inTransitLetter.fromCity || 'İstanbul')}</span>
+            <span class="flight-city-country" data-no-translate>${escapeHtml(inTransitLetter.fromCountry || 'Türkiye')}</span>
           </div>
 
           <div class="flight-progress-line">
@@ -892,8 +894,8 @@ window.TDAMessaging = (function() {
 
           <div class="flight-city-node">
             <div class="flight-city-dot" style="background:#b8860b"></div>
-            <span class="flight-city-name">${inTransitLetter.toCity || 'Almatı'}</span>
-            <span class="flight-city-country">${inTransitLetter.toCountry || 'Kazakistan'}</span>
+            <span class="flight-city-name" data-no-translate>${escapeHtml(inTransitLetter.toCity || 'Almatı')}</span>
+            <span class="flight-city-country" data-no-translate>${escapeHtml(inTransitLetter.toCountry || 'Kazakistan')}</span>
           </div>
         </div>
 
@@ -980,13 +982,13 @@ window.TDAMessaging = (function() {
               <span class="penpal-status-dot" title="Aktif Mektup Arkadaşı"></span>
             </div>
             <div class="penpal-meta-info">
-              <h4>${p.name}</h4>
-              <span>${p.city} • ${p.university}</span>
-              <small class="muted">Öğrenci No: ${p.studentId}</small>
+              <h4 data-no-translate>${p.name}</h4>
+              <span data-no-translate>${p.city} • ${p.university}</span>
+              <small class="muted" data-no-translate>Öğrenci No: ${p.studentId}</small>
             </div>
           </div>
 
-          <p style="font-size:12.5px;color:#475467;line-height:1.45;margin:0;">"${p.bio}"</p>
+          <p data-no-translate style="font-size:12.5px;color:#475467;line-height:1.45;margin:0;">"${p.bio}"</p>
 
           <div class="penpal-flight-preview">
             <span>🦅 Bozkır Kartalı Teslimatı: <strong>${calc.deliveryHours} saat</strong></span>
@@ -1304,7 +1306,7 @@ window.TDAMessaging = (function() {
     if (!files.length) return;
 
     if (attachedPhotoFiles.length + files.length > 3) {
-      alert('Güvenlik kuralı: Bir mektuba en fazla 3 adet fotoğraf ekleyebilirsiniz.');
+      alert(window.TDAI18n ? window.TDAI18n.t('alertMax3Photos') : 'Güvenlik kuralı: Bir mektuba en fazla 3 adet fotoğraf ekleyebilirsiniz.');
       return;
     }
 
@@ -1916,7 +1918,7 @@ window.TDAMessaging = (function() {
       console.warn('Avatar event tetiklenemedi:', e);
     }
     closeAvatarStudio();
-    alert('✓ Bitmoji avatarınız başarıyla kaydedildi! Gönderdiğiniz mektuplarda ve Sanal Çalışma Odası\'nda bu avatar kullanılacaktır.');
+    alert(window.TDAI18n ? window.TDAI18n.t('alertAvatarSaved') : '✓ Bitmoji avatarınız başarıyla kaydedildi! Gönderdiğiniz mektuplarda ve Sanal Çalışma Odası\'nda bu avatar kullanılacaktır.');
   }
 
   // --- 17. AŞAMA GEÇİŞLERİ ---
@@ -1946,7 +1948,7 @@ window.TDAMessaging = (function() {
     if (e) e.preventDefault();
 
     if (!activeSelectedPenpal) {
-      alert('Lütfen bir mektup arkadaşı seçiniz.');
+      alert(window.TDAI18n ? window.TDAI18n.t('alertSelectPenpal') : 'Lütfen bir mektup arkadaşı seçiniz.');
       return;
     }
 
@@ -2025,11 +2027,19 @@ window.TDAMessaging = (function() {
     const counter = document.getElementById('penpalCharCount');
     if (counter) counter.textContent = '0';
 
-    alert(`🦅 Bozkır Kartalı mektubunuzu teslim etmek üzere havalandı!\n\n` +
-          `Rota: İstanbul ➔ ${activeSelectedPenpal.city} (${activeSelectedPenpal.country})\n` +
-          `Uçuş Süresi: ~${calc.flightHours} saat\n` +
-          `Teslimat Süresi (Tam 2 katı): ~${calc.deliveryHours} saat\n\n` +
-          `Mektup hesaplanan süre dolduğunda alıcısına teslim edilecektir.`);
+    const eagleMsg = window.TDAI18n
+      ? window.TDAI18n.t('alertEagleDeparted', {
+          from: 'İstanbul',
+          to: activeSelectedPenpal.city,
+          country: activeSelectedPenpal.country,
+          time: `~${calc.deliveryHours} sa`
+        })
+      : `🦅 Bozkır Kartalı mektubunuzu teslim etmek üzere havalandı!\n\n` +
+        `Rota: İstanbul ➔ ${activeSelectedPenpal.city} (${activeSelectedPenpal.country})\n` +
+        `Uçuş Süresi: ~${calc.flightHours} saat\n` +
+        `Teslimat Süresi (Tam 2 katı): ~${calc.deliveryHours} saat\n\n` +
+        `Mektup hesaplanan süre dolduğunda alıcısına teslim edilecektir.`;
+    alert(eagleMsg);
 
     updateTransitWidget();
     switchPane('paneSent');
@@ -2080,8 +2090,8 @@ window.TDAMessaging = (function() {
               ${isUnread ? '<span class="letter-dm-unread-dot" title="Yeni Mektup"></span>' : ''}
             </div>
             <div class="letter-dm-text">
-              <strong class="letter-dm-name">${l.fromName}</strong>
-              <span class="letter-dm-country">${l.fromCountry}${l.fromCity ? ' (' + l.fromCity + ')' : ''}</span>
+              <strong class="letter-dm-name" data-no-translate>${l.fromName}</strong>
+              <span class="letter-dm-country" data-no-translate>${l.fromCountry}${l.fromCity ? ' (' + l.fromCity + ')' : ''}</span>
             </div>
           </div>
           <div class="letter-dm-right">
@@ -2129,8 +2139,8 @@ window.TDAMessaging = (function() {
               <img src="${avatarSrc}" alt="${l.toName}" class="letter-dm-avatar" onerror="this.src='https://api.dicebear.com/7.x/adventurer/svg?seed=Penpal'">
             </div>
             <div class="letter-dm-text">
-              <strong class="letter-dm-name">${l.toName}</strong>
-              <span class="letter-dm-country">${l.toCountry}${l.toCity ? ' (' + l.toCity + ')' : ''}</span>
+              <strong class="letter-dm-name" data-no-translate>${l.toName}</strong>
+              <span class="letter-dm-country" data-no-translate>${l.toCountry}${l.toCity ? ' (' + l.toCity + ')' : ''}</span>
             </div>
           </div>
           <div class="letter-dm-right">
@@ -2163,7 +2173,7 @@ window.TDAMessaging = (function() {
       letter.read = true;
       saveLetters(letters);
       renderInbox();
-      updateBadgeCounts();
+      notifyUnread();
     }
 
     const stamp = letter.stamp || CULTURAL_STAMPS.tr[0];
@@ -2186,8 +2196,14 @@ window.TDAMessaging = (function() {
       const photosGrid = document.getElementById('letterModalPhotosGrid');
 
       if (avatarEl) avatarEl.src = letter.fromAvatar || generateAvatarUrl();
-      if (senderNameEl) senderNameEl.textContent = letter.fromName;
-      if (subEl) subEl.textContent = `${letter.fromCity ? letter.fromCity + ', ' : ''}${letter.fromCountry} ➔ ${letter.toCity ? letter.toCity + ', ' : ''}${letter.toCountry}`;
+      if (senderNameEl) {
+        senderNameEl.textContent = letter.fromName;
+        senderNameEl.setAttribute('data-no-translate', '');
+      }
+      if (subEl) {
+        subEl.textContent = `${letter.fromCity ? letter.fromCity + ', ' : ''}${letter.fromCountry} ➔ ${letter.toCity ? letter.toCity + ', ' : ''}${letter.toCountry}`;
+        subEl.setAttribute('data-no-translate', '');
+      }
       if (stampImgEl) {
         stampImgEl.src = stampImg;
         stampImgEl.onerror = () => { stampImgEl.src = 'assets/images/mektup-ikon.png'; };
@@ -2195,8 +2211,14 @@ window.TDAMessaging = (function() {
       if (stampNameEl) stampNameEl.textContent = stamp.name || 'Posta Pulu';
       if (transitAlert) transitAlert.style.display = isTransit ? 'block' : 'none';
       if (dateEl) dateEl.textContent = `Tarih: ${dateFormatted}`;
-      if (subjectEl) subjectEl.textContent = letter.subject || 'Mektup';
-      if (bodyEl) bodyEl.textContent = letter.body || '';
+      if (subjectEl) {
+        subjectEl.textContent = letter.subject || 'Mektup';
+        subjectEl.setAttribute('data-no-translate', '');
+      }
+      if (bodyEl) {
+        bodyEl.textContent = letter.body || '';
+        bodyEl.setAttribute('data-no-translate', '');
+      }
 
       if (photosSection && photosGrid) {
         if (!isPending && letter.photos && letter.photos.length) {
@@ -2256,9 +2278,9 @@ window.TDAMessaging = (function() {
           <div class="reader-penpal-info">
             <img src="${letter.fromAvatar || generateAvatarUrl()}" alt="Avatar" class="reader-avatar-big">
             <div>
-              <h3 style="margin:0 0 4px 0;font-size:18px;color:#102343;">${letter.fromName}</h3>
-              <div style="font-size:12.5px;color:#64748b;">
-                ${letter.fromCity || ''}, ${letter.fromCountry} ➔ ${letter.toCity || ''}, ${letter.toCountry}
+              <h3 data-no-translate style="margin:0 0 4px 0;font-size:18px;color:#102343;">${escapeHtml(letter.fromName)}</h3>
+              <div data-no-translate style="font-size:12.5px;color:#64748b;">
+                ${escapeHtml(letter.fromCity || '')}, ${escapeHtml(letter.fromCountry)} ➔ ${escapeHtml(letter.toCity || '')}, ${escapeHtml(letter.toCountry)}
               </div>
               <small class="muted">Tarih: ${dateFormatted}</small>
             </div>
@@ -2278,17 +2300,17 @@ window.TDAMessaging = (function() {
           </div>
         ` : ''}
 
-        <div class="letter-paper-subject" style="font-size:21px;font-weight:bold;margin-bottom:18px;">
-          ${letter.subject}
+        <div class="letter-paper-subject" data-no-translate style="font-size:21px;font-weight:bold;margin-bottom:18px;">
+          ${escapeHtml(letter.subject)}
         </div>
 
-        <div class="letter-paper-body" style="font-size:15.5px;line-height:1.85;white-space:pre-line;margin-bottom:24px;">
-          ${letter.body}
+        <div class="letter-paper-body" data-no-translate style="font-size:15.5px;line-height:1.85;white-space:pre-line;margin-bottom:24px;">
+          ${escapeHtml(letter.body)}
         </div>
 
         ${letter.photos && letter.photos.length ? `
           <div class="reader-attached-photos">
-            <h5>📷 Mektuba Eklenen Fotoğraflar (${letter.photos.length} Adet)</h5>
+            <h5>${window.TDAI18n ? window.TDAI18n.t('attachedPhotosLabel', { n: letter.photos.length }) : `📷 Mektuba Eklenen Fotoğraflar (${letter.photos.length} Adet)`}</h5>
             <div class="reader-photos-row">
               ${letter.photos.map(src => `<img src="${src}" alt="Mektup Eki" class="reader-photo-thumb" onclick="window.open('${src}')">`).join('')}
             </div>
@@ -2296,8 +2318,8 @@ window.TDAMessaging = (function() {
         ` : ''}
 
         <div class="letter-paper-footer" style="border-top:1px solid rgba(0,0,0,0.1);padding-top:16px;margin-top:20px;display:flex;justify-content:space-between;font-size:12px;color:#64748b;">
-          <span>🦅 Türk Dünyası Bozkır Kartalı Posta Ağı</span>
-          <span>${letter.fromName} • ${letter.fromCity || letter.fromCountry}</span>
+          <span>${window.TDAI18n ? window.TDAI18n.t('letterPostalNetwork') : '🦅 Türk Dünyası Bozkır Kartalı Posta Ağı'}</span>
+          <span data-no-translate>${escapeHtml(letter.fromName)} • ${escapeHtml(letter.fromCity || letter.fromCountry)}</span>
         </div>
       `;
     }
@@ -2357,7 +2379,7 @@ window.TDAMessaging = (function() {
 
     renderInbox();
     notifyUnread();
-    alert(`✓ ${target.fromName} ile mektup arkadaşlığı başarıyla kabul edildi! Artık dilediğiniz gibi yanıt yazabilir ve kültürel anılarınızı paylaşabilirsiniz.`);
+    alert(window.TDAI18n ? window.TDAI18n.t('alertPenpalAccepted', { name: target.fromName }) : `✓ ${target.fromName} ile mektup arkadaşlığı başarıyla kabul edildi! Artık dilediğiniz gibi yanıt yazabilir ve kültürel anılarınızı paylaşabilirsiniz.`);
   }
 
   function handleRejectConsent() {
@@ -2366,7 +2388,8 @@ window.TDAMessaging = (function() {
     const senderId = activeViewingLetter.fromStudentId;
     const letterId = activeViewingLetter.id;
 
-    if (!confirm(`${senderName} adlı kullanıcının mektup arkadaşlığı talebini reddetmek ve bu kullanıcıyı engellemek istediğinize emin misiniz?`)) {
+    const confirmMsg = window.TDAI18n ? window.TDAI18n.t('confirmRejectPenpal', { name: senderName }) : `${senderName} adlı kullanıcının mektup arkadaşlığı talebini reddetmek ve bu kullanıcıyı engellemek istediğinize emin misiniz?`;
+    if (!confirm(confirmMsg)) {
       return;
     }
 
@@ -2396,7 +2419,7 @@ window.TDAMessaging = (function() {
       notifyUnread();
     }
 
-    alert(`Mektup arkadaşlığı reddedildi ve ${senderName} engellendi.`);
+    alert(window.TDAI18n ? window.TDAI18n.t('alertPenpalRejected', { name: senderName }) : `Mektup arkadaşlığı reddedildi ve ${senderName} engellendi.`);
   }
 
   function switchPane(paneId) {
@@ -2458,7 +2481,7 @@ window.TDAMessaging = (function() {
     document.getElementById('btnReplyFromModal')?.addEventListener('click', () => {
       if (!activeViewingLetter) return;
       if (activeViewingLetter.status === 'pending') {
-        alert('Mektuba yanıt yazabilmek için lütfen önce yukarıdaki mektup arkadaşlığı talebini Kabul Ediniz.');
+        alert(window.TDAI18n ? window.TDAI18n.t('alertAcceptFirst') : 'Mektuba yanıt yazabilmek için lütfen önce yukarıdaki mektup arkadaşlığı talebini Kabul Ediniz.');
         return;
       }
       closeLetterModal();
@@ -2534,11 +2557,11 @@ window.TDAMessaging = (function() {
       item.addEventListener('click', () => {
         const step = parseInt(item.dataset.step, 10);
         if (step === 2 && !activeSelectedCountry) {
-          alert('Lütfen önce bir ülke seçiniz.');
+          alert(window.TDAI18n ? window.TDAI18n.t('alertSelectCountry') : 'Lütfen önce bir ülke seçiniz.');
           return;
         }
         if (step === 3 && !activeSelectedPenpal) {
-          alert('Lütfen önce bir mektup arkadaşı seçiniz.');
+          alert(window.TDAI18n ? window.TDAI18n.t('alertSelectPenpal') : 'Lütfen önce bir mektup arkadaşı seçiniz.');
           return;
         }
         goToComposeStep(step);

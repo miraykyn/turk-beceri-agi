@@ -240,16 +240,19 @@ window.TDAMatching = (function() {
       date: featureT('demoReviewDate'),
       match: featureT('demoReviewMatch')
     }];
-    box.innerHTML = rs.slice().reverse().map(r => `
+    box.innerHTML = rs.slice().reverse().map(r => {
+      const rating = Math.min(5, Math.max(1, Number(r.rating) || 0));
+      return `
       <div class="review-item">
         <div class="review-item-head">
           <strong>${escapeHtml(featureT(r.match || 'Eşleşme kaydı', { fallback: r.match || 'Eşleşme kaydı' }))}</strong>
-          <span>${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)} (${r.rating}/5)</span>
+          <span>${'★'.repeat(rating)}${'☆'.repeat(5 - rating)} (${rating}/5)</span>
         </div>
         <div class="review-item-meta">${escapeHtml(featureT(r.author || 'Öğrenci', { fallback: r.author || 'Öğrenci' }))} · ${escapeHtml(featureT(r.date || '', { fallback: r.date || '' }))}</div>
         <p>"${escapeHtml(featureT(r.text || '', { fallback: r.text || '' }))}"</p>
       </div>
-    `).join('');
+    `;
+    }).join('');
   }
 
   function openReview(userId) {

@@ -82,19 +82,39 @@ window.TDATabs = (function() {
     }).join('');
     quickContainer.setAttribute('aria-label', window.TDAI18n ? window.TDAI18n.t('quickAria') : 'Hızlı erişim');
     quickContainer.querySelectorAll('[data-quick-tab]').forEach(button => {
-      button.addEventListener('click', () => setTab(button.dataset.quickTab));
+      button.addEventListener('click', () => {
+        const tab = button.dataset.quickTab;
+        if (tab === 'turan') {
+          const originalPanel = document.getElementById('turanPanel');
+          const fab = document.getElementById('turanFab');
+          if (originalPanel) {
+            originalPanel.classList.remove('embedded');
+            originalPanel.classList.add('open');
+            originalPanel.setAttribute('aria-hidden', 'false');
+            if (fab) fab.setAttribute('aria-expanded', 'true');
+            window.TDATuran?.greet?.();
+          }
+          return;
+        }
+        setTab(tab);
+      });
     });
   }
 
   function setTab(id, updateHash = true) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (id === 'profil') id = 'profile';
     if (!panels[id]) id = 'home';
 
     if (id === 'turan') {
       const originalPanel = document.getElementById('turanPanel');
+      const fab = document.getElementById('turanFab');
       if (originalPanel) {
+        originalPanel.classList.remove('embedded');
         originalPanel.classList.add('open');
         originalPanel.setAttribute('aria-hidden', 'false');
+        if (fab) fab.setAttribute('aria-expanded', 'true');
+        window.TDATuran?.greet?.();
       }
     }
 
@@ -104,18 +124,13 @@ window.TDATabs = (function() {
       button.setAttribute('aria-selected', String(active));
       button.tabIndex = active ? 0 : -1;
       button.setAttribute('id', 'tab-button-' + button.dataset.tab);
-      if (panels[button.dataset.tab]) {
-        panels[button.dataset.tab].classList.toggle('active', active);
-        panels[button.dataset.tab].setAttribute('aria-hidden', String(!active));
-        panels[button.dataset.tab].setAttribute('aria-labelledby', 'tab-button-' + button.dataset.tab);
-      }
     });
 
-    const turanPanel = document.getElementById('turanPanel');
-    if (turanPanel && id === 'turan') {
-      turanPanel.classList.add('open');
-      turanPanel.setAttribute('aria-hidden', 'false');
-    }
+    Object.keys(panels).forEach(key => {
+      const active = key === id;
+      panels[key].classList.toggle('active', active);
+      panels[key].setAttribute('aria-hidden', String(!active));
+    });
 
     if (updateHash && history.replaceState) {
       history.replaceState(null, '', '#' + id);
@@ -142,6 +157,7 @@ window.TDATabs = (function() {
     }
     if (toggle) {
       toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('data-i18n-aria', open ? 'menuCloseAria' : 'menuOpenAria');
       toggle.setAttribute('aria-label', open 
         ? (window.TDAI18n ? window.TDAI18n.t('menuCloseAria') : 'Menüyü kapat') 
         : (window.TDAI18n ? window.TDAI18n.t('menuOpenAria') : 'Menüyü aç'));
@@ -356,7 +372,7 @@ window.TDATabs = (function() {
     setQuickLabels(initLang);
 
     const initialHash = location.hash.replace('#', '').split('?')[0];
-    const initialTarget = initialHash && document.getElementById(initialHash);
+    const initialTarget = initialHash ? document.getElementById(initialHash) : null;
     const initialPanel = initialTarget?.closest('.tab-panel');
     setTab(panels[initialHash] ? initialHash : (initialPanel ? initialPanel.id.replace('tab-', '') : 'home'), false);
   }

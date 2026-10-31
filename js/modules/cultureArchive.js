@@ -488,9 +488,10 @@ window.TDACultureArchive = (function() {
     const filtered = getFilteredItems();
 
     if (!filtered.length) {
+      const emptyText = window.TDAI18n ? window.TDAI18n.t('cultureEmptyState') : 'Bu ülke için henüz kültür arşivi fotoğrafı bulunmuyor. İlk fotoğrafı siz paylaşın!';
       grid.innerHTML = `
         <div class="empty-state" style="grid-column: 1 / -1;">
-          Bu ülke için henüz kültür arşivi fotoğrafı bulunmuyor. İlk fotoğrafı siz paylaşın!
+          ${emptyText}
         </div>
       `;
       return;
@@ -500,6 +501,9 @@ window.TDACultureArchive = (function() {
       const meta = getCountryMeta(item.country);
       const locationLabel = item.location || extractLocationFromCaption(item.caption);
       const delayMs = Math.min(index * 35, 350);
+      const newBadge = window.TDAI18n ? window.TDAI18n.t('newShareBadge') : '✨ Yeni Paylaşım';
+      const delLabel = window.TDAI18n ? window.TDAI18n.t('delete') : 'Sil';
+      const heritageLabel = window.TDAI18n ? window.TDAI18n.t('cultureHeritageLabel') : 'Kültür Mirası';
 
       return `
         <article class="culture-card"
@@ -521,19 +525,19 @@ window.TDACultureArchive = (function() {
               <img src="${escapeHtml(meta.flag)}" alt="" loading="lazy" referrerpolicy="no-referrer"/>
               <span>${escapeHtml(translateCountry(item.country))}</span>
             </div>
-            ${item.isUserAdded ? `<span class="culture-card-user-badge">✨ Yeni Paylaşım</span>` : ''}
+            ${item.isUserAdded ? `<span class="culture-card-user-badge">${newBadge}</span>` : ''}
             <span class="culture-card-zoom-hint" aria-hidden="true">🔍</span>
           </div>
           <div class="culture-card-body">
-            <h3 class="culture-card-title">${escapeHtml(item.caption)}</h3>
+            <h3 class="culture-card-title" data-no-translate>${escapeHtml(item.caption)}</h3>
             <div class="culture-card-location">
               <span class="culture-location-pin">
                 <span aria-hidden="true">📍</span>
-                <span>${escapeHtml(locationLabel)}</span>
+                <span data-no-translate>${escapeHtml(locationLabel)}</span>
               </span>
               ${item.isUserAdded
-                ? `<button type="button" class="culture-card-delete-btn" data-delete-id="${escapeHtml(item.id)}" title="Bu paylaşımı kaldır">Sil</button>`
-                : `<small style="color:#94a3b8;font-weight:700;">Kültür Mirası</small>`
+                ? `<button type="button" class="culture-card-delete-btn" data-delete-id="${escapeHtml(item.id)}" title="${delLabel}">${delLabel}</button>`
+                : `<small style="color:#94a3b8;font-weight:700;">${heritageLabel}</small>`
               }
             </div>
           </div>
@@ -747,8 +751,14 @@ window.TDACultureArchive = (function() {
     img.onerror = () => {
       img.src = createSvgFallback(item.caption, item.country);
     };
-    if (title) title.textContent = item.caption;
-    if (sub) sub.textContent = `${translateCountry(item.country)} • 📍 ${item.location || extractLocationFromCaption(item.caption)}`;
+    if (title) {
+      title.textContent = item.caption;
+      title.setAttribute('data-no-translate', '');
+    }
+    if (sub) {
+      sub.textContent = `${translateCountry(item.country)} • 📍 ${item.location || extractLocationFromCaption(item.caption)}`;
+      sub.setAttribute('data-no-translate', '');
+    }
 
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');

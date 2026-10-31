@@ -1408,7 +1408,7 @@ window.TDAWordGame = (function() {
             <div class="wg-player-id-row">
               <div>
                 <span class="wg-player-id-label">Senin Benzersiz Oyuncu ID'n:</span>
-                <strong class="wg-player-id-val" id="wgMyPlayerIdText">${escapeHtml(state.me.playerId)}</strong>
+                <strong class="wg-player-id-val" id="wgMyPlayerIdText" data-no-translate>${escapeHtml(state.me.playerId)}</strong>
               </div>
               <button type="button" class="wg-btn-copy-id" id="wgCopyMyIdBtn">📋 ID Kopyala</button>
             </div>
@@ -1804,7 +1804,7 @@ window.TDAWordGame = (function() {
             </div>
             <div>
               <div class="wg-hud-name">
-                <span>${escapeHtml(state.me.name)} (Sen)</span>
+                <span><span data-no-translate>${escapeHtml(state.me.name)}</span> (Sen)</span>
                 ${state.match.myStreak >= 2 ? `<span class="wg-streak-pill">🔥 ${state.match.myStreak}x Seri</span>` : ''}
               </div>
               <div class="wg-hud-live-metrics">
@@ -1838,7 +1838,7 @@ window.TDAWordGame = (function() {
             <div>
               <div class="wg-hud-name">
                 ${state.match.oppStreak >= 2 ? `<span class="wg-streak-pill">🔥 ${state.match.oppStreak}x Seri</span>` : ''}
-                <span>${escapeHtml(opp.name)}</span>
+                <span data-no-translate>${escapeHtml(opp.name)}</span>
               </div>
               <div class="wg-hud-live-metrics">
                 <span class="wg-hud-mini-pill correct" title="1. Öncelikli Kriter: Doğru Sayısı">✓ ${oppLive.correctCount} Doğru</span>
@@ -1866,11 +1866,11 @@ window.TDAWordGame = (function() {
               <span>${escapeHtml(q.dialect)} • ${escapeHtml(q.country)}</span>
             </span>
             <span class="wg-target-word-pill">
-              🧩 Mini Görev Kelimesi: "${escapeHtml(q.word)}"
+              🧩 Mini Görev Kelimesi: "<span data-no-translate>${escapeHtml(q.word)}</span>"
             </span>
           </div>
 
-          <h3 class="wg-question-text">${escapeHtml(q.question)}</h3>
+          <h3 class="wg-question-text" data-no-translate>${escapeHtml(q.question)}</h3>
 
           <div class="wg-options-grid">
             ${q.options.map((optText, idx) => {
@@ -1891,7 +1891,7 @@ window.TDAWordGame = (function() {
                   ${myAns ? 'disabled' : ''}
                 >
                   <span class="wg-option-letter">${letters[idx]}</span>
-                  <span class="wg-option-text">${escapeHtml(optText)}</span>
+                  <span class="wg-option-text" data-no-translate>${escapeHtml(optText)}</span>
                   ${showOppChoice ? `<span class="wg-option-peer-tag">👤 ${escapeHtml(opp.name.split(' ')[0])} (${Number(oppAns.timeSpentSec).toFixed(2)} sn)</span>` : ''}
                 </button>
               `;
@@ -2133,7 +2133,7 @@ window.TDAWordGame = (function() {
                       Soru ${i + 1} • ${escapeHtml(q.dialect)}
                     </span>
                     <strong style="font-size:14.5px;color:#102343;margin-left:6px;">
-                      "${escapeHtml(q.word)}" → <span style="color:#15803d;">${escapeHtml(q.options[q.correctIndex])}</span>
+                      "<span data-no-translate>${escapeHtml(q.word)}</span>" → <span style="color:#15803d;" data-no-translate>${escapeHtml(q.options[q.correctIndex])}</span>
                     </strong>
                     <div style="font-size:12px;color:#64748b;margin-top:4px;">${escapeHtml(q.hint)}</div>
                   </div>

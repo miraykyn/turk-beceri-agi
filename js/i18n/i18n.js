@@ -40,60 +40,6 @@ window.TDAI18n = (function() {
     return 'auto_' + (h >>> 0).toString(16).padStart(8, '0');
   }
 
-  const STUDY_ROOM_I18N = {
-    tabHome: { tr: "Ana Sayfa", az: "Ana Səhifə", uz: "Bosh Sahifa", kk: "Басты Бет", tk: "Baş Sahypa", ky: "Башкы Бет", en: "Home" },
-    tabJourney: { tr: "Nasıl Çalışır?", az: "Necə İşləyir?", uz: "Qanday Ishlaydi?", kk: "Қалай Жұмыс Істейді?", tk: "Nähili Işleýär?", ky: "Кандай Иштейт?", en: "How It Works" },
-    tabMatching: { tr: "Eşleşme", az: "Uyğunlaşma", uz: "Moslashuv", kk: "Сәйкестендіру", tk: "Gabatlanyş", ky: "Дал Келүү", en: "Matching" },
-    tabCommunity: { tr: "Topluluk", az: "İcma", uz: "Hamjamiyat", kk: "Қоғамдастық", tk: "Jemgyýet", ky: "Коомчулук", en: "Community" },
-    tabArticles: { tr: "Makaleler", az: "Məqalələr", uz: "Maqolalar", kk: "Мақалалар", tk: "Makalalar", ky: "Макалалар", en: "Articles" },
-    tabMessages: { tr: "Mektuplar", az: "Məktublar", uz: "Maktublar", kk: "Хаттар", tk: "Hatlar", ky: "Каттар", en: "Letters" },
-    tabStudy: { tr: "Çalışma Odası", az: "İş Otağı", uz: "O‘qish Xonasi", kk: "Оқу Бөлмесі", tk: "Okuw Otagy", ky: "Окуу Бөлмөсү", en: "Study Room" },
-    navStudy: { tr: "Çalışma Odası", az: "İş Otağı", uz: "O‘qish Xonasi", kk: "Оқу Бөлмесі", tk: "Okuw Otagy", ky: "Окуу Бөлмөсү", en: "Study Room" },
-    tabWordGame: { tr: "Kelime Oyunu", az: "Söz Oyunu", uz: "So‘z O‘yini", kk: "Сөз Ойыны", tk: "Söz Oýny", ky: "Сөз Оюну", en: "Word Game" },
-    navWordGame: { tr: "Kelime Oyunu", az: "Söz Oyunu", uz: "So‘z O‘yini", kk: "Сөз Ойыны", tk: "Söz Oýny", ky: "Сөз Оюну", en: "Word Game" },
-    tabCulture: { tr: "Dijital Kültür Arşivi", az: "Rəqəmsal Mədəniyyət Arxivi", uz: "Raqamli Madaniyat Arxivi", kk: "Сандық Мәдениет Мұрағаты", tk: "Sanly Medeniýet Arhiwi", ky: "Санарип Маданият Архивы", en: "Digital Culture Archive" },
-    navCultureArchive: { tr: "Dijital Kültür Arşivi", az: "Rəqəmsal Mədəniyyət Arxivi", uz: "Raqamli Madaniyat Arxivi", kk: "Сандық Мәдениет Мұрағаты", tk: "Sanly Medeniýet Arhiwi", ky: "Санарип Маданияt Архивы", en: "Digital Culture Archive" },
-    quickWordGameTitle: { tr: "Online Kelime Oyunu", az: "Onlayn Söz Oyunu", uz: "Onlayn So‘z O‘yini", kk: "Онлайн Сөз Ойыны", tk: "Onlaýn Söz Oýny", ky: "Онлайн Сөз Оюну", en: "Online Word Game" },
-    quickWordGameSub: { tr: "Çok Oyunculu 3 Şıklı Türk Lehçeleri Düellosu", az: "Çox Oyunçulu 3 Variantlı Türk Ləhcələri Duellosu", uz: "Ko‘p O‘yinchili 3 Variantli Turkiy Lahjalar Bellashuvi", kk: "Көп Ойыншылы 3 Нұсқалы Түркі Диалектілері Дуэлі", tk: "Köp Oýunçyly 3 Şahaly Türk Şiweleri Bäsleşigi", ky: "Көп Оюнчулуу 3 Варианттуу Түрк Диалектилери Татайлашуусу", en: "Multiplayer 3-Choice Turkic Dialects Duel" },
-    quickCultureTitle: { tr: "Dijital Kültür Arşivi", az: "Rəqəmsal Mədəniyyət Arxivi", uz: "Raqamli Madaniyat Arxivi", kk: "Сандық Мәдениет Мұрағаты", tk: "Sanly Medeniýet Arhiwi", ky: "Санарип Маданият Архивы", en: "Digital Culture Archive" },
-    quickCultureSub: { tr: "7 Türk Devleti Fotoğraf & Kültür Galerisi", az: "7 Türk Dövləti Foto & Mədəniyyət Qalereyası", uz: "7 Turk Davlati Foto & Madaniyat Galereyasi", kk: "7 Түркі Мемлекеті Фото & Мәдениет Галереясы", tk: "7 Türk Döwleti Foto & Medeniýet Galereýasy", ky: "7 Түрк Мамлекети Фото & Маданият Галереясы", en: "7 Turkic States Photo & Culture Gallery" },
-    quickStudyTitle: { tr: "Çalışma Odası", az: "İş Otağı", uz: "O‘qish Xonasi", kk: "Оқу Бөлмесі", tk: "Okuw Otagy", ky: "Окуу Бөлмөсү", en: "Study Room" },
-    quickStudySub: { tr: "Pomodoro & Ortam Sesleri", az: "Pomodoro & Ətraf Səsləri", uz: "Pomodoro & Muhit Ovozlar", kk: "Помодоро & Фондық Дыбыстар", tk: "Pomodoro & Gurşaw Sesleri", ky: "Помодоро & Айлана Дыбыстары", en: "Pomodoro & Ambient Audio" },
-    quickTuranSub: { tr: "Yapay Zekâ Desteği & Rehberlik", az: "Süni İntellekt Dəstəyi & Bələdçilik", uz: "Sun’iy Intellekt Yordami & Yo‘riqnoma", kk: "Жасанды Интеллект Қолдауы & Нұсқаулық", tk: "Emeli Aň Goldawy & Ýolbeletlik", ky: "Жасалма Интеллект Колдоосу & Багыттоо", en: "AI Support & Guidance" },
-    profileNotice: { tr: "Beceri doğrulaması; sertifika ve öğrenci değerlendirmeleri ile yapılabilir.", az: "Bacarıq doğrulaması; sertifikat və tələbə qiymətləndirmələri ilə edilə bilər.", uz: "Ko‘nikmani tasdiqlash; sertifikat va talabalar baholashlari orqali amalga oshirilishi mumkin.", kk: "Дағдыны растау; сертификат және студенттердің бағалауы арқылы жүзеге асырылуы мүмкін.", tk: "Başarnygy tassyklamak; şahadatnama we talyp baha bermeleri arkaly amala aşyrylyp bilner.", ky: "Көндүмдү тастыктоо; сертификат жана студенттердин баалоосу аркылуу жүргүзүлүшү мүмкүн.", en: "Skill verification can be performed through certificates and student reviews." },
-    articlePrototypeNotice: { tr: "Bu bir prototip olduğu için yazının içeriği şu an görüntülenememektedir.", az: "Bu bir prototip olduğu üçün yazının məzmunu hazırda göstərilə bilmir.", uz: "Bu prototip bo‘lgani uchun maqola matni hozircha ko‘rsatilmaydi.", kk: "Бұл прототип болғандықтан, мақаланың мазмұны қазір көрсетілмейді.", tk: "Bu prototip bolandygy üçin makalanyň mazmuny häzirlikçe görkezilmeýär.", ky: "Бул прототип болгондуктан, макаланын мазмуну азырынча көрсөтүлбөйт.", en: "Since this is a prototype, the content of the article cannot be displayed at the moment." },
-    studyEyebrow: { tr: "DİJİTAL KÜTÜPHANE • ODAKLANMA ALANI", az: "RƏQƏMSAL KİTABXANA • DİQQƏT MƏRKƏZİ", uz: "RAQAMLI KUTUBXONA • DIQQAT MARKAZI", kk: "САНДЫҚ КІТАПХАНА • ЗЕЙІН ҚОЮ АЛАНЫ", tk: "SANLY KITAPHANA • ÜNS MERKEZI", ky: "САНАРИП КИТЕПКАНА • КӨҢҮЛ БУРУУ АЙМАГЫ", en: "DIGITAL LIBRARY • FOCUS SPACE" },
-    studyTitle: { tr: "Sanal Çalışma Odası", az: "Virtual İş Otağı", uz: "Virtual O‘qish Xonasi", kk: "Виртуалды Оқу Бөлмесі", tk: "Wirtual Okuw Otagy", ky: "Виртуалдуу Окуу Бөлмөсү", en: "Virtual Study Room" },
-    studySubtitle: { tr: "Kendi oluşturduğun Bitmoji avatarınla çalışma masana geç, Pomodoro zamanlayıcı, yapılacak hedefler ve rahatlatıcı ortam sesleriyle odaklan.", az: "Öz yaratdığın Bitmoji avatarınla iş masana keç, Pomodoro sayğacı və sakitləşdirici fon səsləri ilə diqqətini topla.", uz: "O‘zingiz yaratgan Bitmoji avatar bilan ish stolingizga o‘tiring, Pomodoro taymeri va tinchlantiruvchi ovozlar bilan diqqatni jamlang.", kk: "Өзің жасаған Bitmoji аватарыңмен оқу үстеліңе отыр, Помодоро таймері және фондық дыбыстармен зейін қой.", tk: "Öz döreden Bitmoji awataryň bilen okuw stoluňa geç, Pomodoro wagty we dynç alyş sesleri bilen ünsüňi jemle.", ky: "Өзүң жараткан Bitmoji аватарың менен окуу столуңа отур, Помодоро таймери жана айлана дабыштары менен көңүл бур.", en: "Sit at your study desk with your personalized Bitmoji avatar, focus with Pomodoro timer, goals and soothing ambient sounds." },
-    pomodoroWork: { tr: "Odaklanma", az: "Diqqət", uz: "Fokus", kk: "Зейін", tk: "Üns", ky: "Көңүл", en: "Focus" },
-    pomodoroShortBreak: { tr: "Kısa Mola", az: "Qısa Fasilə", uz: "Qisqa Tanaffus", kk: "Қысқа Үзіліс", tk: "Gysga Arakesme", ky: "Кыска Тыныгуу", en: "Short Break" },
-    pomodoroLongBreak: { tr: "Uzun Mola", az: "Uzun Fasilə", uz: "Uzoq Tanaffus", kk: "Ұзақ Үзіліс", tk: "Uzak Arakesme", ky: "Узак Тыныгуу", en: "Long Break" },
-    todosTitle: { tr: "Günlük Hedefler ve Görevler", az: "Gündəlik Hədəflər və Tapşırıqlar", uz: "Kunlik Maqsadlar va Vazifalar", kk: "Күнделікті Мақсаттар мен Тапсырмалар", tk: "Gündelik Maksatlar we Tabşyryklar", ky: "Күндөлүк Максаттар жана Тапшырмалар", en: "Daily Goals & Tasks" },
-    ambientTitle: { tr: "Ortam Sesleri Mikseri", az: "Ətraf Səsləri Mikseri", uz: "Muhit Ovozlar Mikseri", kk: "Фондық Дыбыс Миксері", tk: "Gurşaw Sesleri Mikseri", ky: "Айлана Үндөр Миксери", en: "Ambient Audio Mixer" },
-    editAvatarTooltip: { tr: "Bitmoji Avatarımı Özelleştir", az: "Bitmoji Avatarımı Fərdiləşdir", uz: "Bitmoji Avatarimni O‘zgartirish", kk: "Bitmoji Аватарымды Баптау", tk: "Bitmoji Awatarymy Sazla", ky: "Bitmoji Аватарымды Ырастоо", en: "Customize My Bitmoji Avatar" },
-    footerDevelopersTitle: { tr: "Türk Dünyası Beceri Ağı Geliştiricileri", az: "Türk Dünyası Bacarıq Şəbəkəsi Tərtibatçıları", uz: "Turk Dunyosi Ko‘nikmalar Tarmog‘i Dasturchilari", kk: "Түркі Әлемі Дағдылар Желісінің Әзірлеушілері", tk: "Türk Dünýäsi Başarnyk Ulgamynyň Düzüjileri", ky: "Түрк Дүйнөсү Көндүмдөр Тармагынын Иштеп Чыгуучулары", en: "Turkic World Skill Network Developers" },
-    logoLead: { tr: "TÜRK DÜNYASI", az: "TÜRK DÜNYASI", uz: "TURK DUNYOSI", kk: "ТҮРКІ ӘЛЕМІ", tk: "TÜRK DÜNÝÄSI", ky: "ТҮРК ДҮЙНӨСҮ", en: "TURKIC WORLD" },
-    logoTail: { tr: "BECERİ AĞI", az: "BACARIQ ŞƏBƏKƏSİ", uz: "KO‘NIKMALAR TARMOG‘I", kk: "ДАҒДЫЛАР ЖЕЛІСІ", tk: "BAŞARNYK ULGAMY", ky: "КӨНДҮМДӨР ТАРМАГЫ", en: "SKILL NETWORK" }
-  };
-
-  const MESSAGING_I18N = {
-    tabMessages: { tr: "Mektuplar", az: "Məktublar", uz: "Maktublar", kk: "Хаттар", tk: "Hatlar", ky: "Каттар", en: "Letters" },
-    navLetters: { tr: "Mektuplar", az: "Məktublar", uz: "Maktublar", kk: "Хаттар", tk: "Hatlar", ky: "Каттар", en: "Letters" },
-    messagingEyebrow: { tr: "DİJİTAL MEKTUPLAŞMA • SINIR ÖTESİ HABERLEŞME", az: "RƏQƏMSAL MƏKTUBLAŞMA • SƏRHƏDLƏRARASI XƏBƏRLƏŞMƏ", uz: "RAQAMLI MAKTUBLASHUV • CHEGARALARARO ALOQA", kk: "САНДЫҚ ХАТ АЛМАСУ • ШЕКАРААРАЛЫҚ БАЙЛАНЫС", tk: "SANLY HAT ALYŞYGY • SERHETARA HABARLAŞYK", ky: "САНАРИП КАТ АЛЫШУУ • ЧЕК АРАСЫЗ БАЙЛАНЫШ", en: "DIGITAL CORRESPONDENCE • CROSS-BORDER COMMUNICATION" },
-    messagingTitle: { tr: "Sınır Ötesi Mektuplaşma", az: "Sərhədlərarası Məktublaşma", uz: "Chegaralararo Maktublashuv", kk: "Шекарааралық Хат Алмасу", tk: "Serhetara Hat Alyşygy", ky: "Чек Арасыз Кат Алмашуу", en: "Cross-Border Letter Exchange" },
-    messagingSubtitle: { tr: "Türk Dünyası'ndaki 7 bağımsız devletin öğrencileri arasında dostluk, beceri takası ve kültürel miras mektuplaşması. Mektubunu yaz, seçtiğin Türk devletinin hatıra pulu ve dostluk mührüyle sınırları aş.", az: "Türk Dünyasındakı 7 müstəqil dövlətin tələbələri arasında dostluq, bacarıq mübadiləsi və mədəni irs məktublaşması.", uz: "Turk Dunyosidagi 7 ta mustaqil davlat talabalari o‘rtasida do‘stlik, ko‘nikmalar almashinuvi va madaniy meros maktublashuvi.", kk: "Түркі Әлеміндегі 7 тәуелсіз мемлекет студенттері арасындағы достық, дағды алмасу және мәдени мұра хат алмасуы.", tk: "Türk Dünýäsindäki 7 garaşsyz döwletiň talyplarynyň arasynda dostluk, başarnyk alyş-çalşygy we medeni miras hat alyşygy.", ky: "Түрк Дүйнөсүндөгү 7 көз карандысыз мамлекеттин студенттеринин ортосундагы достук, көндүм алмашуу жана маданий мурас кат алышуусу.", en: "Friendship, skill exchange, and cultural heritage correspondence among students across the 7 independent Turkic states." },
-    inbox: { tr: "Gelen Kutusu", az: "Gələnlər Qutusu", uz: "Kiruvchi Xatlar", kk: "Кіріс Қорабы", tk: "Gelen Hatlar", ky: "Кирүүчү Куту", en: "Inbox" },
-    sent: { tr: "Gönderilenler", az: "Göndərilənlər", uz: "Yuborilgan Xatlar", kk: "Жіберілгендер", tk: "Ugradylan Hatlar", ky: "Жөнөтүлгөндөр", en: "Sent" },
-    newLetter: { tr: "Yeni Mektup Yaz", az: "Yeni Məktub Yaz", uz: "Yangi Maktub Yozish", kk: "Жаңа Хат Жазу", tk: "Täze Hat Ýaz", ky: "Жаңы Кат Жазуу", en: "Write New Letter" },
-    recipientStudentId: { tr: "Alıcı Öğrenci ID veya E-posta", az: "Qəbul edən Tələbə ID və ya E-poçt", uz: "Qabul qiluvchi Talaba ID yoki Elektron pochta", kk: "Алушы Студент ID немесе Электрондық пошта", tk: "Alyjy Talyp ID ýa-da E-poçta", ky: "Алуучу Студент ID же Электрондук почта", en: "Recipient Student ID or Email" },
-    letterSubject: { tr: "Mektup Konusu", az: "Məktubun Mövzusu", uz: "Maktub Mavzusi", kk: "Хат Тақырыбы", tk: "Hatyň Temasy", ky: "Каттын Темасы", en: "Letter Subject" },
-    letterBody: { tr: "Mektubunuz (Hitap, Düşünceleriniz ve Beceri Talebiniz)", az: "Məktubunuz (Müraciət, Fikirləriniz və Bacarıq Tələbiniz)", uz: "Maktubingiz (Murojaat, Fikrlaringiz va Ko‘nikma Talabingiz)", kk: "Хатыңыз (Қарату, Ойларыңыз және Дағды Тілегіңіз)", tk: "Hatyňyz (Ýüzlenme, Pikirleriňiz we Başarnyk Islegiňiz)", ky: "Катыңыз (Кайрылуу, Ойлоруңуз жана Көндүм Талабыңыз)", en: "Your Letter (Salutation, Thoughts & Skill Request)" },
-    selectStamp: { tr: "Devlet Pulu & Kültür Mührü Seç", az: "Dövlət Markası & Mədəniyyət Möhürü Seç", uz: "Davlat Markasi & Madaniyat Muhrini Tanlash", kk: "Мемлекеттік Марка & Мәдениет Мөрін Таңдау", tk: "Döwlet Markasy & Medeniýet Möhrüni Saýla", ky: "Мамлекеттик Марка & Маданият Мөөрүн Тандоо", en: "Select State Stamp & Cultural Seal" },
-    sendLetterBtn: { tr: "Mektubu Mühürle ve Gönder", az: "Məktubu Möhürlə və Göndər", uz: "Maktubni Muhrlab Yuborish", kk: "Хатты Мөрлеп Жіберу", tk: "Haty Möhürläp Ugrat", ky: "Катты Мөөр басып Жөнөтүү", en: "Seal and Send Letter" },
-    sealDivanTitle: { tr: "Bozkır Kartalı Taşıyor", az: "Bozqır Qartalı Daşıyır", uz: "Dasht Burguti Yetkazmoqda", kk: "Дала Бүркіті Жеткізуде", tk: "Sähra Bürgüdi Daşaýar", ky: "Талаа Бүркүтү Жеткирүүдө", en: "Carried by the Steppe Eagle" },
-    sealDivanDesc: { tr: "Mektuplar şehirler arası ortalama uçuş süresinin tam 2 katı sürede teslim edilir. Erken teslim seçeneği bulunmaz.", az: "Məktublar şəhərlərarası orta uçuş müddətinin düz 2 qatı vaxtda çatdırılır. Erkən çatdırılma seçimi yoxdur.", uz: "Maktublar shaharlararo o‘rtacha parvoz vaqtining roppa-rosa 2 barobari vaqtida yetkaziladi. Erta yetkazish tanlovi mavjud emas.", kk: "Хаттар қалааралық орташа ұшу уақытынан тура 2 есе көп уақытта жеткізіледі. Ерте жеткізу таңдауы жоқ.", tk: "Hatlar şäherara ortaça uçuş wagtynyň dogry 2 esse möhletinde gowşurylýar. Ir gowşurmak saýlawy ýokdur.", ky: "Каттар шаарлар аралык орточо учуу убактысынан так 2 эсе көп убакытта жеткирилет. Эрте жеткирүү тандоосу жок.", en: "Letters are delivered in exactly twice the average flight time between cities. Early delivery is not available." }
-  };
-
   function initRegistries() {
     supportedLanguages.forEach(lang => {
       I18N[lang] = I18N[lang] || {};
@@ -405,7 +351,7 @@ window.TDAI18n = (function() {
     try { localStorage.setItem('tda-language', lang); } catch (e) {}
     window.dispatchEvent(new CustomEvent('tda:languageChanged', { detail: { language: lang } }));
 
-    setTimeout(() => translateTree(document.body, lang, { online: true }), 0);
+    setTimeout(() => translateTree(document.body, lang, { online: false }), 0);
     if (queuedLanguage) {
       const next = queuedLanguage;
       queuedLanguage = null;
@@ -414,6 +360,10 @@ window.TDAI18n = (function() {
   }
 
   function init() {
+    try {
+      Object.keys(localStorage).filter(k => k.startsWith('tda:v3:')).forEach(k => localStorage.removeItem(k));
+    } catch (e) {}
+
     initRegistries();
     let saved = 'tr';
     try { saved = localStorage.getItem('tda-language') || 'tr'; } catch (e) {}
@@ -437,7 +387,7 @@ window.TDAI18n = (function() {
         }
       }
       if (added.length) {
-        setTimeout(() => added.filter(n => !isExcluded(n)).forEach(n => translateTree(n, currentLanguage, { online: true })), 0);
+        setTimeout(() => added.filter(n => !isExcluded(n)).forEach(n => translateTree(n, currentLanguage, { online: false })), 0);
       }
     });
     observer.observe(document.body, { childList: true, subtree: true });
@@ -451,7 +401,7 @@ window.TDAI18n = (function() {
     get languages() { return supportedLanguages.slice(); },
     t,
     setLanguage: applyLanguage,
-    translate: (text, target, source = 'auto') => onlineTranslate(text, target, source),
+    translate: (text) => Promise.resolve(text),
     addUserContent: async (el, sourceLang = 'auto') => {
       if (!el) return;
       el.dataset.sourceLang = sourceLang;

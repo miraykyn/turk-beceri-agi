@@ -35,8 +35,7 @@ Bu proje GitHub Pages üzerinde statik web sitesi olarak barındırılmaya tam u
 
 ## 🛠️ Yerel Çalıştırma
 Statik bir web projesi olduğu için herhangi bir HTTP sunucusuyla çalıştırılabilir:
-```powershell
-# PowerShell ile:
-powershell -ExecutionPolicy Bypass -File ./server.ps1
+```bash
+python3 -m http.server 8000
 ```
 Veya doğrudan tarayıcıda `index.html` dosyasını açabilirsiniz.

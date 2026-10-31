@@ -399,7 +399,7 @@ window.TDAStudyRoom = (function() {
       `;
 
       // 5. MASA PIRINC KUNYESI (01 - 50)
-      const brassPlateText = window.TDAI18n ? window.TDAI18n.t('deskPlateLabel', { n: String(deskNo).padStart(2, '0') }) : `Masa ${String(deskNo).padStart(2, '0')}`;
+      const brassPlateText = window.TDAI18n ? window.TDAI18n.t('deskPlateLabel', { n: String(deskNo).padStart(2, '0'), fallback: `Masa ${String(deskNo).padStart(2, '0')}` }) : `Masa ${String(deskNo).padStart(2, '0')}`;
       const brassPlateHtml = `<div class="desk-brass-plate">${escapeHtml(brassPlateText)}</div>`;
 
       // Istasyon Sinifi
@@ -409,14 +409,14 @@ window.TDAStudyRoom = (function() {
 
       if (isUserDeskHere) {
         unitClass += ' user-seated-desk user-occupied-desk';
-        titleAttr = window.TDAI18n ? window.TDAI18n.t('deskTitleUser', { n: deskNo }) : `Masa ${deskNo} &bull; Senin Masan (Odakta)`;
+        titleAttr = window.TDAI18n ? window.TDAI18n.t('deskTitleUser', { n: deskNo, fallback: `Masa ${deskNo} &bull; Senin Masan (Odakta)` }) : `Masa ${deskNo} &bull; Senin Masan (Odakta)`;
       } else if (isOccupied) {
         unitClass += ' occupied-desk';
-        titleAttr = window.TDAI18n ? window.TDAI18n.t('deskTitleOccupied', { n: deskNo, name: deskItem.student.name, country: deskItem.student.country }) : `Masa ${deskNo} &bull; ${escapeHtml(deskItem.student.name)} (${deskItem.student.country})`;
+        titleAttr = window.TDAI18n ? window.TDAI18n.t('deskTitleOccupied', { n: deskNo, name: deskItem.student.name, country: deskItem.student.country, fallback: `Masa ${deskNo} &bull; ${escapeHtml(deskItem.student.name)} (${deskItem.student.country})` }) : `Masa ${deskNo} &bull; ${escapeHtml(deskItem.student.name)} (${deskItem.student.country})`;
         dataPeerAttr = `data-peer-data='${escapeHtml(JSON.stringify(deskItem.student))}'`;
       } else {
         unitClass += ' empty-desk';
-        titleAttr = window.TDAI18n ? window.TDAI18n.t('deskTitleEmpty', { n: deskNo }) : `Masa ${deskNo} &bull; &#x00C7;al&#x0131;&#x015F;maya Ba&#x015F;lamak &#x0130;&ccedil;in Sandalyeye T&#x0131;kla`;
+        titleAttr = window.TDAI18n ? window.TDAI18n.t('deskTitleEmpty', { n: deskNo, fallback: `Masa ${deskNo} &bull; &#x00C7;al&#x0131;&#x015F;maya Ba&#x015F;lamak &#x0130;&ccedil;in Sandalyeye T&#x0131;kla` }) : `Masa ${deskNo} &bull; &#x00C7;al&#x0131;&#x015F;maya Ba&#x015F;lamak &#x0130;&ccedil;in Sandalyeye T&#x0131;kla`;
       }
 
       html += `
@@ -642,7 +642,7 @@ window.TDAStudyRoom = (function() {
       startPomodoro();
       const goalLabel = document.getElementById('pomoActiveGoalText');
       if (goalLabel) goalLabel.textContent = `Hedef: ${goalText}`;
-      const toastMsg = window.TDAI18n ? window.TDAI18n.t('sessionStartedToast', { n: state.userDeskNumber }) : `🎯 Masa ${state.userDeskNumber}'de seans başladı. Verimli çalışmalar!`;
+      const toastMsg = window.TDAI18n ? window.TDAI18n.t('sessionStartedToast', { n: state.userDeskNumber, fallback: `🎯 Masa ${state.userDeskNumber}'de seans başladı. Verimli çalışmalar!` }) : `🎯 Masa ${state.userDeskNumber}'de seans başladı. Verimli çalışmalar!`;
       showToast(toastMsg);
     }, 760);
 
@@ -671,7 +671,7 @@ window.TDAStudyRoom = (function() {
     renderHallDesks();
     renderRoomSelector();
     setSceneState('LOBBY');
-    const leaveMsg = window.TDAI18n ? window.TDAI18n.t('leftDeskToast') : '🚪 Masadan kalkıldı ve salona dönüldü.';
+    const leaveMsg = window.TDAI18n ? window.TDAI18n.t('leftDeskToast', { fallback: '🚪 Masadan kalkıldı ve salona dönüldü.' }) : '🚪 Masadan kalkıldı ve salona dönüldü.';
     showToast(leaveMsg);
   }
 
@@ -1332,7 +1332,7 @@ window.TDAStudyRoom = (function() {
           if (el) {
             el.style.transform = 'scale(1.18)';
             setTimeout(() => { el.style.transform = ''; }, 650);
-            const deskToast = window.TDAI18n ? window.TDAI18n.t('deskAvailableToast', { n: emptyDesk.deskNo }) : `🪑 Masa ${emptyDesk.deskNo} müsait!`;
+            const deskToast = window.TDAI18n ? window.TDAI18n.t('deskAvailableToast', { n: emptyDesk.deskNo, fallback: `🪑 Masa ${emptyDesk.deskNo} müsait!` }) : `🪑 Masa ${emptyDesk.deskNo} müsait!`;
             showToast(deskToast);
           }
         }

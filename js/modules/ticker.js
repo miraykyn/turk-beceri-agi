@@ -69,7 +69,7 @@ window.TDATicker = (function() {
       if (index !== previous) return;
       countryEl.textContent = translatedCountry;
       textEl.textContent = translatedText;
-      const srcPrefix = window.TDAI18n ? window.TDAI18n.t('factTickerSource') : (lang === 'tr' ? 'Kaynak: ' : 'Source: ');
+      const srcPrefix = window.TDAI18n ? window.TDAI18n.t('factTickerSource', { fallback: (lang === 'tr' ? 'Kaynak: ' : 'Source: ') }) : (lang === 'tr' ? 'Kaynak: ' : 'Source: ');
       sourceEl.textContent = srcPrefix + translatedSource;
       window.requestAnimationFrame(fitMessage);
     });
@@ -84,7 +84,10 @@ window.TDATicker = (function() {
 
     showFact();
     if (timerId) clearInterval(timerId);
-    timerId = setInterval(showFact, 7500);
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion) {
+      timerId = setInterval(showFact, 7500);
+    }
 
     window.addEventListener('resize', fitMessage);
     window.addEventListener('tda:languageChanged', () => showFact());

@@ -27,4 +27,30 @@
   .flowline .arrow{display:none!important}
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .fact-ticker-message.is-changing,
+  .fact-ticker,
+  .turan-star,
+  .turan-halo,
+  .eagle-transit-plane,
+  .live-dot-pulse,
+  .seated-desk-pulse,
+  .mug-steam-rising,
+  .steam-particle,
+  .candle-flame,
+  .wg-pulse-dot,
+  .wg-searching-radar,
+  .wg-pulse-fast {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+
 

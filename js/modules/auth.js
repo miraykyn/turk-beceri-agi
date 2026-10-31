@@ -61,14 +61,14 @@ window.TDAAuth = (function() {
     if (mode === 'login') {
       if (title) {
         title.dataset.i18n = 'loginTitle';
-        title.textContent = window.TDAI18n?.t('loginTitle') || 'Giriş Yap';
+        title.textContent = window.TDAI18n?.t('loginTitle', { fallback: 'Giriş Yap' }) || 'Giriş Yap';
       }
       reg.style.display = 'none';
       login.style.display = 'block';
     } else {
       if (title) {
         title.dataset.i18n = 'registerTitle';
-        title.textContent = window.TDAI18n?.t('registerTitle') || 'Kayıt Ol';
+        title.textContent = window.TDAI18n?.t('registerTitle', { fallback: 'Kayıt Ol' }) || 'Kayıt Ol';
       }
       reg.style.display = 'block';
       login.style.display = 'none';
@@ -108,7 +108,7 @@ window.TDAAuth = (function() {
       const x = document.createElement('button');
       x.type = 'button';
       x.textContent = '×';
-      x.setAttribute('aria-label', window.TDAI18n?.t('selectionRemove') || 'Seçimi kaldır');
+      x.setAttribute('aria-label', window.TDAI18n?.t('selectionRemove', { fallback: 'Seçimi kaldır' }) || 'Seçimi kaldır');
       x.onclick = () => {
         picker._selected.delete(label);
         renderSelected(picker);
@@ -290,12 +290,12 @@ window.TDAAuth = (function() {
         if (!file) return;
         const allowed = CERT_TYPES.includes(file.type) || /\.(pdf|jpe?g|png|webp|docx?)$/i.test(file.name);
         if (!allowed) {
-          alert(window.TDAI18n?.t('certificateInvalid') || 'Desteklenmeyen dosya türü.');
+          alert(window.TDAI18n?.t('certificateInvalid', { fallback: 'Desteklenmeyen dosya türü. PDF, JPG, JPEG, PNG, WEBP, DOC veya DOCX seçebilirsin.' }) || 'Desteklenmeyen dosya türü.');
           clearCertificateUI();
           return;
         }
         if (file.size > CERT_MAX) {
-          alert(window.TDAI18n?.t('certificateTooLarge') || 'Dosya 3 MB sınırını aşıyor.');
+          alert(window.TDAI18n?.t('certificateTooLarge', { fallback: 'Dosya 3 MB sınırını aşıyor. Daha küçük bir belge seç.' }) || 'Dosya 3 MB sınırını aşıyor.');
           clearCertificateUI();
           return;
         }
@@ -320,7 +320,7 @@ window.TDAAuth = (function() {
           localStorage.setItem('tda-demo-user', JSON.stringify(data));
         } catch (err) {}
 
-        showAuthStatus('registerStatus', window.TDAI18n?.t('registrationSuccess') || 'Kayıt oluşturuldu.');
+        showAuthStatus('registerStatus', window.TDAI18n?.t('registrationSuccess', { fallback: 'Kayıt oluşturuldu. Bilgilerin bu prototipte tarayıcında saklandı.' }) || 'Kayıt oluşturuldu.');
         registerForm.reset();
         clearCertificateUI();
 
@@ -339,10 +339,10 @@ window.TDAAuth = (function() {
         } catch (err) {}
 
         if (user && user.email === data.email) {
-          showAuthStatus('loginStatus', window.TDAI18n?.t('loginSuccess', { name: user.firstName || 'Öğrenci' }) || 'Giriş başarılı.');
+          showAuthStatus('loginStatus', window.TDAI18n?.t('loginSuccess', { name: user.firstName || 'Öğrenci', fallback: 'Giriş başarılı. Hoş geldin, {name}!' }) || 'Giriş başarılı.');
           window.dispatchEvent(new CustomEvent('tda:profileUpdated', { detail: user }));
         } else {
-          showAuthStatus('loginStatus', window.TDAI18n?.t('loginNotFound') || 'Hesap bulunamadı.');
+          showAuthStatus('loginStatus', window.TDAI18n?.t('loginNotFound', { fallback: 'Bu prototipte kayıtlı bilgilerle eşleşen bir hesap bulunamadı.' }) || 'Hesap bulunamadı.');
         }
       });
     }

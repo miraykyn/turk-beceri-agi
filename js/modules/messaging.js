@@ -902,8 +902,8 @@ window.TDAMessaging = (function() {
 
     // Uçak simgesi yerine Bozkır Kartalı (Steppe Eagle) ikonu kullanılır.
     // Kesin kural: "Hızlı Gönder" veya "Süreyi Atla" butonu yoktur.
-    const widgetTitle = window.TDAI18n ? window.TDAI18n.t('transitWidgetTitle') : 'Bozkır Kartalı Mektubunuzu Taşıyor! (Teslimat Simülasyonu)';
-    const remainingTitle = window.TDAI18n ? window.TDAI18n.t('transitRemaining') : '⏳ Teslimata Kalan Süre:';
+    const widgetTitle = window.TDAI18n ? window.TDAI18n.t('transitWidgetTitle', { fallback: 'Bozkır Kartalı Mektubunuzu Taşıyor! (Teslimat Simülasyonu)' }) : 'Bozkır Kartalı Mektubunuzu Taşıyor! (Teslimat Simülasyonu)';
+    const remainingTitle = window.TDAI18n ? window.TDAI18n.t('transitRemaining', { fallback: '⏳ Teslimata Kalan Süre:' }) : '⏳ Teslimata Kalan Süre:';
     container.innerHTML = `
       <div class="transit-delivery-widget">
         <div class="transit-header">
@@ -1347,7 +1347,7 @@ window.TDAMessaging = (function() {
     if (!files.length) return;
 
     if (attachedPhotoFiles.length + files.length > 3) {
-      alert(window.TDAI18n ? window.TDAI18n.t('alertMax3Photos') : 'Güvenlik kuralı: Bir mektuba en fazla 3 adet fotoğraf ekleyebilirsiniz.');
+      alert(window.TDAI18n ? window.TDAI18n.t('alertMax3Photos', { fallback: 'Güvenlik kuralı: Bir mektuba en fazla 3 adet fotoğraf ekleyebilirsiniz.' }) : 'Güvenlik kuralı: Bir mektuba en fazla 3 adet fotoğraf ekleyebilirsiniz.');
       return;
     }
 
@@ -1960,7 +1960,7 @@ window.TDAMessaging = (function() {
       console.warn('Avatar event tetiklenemedi:', e);
     }
     closeAvatarStudio();
-    alert(window.TDAI18n ? window.TDAI18n.t('alertAvatarSaved') : '✓ Bitmoji avatarınız başarıyla kaydedildi! Gönderdiğiniz mektuplarda ve Sanal Çalışma Odası\'nda bu avatar kullanılacaktır.');
+    alert(window.TDAI18n ? window.TDAI18n.t('alertAvatarSaved', { fallback: '✓ Bitmoji avatarınız başarıyla kaydedildi! Gönderdiğiniz mektuplarda ve Sanal Çalışma Odası\'nda bu avatar kullanılacaktır.' }) : '✓ Bitmoji avatarınız başarıyla kaydedildi! Gönderdiğiniz mektuplarda ve Sanal Çalışma Odası\'nda bu avatar kullanılacaktır.');
   }
 
   // --- 17. AŞAMA GEÇİŞLERİ ---
@@ -1990,7 +1990,7 @@ window.TDAMessaging = (function() {
     if (e) e.preventDefault();
 
     if (!activeSelectedPenpal) {
-      alert(window.TDAI18n ? window.TDAI18n.t('alertSelectPenpal') : 'Lütfen bir mektup arkadaşı seçiniz.');
+      alert(window.TDAI18n ? window.TDAI18n.t('alertSelectPenpal', { fallback: 'Lütfen bir mektup arkadaşı seçiniz.' }) : 'Lütfen bir mektup arkadaşı seçiniz.');
       return;
     }
 
@@ -2062,7 +2062,7 @@ window.TDAMessaging = (function() {
     letters.unshift(newLetter);
     const saved = saveLetters(letters);
     if (!saved) {
-      alert(window.TDAI18n ? window.TDAI18n.t('alertStorageError') : 'Depolama alanı yetersiz olduğu için mektup kaydedilemedi. Lütfen ekli fotoğrafları azaltın veya daha küçük bir görsel seçin.');
+      alert(window.TDAI18n ? window.TDAI18n.t('alertStorageError', { fallback: 'Depolama alanı yetersiz olduğu için mektup kaydedilemedi. Lütfen ekli fotoğrafları azaltın veya daha küçük bir görsel seçin.' }) : 'Depolama alanı yetersiz olduğu için mektup kaydedilemedi. Lütfen ekli fotoğrafları azaltın veya daha küçük bir görsel seçin.');
       return;
     }
 
@@ -2078,7 +2078,8 @@ window.TDAMessaging = (function() {
           from: 'İstanbul',
           to: activeSelectedPenpal.city,
           country: activeSelectedPenpal.country,
-          time: `~${calc.deliveryHours} sa`
+          time: `~${calc.deliveryHours} sa`,
+          fallback: "🦅 Bozkır Kartalı mektubunuzu ulaştırmak üzere havalandı!\n\nGüzergâh: {from} ➔ {to} ({country})\nTahmini Teslim Süresi: {time}"
         })
       : `🦅 Bozkır Kartalı mektubunuzu teslim etmek üzere havalandı!\n\n` +
         `Rota: İstanbul ➔ ${activeSelectedPenpal.city} (${activeSelectedPenpal.country})\n` +
@@ -2359,7 +2360,7 @@ window.TDAMessaging = (function() {
 
         ${letter.photos && letter.photos.length ? `
           <div class="reader-attached-photos">
-            <h5>${window.TDAI18n ? window.TDAI18n.t('attachedPhotosLabel', { n: letter.photos.length }) : `📷 Mektuba Eklenen Fotoğraflar (${letter.photos.length} Adet)`}</h5>
+            <h5>${window.TDAI18n ? window.TDAI18n.t('attachedPhotosLabel', { n: letter.photos.length, fallback: `📷 Mektuba Eklenen Fotoğraflar (${letter.photos.length} Adet)` }) : `📷 Mektuba Eklenen Fotoğraflar (${letter.photos.length} Adet)`}</h5>
             <div class="reader-photos-row">
               ${letter.photos.map(src => `<img src="${escapeHtml(src)}" alt="Mektup Eki" class="reader-photo-thumb" data-photo-src="${escapeHtml(src)}">`).join('')}
             </div>
@@ -2367,7 +2368,7 @@ window.TDAMessaging = (function() {
         ` : ''}
 
         <div class="letter-paper-footer" style="border-top:1px solid rgba(0,0,0,0.1);padding-top:16px;margin-top:20px;display:flex;justify-content:space-between;font-size:12px;color:#64748b;">
-          <span>${window.TDAI18n ? window.TDAI18n.t('letterPostalNetwork') : '🦅 Türk Dünyası Bozkır Kartalı Posta Ağı'}</span>
+          <span>${window.TDAI18n ? window.TDAI18n.t('letterPostalNetwork', { fallback: '🦅 Türk Dünyası Bozkır Kartalı Posta Ağı' }) : '🦅 Türk Dünyası Bozkır Kartalı Posta Ağı'}</span>
           <span data-no-translate>${escapeHtml(letter.fromName)} • ${escapeHtml(letter.fromCity || letter.fromCountry)}</span>
         </div>
       `;
@@ -2434,7 +2435,7 @@ window.TDAMessaging = (function() {
 
     renderInbox();
     notifyUnread();
-    alert(window.TDAI18n ? window.TDAI18n.t('alertPenpalAccepted', { name: target.fromName }) : `✓ ${target.fromName} ile mektup arkadaşlığı başarıyla kabul edildi! Artık dilediğiniz gibi yanıt yazabilir ve kültürel anılarınızı paylaşabilirsiniz.`);
+    alert(window.TDAI18n ? window.TDAI18n.t('alertPenpalAccepted', { name: target.fromName, fallback: `✓ ${target.fromName} ile mektup arkadaşlığı başarıyla kabul edildi! Artık dilediğiniz gibi yanıt yazabilir ve kültürel anılarınızı paylaşabilirsiniz.` }) : `✓ ${target.fromName} ile mektup arkadaşlığı başarıyla kabul edildi! Artık dilediğiniz gibi yanıt yazabilir ve kültürel anılarınızı paylaşabilirsiniz.`);
   }
 
   function handleRejectConsent() {
@@ -2443,7 +2444,7 @@ window.TDAMessaging = (function() {
     const senderId = activeViewingLetter.fromStudentId;
     const letterId = activeViewingLetter.id;
 
-    const confirmMsg = window.TDAI18n ? window.TDAI18n.t('confirmRejectPenpal', { name: senderName }) : `${senderName} adlı kullanıcının mektup arkadaşlığı talebini reddetmek ve bu kullanıcıyı engellemek istediğinize emin misiniz?`;
+    const confirmMsg = window.TDAI18n ? window.TDAI18n.t('confirmRejectPenpal', { name: senderName, fallback: `${senderName} adlı kullanıcının mektup arkadaşlığı talebini reddetmek ve bu kullanıcıyı engellemek istediğinize emin misiniz?` }) : `${senderName} adlı kullanıcının mektup arkadaşlığı talebini reddetmek ve bu kullanıcıyı engellemek istediğinize emin misiniz?`;
     if (!confirm(confirmMsg)) {
       return;
     }
@@ -2474,7 +2475,7 @@ window.TDAMessaging = (function() {
       notifyUnread();
     }
 
-    alert(window.TDAI18n ? window.TDAI18n.t('alertPenpalRejected', { name: senderName }) : `Mektup arkadaşlığı reddedildi ve ${senderName} engellendi.`);
+    alert(window.TDAI18n ? window.TDAI18n.t('alertPenpalRejected', { name: senderName, fallback: `Mektup arkadaşlığı reddedildi ve ${senderName} engellendi.` }) : `Mektup arkadaşlığı reddedildi ve ${senderName} engellendi.`);
   }
 
   function switchPane(paneId) {
@@ -2536,7 +2537,7 @@ window.TDAMessaging = (function() {
     document.getElementById('btnReplyFromModal')?.addEventListener('click', () => {
       if (!activeViewingLetter) return;
       if (activeViewingLetter.status === 'pending') {
-        alert(window.TDAI18n ? window.TDAI18n.t('alertAcceptFirst') : 'Mektuba yanıt yazabilmek için lütfen önce yukarıdaki mektup arkadaşlığı talebini Kabul Ediniz.');
+        alert(window.TDAI18n ? window.TDAI18n.t('alertAcceptFirst', { fallback: 'Mektuba yanıt yazabilmek için lütfen önce yukarıdaki mektup arkadaşlığı talebini Kabul Ediniz.' }) : 'Mektuba yanıt yazabilmek için lütfen önce yukarıdaki mektup arkadaşlığı talebini Kabul Ediniz.');
         return;
       }
       closeLetterModal();
@@ -2612,11 +2613,11 @@ window.TDAMessaging = (function() {
       item.addEventListener('click', () => {
         const step = parseInt(item.dataset.step, 10);
         if (step === 2 && !activeSelectedCountry) {
-          alert(window.TDAI18n ? window.TDAI18n.t('alertSelectCountry') : 'Lütfen önce bir ülke seçiniz.');
+          alert(window.TDAI18n ? window.TDAI18n.t('alertSelectCountry', { fallback: 'Lütfen önce bir ülke seçiniz.' }) : 'Lütfen önce bir ülke seçiniz.');
           return;
         }
         if (step === 3 && !activeSelectedPenpal) {
-          alert(window.TDAI18n ? window.TDAI18n.t('alertSelectPenpal') : 'Lütfen önce bir mektup arkadaşı seçiniz.');
+          alert(window.TDAI18n ? window.TDAI18n.t('alertSelectPenpal', { fallback: 'Lütfen önce bir mektup arkadaşı seçiniz.' }) : 'Lütfen önce bir mektup arkadaşı seçiniz.');
           return;
         }
         goToComposeStep(step);

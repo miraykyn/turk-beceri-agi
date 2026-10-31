@@ -4,26 +4,26 @@
 
 window.TDATabs = (function() {
   const navTabs = [
-    { key: 'tabHome', id: 'home' },
-    { key: 'tabJourney', id: 'journey' },
-    { key: 'tabMatching', id: 'matching' },
-    { key: 'tabCommunity', id: 'community' },
-    { key: 'tabArticles', id: 'articles' },
-    { key: 'tabMessages', id: 'messages' },
-    { key: 'tabStudy', id: 'study' },
-    { key: 'tabWordGame', id: 'wordgame' },
-    { key: 'tabCulture', id: 'culture' }
+    { key: 'tabHome', id: 'home', fallback: 'Ana Sayfa' },
+    { key: 'tabJourney', id: 'journey', fallback: 'Nasıl Çalışır?' },
+    { key: 'tabMatching', id: 'matching', fallback: 'Eşleşme' },
+    { key: 'tabCommunity', id: 'community', fallback: 'Topluluk' },
+    { key: 'tabArticles', id: 'articles', fallback: 'Makaleler' },
+    { key: 'tabMessages', id: 'messages', fallback: 'Mektuplar' },
+    { key: 'tabStudy', id: 'study', fallback: 'Çalışma Odası' },
+    { key: 'tabWordGame', id: 'wordgame', fallback: 'Kelime Oyunu' },
+    { key: 'tabCulture', id: 'culture', fallback: 'Dijital Kültür Arşivi' }
   ];
   const tabKeys = navTabs.map(t => t.key);
   const tabIds = navTabs.map(t => t.id);
   const allPanelIds = ['home', 'journey', 'matching', 'community', 'articles', 'messages', 'study', 'wordgame', 'culture', 'profile', 'turan'];
   const quickItems = [
-    { id: 'journey', titleKey: 'quickJourneyTitle', descKey: 'quickJourneySub' },
-    { id: 'matching', titleKey: 'quickMatchingTitle', descKey: 'quickMatchingSub' },
-    { id: 'study', titleKey: 'quickStudyTitle', descKey: 'quickStudySub' },
-    { id: 'wordgame', titleKey: 'quickWordGameTitle', descKey: 'quickWordGameSub' },
-    { id: 'culture', titleKey: 'quickCultureTitle', descKey: 'quickCultureSub' },
-    { id: 'turan', titleKey: 'quickTuranTitle', descKey: 'quickTuranSub' }
+    { id: 'journey', titleKey: 'quickJourneyTitle', descKey: 'quickJourneySub', titleFallback: 'Öğrenci Yolculuğu', descFallback: 'Sistemi adım adım keşfet' },
+    { id: 'matching', titleKey: 'quickMatchingTitle', descKey: 'quickMatchingSub', titleFallback: 'Akıllı Eşleştirme', descFallback: 'Sana uygun öğrencileri bul' },
+    { id: 'study', titleKey: 'quickStudyTitle', descKey: 'quickStudySub', titleFallback: 'Çalışma Odası', descFallback: 'Pomodoro & Ortam Sesleri' },
+    { id: 'wordgame', titleKey: 'quickWordGameTitle', descKey: 'quickWordGameSub', titleFallback: 'Online Kelime Oyunu', descFallback: 'Çok Oyunculu 3 Şıklı Türk Lehçeleri Düellosu' },
+    { id: 'culture', titleKey: 'quickCultureTitle', descKey: 'quickCultureSub', titleFallback: 'Dijital Kültür Arşivi', descFallback: '7 Türk Ülkesi ve Topluluğu Fotoğraf & Kültür Galerisi' },
+    { id: 'turan', titleKey: 'quickTuranTitle', descKey: 'quickTuranSub', titleFallback: 'Turan, demo yardım asistanı', descFallback: 'Sorularına hızlıca yanıt al' }
   ];
   let buttons = [];
   let panels = {};
@@ -32,8 +32,10 @@ window.TDATabs = (function() {
 
   function setLabels(lang = window.TDAI18n?.language || 'tr') {
     buttons.forEach((button, index) => {
-      const k = tabKeys[index];
-      const text = (window.TDAI18n ? window.TDAI18n.t(k) : '') || (k === 'tabMessages' ? 'Mektuplar' : (k === 'tabCulture' ? 'Dijital Kültür Arşivi' : button.textContent || ''));
+      const tabInfo = navTabs[index] || {};
+      const k = tabInfo.key;
+      const fallback = tabInfo.fallback || button.textContent || '';
+      const text = (window.TDAI18n ? window.TDAI18n.t(k, { fallback }) : '') || fallback;
       if (button.dataset.tab === 'messages') {
         const unreadCount = window.TDAMessaging ? window.TDAMessaging.getUnreadCount() : 0;
         button.className = 'tab-button tab-button-mektuplar' + (button.classList.contains('active') ? ' active' : '');
@@ -63,24 +65,24 @@ window.TDATabs = (function() {
         button.textContent = text;
       }
     });
-    if (tabNav) tabNav.setAttribute('aria-label', window.TDAI18n ? window.TDAI18n.t('tabAriaMain') : 'Ana bölümler');
+    if (tabNav) tabNav.setAttribute('aria-label', window.TDAI18n ? window.TDAI18n.t('tabAriaMain', { fallback: 'Ana bölümler' }) : 'Ana bölümler');
     const toggle = document.getElementById('menuToggle');
     if (toggle) {
       const open = document.getElementById('mainNav')?.classList.contains('open');
       toggle.setAttribute('aria-label', open 
-        ? (window.TDAI18n ? window.TDAI18n.t('menuCloseAria') : 'Menüyü kapat') 
-        : (window.TDAI18n ? window.TDAI18n.t('menuOpenAria') : 'Menüyü aç'));
+        ? (window.TDAI18n ? window.TDAI18n.t('menuCloseAria', { fallback: 'Menüyü kapat' }) : 'Menüyü kapat') 
+        : (window.TDAI18n ? window.TDAI18n.t('menuOpenAria', { fallback: 'Menüyü aç' }) : 'Menüyü aç'));
     }
   }
 
   function setQuickLabels(lang = window.TDAI18n?.language || 'tr') {
     if (!quickContainer) return;
     quickContainer.innerHTML = quickItems.map(item => {
-      const title = window.TDAI18n ? window.TDAI18n.t(item.titleKey) : item.id;
-      const desc = window.TDAI18n ? window.TDAI18n.t(item.descKey) : '';
+      const title = window.TDAI18n ? window.TDAI18n.t(item.titleKey, { fallback: item.titleFallback }) : item.titleFallback;
+      const desc = window.TDAI18n ? window.TDAI18n.t(item.descKey, { fallback: item.descFallback }) : item.descFallback;
       return `<button type="button" data-quick-tab="${item.id}">${title}<small>${desc}</small></button>`;
     }).join('');
-    quickContainer.setAttribute('aria-label', window.TDAI18n ? window.TDAI18n.t('quickAria') : 'Hızlı erişim');
+    quickContainer.setAttribute('aria-label', window.TDAI18n ? window.TDAI18n.t('quickAria', { fallback: 'Hızlı erişim' }) : 'Hızlı erişim');
     quickContainer.querySelectorAll('[data-quick-tab]').forEach(button => {
       button.addEventListener('click', () => {
         const tab = button.dataset.quickTab;

@@ -702,12 +702,12 @@ window.TDAWordGame = (function() {
   async function handleJoinByCodeOrFriendId(rawInput) {
     const code = String(rawInput || '').trim().toUpperCase();
     if (!code) {
-      alert('Lütfen geçerli bir Oda Kodu (örn: TDA-482) veya Arkadaş Oyuncu ID\'si (örn: TDA-AZ-202) giriniz.');
+      alert(window.TDAI18n ? window.TDAI18n.t('wgAlertValidCode', { fallback: 'Lütfen geçerli bir Oda Kodu veya Arkadaş Oyuncu ID\'si giriniz.' }) : 'Lütfen geçerli bir Oda Kodu veya Arkadaş Oyuncu ID\'si giriniz.');
       return;
     }
 
     if (code === state.me.playerId.toUpperCase()) {
-      alert('Kendi Oyuncu ID\'nizi girdiniz. Lütfen arkadaşınızın Oyuncu ID\'sini veya Oda Kodunu giriniz.');
+      alert(window.TDAI18n ? window.TDAI18n.t('wgAlertOwnId', { fallback: 'Kendi Oyuncu ID\'nizi girdiniz. Lütfen arkadaşınızın Oyuncu ID\'sini veya Oda Kodunu giriniz.' }) : 'Kendi Oyuncu ID\'nizi girdiniz. Lütfen arkadaşınızın Oyuncu ID\'sini veya Oda Kodunu giriniz.');
       return;
     }
 
@@ -728,7 +728,7 @@ window.TDAWordGame = (function() {
     }
 
     // 3. Bilinmeyen bir arkadaş kimliği girildiğinde bot oluşturma, arkadaş bulunamadı de:
-    alert(window.TDAI18n ? window.TDAI18n.t('wgFriendNotFound') : 'Arkadaş bulunamadı');
+    alert(window.TDAI18n ? window.TDAI18n.t('wgFriendNotFound', { fallback: 'Arkadaş bulunamadı' }) : 'Arkadaş bulunamadı');
   }
 
   function inviteFriendInsideLobby(rawId) {
@@ -740,7 +740,7 @@ window.TDAWordGame = (function() {
     );
 
     if (!knownPeer) {
-      alert(window.TDAI18n ? window.TDAI18n.t('wgFriendNotFound') : 'Arkadaş bulunamadı');
+      alert(window.TDAI18n ? window.TDAI18n.t('wgFriendNotFound', { fallback: 'Arkadaş bulunamadı' }) : 'Arkadaş bulunamadı');
       return;
     }
 
@@ -778,7 +778,7 @@ window.TDAWordGame = (function() {
   function hostStartFriendMatch() {
     if (!state.room || !state.room.isHost) return;
     if (!state.room.guest) {
-      alert('Oyunu başlatmak için önce arkadaşınızın odaya katılması veya aşağıdan bir arkadaş ID\'si davet etmeniz gerekmektedir.');
+      alert(window.TDAI18n ? window.TDAI18n.t('wgAlertInviteFirst', { fallback: 'Oyunu başlatmak için önce arkadaşınızın odaya katılması veya aşağıdan bir arkadaş ID\'si davet etmeniz gerekmektedir.' }) : 'Oyunu başlatmak için önce arkadaşınızın odaya katılması veya aşağıdan bir arkadaş ID\'si davet etmeniz gerekmektedir.');
       return;
     }
 

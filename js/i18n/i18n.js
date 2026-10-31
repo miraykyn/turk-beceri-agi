@@ -11,7 +11,6 @@ window.TDAI18n = (function() {
 
   const nodeRecords = new WeakMap();
   const attrRecords = new WeakMap();
-  const translationCache = new Map();
   const translatableAttributes = ['placeholder', 'title', 'aria-label', 'alt', 'data-tooltip'];
   const excludedTags = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE']);
   const missingTranslations = new Map();
@@ -53,26 +52,6 @@ window.TDAI18n = (function() {
         translationRegistry[source] = k;
       }
     });
-
-    for (const [key, trans] of Object.entries(MESSAGING_I18N)) {
-      supportedLanguages.forEach(lang => {
-        const v = trans[lang] || trans['tr'];
-        const sk = stableKey(key);
-        I18N[lang][key] = v;
-        I18N[lang][sk] = v;
-        translationRegistry[key] = sk;
-      });
-    }
-
-    for (const [key, trans] of Object.entries(STUDY_ROOM_I18N)) {
-      supportedLanguages.forEach(lang => {
-        const v = trans[lang] || trans['tr'];
-        const sk = stableKey(key);
-        I18N[lang][key] = v;
-        I18N[lang][sk] = v;
-        translationRegistry[key] = sk;
-      });
-    }
   }
 
   function t(key, vars = {}) {
@@ -100,10 +79,16 @@ window.TDAI18n = (function() {
       }
       if (val == null) {
         missingTranslations.set(`${lang}:${key}`, true);
-        return vars.fallback != null ? vars.fallback : key;
+        const fb = (vars && typeof vars === 'object' && vars.fallback != null)
+          ? vars.fallback
+          : (typeof vars === 'string' ? vars : null);
+        if (fb != null) {
+          return String(fb).replace(/\{(\w+)\}/g, (_, k) => (vars && typeof vars === 'object' ? vars[k] ?? '' : ''));
+        }
+        return key;
       }
     }
-    return String(val).replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
+    return String(val).replace(/\{(\w+)\}/g, (_, k) => (vars && typeof vars === 'object' ? vars[k] ?? '' : ''));
   }
 
   function getDictionaryTranslation(text, lang) {
@@ -118,55 +103,6 @@ window.TDAI18n = (function() {
     }
     if (val != null) return preserveWhitespace(text, val);
     return null;
-  }
-
-  function cacheKey(sl, tl, text) {
-    return `tda:v3:${sl}:${tl}:${text}`;
-  }
-
-  function loadCached(sl, tl, text) {
-    const k = cacheKey(sl, tl, text);
-    if (translationCache.has(k)) return translationCache.get(k);
-    try {
-      const v = localStorage.getItem(k);
-      if (v) {
-        translationCache.set(k, v);
-        return v;
-      }
-    } catch (e) {}
-    return null;
-  }
-
-  function saveCached(sl, tl, text, value) {
-    const k = cacheKey(sl, tl, text);
-    translationCache.set(k, value);
-    try { localStorage.setItem(k, value); } catch (e) {}
-  }
-
-  async function onlineTranslate(text, targetLang, sourceLang = 'auto') {
-    text = cleanText(text);
-    if (!text || targetLang === sourceLang) return text;
-    const cached = loadCached(sourceLang, targetLang, text);
-    if (cached) return cached;
-    const sl = (sourceLang || 'auto').split('-')[0];
-    const tl = (targetLang || 'tr').split('-')[0];
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 6500);
-    try {
-      const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=' + encodeURIComponent(sl) + '&tl=' + encodeURIComponent(tl) + '&dt=t&q=' + encodeURIComponent(text);
-      const r = await fetch(url, { cache: 'force-cache', signal: controller.signal, headers: { 'Accept': 'application/json; charset=utf-8' } });
-      if (!r.ok) throw new Error('translate error');
-      const data = await r.json();
-      const parts = data?.[0] || [];
-      const out = parts.map(x => x?.[0] || '').join('').trim();
-      if (out) {
-        saveCached(sourceLang, targetLang, text, out);
-        return out;
-      }
-    } catch (e) {} finally {
-      clearTimeout(timer);
-    }
-    return text;
   }
 
   function rememberTextNode(node) {
@@ -185,7 +121,7 @@ window.TDAI18n = (function() {
     return !el || excludedTags.has(el.tagName) || !!el.closest('[data-no-translate]');
   }
 
-  async function translateTextNode(node, lang, allowOnline = false) {
+  function translateTextNode(node, lang) {
     if (!node?.parentElement || isExcluded(node.parentElement) || node.parentElement.hasAttribute('data-i18n')) return;
     const source = rememberTextNode(node);
     if (!cleanText(source)) return;
@@ -196,15 +132,10 @@ window.TDAI18n = (function() {
     const dict = getDictionaryTranslation(source, lang);
     if (dict !== null) {
       if (node.nodeValue !== dict) node.nodeValue = dict;
-      return;
     }
-    if (!allowOnline) return;
-    const sourceLang = node.parentElement.closest('[data-source-lang]')?.dataset.sourceLang || 'auto';
-    const out = await onlineTranslate(source, lang, sourceLang);
-    if (out !== source && node.isConnected) node.nodeValue = preserveWhitespace(source, out);
   }
 
-  async function translateElementAttributes(el, lang, allowOnline = false) {
+  function translateElementAttributes(el, lang) {
     if (!el || isExcluded(el)) return;
     for (const attr of translatableAttributes) {
       if (!el.hasAttribute(attr)) continue;
@@ -217,10 +148,6 @@ window.TDAI18n = (function() {
       const dict = getDictionaryTranslation(source, lang);
       if (dict !== null) {
         if (el.getAttribute(attr) !== dict.trim()) el.setAttribute(attr, dict.trim());
-      } else if (allowOnline) {
-        const sourceLang = el.dataset.sourceLang || 'auto';
-        const out = await onlineTranslate(source, lang, sourceLang);
-        if (out !== source && el.isConnected) el.setAttribute(attr, out);
       }
     }
   }
@@ -265,45 +192,15 @@ window.TDAI18n = (function() {
     });
     const nodes = [];
     while (walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach(n => { try { translateTextNode(n, lang, false); } catch (e) {} });
+    nodes.forEach(n => { try { translateTextNode(n, lang); } catch (e) {} });
 
     const elements = [...(root.querySelectorAll ? root.querySelectorAll('*') : [])];
-    elements.forEach(e => { try { translateElementAttributes(e, lang, false); } catch (e) {} });
+    elements.forEach(e => { try { translateElementAttributes(e, lang); } catch (e) {} });
   }
 
-  async function translateTree(root = document.body, lang = currentLanguage, options = {}) {
+  function translateTree(root = document.body, lang = currentLanguage) {
     if (!root) return;
-    const online = options.online !== false;
     translateBuiltInTree(root, lang);
-    if (!online || lang === 'tr') return;
-
-    const nodes = [];
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-      acceptNode: n => !n.nodeValue.trim() || isExcluded(n.parentElement) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
-    });
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-
-    const elements = [...(root.querySelectorAll ? root.querySelectorAll('*') : [])];
-    const jobs = [];
-    nodes.forEach(n => {
-      if (getDictionaryTranslation(rememberTextNode(n), lang) === null) {
-        jobs.push(() => translateTextNode(n, lang, true));
-      }
-    });
-    elements.forEach(e => translatableAttributes.forEach(attr => {
-      if (e.hasAttribute(attr) && getDictionaryTranslation(rememberAttribute(e, attr), lang) === null) {
-        jobs.push(() => translateElementAttributes(e, lang, true));
-      }
-    }));
-
-    let cursor = 0;
-    async function worker() {
-      while (cursor < jobs.length) {
-        const job = jobs[cursor++];
-        try { await job(); } catch (e) {}
-      }
-    }
-    await Promise.all([worker(), worker(), worker(), worker()]);
   }
 
   function getUILanguageNames(lang = currentLanguage) {
@@ -330,7 +227,7 @@ window.TDAI18n = (function() {
     root.querySelectorAll?.('[data-i18n-key]').forEach(el => {
       const key = el.dataset.i18nKey;
       if (lang === 'tr') el.textContent = el.dataset.i18nTr || key;
-      else el.textContent = t(key);
+      else el.textContent = t(key, { fallback: el.dataset.i18nTr || key });
     });
   }
 
@@ -356,7 +253,7 @@ window.TDAI18n = (function() {
     try { localStorage.setItem('tda-language', lang); } catch (e) {}
     window.dispatchEvent(new CustomEvent('tda:languageChanged', { detail: { language: lang } }));
 
-    setTimeout(() => translateTree(document.body, lang, { online: false }), 0);
+    setTimeout(() => translateTree(document.body, lang), 0);
     if (queuedLanguage) {
       const next = queuedLanguage;
       queuedLanguage = null;
@@ -393,7 +290,7 @@ window.TDAI18n = (function() {
         }
       }
       if (added.length) {
-        setTimeout(() => added.filter(n => !isExcluded(n)).forEach(n => translateTree(n, currentLanguage, { online: false })), 0);
+        setTimeout(() => added.filter(n => !isExcluded(n)).forEach(n => translateTree(n, currentLanguage)), 0);
       }
     });
     observer.observe(document.body, { childList: true, subtree: true });
@@ -408,17 +305,15 @@ window.TDAI18n = (function() {
     t,
     setLanguage: applyLanguage,
     translate: (text) => Promise.resolve(text),
-    addUserContent: async (el, sourceLang = 'auto') => {
+    addUserContent: async (el) => {
       if (!el) return;
-      el.dataset.sourceLang = sourceLang;
       el.dataset.userContent = '1';
-      await translateTree(el, currentLanguage);
+      translateTree(el, currentLanguage);
     },
-    register: async (el, sourceLang = 'auto') => {
+    register: async (el) => {
       if (!el) return;
-      el.dataset.sourceLang = sourceLang;
       el.dataset.userContent = '1';
-      await translateTree(el, currentLanguage);
+      translateTree(el, currentLanguage);
     }
   };
 })();

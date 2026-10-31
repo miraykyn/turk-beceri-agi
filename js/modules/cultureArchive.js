@@ -436,7 +436,7 @@ window.TDACultureArchive = (function() {
 
     const totalCount = state.items.length;
     if (statsPill) {
-      statsPill.textContent = window.TDAI18n ? window.TDAI18n.t('cultureTotalStats', { count: totalCount }) : `7 Türk Ülkesi ve Topluluğu • ${totalCount} Kültür Mirası Kaydı`;
+      statsPill.textContent = window.TDAI18n ? window.TDAI18n.t('cultureTotalStats', { count: totalCount, fallback: `7 Türk Ülkesi ve Topluluğu • ${totalCount} Kültür Mirası Kaydı` }) : `7 Türk Ülkesi ve Topluluğu • ${totalCount} Kültür Mirası Kaydı`;
     }
 
     const allBtnHtml = `
@@ -491,7 +491,7 @@ window.TDACultureArchive = (function() {
     const filtered = getFilteredItems();
 
     if (!filtered.length) {
-      const emptyText = window.TDAI18n ? window.TDAI18n.t('cultureEmptyState') : 'Bu ülke için henüz kültür arşivi fotoğrafı bulunmuyor. İlk fotoğrafı siz paylaşın!';
+      const emptyText = window.TDAI18n ? window.TDAI18n.t('cultureEmptyState', { fallback: 'Bu ülke için henüz kültür arşivi fotoğrafı bulunmuyor. İlk fotoğrafı siz paylaşın!' }) : 'Bu ülke için henüz kültür arşivi fotoğrafı bulunmuyor. İlk fotoğrafı siz paylaşın!';
       grid.innerHTML = `
         <div class="empty-state" style="grid-column: 1 / -1;">
           ${emptyText}
@@ -504,9 +504,9 @@ window.TDACultureArchive = (function() {
       const meta = getCountryMeta(item.country);
       const locationLabel = item.location || extractLocationFromCaption(item.caption);
       const delayMs = Math.min(index * 35, 350);
-      const newBadge = window.TDAI18n ? window.TDAI18n.t('newShareBadge') : '✨ Yeni Paylaşım';
-      const delLabel = window.TDAI18n ? window.TDAI18n.t('delete') : 'Sil';
-      const heritageLabel = window.TDAI18n ? window.TDAI18n.t('cultureHeritageLabel') : 'Kültür Mirası';
+      const newBadge = window.TDAI18n ? window.TDAI18n.t('newShareBadge', { fallback: '✨ Yeni Paylaşım' }) : '✨ Yeni Paylaşım';
+      const delLabel = window.TDAI18n ? window.TDAI18n.t('delete', { fallback: 'Sil' }) : 'Sil';
+      const heritageLabel = window.TDAI18n ? window.TDAI18n.t('cultureHeritageLabel', { fallback: 'Kültür Mirası' }) : 'Kültür Mirası';
 
       const isLocalCulture = typeof item.image === 'string' && item.image.includes('/culture/');
       const basePath = isLocalCulture ? item.image.replace(/\.(jpg|jpeg|webp)$/i, '').replace(/-(640|1280)$/, '') : '';

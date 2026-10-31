@@ -203,7 +203,7 @@ window.TDATabs = (function() {
       if (event.key === 'Escape') setMobileMenuOpen(false);
     });
     window.addEventListener('resize', () => {
-      if (window.innerWidth > 900) setMobileMenuOpen(false);
+      if (window.innerWidth > 1440) setMobileMenuOpen(false);
     });
   }
 

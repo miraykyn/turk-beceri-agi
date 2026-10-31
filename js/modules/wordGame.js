@@ -25,13 +25,13 @@ window.TDAWordGame = (function() {
 
   // --- 1. ÜLKE BAYRAKLARI VE ÇEVRİM İÇİ RAKİP / ARKADAŞ HAVUZU ---
   const COUNTRY_FLAGS = {
-    'Türkiye': 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Turkey.svg',
-    'Azerbaycan': 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Azerbaijan.svg',
-    'Kazakistan': 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Kazakhstan.svg',
-    'Özbekistan': 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Uzbekistan.svg',
-    'Kırgızistan': 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Kyrgyzstan.svg',
-    'Türkmenistan': 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Turkmenistan.svg',
-    'Kuzey Kıbrıs Türk Cumhuriyeti': 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_the_Turkish_Republic_of_Northern_Cyprus.svg'
+    'Türkiye': 'assets/flags/tr.svg',
+    'Azerbaycan': 'assets/flags/az.svg',
+    'Kazakistan': 'assets/flags/kz.svg',
+    'Özbekistan': 'assets/flags/uz.svg',
+    'Kırgızistan': 'assets/flags/kg.svg',
+    'Türkmenistan': 'assets/flags/tm.svg',
+    'Kuzey Kıbrıs Türk Cumhuriyeti': 'assets/flags/kktc.svg'
   };
 
   const ONLINE_PEERS = [
@@ -416,9 +416,25 @@ window.TDAWordGame = (function() {
     } catch (e) {}
   }
 
+  function sanitizeRoom(room) {
+    if (!room) return null;
+    return {
+      ...room,
+      roundCount: Number(room.roundCount) || 5,
+      timePerQuestion: Number(room.timePerQuestion) || 15
+    };
+  }
+
   function readLocalRooms() {
     try {
-      return JSON.parse(localStorage.getItem(STORAGE_ROOMS_KEY) || '{}') || {};
+      const parsed = JSON.parse(localStorage.getItem(STORAGE_ROOMS_KEY) || '{}') || {};
+      const sanitized = {};
+      for (const k of Object.keys(parsed)) {
+        if (parsed[k]) {
+          sanitized[k] = sanitizeRoom(parsed[k]);
+        }
+      }
+      return sanitized;
     } catch (e) {
       return {};
     }
@@ -517,9 +533,10 @@ window.TDAWordGame = (function() {
         clearTimeout(quickSearchTimer);
         quickSearchTimer = null;
       }
-      state.room = { ...payload.room, isHost: false };
+      const room = sanitizeRoom(payload.room);
+      state.room = { ...room, isHost: false };
       state.match.isLiveHumanPeer = true;
-      beginMatchCountdown(payload.room);
+      beginMatchCountdown(room);
       return;
     }
 
@@ -536,15 +553,16 @@ window.TDAWordGame = (function() {
 
     // 4) Doğrudan Oyuncu ID ile Davet Geldi
     if (type === 'DIRECT_INVITE' && String(payload.targetPlayerId).toUpperCase() === state.me.playerId.toUpperCase()) {
-      showIncomingInviteToast(payload.room);
+      showIncomingInviteToast(sanitizeRoom(payload.room));
       return;
     }
 
     // 5) Kurucu Oyunu Başlattı
     if (type === 'MATCH_START' && state.room && state.room.roomId === payload.room.roomId) {
-      state.room = { ...payload.room, isHost: state.room.isHost };
+      const room = sanitizeRoom(payload.room);
+      state.room = { ...room, isHost: state.room.isHost };
       state.match.isLiveHumanPeer = true;
-      beginMatchCountdown(payload.room);
+      beginMatchCountdown(room);
       return;
     }
 
@@ -556,9 +574,10 @@ window.TDAWordGame = (function() {
 
     // 7) Rövanş İstendi
     if (type === 'MATCH_REMATCH' && state.room && state.room.roomId === payload.room.roomId) {
-      state.room = { ...payload.room, isHost: state.room.isHost };
+      const room = sanitizeRoom(payload.room);
+      state.room = { ...room, isHost: state.room.isHost };
       state.match.isLiveHumanPeer = true;
-      beginMatchCountdown(payload.room);
+      beginMatchCountdown(room);
     }
   }
 
@@ -665,8 +684,9 @@ window.TDAWordGame = (function() {
 
   function joinRoomObject(room) {
     clearMatchTimers();
+    const cleanRoom = sanitizeRoom(room);
     const updatedRoom = {
-      ...room,
+      ...cleanRoom,
       guest: { ...state.me },
       isLiveHumanGuest: true
     };
@@ -674,7 +694,7 @@ window.TDAWordGame = (function() {
     state.match.isLiveHumanPeer = true;
     state.view = 'FRIEND_LOBBY';
     writeLocalRoom(updatedRoom);
-    sendRealtimePacket('ROOM_JOINED', { roomId: room.roomId, guest: { ...state.me } });
+    sendRealtimePacket('ROOM_JOINED', { roomId: cleanRoom.roomId, guest: { ...state.me } });
     startServerLobbyPolling();
     render();
   }
@@ -707,36 +727,25 @@ window.TDAWordGame = (function() {
       return;
     }
 
-    // 3. Herhangi bir TDA-... Arkadaş ID'si girildiyse:
-    // Hem diğer sekmelere canlı davet gönder hem de o arkadaşı özel odaya davet edilmiş olarak ekle
-    const customFriend = {
-      playerId: code,
-      name: `Arkadaş (${code})`,
-      country: 'Kazakistan',
-      dialect: 'Kazakça',
-      accuracy: 0.76,
-      avgSpeed: 4.8
-    };
-    createPrivateFriendRoom(customFriend);
-    sendRealtimePacket('DIRECT_INVITE', { targetPlayerId: code, room: state.room });
+    // 3. Bilinmeyen bir arkadaş kimliği girildiğinde bot oluşturma, arkadaş bulunamadı de:
+    alert(window.TDAI18n ? window.TDAI18n.t('wgFriendNotFound') : 'Arkadaş bulunamadı');
   }
 
   function inviteFriendInsideLobby(rawId) {
     const code = String(rawId || '').trim().toUpperCase();
     if (!code || !state.room) return;
 
-    // Diğer sekmede bu ID ile açık bir oyuncu varsa canlı davet bildirimi gönder
-    sendRealtimePacket('DIRECT_INVITE', { targetPlayerId: code, room: state.room });
-
     const knownPeer = ONLINE_PEERS.find(
       p => p.playerId.toUpperCase() === code || p.studentId.toUpperCase() === code
-    ) || {
-      playerId: code,
-      name: `Davetli Arkadaş (${code})`,
-      country: 'Azerbaycan',
-      accuracy: 0.76,
-      avgSpeed: 4.9
-    };
+    );
+
+    if (!knownPeer) {
+      alert(window.TDAI18n ? window.TDAI18n.t('wgFriendNotFound') : 'Arkadaş bulunamadı');
+      return;
+    }
+
+    // Diğer sekmede bu ID ile açık bir oyuncu varsa canlı davet bildirimi gönder
+    sendRealtimePacket('DIRECT_INVITE', { targetPlayerId: code, room: state.room });
 
     state.room.guest = { ...knownPeer };
     writeLocalRoom(state.room);
@@ -1391,16 +1400,12 @@ window.TDAWordGame = (function() {
             </div>
             <h2 class="wg-hero-title">Türk Dünyası <span>Online Kelime Oyunu</span></h2>
             <p class="wg-hero-desc">
-              Kazakça, Kırgızca, Özbekçe, Türkmence, Azerbaycan Türkçesi ve Kıbrıs Türkçesi ortak kelime hazinesini 3 şıklı canlı düellolarla keşfet! Çevrim içi rakiplerle rastgele eşleş veya Arkadaş ID / Oda Kodu ile özel maç kur.
+              Kazakça, Kırgızca, Özbekçe, Türkmence, Azerbaycan Türkçesi ve Kıbrıs Türkçesi ortak kelime hazinesini 3 şıklı canlı düellolarla keşfet! Demo rakiple (bilgisayar) rastgele eşleş veya Arkadaş ID / Oda Kodu ile özel maç kur.
             </p>
           </div>
 
           <div class="wg-identity-card">
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
-              <span class="wg-net-status">
-                <span class="wg-net-dot"></span>
-                <span>Canlı Eşleşme Ağı Aktif</span>
-              </span>
+            <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px;">
               <button type="button" id="wgToggleSoundBtn" class="wg-btn-ghost" style="padding:4px 9px;font-size:11.5px;background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.2);">
                 ${state.soundEnabled ? '🔊 Ses Açık' : '🔇 Sessiz'}
               </button>
@@ -1498,7 +1503,7 @@ window.TDAWordGame = (function() {
             </div>
             <h3>A) Rastgele / Otomatik Eşleştirme</h3>
             <p>
-              Çevrim içi olan Türk Dünyası öğrencileriyle otomatik ve karışık bir havuzdan anında eşleş. Her iki oyuncuya da aynı anda aynı 3 şıklı sorular yansıtılır!
+              Demo rakiple (bilgisayar) otomatik ve karışık bir havuzdan anında eşleş. Her iki oyuncuya da aynı anda aynı 3 şıklı sorular yansıtılır!
             </p>
             <ul class="wg-mode-features">
               <li><span>✓</span> <strong>1. Öncelikli Kriter (Doğru Sayısı):</strong> En çok doğru yanıt veren her zaman kazanır</li>
@@ -1510,7 +1515,7 @@ window.TDAWordGame = (function() {
           <div>
             <button type="button" class="wg-btn-primary" id="wgBtnStartQuickMatch">
               <span>⚡</span>
-              <span>Rastgele Rakip Bul ve Maça Başla</span>
+              <span>Demo Rakip (Bilgisayar) ile Başla</span>
             </button>
           </div>
         </article>
@@ -1546,7 +1551,7 @@ window.TDAWordGame = (function() {
               </div>
               <div style="margin-top:10px;">
                 <small style="color:#64748b;font-size:11.5px;display:block;margin-bottom:6px;">
-                  Hızlı davet için çevrim içi bir arkadaş seçebilir veya ikinci bir sekme açıp kendi ID'nizi deneyebilirsiniz:
+                  Hızlı davet için listeden bir arkadaş seçebilir veya ikinci bir sekme açıp kendi ID'nizi deneyebilirsiniz:
                 </small>
                 <div style="display:flex;flex-wrap:wrap;gap:6px;">
                   ${ONLINE_PEERS.slice(0, 4).map(p => `
@@ -1577,9 +1582,9 @@ window.TDAWordGame = (function() {
         <div class="wg-radar-wrap">
           <div class="wg-radar-circle">🌍</div>
           <div class="eyebrow" style="color:#b45309;">OTOMATİK EŞLEŞTİRME HAVUZU (QUICK MATCH)</div>
-          <h3 style="font-size:26px;color:#102343;margin:8px 0;">Çevrim İçi Rakip Aranıyor...</h3>
+          <h3 style="font-size:26px;color:#102343;margin:8px 0;">Demo Rakip (Bilgisayar) Aranıyor...</h3>
           <p class="muted" style="max-width:520px;margin:0 auto 20px;">
-            Türk Dünyası Beceri Ağı'ndaki çevrim içi öğrenciler taranıyor. Eşleşme sağlandığında <strong>${state.settings.roundCount} soruluk</strong> kelime düellosu eşzamanlı olarak başlayacak.
+            Demo rakip (bilgisayar) hazırlanıyor. Eşleşme sağlandığında <strong>${state.settings.roundCount} soruluk</strong> kelime düellosu eşzamanlı olarak başlayacak.
           </p>
           <div style="display:inline-flex;gap:10px;align-items:center;background:#f8fafc;border:1px solid #e2e8f0;padding:10px 18px;border-radius:999px;margin-bottom:22px;font-size:13px;font-weight:750;color:#102343;">
             <span>🎯 ${state.settings.roundCount} Soru</span>
@@ -1677,7 +1682,7 @@ window.TDAWordGame = (function() {
             <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
               <div>
                 <strong style="font-size:13.5px;color:#102343;">⚡ Arkadaş ID'si ile Doğrudan Odaya Davet Et:</strong>
-                <div style="font-size:12px;color:#64748b;">Arkadaşının Oyuncu ID'sini yazabilir veya çevrim içi arkadaş listesinden seçebilirsin.</div>
+                <div style="font-size:12px;color:#64748b;">Arkadaşının Oyuncu ID'sini yazabilir veya demo arkadaş listesinden seçebilirsin.</div>
               </div>
               <div class="wg-lobby-invite-row" style="display:flex;gap:8px;flex:1;max-width:420px;">
                 <input type="text" id="wgLobbyInviteIdInput" class="wg-friend-input" placeholder="Arkadaş ID gir (Örn: TDA-KZ-301)" style="padding:8px 12px;font-size:13px;" />
@@ -1982,14 +1987,14 @@ window.TDAWordGame = (function() {
                 </div>
               </div>
               <div style="text-align:right;">
-                <span style="font-size:26px;font-weight:900;color:#16a34a;">${myMetrics.correctCount} Doğru</span>
+                <span style="font-size:26px;font-weight:900;color:#15803d;">${myMetrics.correctCount} Doğru</span>
                 <small style="display:block;font-size:11.5px;color:#475569;font-weight:800;">Toplam Süre: ${myMetrics.totalRawTimeSec} sn</small>
               </div>
             </div>
 
             <div class="wg-result-metrics">
               <div class="wg-metric-box">
-                <strong style="color:#16a34a;">${myMetrics.correctCount}</strong>
+                <strong style="color:#15803d;">${myMetrics.correctCount}</strong>
                 <small>Doğru (1. Kriter)</small>
               </div>
               <div class="wg-metric-box">
@@ -1997,7 +2002,7 @@ window.TDAWordGame = (function() {
                 <small>Yanlış (-${myMetrics.penaltyPointsTotal}p)</small>
               </div>
               <div class="wg-metric-box">
-                <strong style="color:#d97706;">${myMetrics.avgRawTimeSec}s</strong>
+                <strong style="color:#b45309;">${myMetrics.avgRawTimeSec}s</strong>
                 <small>Ort. Hız / Soru</small>
               </div>
               <div class="wg-metric-box">
@@ -2021,14 +2026,14 @@ window.TDAWordGame = (function() {
                 </div>
               </div>
               <div style="text-align:right;">
-                <span style="font-size:26px;font-weight:900;color:#16a34a;">${oppMetrics.correctCount} Doğru</span>
+                <span style="font-size:26px;font-weight:900;color:#15803d;">${oppMetrics.correctCount} Doğru</span>
                 <small style="display:block;font-size:11.5px;color:#475569;font-weight:800;">Toplam Süre: ${oppMetrics.totalRawTimeSec} sn</small>
               </div>
             </div>
 
             <div class="wg-result-metrics">
               <div class="wg-metric-box">
-                <strong style="color:#16a34a;">${oppMetrics.correctCount}</strong>
+                <strong style="color:#15803d;">${oppMetrics.correctCount}</strong>
                 <small>Doğru (1. Kriter)</small>
               </div>
               <div class="wg-metric-box">
@@ -2036,7 +2041,7 @@ window.TDAWordGame = (function() {
                 <small>Yanlış (-${oppMetrics.penaltyPointsTotal}p)</small>
               </div>
               <div class="wg-metric-box">
-                <strong style="color:#d97706;">${oppMetrics.avgRawTimeSec}s</strong>
+                <strong style="color:#b45309;">${oppMetrics.avgRawTimeSec}s</strong>
                 <small>Ort. Hız / Soru</small>
               </div>
               <div class="wg-metric-box">
@@ -2061,14 +2066,14 @@ window.TDAWordGame = (function() {
             <tbody>
               <tr>
                 <td class="metric-label">1. Öncelikli Kriter: Doğru Sayısı</td>
-                <td><strong style="color:#16a34a;font-size:15px;">${myMetrics.correctCount} Doğru</strong></td>
-                <td><strong style="color:#16a34a;font-size:15px;">${oppMetrics.correctCount} Doğru</strong></td>
+                <td><strong style="color:#15803d;font-size:15px;">${myMetrics.correctCount} Doğru</strong></td>
+                <td><strong style="color:#15803d;font-size:15px;">${oppMetrics.correctCount} Doğru</strong></td>
                 <td>
                   ${myMetrics.correctCount > oppMetrics.correctCount
-                    ? `<span style="color:#16a34a;font-weight:800;">✓ Sen (+${myMetrics.correctCount - oppMetrics.correctCount})</span>`
+                    ? `<span style="color:#15803d;font-weight:800;">✓ Sen (+${myMetrics.correctCount - oppMetrics.correctCount})</span>`
                     : (oppMetrics.correctCount > myMetrics.correctCount
                       ? `<span style="color:#dc2626;font-weight:800;">Rakip (+${oppMetrics.correctCount - myMetrics.correctCount})</span>`
-                      : '<span style="color:#d97706;font-weight:800;">Eşit (2. Kritere Bakılır)</span>')}
+                      : '<span style="color:#b45309;font-weight:800;">Eşit (2. Kritere Bakılır)</span>')}
                 </td>
               </tr>
               <tr>
@@ -2077,7 +2082,7 @@ window.TDAWordGame = (function() {
                 <td><span style="color:#dc2626;font-weight:750;">${oppMetrics.wrongCount} Yanlış</span> <small class="muted">(-${oppMetrics.penaltyPointsTotal}p / +${oppMetrics.penaltyTimeSecTotal}sn)</small></td>
                 <td>
                   ${myMetrics.wrongCount < oppMetrics.wrongCount
-                    ? '<span style="color:#16a34a;font-weight:800;">✓ Daha Az Hata</span>'
+                    ? '<span style="color:#15803d;font-weight:800;">✓ Daha Az Hata</span>'
                     : (oppMetrics.wrongCount < myMetrics.wrongCount ? '<span style="color:#dc2626;font-weight:800;">Rakip Daha Az Hatalı</span>' : 'Eşit')}
                 </td>
               </tr>
@@ -2087,7 +2092,7 @@ window.TDAWordGame = (function() {
                 <td><strong>${oppMetrics.totalRawTimeSec} sn</strong> <small class="muted">(${oppMetrics.totalRawTimeMs} ms)</small></td>
                 <td>
                   ${myMetrics.totalRawTimeMs < oppMetrics.totalRawTimeMs
-                    ? `<span style="color:#16a34a;font-weight:800;">⚡ Sen Daha Hızlısın (-${((oppMetrics.totalRawTimeMs - myMetrics.totalRawTimeMs) / 1000).toFixed(2)} sn)</span>`
+                    ? `<span style="color:#15803d;font-weight:800;">⚡ Sen Daha Hızlısın (-${((oppMetrics.totalRawTimeMs - myMetrics.totalRawTimeMs) / 1000).toFixed(2)} sn)</span>`
                     : (oppMetrics.totalRawTimeMs < myMetrics.totalRawTimeMs
                       ? `<span style="color:#dc2626;font-weight:800;">Rakip Daha Hızlı (-${((myMetrics.totalRawTimeMs - oppMetrics.totalRawTimeMs) / 1000).toFixed(2)} sn)</span>`
                       : 'Eşit')}

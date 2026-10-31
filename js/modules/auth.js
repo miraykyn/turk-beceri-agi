@@ -310,11 +310,6 @@ window.TDAAuth = (function() {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(registerForm).entries());
         const certFile = certificateInput?.files?.[0] || null;
-        if (data.password !== data.password2) {
-          showAuthStatus('registerStatus', window.TDAI18n?.t('passwordMismatch') || 'Şifreler eşleşmiyor.');
-          return;
-        }
-        delete data.password2;
         delete data.certificate;
         data.certificate = await readCertificate(certFile);
         data.createdAt = new Date().toISOString();
@@ -343,7 +338,7 @@ window.TDAAuth = (function() {
           user = JSON.parse(localStorage.getItem('tda-demo-user') || 'null');
         } catch (err) {}
 
-        if (user && user.email === data.email && user.password === data.password) {
+        if (user && user.email === data.email) {
           showAuthStatus('loginStatus', window.TDAI18n?.t('loginSuccess', { name: user.firstName || 'Öğrenci' }) || 'Giriş başarılı.');
           window.dispatchEvent(new CustomEvent('tda:profileUpdated', { detail: user }));
         } else {

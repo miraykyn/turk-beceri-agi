@@ -28,6 +28,47 @@ window.TDAMessaging = (function() {
   const BLOCKED_PENPALS_KEY = 'tda-blocked-penpals';
   const MY_AVATAR_KEY = 'tda-my-avatar-config-v2';
 
+  function escapeHtml(v) {
+    if (v == null) return '';
+    return String(v)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function downscaleImage(file, maxDimension = 1280, quality = 0.82) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = ev => {
+        const img = new Image();
+        img.onload = () => {
+          let { width, height } = img;
+          if (width > maxDimension || height > maxDimension) {
+            if (width > height) {
+              height = Math.round((height * maxDimension) / width);
+              width = maxDimension;
+            } else {
+              width = Math.round((width * maxDimension) / height);
+              height = maxDimension;
+            }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.onerror = () => resolve(ev.target.result);
+        img.src = ev.target.result;
+      };
+      reader.onerror = () => reject(new Error('Dosya okunamadı'));
+      reader.readAsDataURL(file);
+    });
+  }
+
   // --- 1. ŞEHİRLER & KOORDİNAT MATRİSİ ---
   const CITIES = {
     'İstanbul': { country: 'Türkiye', code: 'IST', lat: 41.0082, lon: 28.9784 },
@@ -82,43 +123,43 @@ window.TDAMessaging = (function() {
     { 
       id: 'tr', 
       name: 'Türkiye', 
-      flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Turkey.svg', 
+      flagImg: 'assets/flags/tr.svg', 
       penpalCount: 88 
     },
     { 
       id: 'az', 
       name: 'Azerbaycan', 
-      flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Azerbaijan.svg', 
+      flagImg: 'assets/flags/az.svg', 
       penpalCount: 76 
     },
     { 
       id: 'kz', 
       name: 'Kazakistan', 
-      flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Kazakhstan.svg', 
+      flagImg: 'assets/flags/kz.svg', 
       penpalCount: 82 
     },
     { 
       id: 'uz', 
       name: 'Özbekistan', 
-      flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Uzbekistan.svg', 
+      flagImg: 'assets/flags/uz.svg', 
       penpalCount: 72 
     },
     { 
       id: 'kg', 
       name: 'Kırgızistan', 
-      flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Kyrgyzstan.svg', 
+      flagImg: 'assets/flags/kg.svg', 
       penpalCount: 64 
     },
     { 
       id: 'tm', 
       name: 'Türkmenistan', 
-      flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Turkmenistan.svg', 
+      flagImg: 'assets/flags/tm.svg', 
       penpalCount: 51 
     },
     { 
       id: 'kktc', 
       name: 'Kuzey Kıbrıs Türk Cumhuriyeti', 
-      flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_the_Turkish_Republic_of_Northern_Cyprus.svg', 
+      flagImg: 'assets/flags/kktc.svg', 
       penpalCount: 43 
     }
   ];
@@ -519,7 +560,7 @@ window.TDAMessaging = (function() {
         id: 'cy_girne', 
         countryId: 'kktc', 
         country: 'KKTC', 
-        flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_the_Turkish_Republic_of_Northern_Cyprus.svg', 
+        flagImg: 'assets/flags/kktc.svg', 
         name: 'Girne Kalesi & Limanı Pulu', 
         landmark: 'Girne • Akdeniz Muhafızı', 
         image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a9/Kyrenia_01-2017_img02_Castle_exterior.jpg/500px-Kyrenia_01-2017_img02_Castle_exterior.jpg' 
@@ -528,7 +569,7 @@ window.TDAMessaging = (function() {
         id: 'cy_bellapais', 
         countryId: 'kktc', 
         country: 'KKTC', 
-        flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_the_Turkish_Republic_of_Northern_Cyprus.svg', 
+        flagImg: 'assets/flags/kktc.svg', 
         name: 'Bellapais Manastırı Pulu', 
         landmark: 'Girne • Beşparmak Dağları Eteği', 
         image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/Kyrenia_-_Girne_Kloster_Bellapa%C3%ADs_Kirche_7.jpg/500px-Kyrenia_-_Girne_Kloster_Bellapa%C3%ADs_Kirche_7.jpg' 
@@ -537,7 +578,7 @@ window.TDAMessaging = (function() {
         id: 'cy_salamis', 
         countryId: 'kktc', 
         country: 'KKTC', 
-        flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_the_Turkish_Republic_of_Northern_Cyprus.svg', 
+        flagImg: 'assets/flags/kktc.svg', 
         name: 'Salamis Antik Harabeleri Pulu', 
         landmark: 'Gazimağusa • Antik Sütunlar', 
         image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b1/Gymnasion_und_Therme_aus_S%C3%BCdwest.jpg/500px-Gymnasion_und_Therme_aus_S%C3%BCdwest.jpg' 
@@ -546,7 +587,7 @@ window.TDAMessaging = (function() {
         id: 'cy_karpaz', 
         countryId: 'kktc', 
         country: 'KKTC', 
-        flagImg: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_the_Turkish_Republic_of_Northern_Cyprus.svg', 
+        flagImg: 'assets/flags/kktc.svg', 
         name: 'Karpaz Zafer Burnu Pulu', 
         landmark: 'Karpaz • Altın Sahil ve Mavi Vatan', 
         image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/Cape_Apostolos_Andreas_1.JPG/500px-Cape_Apostolos_Andreas_1.JPG' 
@@ -975,20 +1016,20 @@ window.TDAMessaging = (function() {
         : (consent === 'pending' ? '<span style="color:#d97706">⏳ İstek Bekleniyor</span>' : '<span style="color:#64748b">🔒 Fotoğraf Kilitli</span>');
 
       return `
-        <div class="penpal-card" data-penpal-id="${p.id}">
+        <div class="penpal-card" data-penpal-id="${escapeHtml(p.id)}">
           <div class="penpal-card-top">
             <div class="penpal-avatar-wrap">
-              <img src="${p.avatar}" alt="${p.name} Bitmoji Avatar" class="penpal-avatar-img">
+              <img src="${p.avatar}" alt="${escapeHtml(p.name)} Bitmoji Avatar" class="penpal-avatar-img">
               <span class="penpal-status-dot" title="Aktif Mektup Arkadaşı"></span>
             </div>
             <div class="penpal-meta-info">
-              <h4 data-no-translate>${p.name}</h4>
-              <span data-no-translate>${p.city} • ${p.university}</span>
-              <small class="muted" data-no-translate>Öğrenci No: ${p.studentId}</small>
+              <h4 data-no-translate>${escapeHtml(p.name)}</h4>
+              <span data-no-translate>${escapeHtml(p.city)} • ${escapeHtml(p.university)}</span>
+              <small class="muted" data-no-translate>Öğrenci No: ${escapeHtml(p.studentId)}</small>
             </div>
           </div>
 
-          <p data-no-translate style="font-size:12.5px;color:#475467;line-height:1.45;margin:0;">"${p.bio}"</p>
+          <p data-no-translate style="font-size:12.5px;color:#475467;line-height:1.45;margin:0;">"${escapeHtml(p.bio)}"</p>
 
           <div class="penpal-flight-preview">
             <span>🦅 Bozkır Kartalı Teslimatı: <strong>${calc.deliveryHours} saat</strong></span>
@@ -996,11 +1037,11 @@ window.TDAMessaging = (function() {
           </div>
 
           <div class="penpal-tags-wrap">
-            ${p.interests.map(i => `<span class="penpal-tag">#${i}</span>`).join('')}
+            ${p.interests.map(i => `<span class="penpal-tag">#${escapeHtml(i)}</span>`).join('')}
             <span class="penpal-tag" style="background:#fef3c7">${consentBadge}</span>
           </div>
 
-          <button type="button" class="btn-choose-penpal" data-penpal-id="${p.id}">
+          <button type="button" class="btn-choose-penpal" data-penpal-id="${escapeHtml(p.id)}">
             <span>✉️ Mektup Yaz</span>
           </button>
         </div>
@@ -1030,10 +1071,10 @@ window.TDAMessaging = (function() {
     if (summaryEl) {
       summaryEl.innerHTML = `
         <div class="recipient-summary-left">
-          <img src="${activeSelectedPenpal.avatar}" alt="${activeSelectedPenpal.name}" class="recipient-avatar-mini">
+          <img src="${activeSelectedPenpal.avatar}" alt="${escapeHtml(activeSelectedPenpal.name)}" class="recipient-avatar-mini">
           <div>
-            <strong style="color:#102343;font-size:14.5px;">Alıcı: ${activeSelectedPenpal.name}</strong>
-            <div style="font-size:11.5px;color:#64748b;">${activeSelectedPenpal.city}, ${activeSelectedPenpal.country} • (${activeSelectedPenpal.studentId})</div>
+            <strong style="color:#102343;font-size:14.5px;">Alıcı: ${escapeHtml(activeSelectedPenpal.name)}</strong>
+            <div style="font-size:11.5px;color:#64748b;">${escapeHtml(activeSelectedPenpal.city)}, ${escapeHtml(activeSelectedPenpal.country)} • (${escapeHtml(activeSelectedPenpal.studentId)})</div>
           </div>
         </div>
         <div style="text-align:right;">
@@ -1301,7 +1342,7 @@ window.TDAMessaging = (function() {
     }
   }
 
-  function handlePhotoSelection(e) {
+  async function handlePhotoSelection(e) {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
 
@@ -1310,14 +1351,15 @@ window.TDAMessaging = (function() {
       return;
     }
 
-    files.slice(0, 3 - attachedPhotoFiles.length).forEach(file => {
-      const reader = new FileReader();
-      reader.onload = ev => {
-        attachedPhotoFiles.push(ev.target.result);
-        renderPhotoPreviews();
-      };
-      reader.readAsDataURL(file);
-    });
+    for (const file of files.slice(0, 3 - attachedPhotoFiles.length)) {
+      try {
+        const scaled = await downscaleImage(file, 1280, 0.82);
+        attachedPhotoFiles.push(scaled);
+      } catch (err) {
+        console.warn('Görsel küçültülemedi:', err);
+      }
+    }
+    renderPhotoPreviews();
   }
 
   function renderPhotoPreviews() {
@@ -2018,7 +2060,11 @@ window.TDAMessaging = (function() {
 
     const letters = getStoredLetters();
     letters.unshift(newLetter);
-    saveLetters(letters);
+    const saved = saveLetters(letters);
+    if (!saved) {
+      alert(window.TDAI18n ? window.TDAI18n.t('alertStorageError') : 'Depolama alanı yetersiz olduğu için mektup kaydedilemedi. Lütfen ekli fotoğrafları azaltın veya daha küçük bir görsel seçin.');
+      return;
+    }
 
     // Formu temizle
     if (subjectInput) subjectInput.value = '';
@@ -2083,15 +2129,15 @@ window.TDAMessaging = (function() {
       const dateStr = new Date(l.createdAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' });
 
       return `
-        <div class="letter-dm-row ${isUnread ? 'unread' : ''}" data-letter-id="${l.id}" role="button" tabindex="0">
+        <div class="letter-dm-row ${isUnread ? 'unread' : ''}" data-letter-id="${escapeHtml(l.id)}" role="button" tabindex="0">
           <div class="letter-dm-left">
             <div class="letter-dm-avatar-frame">
-              <img src="${avatarSrc}" alt="${l.fromName}" class="letter-dm-avatar" onerror="this.src='https://api.dicebear.com/7.x/adventurer/svg?seed=Penpal'">
+              <img src="${avatarSrc}" alt="${escapeHtml(l.fromName)}" class="letter-dm-avatar" onerror="this.src='https://api.dicebear.com/7.x/adventurer/svg?seed=Penpal'">
               ${isUnread ? '<span class="letter-dm-unread-dot" title="Yeni Mektup"></span>' : ''}
             </div>
             <div class="letter-dm-text">
-              <strong class="letter-dm-name" data-no-translate>${l.fromName}</strong>
-              <span class="letter-dm-country" data-no-translate>${l.fromCountry}${l.fromCity ? ' (' + l.fromCity + ')' : ''}</span>
+              <strong class="letter-dm-name" data-no-translate>${escapeHtml(l.fromName)}</strong>
+              <span class="letter-dm-country" data-no-translate>${escapeHtml(l.fromCountry)}${l.fromCity ? ' (' + escapeHtml(l.fromCity) + ')' : ''}</span>
             </div>
           </div>
           <div class="letter-dm-right">
@@ -2133,14 +2179,14 @@ window.TDAMessaging = (function() {
       const dateStr = new Date(l.createdAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' });
 
       return `
-        <div class="letter-dm-row" data-letter-id="${l.id}" role="button" tabindex="0">
+        <div class="letter-dm-row" data-letter-id="${escapeHtml(l.id)}" role="button" tabindex="0">
           <div class="letter-dm-left">
             <div class="letter-dm-avatar-frame">
-              <img src="${avatarSrc}" alt="${l.toName}" class="letter-dm-avatar" onerror="this.src='https://api.dicebear.com/7.x/adventurer/svg?seed=Penpal'">
+              <img src="${avatarSrc}" alt="${escapeHtml(l.toName)}" class="letter-dm-avatar" onerror="this.src='https://api.dicebear.com/7.x/adventurer/svg?seed=Penpal'">
             </div>
             <div class="letter-dm-text">
-              <strong class="letter-dm-name" data-no-translate>${l.toName}</strong>
-              <span class="letter-dm-country" data-no-translate>${l.toCountry}${l.toCity ? ' (' + l.toCity + ')' : ''}</span>
+              <strong class="letter-dm-name" data-no-translate>${escapeHtml(l.toName)}</strong>
+              <span class="letter-dm-country" data-no-translate>${escapeHtml(l.toCountry)}${l.toCity ? ' (' + escapeHtml(l.toCity) + ')' : ''}</span>
             </div>
           </div>
           <div class="letter-dm-right">
@@ -2223,7 +2269,10 @@ window.TDAMessaging = (function() {
       if (photosSection && photosGrid) {
         if (!isPending && letter.photos && letter.photos.length) {
           photosSection.style.display = 'block';
-          photosGrid.innerHTML = letter.photos.map(src => `<img src="${src}" alt="Ek Fotoğraf" onclick="window.open('${src}')">`).join('');
+          photosGrid.innerHTML = letter.photos.map(src => `<img src="${escapeHtml(src)}" alt="Ek Fotoğraf" class="reader-photo-thumb" data-photo-src="${escapeHtml(src)}">`).join('');
+          photosGrid.querySelectorAll('img[data-photo-src]').forEach(img => {
+            img.addEventListener('click', () => window.open(img.dataset.photoSrc));
+          });
         } else {
           photosSection.style.display = 'none';
           photosGrid.innerHTML = '';
@@ -2312,7 +2361,7 @@ window.TDAMessaging = (function() {
           <div class="reader-attached-photos">
             <h5>${window.TDAI18n ? window.TDAI18n.t('attachedPhotosLabel', { n: letter.photos.length }) : `📷 Mektuba Eklenen Fotoğraflar (${letter.photos.length} Adet)`}</h5>
             <div class="reader-photos-row">
-              ${letter.photos.map(src => `<img src="${src}" alt="Mektup Eki" class="reader-photo-thumb" onclick="window.open('${src}')">`).join('')}
+              ${letter.photos.map(src => `<img src="${escapeHtml(src)}" alt="Mektup Eki" class="reader-photo-thumb" data-photo-src="${escapeHtml(src)}">`).join('')}
             </div>
           </div>
         ` : ''}
@@ -2322,6 +2371,9 @@ window.TDAMessaging = (function() {
           <span data-no-translate>${escapeHtml(letter.fromName)} • ${escapeHtml(letter.fromCity || letter.fromCountry)}</span>
         </div>
       `;
+      readerContainer.querySelectorAll('.reader-photo-thumb[data-photo-src]').forEach(img => {
+        img.addEventListener('click', () => window.open(img.dataset.photoSrc));
+      });
     }
   }
 
@@ -2374,7 +2426,10 @@ window.TDAMessaging = (function() {
     const photosGrid = document.getElementById('letterModalPhotosGrid');
     if (photosSection && photosGrid && target.photos && target.photos.length) {
       photosSection.style.display = 'block';
-      photosGrid.innerHTML = target.photos.map(src => `<img src="${src}" alt="Ek Fotoğraf" onclick="window.open('${src}')">`).join('');
+      photosGrid.innerHTML = target.photos.map(src => `<img src="${escapeHtml(src)}" alt="Ek Fotoğraf" class="reader-photo-thumb" data-photo-src="${escapeHtml(src)}">`).join('');
+      photosGrid.querySelectorAll('img[data-photo-src]').forEach(img => {
+        img.addEventListener('click', () => window.open(img.dataset.photoSrc));
+      });
     }
 
     renderInbox();

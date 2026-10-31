@@ -1011,16 +1011,16 @@
 /* 5.7 Masa Pirinç Künyesi (Engraved Brass Plate: Masa 01) */
 .desk-brass-plate {
   position: absolute;
-  bottom: -4px;
+  bottom: -5px;
   left: 50%;
   transform: translateX(-50%);
   background: linear-gradient(135deg, #fef08a 0%, #ca8a04 50%, #854d0e 100%);
   color: #451a03;
-  font-size: 8.5px;
+  font-size: 11px;
   font-weight: 900;
   letter-spacing: 0.5px;
-  padding: 1px 7px;
-  border-radius: 3px;
+  padding: 2px 8px;
+  border-radius: 4px;
   border: 0.5px solid #713f12;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.6);
   z-index: 7;
@@ -1250,7 +1250,7 @@
 }
 
 .btn-start-study {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  background: #b45309;
   color: #ffffff;
   border: none;
   padding: 11px 24px;
@@ -1261,13 +1261,14 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.3);
+  box-shadow: 0 4px 14px rgba(180, 83, 9, 0.35);
   transition: all 0.2s;
 }
 
 .btn-start-study:hover {
+  background: #92400e;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(217, 119, 6, 0.4);
+  box-shadow: 0 6px 20px rgba(146, 64, 14, 0.45);
 }
 
 /* ==========================================================================

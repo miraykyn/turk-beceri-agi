@@ -1,5 +1,5 @@
 /**
- * Türk Dünyası Beceri Ağı - Turan Yapay Zekâ Asistanı & Dedektör Modülü
+ * Türk Dünyası Beceri Ağı - Turan, Demo Yardım Asistanı
  */
 
 window.TDATuran = (function() {
@@ -24,7 +24,7 @@ window.TDATuran = (function() {
     const q = text.toLocaleLowerCase('tr-TR');
     if (q.includes('puan')) {
       return featureT('turanPointAnswer', {
-        fallback: 'Beceri Puanı, 1 saatlik beceri paylaşımıyla kazanılır. Kazandığın puanı Türk Dünyası\'nın başka bir ülkesindeki doğrulanmış öğrenciden öğrenmek için kullanabilirsin.'
+        fallback: 'Beceri Puanı, 1 saatlik beceri paylaşımıyla kazanılır. Kazandığın puanı Türk Dünyası\'nın başka bir ülkesindeki bir öğrenciden (öğrenci doğrulaması planlanıyor) öğrenmek için kullanabilirsin.'
       });
     }
     if (q.includes('eşleşme') || q.includes('eslesme') || q.includes('nasıl')) {
@@ -38,7 +38,7 @@ window.TDATuran = (function() {
       });
     }
     return featureT('turanDefaultAnswer', {
-      fallback: 'Türk Dünyası Beceri Ağı\'na hoş geldin! Ben Turan, 7 Türk devletindeki öğrencilerin beceri ve bilgi paylaşımında rehberlik eden asistanınım. Sana nasıl yardımcı olabilirim?'
+      fallback: 'Türk Dünyası Beceri Ağı\'na hoş geldin! Ben Turan, 7 Türk ülkesi ve topluluğundaki öğrencilerin beceri ve bilgi paylaşımında rehberlik eden demo yardım asistanınım. Sana nasıl yardımcı olabilirim?'
     });
   }
 

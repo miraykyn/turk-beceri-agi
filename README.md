@@ -3,11 +3,11 @@
 Türk Dünyası'ndaki öğrencileri; öğretebildikleri, öğrenmek istedikleri ve ayırabilecekleri zaman üzerinden bir araya getiren çok dilli karşılıklı beceri paylaşım platformu.
 
 ## 🌟 Özellikler
-- **7 Türk Devleti Desteği:** Türkiye, Azerbaycan, Kazakistan, Özbekistan, Kırgızistan, Türkmenistan, Kuzey Kıbrıs Türk Cumhuriyeti.
+- **7 Türk Ülkesi ve Topluluğu Desteği:** Türkiye, Azerbaycan, Kazakistan, Özbekistan, Kırgızistan, Türkmenistan, Kuzey Kıbrıs Türk Cumhuriyeti.
 - **Dinamik Çoklu Dil (i18n):** Türkçe, Azerbaycan Türkçesi, Kazakça, Kırgızca, Özbekçe, Türkmence ve İngilizce tam yerelleştirme.
 - **Beceri Eşleştirme Sistemi:** Zaman temelli puan mekanizması (1 saat = 1 Beceri Puanı).
-- **Akıllı Asistan Turan:** Soru-cevap ve yapay zekâ metin dedektörü.
-- **Topluluk Odaları & Doğrulanmış Profiller:** Akran öğrenimi ve bilgi alışverişi.
+- **Turan, Demo Yardım Asistanı:** Soru-cevap desteği.
+- **Topluluk Odaları & Öğrenci Doğrulaması:** Akran öğrenimi ve bilgi alışverişi (öğrenci doğrulaması planlanıyor).
 
 ## 🚀 Canlı Önizleme (GitHub Pages)
 Bu proje GitHub Pages üzerinde statik web sitesi olarak barındırılmaya tam uyumludur.
@@ -30,7 +30,7 @@ Bu proje GitHub Pages üzerinde statik web sitesi olarak barındırılmaya tam u
 │   ├── config.js               # Veri modelleri ve yapılandırma
 │   ├── i18n/                   # Dil motoru ve çeviri tabloları
 │   └── modules/                # Fonksiyonel modüller (auth, matching, turan vb.)
-└── curated_i18n.json           # Çeviri ve sözlük veri kaynağı
+└── assets/                     # Resimler, bayraklar ve kültür arşivi görselleri
 ```
 
 ## 🛠️ Yerel Çalıştırma

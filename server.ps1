@@ -30,35 +30,6 @@ while ($listener.IsListening) {
             $path = "/index.html"
         }
 
-        # Save dicts endpoint for modularization
-        if ($path -eq "/api/save_dicts" -and $request.HttpMethod -eq "POST") {
-            $reader = New-Object System.IO.StreamReader($request.InputStream, [System.Text.Encoding]::UTF8)
-            $body = $reader.ReadToEnd()
-            $json = $body | ConvertFrom-Json
-            $lang = $json.lang
-            $dictJson = $json.dict | ConvertTo-Json -Depth 10
-
-            $i18nDir = [System.IO.Path]::Combine($rootDir, "js", "i18n")
-            if (!(Test-Path $i18nDir)) { New-Item -ItemType Directory -Path $i18nDir -Force | Out-Null }
-
-            $outFile = [System.IO.Path]::Combine($i18nDir, "$lang.js")
-            $fileContent = @"
-/**
- * Türk Dünyası Beceri Ağı - $lang Dil Sözlüğü
- */
-window.TDA_TRANSLATIONS = window.TDA_TRANSLATIONS || {};
-window.TDA_TRANSLATIONS['$lang'] = $dictJson;
-"@
-            [System.IO.File]::WriteAllText($outFile, $fileContent, [System.Text.Encoding]::UTF8)
-
-            $respBytes = [System.Text.Encoding]::UTF8.GetBytes('{"status":"ok"}')
-            $response.ContentType = "application/json; charset=utf-8"
-            $response.ContentLength64 = $respBytes.Length
-            $response.OutputStream.Write($respBytes, 0, $respBytes.Length)
-            $response.OutputStream.Close()
-            continue
-        }
-
         # Mock API destegi
         if ($path -eq "/api/ai" -and $request.HttpMethod -eq "POST") {
             $reader = New-Object System.IO.StreamReader($request.InputStream, [System.Text.Encoding]::UTF8)
@@ -67,7 +38,7 @@ window.TDA_TRANSLATIONS['$lang'] = $dictJson;
             try { $jsonReq = $body | ConvertFrom-Json } catch {}
             $userMsg = if ($jsonReq -and $jsonReq.message) { $jsonReq.message } else { "Merhaba" }
 
-            $reply = "Turan: Sorunuzu aldım ('$userMsg'). Türk Dünyası Beceri Ağı üzerinden 7 bağımsız Türk devleti ve toplulukları arasında bilgi, dil ve beceri paylaşımı yapabilirsiniz."
+            $reply = "Turan: Sorunuzu aldım ('$userMsg'). Türk Dünyası Beceri Ağı üzerinden 7 Türk ülkesi ve topluluğu arasında bilgi, dil ve beceri paylaşımı yapabilirsiniz."
             if ($userMsg -match "puan") {
                 $reply = "Turan: Beceri Puanı sistemi zaman temellidir. 1 saatlik beceri paylaşımı = 1 puan kazandırır. Sıfır puanlı kullanıcılar topluluktan destek isteyebilir veya puan bağışlanabilir."
             } elseif ($userMsg -match "eşleş|esles") {

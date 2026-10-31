@@ -111,23 +111,23 @@
   .quick-access{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 }
 
-@media(max-width:900px){
+@media(max-width:1440px){
   header{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;height:56px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;flex-wrap:nowrap!important;gap:clamp(4px, 1.5vw, 8px)!important;padding:0 clamp(6px, 2vw, 12px)!important;z-index:10000!important;background:rgba(14,27,51,.98)!important;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 4px 20px rgba(4,10,22,.45);box-sizing:border-box!important;overflow:visible!important}
   body{padding-top:56px!important}
   header>.logo, .logo{display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:flex-start!important;line-height:1.15!important;flex:0 1 auto!important;min-width:0!important;margin:0!important;padding-right:2px!important;overflow:hidden!important;text-decoration:none!important}
-  .logo .logo-text-lead{font-size:clamp(10px, 2.7vw, 12px)!important;font-weight:850!important;letter-spacing:.3px!important;color:#fff!important;white-space:nowrap!important;text-transform:uppercase!important;line-height:1.15!important;overflow:hidden!important;text-overflow:ellipsis!important}
-  .logo .logo-text-tail{font-size:clamp(8.5px, 2.2vw, 9.5px)!important;font-weight:800!important;letter-spacing:.5px!important;color:#f5b942!important;white-space:nowrap!important;text-transform:uppercase!important;line-height:1.15!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  .logo .logo-text-lead{font-size:clamp(10px, 1.8vw, 13px)!important;font-weight:850!important;letter-spacing:.3px!important;color:#fff!important;white-space:nowrap!important;text-transform:uppercase!important;line-height:1.15!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  .logo .logo-text-tail{font-size:clamp(8.5px, 1.4vw, 10px)!important;font-weight:800!important;letter-spacing:.5px!important;color:#f5b942!important;white-space:nowrap!important;text-transform:uppercase!important;line-height:1.15!important;overflow:hidden!important;text-overflow:ellipsis!important}
   header>div:last-child, .header-right{display:flex!important;align-items:center!important;justify-content:flex-end!important;flex-wrap:nowrap!important;flex:0 0 auto!important;gap:clamp(3px, 1vw, 5px)!important;width:auto!important;min-width:0!important;position:relative!important}
   header>div:last-child>.auth-actions, .header-right>.auth-actions{display:none!important}
-  .lang-wrap{display:inline-flex!important;align-items:center!important;flex-shrink:0!important;gap:2px!important;padding:1px 5px!important;margin:0!important;height:32px!important;border-radius:8px!important;background:#172a4b!important;border:1px solid rgba(96,119,155,.55)!important;box-sizing:border-box!important}
+  .lang-wrap{display:inline-flex!important;align-items:center!important;flex-shrink:0!important;gap:2px!important;padding:2px 6px!important;margin:0!important;height:32px!important;border-radius:8px!important;background:#172a4b!important;border:1px solid rgba(96,119,155,.55)!important;box-sizing:border-box!important;width:auto!important;max-width:none!important}
   .lang-wrap span[aria-hidden="true"]{font-size:12px!important;line-height:1!important}
-  .lang-select{max-width:54px!important;font-size:10.5px!important;padding:1px 2px!important;border:none!important;background:transparent!important;color:#fff!important;outline:none!important}
+  .lang-select{width:auto!important;min-width:max-content!important;max-width:none!important;font-size:11px!important;padding:1px 4px!important;border:none!important;background:transparent!important;color:#fff!important;outline:none!important;cursor:pointer!important}
   .mobile-header-actions{display:inline-flex!important;align-items:center!important;flex-wrap:nowrap!important;gap:clamp(3px, 1vw, 5px)!important;position:relative!important;top:auto!important;right:auto!important;z-index:9525!important;flex-shrink:0!important}
   .mobile-mail-btn,.menu-toggle{display:inline-flex!important;align-items:center!important;justify-content:center!important;position:relative!important;top:auto!important;right:auto!important;z-index:9525!important;flex-shrink:0!important;width:32px!important;height:32px!important;min-width:32px!important;border-radius:8px!important;box-sizing:border-box!important}
   .mobile-mail-btn{border-radius:50%!important;padding:0!important;border:1.5px solid #d4af37!important;background:#ffffff!important;box-shadow:0 0 8px rgba(212,175,55,.45),inset 0 0 3px rgba(0,0,0,.1)!important}
   .menu-toggle{font-size:17px!important;line-height:1!important;border:1.5px solid rgba(245,207,121,.45)!important}
   .mobile-mail-badge{top:-3px!important;right:-3px!important;min-width:15px!important;height:15px!important;font-size:9px!important;line-height:12px!important;padding:0 3px!important}
-  header nav{display:none;position:fixed;top:60px!important;right:12px;left:12px;margin-left:auto;width:auto;max-width:360px;max-height:calc(100vh - 76px);max-height:calc(100dvh - 76px);overflow-y:auto;padding:14px;background:linear-gradient(180deg,#10213d 0%,#0b172b 100%)!important;border:1.5px solid rgba(245,207,121,.34);border-radius:18px;box-shadow:0 24px 60px rgba(4,10,22,.88);z-index:9520!important}
+  header nav{display:none;position:fixed;top:60px!important;right:12px;left:12px;margin-left:auto;width:auto;max-width:380px;max-height:calc(100vh - 76px);max-height:calc(100dvh - 76px);overflow-y:auto;padding:14px;background:linear-gradient(180deg,#10213d 0%,#0b172b 100%)!important;border:1.5px solid rgba(245,207,121,.34);border-radius:18px;box-shadow:0 24px 60px rgba(4,10,22,.88);z-index:9520!important}
   header nav.open{display:block;max-height:calc(100vh - 76px);max-height:calc(100dvh - 76px);overflow-y:auto;z-index:9520!important;animation:tabReveal .18s ease-out}
   .mobile-nav-backdrop.open{display:block!important;position:fixed;inset:0;background:rgba(8,18,37,.68);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:9490!important;animation:mobileBackdropFade .18s ease-out}
   .tab-nav{display:grid;grid-template-columns:1fr;gap:5px;width:100%;overflow:visible;padding:0}
@@ -157,7 +157,7 @@
   .logo .logo-text-tail{font-size:8px!important;letter-spacing:.3px!important}
   .lang-wrap{padding:1px 3px!important;height:30px!important;gap:1px!important}
   .lang-wrap span[aria-hidden="true"]{font-size:11px!important}
-  .lang-select{max-width:44px!important;font-size:9.5px!important}
+  .lang-select{width:auto!important;min-width:max-content!important;max-width:none!important;font-size:9.5px!important}
   .mobile-header-actions{gap:3px!important}
   .mobile-mail-btn,.menu-toggle{width:29px!important;height:29px!important;min-width:29px!important}
   .menu-toggle{font-size:15px!important}
@@ -166,11 +166,9 @@
 
 /* =========================================================
    Masaüstü (Desktop) Header & Menü Mimarisi
-   - Kesinlikle flex-wrap: nowrap; tek düzgün sırada yan yana
-   - Butonlar ve 9 menü elemanı üst üste binmeden, taşma yapmadan konumlanır
-   - Sadece masaüstünü hedefler (@media min-width: 901px)
+   - Sadece geniş masaüstünü hedefler (@media min-width: 1441px)
    ========================================================= */
-@media (min-width: 901px) {
+@media (min-width: 1441px) {
   header {
     display: flex !important;
     align-items: center !important;
@@ -235,23 +233,18 @@
     overflow: visible !important;
   }
 
-  /* 9 Menü Elemanını Barındıran Sekme Grubu: wrap asla yok */
+  /* 9 Menü Elemanını Barındıran Sekme Grubu */
   .tab-nav {
     display: flex !important;
     align-items: center !important;
     flex-direction: row !important;
     flex-wrap: nowrap !important;
-    gap: clamp(1px, 0.2vw, 3px) !important;
+    gap: clamp(1px, 0.25vw, 4px) !important;
     padding: 0 !important;
     margin: 0 !important;
     min-width: 0 !important;
     flex-shrink: 1 !important;
-    overflow-x: auto !important;
-    scrollbar-width: none !important;
-    -ms-overflow-style: none !important;
-  }
-  .tab-nav::-webkit-scrollbar {
-    display: none !important;
+    overflow: visible !important;
   }
 
   /* Masaüstü Menü Butonları: Tek satırda, ezilmeden ve taşmadan */
@@ -404,59 +397,13 @@
 
   .lang-select {
     font-size: clamp(11px, 0.72vw, 12px) !important;
-    max-width: 72px !important;
+    width: auto !important;
+    min-width: max-content !important;
+    max-width: none !important;
     padding: 2px 4px !important;
     border: none !important;
     background: transparent !important;
     color: #ffffff !important;
     cursor: pointer !important;
-  }
-}
-
-/* 901px - 1180px arası orta boy masaüstü ekranlar için ince ayar */
-@media (min-width: 901px) and (max-width: 1180px) {
-  header {
-    padding: 0 8px !important;
-    gap: 6px !important;
-  }
-  header > .logo, .logo {
-    font-size: 13px !important;
-    gap: 4px !important;
-  }
-  .tab-nav {
-    gap: 0 !important;
-  }
-  .tab-nav button, .tab-button {
-    padding: 4px 4px !important;
-    font-size: 11px !important;
-    letter-spacing: -0.22px !important;
-  }
-  .tab-button-mektuplar {
-    gap: 3px !important;
-  }
-  .nav-mektup-icon {
-    width: 17px !important;
-    height: 17px !important;
-  }
-  header nav .auth-actions, .auth-actions {
-    margin-left: 5px !important;
-    padding-left: 5px !important;
-    gap: 4px !important;
-  }
-  header nav .auth-btn, .auth-btn {
-    height: 29px !important;
-    min-height: 29px !important;
-    max-height: 29px !important;
-    padding: 0 7px !important;
-    font-size: 11px !important;
-  }
-  .lang-wrap {
-    margin-left: 4px !important;
-    padding: 1px 4px !important;
-    height: 29px !important;
-  }
-  .lang-select {
-    max-width: 60px !important;
-    font-size: 10.5px !important;
   }
 }

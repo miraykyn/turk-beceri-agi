@@ -314,9 +314,14 @@ window.TDAI18n = (function() {
   function updateTopLanguageLabels(lang = currentLanguage) {
     const select = document.getElementById('languageSelect');
     if (!select) return;
+    const isMobile = window.innerWidth <= 768;
     const names = getUILanguageNames(lang);
     Array.from(select.options).forEach(opt => {
-      if (names[opt.value]) opt.textContent = names[opt.value];
+      if (isMobile) {
+        opt.textContent = opt.value.toUpperCase();
+      } else {
+        if (names[opt.value]) opt.textContent = names[opt.value];
+      }
     });
     select.setAttribute('aria-label', t('Dil seçimi', { fallback: (lang === 'tr' ? 'Dil seçimi' : 'Language selection') }));
   }
@@ -376,6 +381,7 @@ window.TDAI18n = (function() {
       sel.value = currentLanguage;
       updateTopLanguageLabels(currentLanguage);
       sel.addEventListener('change', () => applyLanguage(sel.value));
+      window.addEventListener('resize', () => updateTopLanguageLabels(currentLanguage));
     }
 
     const observer = new MutationObserver(mutations => {

@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 6. Biliyor muydunuz? (Fact Ticker) ve 3D Bayrak Kartlarını Başlat
   safeInit('Ticker', window.TDATicker);
 
-  // 7. Turan AI Asistanı & Dedektörünü Başlat
+  // 7. Turan, Demo Yardım Asistanını Başlat
   safeInit('Turan', window.TDATuran);
 
   // 8. Sınır Ötesi Mektuplaşma / Mesajlaşma Modülünü Başlat

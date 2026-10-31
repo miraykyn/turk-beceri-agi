@@ -5,13 +5,13 @@
 
 window.TDAConfig = (function() {
   const COUNTRIES = [
- {name:'Türkiye',flag:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Turkey.svg'},
- {name:'Azerbaycan',flag:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Azerbaijan.svg'},
- {name:'Kazakistan',flag:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Kazakhstan.svg'},
- {name:'Özbekistan',flag:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Uzbekistan.svg'},
- {name:'Kırgızistan',flag:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Kyrgyzstan.svg'},
- {name:'Türkmenistan',flag:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_Turkmenistan.svg'},
- {name:'Kuzey Kıbrıs Türk Cumhuriyeti',flag:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Flag_of_the_Turkish_Republic_of_Northern_Cyprus.svg'}
+ {name:'Türkiye',flag:'assets/flags/tr.svg'},
+ {name:'Azerbaycan',flag:'assets/flags/az.svg'},
+ {name:'Kazakistan',flag:'assets/flags/kz.svg'},
+ {name:'Özbekistan',flag:'assets/flags/uz.svg'},
+ {name:'Kırgızistan',flag:'assets/flags/kg.svg'},
+ {name:'Türkmenistan',flag:'assets/flags/tm.svg'},
+ {name:'Kuzey Kıbrıs Türk Cumhuriyeti',flag:'assets/flags/kktc.svg'}
 ];
 
   const DEMO_USERS = [

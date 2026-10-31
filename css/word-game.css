@@ -1121,13 +1121,15 @@
   background: #ffffff;
   border: 1.5px solid #e2e8f0;
   border-radius: 18px;
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   margin-bottom: 24px;
   box-shadow: 0 6px 20px rgba(16, 35, 67, 0.05);
 }
 
 .wg-comparison-table {
   width: 100%;
+  min-width: 340px;
   border-collapse: collapse;
   font-size: 13.5px;
 }

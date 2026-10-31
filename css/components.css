@@ -117,3 +117,32 @@ h2,h3,h4{color:#0f172a}
   .buttons{flex-direction:column}
   .buttons .btn{width:100%;text-align:center}
 }
+
+/* Sıralama ve Seçici Kontrolleri: metin kesilmesini önleme */
+#matchSort {
+  min-width: max-content;
+  width: 100%;
+}
+
+/* Erişilebilirlik: Görünür focus-visible çerçevesi */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #f5b942 !important;
+  outline-offset: 2px !important;
+}
+
+/* Hareket Hassasiyeti (prefers-reduced-motion) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

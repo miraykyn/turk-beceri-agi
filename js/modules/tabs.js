@@ -6,7 +6,7 @@ window.TDATabs = (function() {
   const navTabs = [
     { key: 'tabHome', id: 'home', fallback: 'Ana Sayfa' },
     { key: 'tabJourney', id: 'journey', fallback: 'Nasıl Çalışır?' },
-    { key: 'tabMatching', id: 'matching', fallback: 'Eşleşme' },
+    { key: 'tabMatching', id: 'matching', fallback: 'Akıllı Eşleştirme' },
     { key: 'tabCommunity', id: 'community', fallback: 'Topluluk' },
     { key: 'tabArticles', id: 'articles', fallback: 'Makaleler' },
     { key: 'tabMessages', id: 'messages', fallback: 'Mektuplar' },
@@ -205,7 +205,7 @@ window.TDATabs = (function() {
       if (event.key === 'Escape') setMobileMenuOpen(false);
     });
     window.addEventListener('resize', () => {
-      if (window.innerWidth > 1440) setMobileMenuOpen(false);
+      if (window.innerWidth > 820) setMobileMenuOpen(false);
     });
   }
 

@@ -1406,32 +1406,45 @@ window.TDAWordGame = (function() {
   }
 
   function renderTopHeroBanner() {
+    const t = (k, fb) => (window.TDAI18n ? window.TDAI18n.t(k, { fallback: fb }) : fb) || fb;
+    const eyebrow = t('wgHeroEyebrow', 'MİNİ GÖREVLER • TÜRK LEHÇELERİ ÇOK OYUNCULU KELİME DÜELLOSU');
+    const titleMain = t('wgHeroTitleMain', 'Türk Dünyası');
+    const titleAccent = t('wgHeroTitleAccent', 'Online Kelime Oyunu');
+    const desc = t('wgHeroDesc', 'Kazakça, Kırgızca, Özbekçe, Türkmence, Azerbaycan Türkçesi ve Kıbrıs Türkçesi ortak kelime hazinesini 3 şıklı canlı düellolarla keşfet! Demo rakiple (bilgisayar) rastgele eşleş veya Arkadaş ID / Oda Kodu ile özel maç kur.');
+    const soundText = state.soundEnabled ? t('wgSoundOn', '🔊 Ses Açık') : t('wgSoundOff', '🔇 Sessiz');
+    const playerIdLabel = t('wgYourUniquePlayerId', "Senin Benzersiz Oyuncu ID'n:");
+    const copyIdBtnText = t('wgCopyIdBtn', '📋 ID Kopyala');
+    const statPlayed = t('wgStatPlayed', 'Tamamlanan Maç');
+    const statWon = t('wgStatWon', 'Kazanılan Düello');
+    const statStreak = t('wgStatStreak', 'En Yüksek Seri (Streak)');
+    const statPoints = t('wgStatEarnedPoints', 'Kazanılan Beceri Puanı');
+
     return `
       <div class="wg-hero-banner">
         <div class="wg-hero-top">
           <div>
             <div class="wg-hero-eyebrow">
               <span>🎮</span>
-              <span>MİNİ GÖREVLER • TÜRK LEHÇELERİ ÇOK OYUNCULU KELİME DÜELLOSU</span>
+              <span>${escapeHtml(eyebrow)}</span>
             </div>
-            <h2 class="wg-hero-title">Türk Dünyası <span>Online Kelime Oyunu</span></h2>
+            <h2 class="wg-hero-title">${escapeHtml(titleMain)} <span>${escapeHtml(titleAccent)}</span></h2>
             <p class="wg-hero-desc">
-              Kazakça, Kırgızca, Özbekçe, Türkmence, Azerbaycan Türkçesi ve Kıbrıs Türkçesi ortak kelime hazinesini 3 şıklı canlı düellolarla keşfet! Demo rakiple (bilgisayar) rastgele eşleş veya Arkadaş ID / Oda Kodu ile özel maç kur.
+              ${escapeHtml(desc)}
             </p>
           </div>
 
           <div class="wg-identity-card">
             <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px;">
               <button type="button" id="wgToggleSoundBtn" class="wg-btn-ghost" style="padding:4px 9px;font-size:11.5px;background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.2);">
-                ${state.soundEnabled ? '🔊 Ses Açık' : '🔇 Sessiz'}
+                ${escapeHtml(soundText)}
               </button>
             </div>
             <div class="wg-player-id-row">
               <div>
-                <span class="wg-player-id-label">Senin Benzersiz Oyuncu ID'n:</span>
+                <span class="wg-player-id-label">${escapeHtml(playerIdLabel)}</span>
                 <strong class="wg-player-id-val" id="wgMyPlayerIdText" data-no-translate>${escapeHtml(state.me.playerId)}</strong>
               </div>
-              <button type="button" class="wg-btn-copy-id" id="wgCopyMyIdBtn">📋 ID Kopyala</button>
+              <button type="button" class="wg-btn-copy-id" id="wgCopyMyIdBtn">${escapeHtml(copyIdBtnText)}</button>
             </div>
           </div>
         </div>
@@ -1441,28 +1454,28 @@ window.TDAWordGame = (function() {
             <div class="wg-stat-icon">⚔️</div>
             <div class="wg-stat-info">
               <strong>${state.stats.played}</strong>
-              <small>Tamamlanan Maç</small>
+              <small>${escapeHtml(statPlayed)}</small>
             </div>
           </div>
           <div class="wg-stat-pill">
             <div class="wg-stat-icon">🏆</div>
             <div class="wg-stat-info">
               <strong>${state.stats.won}</strong>
-              <small>Kazanılan Düello</small>
+              <small>${escapeHtml(statWon)}</small>
             </div>
           </div>
           <div class="wg-stat-pill">
             <div class="wg-stat-icon">🔥</div>
             <div class="wg-stat-info">
               <strong>${state.stats.bestStreak}x</strong>
-              <small>En Yüksek Seri (Streak)</small>
+              <small>${escapeHtml(statStreak)}</small>
             </div>
           </div>
           <div class="wg-stat-pill">
             <div class="wg-stat-icon">⭐</div>
             <div class="wg-stat-info">
               <strong>+${state.stats.earnedSkillPoints.toFixed(1)}</strong>
-              <small>Kazanılan Beceri Puanı</small>
+              <small>${escapeHtml(statPoints)}</small>
             </div>
           </div>
         </div>
@@ -2198,8 +2211,10 @@ window.TDAWordGame = (function() {
     document.getElementById('wgCopyMyIdBtn')?.addEventListener('click', e => {
       const btn = e.currentTarget;
       navigator.clipboard?.writeText(state.me.playerId).catch(() => {});
-      btn.textContent = '✓ Kopyalandı!';
-      setTimeout(() => { btn.textContent = '📋 ID Kopyala'; }, 1800);
+      const copiedText = window.TDAI18n ? window.TDAI18n.t('wgCopiedToast', { fallback: '✓ Kopyalandı!' }) : '✓ Kopyalandı!';
+      const defaultText = window.TDAI18n ? window.TDAI18n.t('wgCopyIdBtn', { fallback: '📋 ID Kopyala' }) : '📋 ID Kopyala';
+      btn.textContent = copiedText;
+      setTimeout(() => { btn.textContent = defaultText; }, 1800);
     });
 
     // Tur Soru Sayısı Seçimi (5 / 10)
@@ -2265,8 +2280,10 @@ window.TDAWordGame = (function() {
       if (!state.room) return;
       const btn = e.currentTarget;
       navigator.clipboard?.writeText(state.room.roomId).catch(() => {});
-      btn.textContent = '✓ Oda Kodu Kopyalandı!';
-      setTimeout(() => { btn.textContent = '📋 Oda Kodunu Kopyala'; }, 1800);
+      const copiedText = window.TDAI18n ? window.TDAI18n.t('wgRoomCodeCopiedToast', { fallback: '✓ Oda Kodu Kopyalandı!' }) : '✓ Oda Kodu Kopyalandı!';
+      const defaultText = window.TDAI18n ? window.TDAI18n.t('wgCopyRoomCodeBtn', { fallback: '📋 Oda Kodunu Kopyala' }) : '📋 Oda Kodunu Kopyala';
+      btn.textContent = copiedText;
+      setTimeout(() => { btn.textContent = defaultText; }, 1800);
     });
 
     document.getElementById('wgCopyInviteLinkBtn')?.addEventListener('click', e => {
@@ -2274,8 +2291,10 @@ window.TDAWordGame = (function() {
       const btn = e.currentTarget;
       const url = `${location.origin}${location.pathname}#wordgame?room=${encodeURIComponent(state.room.roomId)}`;
       navigator.clipboard?.writeText(url).catch(() => {});
-      btn.textContent = '✓ Link Kopyalandı!';
-      setTimeout(() => { btn.textContent = '🔗 Davet Linki'; }, 1800);
+      const copiedText = window.TDAI18n ? window.TDAI18n.t('wgLinkCopiedToast', { fallback: '✓ Link Kopyalandı!' }) : '✓ Link Kopyalandı!';
+      const defaultText = window.TDAI18n ? window.TDAI18n.t('wgInviteLinkBtn', { fallback: '🔗 Davet Linki' }) : '🔗 Davet Linki';
+      btn.textContent = copiedText;
+      setTimeout(() => { btn.textContent = defaultText; }, 1800);
     });
 
     // Özel Lobi: Arkadaş ID ile Davet Et

@@ -1136,7 +1136,9 @@ window.TDAMessaging = (function() {
         isStampDrawerOpen = !isStampDrawerOpen;
         drawer.style.display = isStampDrawerOpen ? 'block' : 'none';
         if (toggleText) {
-          toggleText.textContent = isStampDrawerOpen ? '▴ Pul Çekmecesini Kapat' : '▾ Pulu Değiştir / Ülke Seç';
+          const closeText = window.TDAI18n ? window.TDAI18n.t('closeStampDrawer', { fallback: '▴ Pul Çekmecesini Kapat' }) : '▴ Pul Çekmecesini Kapat';
+          const openText = window.TDAI18n ? window.TDAI18n.t('btnChangeStamp', { fallback: '▾ Pulu Değiştir / Ülke Seç' }) : '▾ Pulu Değiştir / Ülke Seç';
+          toggleText.textContent = isStampDrawerOpen ? closeText : openText;
         }
       };
     }
@@ -1228,7 +1230,9 @@ window.TDAMessaging = (function() {
         if (drawer) {
           drawer.style.display = 'none';
           isStampDrawerOpen = false;
-          if (toggleText) toggleText.textContent = '▾ Pulu Değiştir / Ülke Seç';
+          if (toggleText) {
+            toggleText.textContent = window.TDAI18n ? window.TDAI18n.t('btnChangeStamp', { fallback: '▾ Pulu Değiştir / Ülke Seç' }) : '▾ Pulu Değiştir / Ülke Seç';
+          }
         }
       };
     });
@@ -1248,26 +1252,32 @@ window.TDAMessaging = (function() {
     const consentMap = getPhotoConsentMap();
     const status = consentMap[activeSelectedPenpal.id] || 'locked';
 
+    const t = (k, fb, params) => (window.TDAI18n ? window.TDAI18n.t(k, Object.assign({ fallback: fb }, params || {})) : fb) || fb;
+
     if (status === 'locked') {
+      const titleLocked = t('photoShareLockedTitle', 'Fotoğraf Paylaşımı Başlangıçta Kilitlidir');
+      const btnRequest = t('btnSendPhotoRequest', '📷 Fotoğraf Paylaşım İsteği Gönder');
+      const btnSim = t('btnSimulateAccept', '✓ Karşı Taraf Kabul Etsin (Simüle Et)');
+      const descLocked = t('photoShareLockedDesc', 'Karşılıklı güven gereğince fotoğraf ekleme özelliği iki taraf da onaylayana kadar kapalıdır. İstek kabul edildiğinde mektuba maksimum 3 adet fotoğraf iliştirilebilir.');
+
       container.innerHTML = `
         <div class="photo-consent-box locked">
           <div class="consent-header-row">
             <div class="consent-title-badge">
               <span>🔒</span>
-              <span>Fotoğraf Paylaşımı Başlangıçta Kilitlidir</span>
+              <span>${escapeHtml(titleLocked)}</span>
             </div>
             <div class="consent-action-buttons">
               <button type="button" class="btn-request-photo" id="btnSendPhotoRequest">
-                📷 Fotoğraf Paylaşım İsteği Gönder
+                ${escapeHtml(btnRequest)}
               </button>
               <button type="button" class="btn-sim-accept" id="btnSimulateAccept" title="Geliştirme / Test için onay simülasyonu">
-                ✓ Karşı Taraf Kabul Etsin (Simüle Et)
+                ${escapeHtml(btnSim)}
               </button>
             </div>
           </div>
           <p style="font-size:12px;color:#78350f;margin:8px 0 0 0;line-height:1.45;">
-            Karşılıklı güven gereğince fotoğraf ekleme özelliği iki taraf da onaylayana kadar kapalıdır.
-            İstek kabul edildiğinde mektuba maksimum 3 adet fotoğraf iliştirilebilir.
+            ${escapeHtml(descLocked)}
           </p>
         </div>
       `;
@@ -1283,21 +1293,25 @@ window.TDAMessaging = (function() {
       });
 
     } else if (status === 'pending') {
+      const titlePending = t('photoSharePendingTitle', 'Fotoğraf Paylaşım İsteği İletildi — Onay Bekleniyor');
+      const btnSim = t('btnSimulateAccept', '✓ Karşı Taraf Kabul Etsin (Simüle Et)');
+      const descPending = t('photoSharePendingDesc', `${activeSelectedPenpal.name} isteğinizi onayladığında buraya en fazla 3 fotoğraf ekleyebilirsiniz.`, { name: activeSelectedPenpal.name });
+
       container.innerHTML = `
         <div class="photo-consent-box locked">
           <div class="consent-header-row">
             <div class="consent-title-badge">
               <span>⏳</span>
-              <span>Fotoğraf Paylaşım İsteği İletildi — Onay Bekleniyor</span>
+              <span>${escapeHtml(titlePending)}</span>
             </div>
             <div class="consent-action-buttons">
               <button type="button" class="btn-sim-accept" id="btnSimulateAccept">
-                ✓ Karşı Taraf Kabul Etsin (Simüle Et)
+                ${escapeHtml(btnSim)}
               </button>
             </div>
           </div>
           <p style="font-size:12px;color:#78350f;margin:6px 0 0 0;">
-            ${activeSelectedPenpal.name} isteğinizi onayladığında buraya en fazla 3 fotoğraf ekleyebilirsiniz.
+            ${escapeHtml(descPending)}
           </p>
         </div>
       `;
@@ -1309,22 +1323,26 @@ window.TDAMessaging = (function() {
 
     } else {
       // Unlocked (Açık - Maks. 3 Fotoğraf)
+      const titleUnlocked = t('photoShareUnlockedTitle', 'Fotoğraf Paylaşımı Aktif (Maksimum 3 Fotoğraf)');
+      const countDisplay = t('photosUploadedCount', `${attachedPhotoFiles.length} / 3 Fotoğraf Yüklendi`, { n: attachedPhotoFiles.length });
+      const btnSelect = t('btnSelectPhotos', '📎 Fotoğraf Seç (En fazla 3 adet)');
+
       container.innerHTML = `
         <div class="photo-consent-box unlocked">
           <div class="consent-header-row">
             <div class="consent-title-badge">
               <span>🔓</span>
-              <span>Fotoğraf Paylaşımı Aktif (Maksimum 3 Fotoğraf)</span>
+              <span>${escapeHtml(titleUnlocked)}</span>
             </div>
             <span style="font-size:11.5px;color:#166534;font-weight:750;" id="photoCountDisplay">
-              ${attachedPhotoFiles.length} / 3 Fotoğraf Yüklendi
+              ${escapeHtml(countDisplay)}
             </span>
           </div>
 
           <div class="photo-uploader-area">
             <input type="file" id="penpalPhotoInput" accept="image/*" multiple style="display:none">
             <button type="button" class="btn secondary" id="btnTriggerPhotoUpload" style="font-size:12px;padding:7px 13px;border-color:#166534;color:#166534">
-              📎 Fotoğraf Seç (En fazla 3 adet)
+              ${escapeHtml(btnSelect)}
             </button>
             <div class="photo-previews-grid" id="photoPreviewsGrid"></div>
           </div>
@@ -2257,7 +2275,9 @@ window.TDAMessaging = (function() {
       }
       if (stampNameEl) stampNameEl.textContent = stamp.name || 'Posta Pulu';
       if (transitAlert) transitAlert.style.display = isTransit ? 'block' : 'none';
-      if (dateEl) dateEl.textContent = `Tarih: ${dateFormatted}`;
+      if (dateEl) {
+        dateEl.textContent = window.TDAI18n ? window.TDAI18n.t('letterDateLabel', { date: dateFormatted, fallback: `Tarih: ${dateFormatted}` }) : `Tarih: ${dateFormatted}`;
+      }
       if (subjectEl) {
         subjectEl.textContent = letter.subject || 'Mektup';
         subjectEl.setAttribute('data-no-translate', '');

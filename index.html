@@ -30,7 +30,7 @@
     <span class="logo-text-lead" data-i18n="logoLead">TÜRK DÜNYASI</span>
     <span class="logo-text-tail" data-i18n="logoTail">BECERİ AĞI</span>
   </a>
-  <div class="header-right" style="display:flex;align-items:center">
+  <div class="header-nav-wrap">
     <nav id="mainNav">
       <a href="#home" data-i18n="tabHome">Ana Sayfa</a>
       <a href="#nasil" data-i18n="tabJourney">Nasıl Çalışır?</a>
@@ -41,11 +41,17 @@
       <a href="#calisma-odasi" class="nav-study-link"><span class="nav-study-icon" aria-hidden="true">🎧</span><span data-i18n="navStudy">Çalışma Odası</span></a>
       <a href="#kelime-oyunu" data-i18n="navWordGame">Kelime Oyunu</a>
       <a href="#kultur-arsivi" data-i18n="navCultureArchive">Dijital Kültür Arşivi</a>
-      <div class="auth-actions">
+      <div class="auth-actions mobile-only-auth">
         <button class="auth-btn" data-i18n="loginTitle" onclick="openAuth('login')" type="button">Giriş Yap</button>
         <button class="auth-btn register" data-i18n="registerTitle" onclick="openAuth('register')" type="button">Kayıt Ol</button>
       </div>
     </nav>
+  </div>
+  <div class="header-right-actions">
+    <div class="auth-actions desktop-auth">
+      <button class="auth-btn" data-i18n="loginTitle" onclick="openAuth('login')" type="button">Giriş Yap</button>
+      <button class="auth-btn register" data-i18n="registerTitle" onclick="openAuth('register')" type="button">Kayıt Ol</button>
+    </div>
     <div class="lang-wrap">
       <span aria-hidden="true">🌐</span>
       <select aria-label="Dil seçimi" data-i18n-aria="Dil seçimi" class="lang-select" id="languageSelect">

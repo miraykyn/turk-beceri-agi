@@ -29,6 +29,62 @@ window.TDATabs = (function() {
   let panels = {};
   let quickContainer = null;
   let tabNav = null;
+  let moreWrap = null;
+  let moreBtn = null;
+  let moreDropdown = null;
+
+  function closeMoreDropdown() {
+    if (moreDropdown) moreDropdown.classList.remove('open');
+    if (moreWrap) moreWrap.classList.remove('open');
+    if (moreBtn) moreBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  function updateMoreBtnActiveState() {
+    if (!moreBtn || !moreDropdown) return;
+    const hasActiveChild = !!moreDropdown.querySelector('.tab-button.active');
+    moreBtn.classList.toggle('active', hasActiveChild);
+  }
+
+  function adjustNavOverflow() {
+    if (!tabNav || !moreWrap || !moreDropdown) return;
+    if (window.innerWidth <= 820) {
+      buttons.forEach(btn => {
+        if (btn.parentElement !== tabNav) {
+          tabNav.insertBefore(btn, moreWrap);
+        }
+      });
+      moreWrap.style.display = 'none';
+      closeMoreDropdown();
+      return;
+    }
+
+    if (moreWrap.parentElement !== tabNav) {
+      tabNav.appendChild(moreWrap);
+    }
+
+    const container = document.querySelector('.header-nav-wrap') || document.getElementById('mainNav');
+    if (!container) return;
+
+    // Reset items to tabNav to calculate true required width
+    while (moreDropdown.children.length > 0) {
+      tabNav.insertBefore(moreDropdown.firstElementChild, moreWrap);
+    }
+    moreWrap.style.display = 'none';
+
+    const maxAvailableWidth = container.clientWidth - 8;
+    if (tabNav.scrollWidth > maxAvailableWidth) {
+      moreWrap.style.display = 'inline-flex';
+      while (tabNav.scrollWidth > maxAvailableWidth) {
+        const visibleTabs = Array.from(tabNav.children).filter(c => c !== moreWrap);
+        if (visibleTabs.length <= 2) break;
+        const lastTab = visibleTabs[visibleTabs.length - 1];
+        moreDropdown.insertBefore(lastTab, moreDropdown.firstChild);
+      }
+    }
+
+    moreWrap.style.display = moreDropdown.children.length > 0 ? 'inline-flex' : 'none';
+    updateMoreBtnActiveState();
+  }
 
   function setLabels(lang = window.TDAI18n?.language || 'tr') {
     buttons.forEach((button, index) => {
@@ -65,6 +121,11 @@ window.TDATabs = (function() {
         button.textContent = text;
       }
     });
+    if (moreBtn) {
+      const moreTextEl = moreBtn.querySelector('.tab-btn-text');
+      const moreText = (window.TDAI18n ? window.TDAI18n.t('navMore') : '') || 'Daha Fazla';
+      if (moreTextEl) moreTextEl.textContent = moreText;
+    }
     if (tabNav) tabNav.setAttribute('aria-label', window.TDAI18n ? window.TDAI18n.t('tabAriaMain', { fallback: 'Ana bölümler' }) : 'Ana bölümler');
     const toggle = document.getElementById('menuToggle');
     if (toggle) {
@@ -73,6 +134,7 @@ window.TDATabs = (function() {
         ? (window.TDAI18n ? window.TDAI18n.t('menuCloseAria', { fallback: 'Menüyü kapat' }) : 'Menüyü kapat') 
         : (window.TDAI18n ? window.TDAI18n.t('menuOpenAria', { fallback: 'Menüyü aç' }) : 'Menüyü aç'));
     }
+    requestAnimationFrame(adjustNavOverflow);
   }
 
   function setQuickLabels(lang = window.TDAI18n?.language || 'tr') {
@@ -144,6 +206,8 @@ window.TDATabs = (function() {
     }
 
     setMobileMenuOpen(false);
+    closeMoreDropdown();
+    updateMoreBtnActiveState();
 
     window.dispatchEvent(new CustomEvent('tda:tab-changed', { detail: { tab: id } }));
   }
@@ -235,6 +299,52 @@ window.TDATabs = (function() {
       button.addEventListener('click', () => setTab(id));
       tabNav.appendChild(button);
       return button;
+    });
+
+    moreWrap = document.createElement('div');
+    moreWrap.className = 'tab-nav-more-wrap';
+    moreWrap.id = 'tabNavMoreWrap';
+    moreWrap.style.display = 'none';
+
+    moreBtn = document.createElement('button');
+    moreBtn.type = 'button';
+    moreBtn.className = 'tab-button tab-button-more';
+    moreBtn.id = 'tabNavMoreBtn';
+    moreBtn.setAttribute('aria-haspopup', 'true');
+    moreBtn.setAttribute('aria-expanded', 'false');
+    moreBtn.innerHTML = `
+      <span class="tab-btn-text" data-i18n="navMore">${(window.TDAI18n ? window.TDAI18n.t('navMore') : '') || 'Daha Fazla'}</span>
+      <span class="tab-more-arrow" aria-hidden="true">▾</span>
+    `;
+
+    moreDropdown = document.createElement('div');
+    moreDropdown.className = 'nav-more-dropdown';
+    moreDropdown.id = 'navMoreDropdown';
+    moreDropdown.setAttribute('role', 'menu');
+
+    moreWrap.appendChild(moreBtn);
+    moreWrap.appendChild(moreDropdown);
+    tabNav.appendChild(moreWrap);
+
+    moreBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const open = moreDropdown.classList.toggle('open');
+      moreWrap.classList.toggle('open', open);
+      moreBtn.setAttribute('aria-expanded', String(open));
+    });
+
+    document.addEventListener('click', e => {
+      if (!e.target.closest('#tabNavMoreWrap')) {
+        closeMoreDropdown();
+      }
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeMoreDropdown();
+    });
+
+    window.addEventListener('resize', () => {
+      requestAnimationFrame(adjustNavOverflow);
     });
 
     nav.querySelectorAll(':scope > a').forEach(link => link.classList.add('legacy-nav-link'));
@@ -377,6 +487,7 @@ window.TDATabs = (function() {
     const initialTarget = initialHash ? document.getElementById(initialHash) : null;
     const initialPanel = initialTarget?.closest('.tab-panel');
     setTab(panels[initialHash] ? initialHash : (initialPanel ? initialPanel.id.replace('tab-', '') : 'home'), false);
+    requestAnimationFrame(adjustNavOverflow);
   }
 
   return {

@@ -214,14 +214,17 @@ window.TDAStudyRoom = (function() {
       const isEmpty = occ === 0;
       const isActive = room.id === state.activeRoomId;
 
+      const roomNum = room.id.replace('room-', '');
+      const localizedRoomName = window.TDAI18n ? window.TDAI18n.t('studyHallFormat', { n: roomNum, fallback: room.name }) : room.name;
+
       let badgeClass = 'room-tab-badge';
-      let badgeText = `${occ}/${TOTAL_DESKS_PER_ROOM} Dolu`;
+      let badgeText = window.TDAI18n ? window.TDAI18n.t('studyHallOccupancy', { occ: occ, fallback: `${occ}/${TOTAL_DESKS_PER_ROOM} Dolu` }) : `${occ}/${TOTAL_DESKS_PER_ROOM} Dolu`;
       if (isFull) {
         badgeClass += ' badge-full';
-        badgeText = '50/50 Tam Dolu';
+        badgeText = window.TDAI18n ? window.TDAI18n.t('studyHallFull', { fallback: '50/50 Tam Dolu' }) : '50/50 Tam Dolu';
       } else if (isEmpty) {
         badgeClass += ' badge-empty';
-        badgeText = '0/50 Boş';
+        badgeText = window.TDAI18n ? window.TDAI18n.t('studyHallEmpty', { fallback: '0/50 Boş' }) : '0/50 Boş';
       }
 
       return `
@@ -233,7 +236,7 @@ window.TDAStudyRoom = (function() {
         >
           <span class="room-tab-icon">${room.icon}</span>
           <div class="room-tab-text">
-            <span class="room-tab-name">${escapeHtml(room.name)}</span>
+            <span class="room-tab-name">${escapeHtml(localizedRoomName)}</span>
             <span class="${badgeClass}">${badgeText}</span>
           </div>
         </button>
@@ -261,7 +264,9 @@ window.TDAStudyRoom = (function() {
     renderHallDesks();
 
     const room = ROOMS.find(r => r.id === roomId);
-    showToast(`🏛️ ${room ? room.subtitle : 'Yeni Salon'} görüntülendi.`);
+    const sub = room ? room.subtitle : 'Yeni Salon';
+    const toastMsg = window.TDAI18n ? window.TDAI18n.t('studyHallToast', { subtitle: sub, fallback: `🏛️ ${sub} görüntülendi.` }) : `🏛️ ${sub} görüntülendi.`;
+    showToast(toastMsg);
 
     // Eğer kullanıcı bu salonda oturmuyorsa lobiye al
     if (state.userSeatedRoomId !== roomId) {
@@ -289,9 +294,12 @@ window.TDAStudyRoom = (function() {
       // Her 10 masada bir koridor bolucusu ekle
       if (idx > 0 && idx % 10 === 0) {
         const rowNumber = Math.floor(idx / 10);
+        const aisleText = window.TDAI18n 
+          ? window.TDAI18n.t('studyAisleLabel', { n: rowNumber, fallback: `Koridor ${rowNumber} &bull; Sessiz Çal&#x0131;şma Bölgesi` })
+          : `Koridor ${rowNumber} &bull; Sessiz Çal&#x0131;şma Bölgesi`;
         html += `
           <div class="grand-hall-aisle-divider">
-            <span class="aisle-label">Koridor ${rowNumber} &bull; Sessiz &#x00C7;al&#x0131;&#x015F;ma B&ouml;lgesi</span>
+            <span class="aisle-label">${escapeHtml(aisleText)}</span>
           </div>
         `;
       }
@@ -304,6 +312,7 @@ window.TDAStudyRoom = (function() {
       const shadowHtml = `<div class="desk-floor-shadow"></div>`;
 
       // 2. 2.5D FIZIKSEL SANDALYE (Z-Index 2: Masanin Arkasinda)
+      const seatText = window.TDAI18n ? window.TDAI18n.t('takeASeat', { fallback: 'Masaya Otur' }) : 'Masaya Otur';
       const chairHtml = `
         <div class="chair-3d-unit">
           <div class="chair-backrest"></div>
@@ -311,7 +320,7 @@ window.TDAStudyRoom = (function() {
           <div class="chair-legs"></div>
           ${!isOccupied && !isUserDeskHere ? `
             <div class="chair-empty-indicator">
-              <span>Masaya Otur</span>
+              <span>${escapeHtml(seatText)}</span>
             </div>
           ` : ''}
         </div>
@@ -1552,6 +1561,11 @@ window.TDAStudyRoom = (function() {
     initTodos();
     renderAmbientPanel();
     bindUI();
+
+    window.addEventListener('tda:languageChanged', () => {
+      renderRoomSelector();
+      renderHallDesks();
+    });
 
     if (state.userDeskNumber && state.userSeatedRoomId === state.activeRoomId) {
       const goalLabel = document.getElementById('pomoActiveGoalText');

@@ -477,9 +477,16 @@ window.TDACultureArchive = (function() {
     if (summaryEl) {
       const filteredCount = getFilteredItems().length;
       if (state.selectedCountry === 'ALL') {
-        summaryEl.innerHTML = `Gösterilen: <strong>Tüm Türk Dünyası (${filteredCount} fotoğraf)</strong>`;
+        const text = window.TDAI18n 
+          ? window.TDAI18n.t('cultureShowingAll', { n: filteredCount, fallback: `Gösterilen: Tüm Türk Dünyası (${filteredCount} fotoğraf)` })
+          : `Gösterilen: Tüm Türk Dünyası (${filteredCount} fotoğraf)`;
+        summaryEl.textContent = text;
       } else {
-        summaryEl.innerHTML = `Seçili Ülke: <strong>${escapeHtml(translateCountry(state.selectedCountry))} (${filteredCount} fotoğraf)</strong>`;
+        const cName = translateCountry(state.selectedCountry);
+        const text = window.TDAI18n 
+          ? window.TDAI18n.t('cultureShowingCountry', { country: cName, n: filteredCount, fallback: `Seçili Ülke: ${cName} (${filteredCount} fotoğraf)` })
+          : `Seçili Ülke: ${cName} (${filteredCount} fotoğraf)`;
+        summaryEl.textContent = text;
       }
     }
   }
@@ -711,7 +718,7 @@ window.TDACultureArchive = (function() {
     const errorBox = $('cultureFormError');
     if (!file.type.startsWith('image/')) {
       if (errorBox) {
-        errorBox.textContent = 'Lütfen geçerli bir fotoğraf dosyası (JPG, PNG, WEBP vb.) seçin.';
+        errorBox.textContent = window.TDAI18n ? window.TDAI18n.t('cultureErrorInvalidFile', { fallback: 'Lütfen geçerli bir fotoğraf dosyası (JPG, PNG, WEBP vb.) seçin.' }) : 'Lütfen geçerli bir fotoğraf dosyası (JPG, PNG, WEBP vb.) seçin.';
         errorBox.classList.add('show');
       }
       return;
@@ -726,7 +733,7 @@ window.TDACultureArchive = (function() {
       if (errorBox) errorBox.classList.remove('show');
     } catch (err) {
       if (errorBox) {
-        errorBox.textContent = 'Fotoğraf işlenirken bir hata oluştu.';
+        errorBox.textContent = window.TDAI18n ? window.TDAI18n.t('cultureErrorProcessing', { fallback: 'Fotoğraf işlenirken bir hata oluştu.' }) : 'Fotoğraf işlenirken bir hata oluştu.';
         errorBox.classList.add('show');
       }
     }
@@ -745,7 +752,7 @@ window.TDACultureArchive = (function() {
 
     if (!rawCaption) {
       if (errorBox) {
-        errorBox.textContent = 'Lütfen fotoğrafın nereden / hangi şehirden çekildiğini yazın (maksimum 40 karakter).';
+        errorBox.textContent = window.TDAI18n ? window.TDAI18n.t('cultureErrorNoCaption', { fallback: 'Lütfen fotoğrafın nereden / hangi şehirden çekildiğini yazın (maksimum 40 karakter).' }) : 'Lütfen fotoğrafın nereden / hangi şehirden çekildiğini yazın (maksimum 40 karakter).';
         errorBox.classList.add('show');
       }
       captionInput?.focus();
@@ -755,7 +762,7 @@ window.TDACultureArchive = (function() {
     const finalImage = state.uploadedDataUrl || customUrl;
     if (!finalImage) {
       if (errorBox) {
-        errorBox.textContent = 'Lütfen bilgisayarınızdan/telefonunuzdan bir fotoğraf seçin veya bir görsel URL’si girin.';
+        errorBox.textContent = window.TDAI18n ? window.TDAI18n.t('cultureErrorNoImage', { fallback: 'Lütfen bilgisayarınızdan/telefonunuzdan bir fotoğraf seçin veya bir görsel URL’si girin.' }) : 'Lütfen bilgisayarınızdan/telefonunuzdan bir fotoğraf seçin veya bir görsel URL’si girin.';
         errorBox.classList.add('show');
       }
       return;
@@ -774,7 +781,7 @@ window.TDACultureArchive = (function() {
     const saved = saveUserItem(newItem);
     if (!saved) {
       if (errorBox) {
-        errorBox.textContent = 'Depolama alanı yetersiz olduğu için fotoğraf kaydedilemedi. Lütfen daha küçük bir görsel deneyin.';
+        errorBox.textContent = window.TDAI18n ? window.TDAI18n.t('cultureErrorStorage', { fallback: 'Depolama alanı yetersiz olduğu için fotoğraf kaydedilemedi. Lütfen daha küçük bir görsel deneyin.' }) : 'Depolama alanı yetersiz olduğu için fotoğraf kaydedilemedi. Lütfen daha küçük bir görsel deneyin.';
         errorBox.classList.add('show');
       }
       return;

@@ -38,6 +38,32 @@ window.TDAMessaging = (function() {
       .replace(/'/g, '&#39;');
   }
 
+  function getLocalizedCountry(c) {
+    if (!c) return '';
+    return window.TDAI18n ? window.TDAI18n.t(c, { fallback: c }) : c;
+  }
+
+  function getLocalizedShortDate(createdAt) {
+    const d = new Date(createdAt);
+    if (isNaN(d.getTime())) return '';
+    const day = d.getDate();
+    const monthKeys = ['monthJan', 'monthFeb', 'monthMar', 'monthApr', 'monthMay', 'monthJun', 'monthJul', 'monthAug', 'monthSep', 'monthOct', 'monthNov', 'monthDec'];
+    const mKey = monthKeys[d.getMonth()] || 'monthJan';
+    const monthStr = window.TDAI18n ? window.TDAI18n.t(mKey) : 'Eki';
+    return `${day} ${monthStr}`;
+  }
+
+  function getLocalizedLongDate(createdAt) {
+    const d = new Date(createdAt);
+    if (isNaN(d.getTime())) return '';
+    const day = d.getDate();
+    const year = d.getFullYear();
+    const monthKeys = ['monthJan', 'monthFeb', 'monthMar', 'monthApr', 'monthMay', 'monthJun', 'monthJul', 'monthAug', 'monthSep', 'monthOct', 'monthNov', 'monthDec'];
+    const mKey = monthKeys[d.getMonth()] || 'monthJan';
+    const monthStr = window.TDAI18n ? window.TDAI18n.t(mKey) : 'Ekim';
+    return `${day} ${monthStr} ${year}`;
+  }
+
   function downscaleImage(file, maxDimension = 1280, quality = 0.82) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -921,7 +947,7 @@ window.TDAMessaging = (function() {
           <div class="flight-city-node">
             <div class="flight-city-dot"></div>
             <span class="flight-city-name" data-no-translate>${escapeHtml(inTransitLetter.fromCity || 'İstanbul')}</span>
-            <span class="flight-city-country" data-no-translate>${escapeHtml(inTransitLetter.fromCountry || 'Türkiye')}</span>
+            <span class="flight-city-country">${escapeHtml(getLocalizedCountry(inTransitLetter.fromCountry || 'Türkiye'))}</span>
           </div>
 
           <div class="flight-progress-line">
@@ -936,7 +962,7 @@ window.TDAMessaging = (function() {
           <div class="flight-city-node">
             <div class="flight-city-dot" style="background:#b8860b"></div>
             <span class="flight-city-name" data-no-translate>${escapeHtml(inTransitLetter.toCity || 'Almatı')}</span>
-            <span class="flight-city-country" data-no-translate>${escapeHtml(inTransitLetter.toCountry || 'Kazakistan')}</span>
+            <span class="flight-city-country">${escapeHtml(getLocalizedCountry(inTransitLetter.toCountry || 'Kazakistan'))}</span>
           </div>
         </div>
 
@@ -1004,28 +1030,31 @@ window.TDAMessaging = (function() {
     const consentMap = getPhotoConsentMap();
 
     if (!profiles.length) {
-      container.innerHTML = `<div class="letter-empty-state"><p>Bu ülkede henüz mektup arkadaşı profili bulunmuyor.</p></div>`;
+      container.innerHTML = `<div class="letter-empty-state"><p>${escapeHtml(t('noPenpalInCountry') || 'Bu ülkede henüz mektup arkadaşı profili bulunmuyor.')}</p></div>`;
       return;
     }
 
     container.innerHTML = profiles.map(p => {
       const calc = calculateDeliveryEstimate('İstanbul', p.city);
       const consent = consentMap[p.id] || 'locked';
+      const consentUnlockedText = escapeHtml(t('photoConsentUnlocked') || '🔓 Fotoğraf İzni Var');
+      const consentPendingText = escapeHtml(t('photoConsentPending') || '⏳ İstek Bekleniyor');
+      const consentLockedText = escapeHtml(t('photoConsentLocked') || '🔒 Fotoğraf Kilitli');
       const consentBadge = consent === 'unlocked' 
-        ? '<span style="color:#10b981">🔓 Fotoğraf İzni Var</span>'
-        : (consent === 'pending' ? '<span style="color:#d97706">⏳ İstek Bekleniyor</span>' : '<span style="color:#64748b">🔒 Fotoğraf Kilitli</span>');
+        ? `<span style="color:#10b981">${consentUnlockedText}</span>`
+        : (consent === 'pending' ? `<span style="color:#d97706">${consentPendingText}</span>` : `<span style="color:#64748b">${consentLockedText}</span>`);
 
       return `
         <div class="penpal-card" data-penpal-id="${escapeHtml(p.id)}">
           <div class="penpal-card-top">
             <div class="penpal-avatar-wrap">
               <img src="${p.avatar}" alt="${escapeHtml(p.name)} Bitmoji Avatar" class="penpal-avatar-img">
-              <span class="penpal-status-dot" title="Aktif Mektup Arkadaşı"></span>
+              <span class="penpal-status-dot" title="${escapeHtml(t('penpalActiveTooltip') || 'Aktif Mektup Arkadaşı')}"></span>
             </div>
             <div class="penpal-meta-info">
               <h4 data-no-translate>${escapeHtml(p.name)}</h4>
               <span data-no-translate>${escapeHtml(p.city)} • ${escapeHtml(p.university)}</span>
-              <small class="muted" data-no-translate>Öğrenci No: ${escapeHtml(p.studentId)}</small>
+              <small class="muted"><span data-i18n="studentIdPrefix">${escapeHtml(t('studentIdPrefix') || 'Öğrenci No:')}</span> <span data-no-translate>${escapeHtml(p.studentId)}</span></small>
             </div>
           </div>
 
@@ -1927,18 +1956,20 @@ window.TDAMessaging = (function() {
     // 4. Rozetlerin Güncellenmesi
     const badgeEye = document.getElementById('badgeEyeColor');
     if (badgeEye) {
-      const eyeNames = {
-        '3b2219': 'Koyu Kahve',
-        '6d4c41': 'Fındık Kahve',
-        '7d6b38': 'Doğal Ela',
-        '2e7d32': 'Zümrüt Yeşil',
-        '1565c0': 'Okyanus Mavi',
-        'b45309': 'Kehribar',
-        '1a1a1a': 'Kömür Siyah',
-        '64748b': 'Buz Mavisi'
+      const eyeKeys = {
+        '3b2219': 'eyeColorDarkBrown',
+        '6d4c41': 'eyeColorHazel',
+        '7d6b38': 'eyeColorAmber',
+        '2e7d32': 'eyeColorGreen',
+        '1565c0': 'eyeColorBlue',
+        'b45309': 'eyeColorHoney',
+        '1a1a1a': 'eyeColorBlack',
+        '64748b': 'eyeColorIceBlue'
       };
       const curColor = (currentEditingAvatarConfig.eyeColor || '3b2219').replace('#', '');
-      badgeEye.innerHTML = `<span class="badge-color-dot" style="background:#${curColor};"></span> ${eyeNames[curColor] || 'Göz Rengi'}`;
+      const colorKey = eyeKeys[curColor];
+      const colorLabel = colorKey && window.TDAI18n ? window.TDAI18n.t(colorKey) : (colorKey || 'Göz Rengi');
+      badgeEye.innerHTML = `<span class="badge-color-dot" style="background:#${curColor};"></span> ${colorLabel}`;
     }
   }
 
@@ -2131,8 +2162,8 @@ window.TDAMessaging = (function() {
       listEl.innerHTML = `
         <div class="letter-empty-state">
           <div style="font-size:38px;margin-bottom:8px;">📬</div>
-          <strong>Henüz gelen bir mektubunuz yok.</strong>
-          <p>Yeni bir mektup yazarak Türk Dünyası'ndaki bir öğrenciye ilk adımı siz atabilirsiniz.</p>
+          <strong>${window.TDAI18n ? window.TDAI18n.t('letterNoLettersYet') : 'Henüz gelen bir mektubunuz yok.'}</strong>
+          <p>${window.TDAI18n ? window.TDAI18n.t('letterFirstStepPrompt') : "Yeni bir mektup yazarak Türk Dünyası'ndaki bir öğrenciye ilk adımı siz atabilirsiniz."}</p>
         </div>
       `;
       return;
@@ -2145,7 +2176,10 @@ window.TDAMessaging = (function() {
       const isTransit = l.status === 'in_transit';
       const isPending = l.status === 'pending';
       const avatarSrc = l.fromAvatar || generateAvatarUrl();
-      const dateStr = new Date(l.createdAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' });
+      const dateStr = getLocalizedShortDate(l.createdAt);
+      const fromCountryDisplay = getLocalizedCountry(l.fromCountry);
+      const pendingBadge = window.TDAI18n ? window.TDAI18n.t('letterBadgePending') : '🛡️ Onay Bekliyor';
+      const transitBadge = window.TDAI18n ? window.TDAI18n.t('letterBadgeInTransit') : '🦅 Yolda';
 
       return `
         <div class="letter-dm-row ${isUnread ? 'unread' : ''}" data-letter-id="${escapeHtml(l.id)}" role="button" tabindex="0">
@@ -2156,13 +2190,13 @@ window.TDAMessaging = (function() {
             </div>
             <div class="letter-dm-text">
               <strong class="letter-dm-name" data-no-translate>${escapeHtml(l.fromName)}</strong>
-              <span class="letter-dm-country" data-no-translate>${escapeHtml(l.fromCountry)}${l.fromCity ? ' (' + escapeHtml(l.fromCity) + ')' : ''}</span>
+              <span class="letter-dm-country"><span>${escapeHtml(fromCountryDisplay)}</span>${l.fromCity ? ' (<span data-no-translate>' + escapeHtml(l.fromCity) + '</span>)' : ''}</span>
             </div>
           </div>
           <div class="letter-dm-right">
-            ${isPending ? '<span class="letter-dm-pending-badge">🛡️ Onay Bekliyor</span>' : ''}
-            ${isTransit ? '<span class="letter-dm-transit-badge">🦅 Yolda</span>' : ''}
-            <span class="letter-dm-date">${dateStr}</span>
+            ${isPending ? `<span class="letter-dm-pending-badge">${escapeHtml(pendingBadge)}</span>` : ''}
+            ${isTransit ? `<span class="letter-dm-transit-badge">${escapeHtml(transitBadge)}</span>` : ''}
+            <span class="letter-dm-date">${escapeHtml(dateStr)}</span>
             <span class="letter-dm-chevron">›</span>
           </div>
         </div>
@@ -2185,7 +2219,7 @@ window.TDAMessaging = (function() {
       listEl.innerHTML = `
         <div class="letter-empty-state">
           <div style="font-size:38px;margin-bottom:8px;">📤</div>
-          <strong>Henüz gönderdiğiniz bir mektup yok.</strong>
+          <strong>${window.TDAI18n ? window.TDAI18n.t('emptySentMsg', { fallback: 'Henüz gönderilmiş bir mektubunuz yok.' }) : 'Henüz gönderilmiş bir mektubunuz yok.'}</strong>
         </div>
       `;
       return;
@@ -2195,7 +2229,10 @@ window.TDAMessaging = (function() {
     listEl.innerHTML = items.map(l => {
       const isTransit = l.status === 'in_transit';
       const avatarSrc = l.toAvatar || 'https://api.dicebear.com/7.x/adventurer/svg?seed=Recipient';
-      const dateStr = new Date(l.createdAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' });
+      const dateStr = getLocalizedShortDate(l.createdAt);
+      const toCountryDisplay = getLocalizedCountry(l.toCountry);
+      const transitBadge = window.TDAI18n ? window.TDAI18n.t('letterBadgeInFlight') : '🦅 Uçuşta';
+      const deliveredBadge = window.TDAI18n ? window.TDAI18n.t('letterBadgeDelivered') : '✓ Teslim';
 
       return `
         <div class="letter-dm-row" data-letter-id="${escapeHtml(l.id)}" role="button" tabindex="0">
@@ -2205,12 +2242,12 @@ window.TDAMessaging = (function() {
             </div>
             <div class="letter-dm-text">
               <strong class="letter-dm-name" data-no-translate>${escapeHtml(l.toName)}</strong>
-              <span class="letter-dm-country" data-no-translate>${escapeHtml(l.toCountry)}${l.toCity ? ' (' + escapeHtml(l.toCity) + ')' : ''}</span>
+              <span class="letter-dm-country"><span>${escapeHtml(toCountryDisplay)}</span>${l.toCity ? ' (<span data-no-translate>' + escapeHtml(l.toCity) + '</span>)' : ''}</span>
             </div>
           </div>
           <div class="letter-dm-right">
-            ${isTransit ? '<span class="letter-dm-transit-badge">🦅 Uçuşta</span>' : '<span class="letter-dm-delivered-badge">✓ Teslim</span>'}
-            <span class="letter-dm-date">${dateStr}</span>
+            ${isTransit ? `<span class="letter-dm-transit-badge">${escapeHtml(transitBadge)}</span>` : `<span class="letter-dm-delivered-badge">${escapeHtml(deliveredBadge)}</span>`}
+            <span class="letter-dm-date">${escapeHtml(dateStr)}</span>
             <span class="letter-dm-chevron">›</span>
           </div>
         </div>
@@ -2243,7 +2280,7 @@ window.TDAMessaging = (function() {
 
     const stamp = letter.stamp || CULTURAL_STAMPS.tr[0];
     const stampImg = getStampImageSrc(stamp);
-    const dateFormatted = new Date(letter.createdAt).toLocaleDateString('tr-TR', { day:'numeric', month:'long', year:'numeric' });
+    const dateFormatted = getLocalizedLongDate(letter.createdAt);
 
     // 1. Popup Modal Görünümünü Doldur ve Aç
     const modal = document.getElementById('letterReadModal');
@@ -2266,8 +2303,7 @@ window.TDAMessaging = (function() {
         senderNameEl.setAttribute('data-no-translate', '');
       }
       if (subEl) {
-        subEl.textContent = `${letter.fromCity ? letter.fromCity + ', ' : ''}${letter.fromCountry} ➔ ${letter.toCity ? letter.toCity + ', ' : ''}${letter.toCountry}`;
-        subEl.setAttribute('data-no-translate', '');
+        subEl.textContent = `${letter.fromCity ? letter.fromCity + ', ' : ''}${getLocalizedCountry(letter.fromCountry)} ➔ ${letter.toCity ? letter.toCity + ', ' : ''}${getLocalizedCountry(letter.toCountry)}`;
       }
       if (stampImgEl) {
         stampImgEl.src = stampImg;
@@ -2349,10 +2385,10 @@ window.TDAMessaging = (function() {
             <img src="${letter.fromAvatar || generateAvatarUrl()}" alt="Avatar" class="reader-avatar-big">
             <div>
               <h3 data-no-translate style="margin:0 0 4px 0;font-size:18px;color:#102343;">${escapeHtml(letter.fromName)}</h3>
-              <div data-no-translate style="font-size:12.5px;color:#64748b;">
-                ${escapeHtml(letter.fromCity || '')}, ${escapeHtml(letter.fromCountry)} ➔ ${escapeHtml(letter.toCity || '')}, ${escapeHtml(letter.toCountry)}
+              <div style="font-size:12.5px;color:#64748b;">
+                <span data-no-translate>${escapeHtml(letter.fromCity || '')}</span>, <span>${escapeHtml(getLocalizedCountry(letter.fromCountry))}</span> ➔ <span data-no-translate>${escapeHtml(letter.toCity || '')}</span>, <span>${escapeHtml(getLocalizedCountry(letter.toCountry))}</span>
               </div>
-              <small class="muted">Tarih: ${dateFormatted}</small>
+              <small class="muted">${window.TDAI18n ? window.TDAI18n.t('letterDatePrefix') : 'Tarih:'} ${escapeHtml(dateFormatted)}</small>
             </div>
           </div>
 
@@ -2656,6 +2692,11 @@ window.TDAMessaging = (function() {
     } else {
       bindUI();
     }
+    window.addEventListener('tda:languageChanged', () => {
+      renderInbox();
+      renderSent();
+      updateTransitWidget();
+    });
   }
 
   return {

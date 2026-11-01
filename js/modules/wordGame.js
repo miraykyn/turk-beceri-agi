@@ -330,7 +330,7 @@ window.TDAWordGame = (function() {
     const prefix = prefixMap[country] || 'TD';
     const randomCode = Math.floor(1000 + Math.random() * 9000);
     const playerId = `TDA-${prefix}-${randomCode}`;
-    const fullName = profile ? (`${profile.firstName || ''} ${profile.lastName || ''}`.trim() || 'Aylin Yılmaz') : `Öğrenci #${randomCode}`;
+    const fullName = profile ? (`${profile.firstName || ''} ${profile.lastName || ''}`.trim() || 'Aylin Yılmaz') : `${t('wgStudentPrefix', null) || 'Öğrenci'} #${randomCode}`;
 
     state.me = {
       playerId,
@@ -947,35 +947,35 @@ window.TDAWordGame = (function() {
     if (myMetrics.correctCount > oppMetrics.correctCount) {
       resultState = 'WIN';
       decisionCriterion = 'CORRECT_COUNT';
-      decisionExplanation = `1. Öncelikli Kriter (Doğru Sayısı Üstünlüğü): Sen ${myMetrics.correctCount} doğru yaptın, rakibin ${oppMetrics.correctCount} doğru yaptı.`;
+      decisionExplanation = t('wgExplWinCorrect', { my: myMetrics.correctCount, opp: oppMetrics.correctCount });
     } else if (oppMetrics.correctCount > myMetrics.correctCount) {
       resultState = 'LOSS';
       decisionCriterion = 'CORRECT_COUNT';
-      decisionExplanation = `1. Öncelikli Kriter (Doğru Sayısı Üstünlüğü): Rakibin ${oppMetrics.correctCount} doğru yaptı, sen ${myMetrics.correctCount} doğru yaptın.`;
+      decisionExplanation = t('wgExplLossCorrect', { my: myMetrics.correctCount, opp: oppMetrics.correctCount });
     } else {
       // 2. KRİTER (EŞİTLİK BOZUCU): YANLIŞ CEZASI DAHİL TOPLAM YANIT SÜRESİ & ORTALAMA HIZ
       if (myMetrics.wrongCount < oppMetrics.wrongCount) {
         resultState = 'WIN';
         decisionCriterion = 'PENALTY_AND_SPEED';
-        decisionExplanation = `Doğru sayıları eşit (${myMetrics.correctCount} - ${oppMetrics.correctCount}). Daha az yanlış cevap (${myMetrics.wrongCount} vs ${oppMetrics.wrongCount}) ve daha iyi efektif süre (${myMetrics.totalEffectiveTimeSec} sn vs ${oppMetrics.totalEffectiveTimeSec} sn) ile kazandın!`;
+        decisionExplanation = t('wgExplWinPenalty', { count: myMetrics.correctCount });
       } else if (oppMetrics.wrongCount < myMetrics.wrongCount) {
         resultState = 'LOSS';
         decisionCriterion = 'PENALTY_AND_SPEED';
-        decisionExplanation = `Doğru sayıları eşit (${myMetrics.correctCount} - ${oppMetrics.correctCount}). Rakibin daha az yanlış cevap (${oppMetrics.wrongCount} vs ${myMetrics.wrongCount}) ve efektif süre avantajıyla kazandı.`;
+        decisionExplanation = t('wgExplLossPenalty', { count: myMetrics.correctCount });
       } else if (myMetrics.totalEffectiveTimeMs < oppMetrics.totalEffectiveTimeMs) {
         resultState = 'WIN';
         decisionCriterion = 'RESPONSE_SPEED';
         const diffSec = ((oppMetrics.totalEffectiveTimeMs - myMetrics.totalEffectiveTimeMs) / 1000).toFixed(2);
-        decisionExplanation = `Doğru sayıları eşit (${myMetrics.correctCount} - ${oppMetrics.correctCount}). 2. Kriter (Yanıt Hızı): Soruları toplam ${myMetrics.totalRawTimeSec} sn (Ort. ${myMetrics.avgRawTimeSec} sn/soru) sürede yanıtlayarak rakibinden ${diffSec} sn daha hızlı oldun!`;
+        decisionExplanation = t('wgExplWinSpeed', { count: myMetrics.correctCount, diff: diffSec });
       } else if (oppMetrics.totalEffectiveTimeMs < myMetrics.totalEffectiveTimeMs) {
         resultState = 'LOSS';
         decisionCriterion = 'RESPONSE_SPEED';
         const diffSec = ((myMetrics.totalEffectiveTimeMs - oppMetrics.totalEffectiveTimeMs) / 1000).toFixed(2);
-        decisionExplanation = `Doğru sayıları eşit (${myMetrics.correctCount} - ${oppMetrics.correctCount}). 2. Kriter (Yanıt Hızı): Rakibin toplam ${oppMetrics.totalRawTimeSec} sn (Ort. ${oppMetrics.avgRawTimeSec} sn/soru) ile senden ${diffSec} sn daha hızlı yanıtladı.`;
+        decisionExplanation = t('wgExplLossSpeed', { count: myMetrics.correctCount, diff: diffSec });
       } else {
         resultState = 'DRAW';
         decisionCriterion = 'EXACT_TIE';
-        decisionExplanation = `Doğru sayıları (${myMetrics.correctCount} - ${oppMetrics.correctCount}) ve milisaniyelik yanıt süreleri birebir eşit!`;
+        decisionExplanation = t('wgExplTie', { count: myMetrics.correctCount });
       }
     }
 
@@ -1645,15 +1645,15 @@ window.TDAWordGame = (function() {
         <div class="wg-room-code-banner">
           <div>
             <span style="font-size:11.5px;font-weight:800;color:#f5cf79;text-transform:uppercase;letter-spacing:0.8px;">
-              🤝 ARKADAŞ ID İLE ÖZEL MAÇ ODASI (${room.isHost ? 'KURUCU SENSİN' : 'MİSAFİR OYUNCU'})
+              ${escapeHtml(t('wgLobbyPrivateRoomHeader', { role: room.isHost ? t('wgRoleHost') : t('wgRoleGuest') }))}
             </span>
-            <h3 style="margin:4px 0 2px;font-size:22px;color:#ffffff;">Özel Düello Lobisi</h3>
-            <small style="color:#cbd5e1;">Arkadaşın bu Oda Kodunu veya senin Oyuncu ID'ni (${escapeHtml(host.playerId)}) girerek anında bağlanabilir.</small>
+            <h3 style="margin:4px 0 2px;font-size:22px;color:#ffffff;">${escapeHtml(t('wgPrivateLobbyTitle'))}</h3>
+            <small style="color:#cbd5e1;">${escapeHtml(t('wgLobbyRoomCodeHint', { id: host.playerId }))}</small>
           </div>
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
             <div class="wg-room-code-display" id="wgLobbyRoomCode">${escapeHtml(room.roomId)}</div>
-            <button type="button" class="wg-btn-copy-id" id="wgCopyRoomCodeBtn">📋 Oda Kodunu Kopyala</button>
-            <button type="button" class="wg-btn-copy-id" id="wgCopyInviteLinkBtn" style="background:#1e3a6d;color:#f5cf79;border:1px solid #f5b942;">🔗 Davet Linki</button>
+            <button type="button" class="wg-btn-copy-id" id="wgCopyRoomCodeBtn">${escapeHtml(t('wgCopyRoomCodeBtn'))}</button>
+            <button type="button" class="wg-btn-copy-id" id="wgCopyInviteLinkBtn" style="background:#1e3a6d;color:#f5cf79;border:1px solid #f5b942;">${escapeHtml(t('wgInviteLinkBtn'))}</button>
           </div>
         </div>
 
@@ -1665,7 +1665,7 @@ window.TDAWordGame = (function() {
               <span class="wg-lobby-flag"><img src="${hostFlag}" alt="${escapeHtml(host.country)}"></span>
             </div>
             <span style="font-size:11px;font-weight:800;color:#15803d;background:#dcfce7;padding:3px 10px;border-radius:999px;">
-              👑 Oda Kurucusu • Hazır ✓
+              ${escapeHtml(t('wgHostReadyBadge'))}
             </span>
             <h4 style="margin:10px 0 4px;font-size:18px;color:#102343;">${escapeHtml(host.name)}</h4>
             <div style="font-size:12.5px;color:#64748b;font-weight:700;">
@@ -1682,7 +1682,7 @@ window.TDAWordGame = (function() {
                 <span class="wg-lobby-flag"><img src="${guestFlag}" alt="${escapeHtml(guest.country)}"></span>
               </div>
               <span style="font-size:11px;font-weight:800;color:#15803d;background:#dcfce7;padding:3px 10px;border-radius:999px;">
-                🤝 Rakip Arkadaş Bağlandı • Hazır ✓
+                ${escapeHtml(t('wgGuestConnectedBadge'))}
               </span>
               <h4 style="margin:10px 0 4px;font-size:18px;color:#102343;">${escapeHtml(guest.name)}</h4>
               <div style="font-size:12.5px;color:#64748b;font-weight:700;">
@@ -1695,11 +1695,11 @@ window.TDAWordGame = (function() {
                 <span>⏳</span>
               </div>
               <span style="font-size:11px;font-weight:800;color:#b45309;background:#fef3c7;padding:3px 10px;border-radius:999px;">
-                Arkadaşın Bekleniyor...
+                ${escapeHtml(t('wgLobbyWaitingFriend'))}
               </span>
-              <h4 style="margin:10px 0 4px;font-size:17px;color:#475569;">2. Oyuncu Slotu Boş</h4>
+              <h4 style="margin:10px 0 4px;font-size:17px;color:#475569;">${escapeHtml(t('wgLobbySecondPlayerEmpty'))}</h4>
               <div style="font-size:12px;color:#64748b;">
-                Diğer sekmeden <strong>${escapeHtml(room.roomId)}</strong> kodunu girin veya aşağıdan Arkadaş ID davet edin.
+                ${t('wgLobbyInviteHint', { code: `<strong>${escapeHtml(room.roomId)}</strong>` })}
               </div>
             </div>
           `}
@@ -1710,13 +1710,13 @@ window.TDAWordGame = (function() {
           <div class="wg-online-friends-box">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
               <div>
-                <strong style="font-size:13.5px;color:#102343;">⚡ Arkadaş ID'si ile Doğrudan Odaya Davet Et:</strong>
-                <div style="font-size:12px;color:#64748b;">Arkadaşının Oyuncu ID'sini yazabilir veya demo arkadaş listesinden seçebilirsin.</div>
+                <strong style="font-size:13.5px;color:#102343;">${escapeHtml(t('wgLobbyDirectInviteTitle'))}</strong>
+                <div style="font-size:12px;color:#64748b;">${escapeHtml(t('wgLobbyDirectInviteDesc'))}</div>
               </div>
               <div class="wg-lobby-invite-row" style="display:flex;gap:8px;flex:1;max-width:420px;">
-                <input type="text" id="wgLobbyInviteIdInput" class="wg-friend-input" placeholder="Arkadaş ID gir (Örn: TDA-KZ-301)" style="padding:8px 12px;font-size:13px;" />
+                <input type="text" id="wgLobbyInviteIdInput" class="wg-friend-input" placeholder="${escapeHtml(t('wgLobbyInputPlaceholder'))}" style="padding:8px 12px;font-size:13px;" />
                 <button type="button" class="wg-btn-navy" id="wgBtnLobbyInviteId">
-                  + Odaya Davet Et
+                  ${escapeHtml(t('wgLobbyInviteBtn'))}
                 </button>
               </div>
             </div>
@@ -1733,15 +1733,15 @@ window.TDAWordGame = (function() {
 
         <!-- Alt Aksiyonlar: Kurucu "Oyunu Başlat" Butonu -->
         <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:24px;flex-wrap:wrap;">
-          <button type="button" class="wg-btn-ghost" id="wgBtnLeaveLobby">← Odadan Ayrıl ve Ana Menüye Dön</button>
+          <button type="button" class="wg-btn-ghost" id="wgBtnLeaveLobby">${escapeHtml(t('wgLobbyLeaveBtn'))}</button>
           ${room.isHost ? `
             <button type="button" class="wg-btn-primary" id="wgBtnHostStartGame" style="width:auto;min-width:260px;" ${guest ? '' : 'disabled style="width:auto;min-width:260px;opacity:0.55;cursor:not-allowed;"'}>
               <span>🚀</span>
-              <span>${guest ? 'Oyunu Başlat (' + room.roundCount + ' Soru)' : 'Önce Arkadaşınızı Davet Edin'}</span>
+              <span>${guest ? escapeHtml(t('wgLobbyStartGameBtn', { count: room.roundCount })) : escapeHtml(t('wgLobbyInviteFirstBtn'))}</span>
             </button>
           ` : `
             <div style="font-size:14px;font-weight:800;color:#102343;background:#fef3c7;padding:12px 20px;border-radius:12px;border:1px solid #f5b942;">
-              ⏳ Oda kurucusunun (${escapeHtml(host.name)}) "Oyunu Başlat" butonuna basması bekleniyor...
+              ${escapeHtml(t('wgLobbyWaitingHost', { name: host.name }))}
             </div>
           `}
         </div>
@@ -1756,8 +1756,8 @@ window.TDAWordGame = (function() {
 
     return `
       <div class="wg-stage-panel" style="background:linear-gradient(135deg,#0e1b33,#183159);color:#fff;text-align:center;border-color:#f5b942;">
-        <div class="wg-hero-eyebrow" style="margin:0 auto 14px;">EŞLEŞME SAĞLANDI • SORULAR SENKRONİZE EDİLDİ</div>
-        <h3 style="font-size:28px;margin:0 0 18px;color:#f5cf79;">Kelime Düellosu Başlıyor!</h3>
+        <div class="wg-hero-eyebrow" style="margin:0 auto 14px;">${escapeHtml(t('wgCountdownEyebrow'))}</div>
+        <h3 style="font-size:28px;margin:0 0 18px;color:#f5cf79;">${escapeHtml(t('wgCountdownTitle'))}</h3>
 
         <div class="wg-vs-arena" style="max-width:680px;margin:0 auto 24px;">
           <div class="wg-lobby-player-card" style="background:rgba(255,255,255,0.08);border-color:rgba(245,185,66,0.4);color:#fff;">
@@ -1784,7 +1784,7 @@ window.TDAWordGame = (function() {
         </div>
 
         <p style="color:#dce8f8;font-size:14px;margin:0;">
-          Her iki oyuncuya da aynı <strong>${state.match.questions.length} soru</strong> eşzamanlı olarak yansıtılıyor...
+          ${escapeHtml(t('wgBothPlayersSameQuestions', { count: state.match.questions.length }) || `Her iki oyuncuya da aynı ${state.match.questions.length} soru eşzamanlı olarak yansıtılıyor...`)}
         </p>
       </div>
     `;
@@ -1813,7 +1813,7 @@ window.TDAWordGame = (function() {
       return state.match.questions.map((_, i) => {
         const a = answers[i];
         if (!a) return `<span class="wg-dot"></span>`;
-        if (a.choiceIndex === -1) return `<span class="wg-dot timeout" title="Süre Bitti (Boş)"></span>`;
+        if (a.choiceIndex === -1) return `<span class="wg-dot timeout" title="${escapeHtml(t('wgTimeoutEmpty', null) || 'Süre Bitti (Boş)')}"></span>`;
         return `<span class="wg-dot ${a.isCorrect ? 'correct' : 'wrong'}"></span>`;
       }).join('');
     };
@@ -1824,8 +1824,8 @@ window.TDAWordGame = (function() {
       <div class="wg-arena-container">
         <!-- Adil Puanlama Kural Şeridi -->
         <div class="wg-fairness-rule-bar">
-          <span>⚖️ <strong>Adil Kazanma Kuralı:</strong> 1. Kriter: En Çok Doğru Sayısı • 2. Kriter (Eşitlikte): En Düşük Toplam Yanıt Süresi</span>
-          <span>⚠️ Yanlış Cevap Cezası: <strong>-35 Puan &amp; +3.00 sn Süre Cezası</strong></span>
+          <span>⚖️ <strong>${escapeHtml(t('wgFairRuleTitle', null) || 'Adil Kazanma Kuralı:')}</strong> ${escapeHtml(t('wgFairRuleDesc', null) || '1. Kriter: En Çok Doğru Sayısı • 2. Kriter (Eşitlikte): En Düşük Toplam Yanıt Süresi')}</span>
+          <span>⚠️ ${escapeHtml(t('wgWrongPenaltyAlert', null) || 'Yanlış Cevap Cezası:')} <strong>${escapeHtml(t('wgPenaltyDetails', null) || '-35 Puan & +3.00 sn Süre Cezası')}</strong></span>
         </div>
 
         <!-- Üst Canlı Skor, Doğru/Yanlış & Süre HUD Bar -->
@@ -1838,14 +1838,14 @@ window.TDAWordGame = (function() {
             </div>
             <div>
               <div class="wg-hud-name">
-                <span><span data-no-translate>${escapeHtml(state.me.name)}</span> (Sen)</span>
-                ${state.match.myStreak >= 2 ? `<span class="wg-streak-pill">🔥 ${state.match.myStreak}x Seri</span>` : ''}
+                <span><span data-no-translate>${escapeHtml(state.me.name)}</span> (${escapeHtml(t('wgYouTag', null) || 'Sen')})</span>
+                ${state.match.myStreak >= 2 ? `<span class="wg-streak-pill">🔥 ${escapeHtml(t('wgStreakText', { n: state.match.myStreak }) || `${state.match.myStreak}x Seri`)}</span>` : ''}
               </div>
               <div class="wg-hud-live-metrics">
-                <span class="wg-hud-mini-pill correct" title="1. Öncelikli Kriter: Doğru Sayısı">✓ ${myLive.correctCount} Doğru</span>
-                <span class="wg-hud-mini-pill wrong" title="Yanlış Sayısı">✕ ${myLive.wrongCount} Yanlış</span>
-                <span class="wg-hud-mini-pill speed" title="2. Kriter: Toplam Yanıt Süresi">⏱️ ${myLive.totalRawTimeSec} sn</span>
-                <span class="wg-hud-mini-pill">Skor: ${state.match.myScore}</span>
+                <span class="wg-hud-mini-pill correct" title="${escapeHtml(t('wgCriteria1Tooltip', null) || '1. Öncelikli Kriter: Doğru Sayısı')}">✓ ${myLive.correctCount} ${escapeHtml(t('wgCorrectBadge', null) || 'Doğru')}</span>
+                <span class="wg-hud-mini-pill wrong" title="${escapeHtml(t('wgCriteriaWrongTooltip', null) || 'Yanlış Sayısı')}">✕ ${myLive.wrongCount} ${escapeHtml(t('wgWrongBadge', null) || 'Yanlış')}</span>
+                <span class="wg-hud-mini-pill speed" title="${escapeHtml(t('wgCriteria2Tooltip', null) || '2. Kriter: Toplam Yanıt Süresi')}">⏱️ ${myLive.totalRawTimeSec} ${escapeHtml(t('wgSecondUnit', null) || 'sn')}</span>
+                <span class="wg-hud-mini-pill">${escapeHtml(t('wgScoreLabel', null) || 'Skor')}: ${state.match.myScore}</span>
               </div>
               <div class="wg-progress-dots">${renderDots(state.match.myAnswers)}</div>
             </div>
@@ -1853,7 +1853,7 @@ window.TDAWordGame = (function() {
 
           <!-- Orta: Dairesel Süre Sayacı -->
           <div class="wg-timer-center">
-            <span class="wg-round-pill">Soru ${qIndex + 1} / ${totalQ}</span>
+            <span class="wg-round-pill">${escapeHtml(t('wgQuestionCounter', { current: qIndex + 1, total: totalQ }) || `Soru ${qIndex + 1} / ${totalQ}`)}</span>
             <div class="wg-timer-ring-box">
               <svg class="wg-timer-svg" viewBox="0 0 64 64">
                 <circle class="wg-timer-bg" cx="32" cy="32" r="28"></circle>
@@ -1871,20 +1871,20 @@ window.TDAWordGame = (function() {
             </div>
             <div>
               <div class="wg-hud-name">
-                ${state.match.oppStreak >= 2 ? `<span class="wg-streak-pill">🔥 ${state.match.oppStreak}x Seri</span>` : ''}
+                ${state.match.oppStreak >= 2 ? `<span class="wg-streak-pill">🔥 ${escapeHtml(t('wgStreakText', { n: state.match.oppStreak }) || `${state.match.oppStreak}x Seri`)}</span>` : ''}
                 <span data-no-translate>${escapeHtml(opp.name)}</span>
               </div>
               <div class="wg-hud-live-metrics">
-                <span class="wg-hud-mini-pill correct" title="1. Öncelikli Kriter: Doğru Sayısı">✓ ${oppLive.correctCount} Doğru</span>
-                <span class="wg-hud-mini-pill wrong" title="Yanlış Sayısı">✕ ${oppLive.wrongCount} Yanlış</span>
-                <span class="wg-hud-mini-pill speed" title="2. Kriter: Toplam Yanıt Süresi">⏱️ ${oppLive.totalRawTimeSec} sn</span>
-                <span class="wg-hud-mini-pill">Skor: ${state.match.oppScore}</span>
+                <span class="wg-hud-mini-pill correct" title="${escapeHtml(t('wgCriteria1Tooltip', null) || '1. Öncelikli Kriter: Doğru Sayısı')}">✓ ${oppLive.correctCount} ${escapeHtml(t('wgCorrectBadge', null) || 'Doğru')}</span>
+                <span class="wg-hud-mini-pill wrong" title="${escapeHtml(t('wgCriteriaWrongTooltip', null) || 'Yanlış Sayısı')}">✕ ${oppLive.wrongCount} ${escapeHtml(t('wgWrongBadge', null) || 'Yanlış')}</span>
+                <span class="wg-hud-mini-pill speed" title="${escapeHtml(t('wgCriteria2Tooltip', null) || '2. Kriter: Toplam Yanıt Süresi')}">⏱️ ${oppLive.totalRawTimeSec} ${escapeHtml(t('wgSecondUnit', null) || 'sn')}</span>
+                <span class="wg-hud-mini-pill">${escapeHtml(t('wgScoreLabel', null) || 'Skor')}: ${state.match.oppScore}</span>
               </div>
               <div class="wg-hud-status-tag ${oppAns ? 'answered' : ''}">
                 ${oppAns
                   ? (oppAns.choiceIndex === -1
                     ? `⌛ ${escapeHtml(t('wgTimeoutEmpty', null) || 'Süresi Doldu (Boş)')}`
-                    : `⚡ ${escapeHtml(t('wgAnswered', null) || 'Yanıtladı')} (${Number(oppAns.timeSpentSec).toFixed(2)} sn • ${oppAns.isCorrect ? '✓' : '✕'})`)
+                    : `⚡ ${escapeHtml(t('wgAnswered', null) || 'Yanıtladı')} (${Number(oppAns.timeSpentSec).toFixed(2)} ${escapeHtml(t('wgSecondUnit', null) || 'sn')} • ${oppAns.isCorrect ? '✓' : '✕'})`)
                   : `🤔 ${escapeHtml(t('wgThinking', null) || 'Düşünüyor...')}`}
               </div>
               <div class="wg-progress-dots">${renderDots(state.match.oppAnswers)}</div>
@@ -1900,7 +1900,7 @@ window.TDAWordGame = (function() {
               <span>${escapeHtml(q.dialect)} • ${escapeHtml(q.country)}</span>
             </span>
             <span class="wg-target-word-pill">
-              🧩 Mini Görev Kelimesi: "<span data-no-translate>${escapeHtml(q.word)}</span>"
+              🧩 ${escapeHtml(t('wgMiniQuestWordLabel', null) || 'Mini Görev Kelimesi:')} "<span data-no-translate>${escapeHtml(q.word)}</span>"
             </span>
           </div>
 
@@ -1979,23 +1979,23 @@ window.TDAWordGame = (function() {
           </div>
           <h3 class="wg-result-title">
             ${resultState === 'WIN'
-              ? `Tebrikler ${escapeHtml(state.me.name)}, Maçı Kazandın!`
+              ? `${escapeHtml(t('wgCongratulationsWin', { name: escapeHtml(state.me.name) }) || `Tebrikler ${escapeHtml(state.me.name)}, Maçı Kazandın!`)}`
               : (resultState === 'DRAW'
-                ? 'Dostluk Kazandı! Tam Beraberlik'
-                : `${escapeHtml(opp.name)} Maçı Kazandı!`)}
+                ? `${escapeHtml(t('wgDrawMatch', null) || 'Dostluk Kazandı! Tam Beraberlik')}`
+                : `${escapeHtml(t('wgOpponentWon', { name: escapeHtml(opp.name) }) || `${escapeHtml(opp.name)} Maçı Kazandı!`)}`)}
           </h3>
 
           <div class="wg-decision-reason-box">
-            <strong>⚖️ Kazanan Belirleme Kararı:</strong> ${escapeHtml(decisionExplanation)}
+            <strong>⚖️ ${escapeHtml(t('wgDecisionReasonTitle', null) || 'Kazanan Belirleme Kararı:')}</strong> ${escapeHtml(decisionExplanation)}
           </div>
 
           ${state.match.rewardInfo?.awarded ? `
             <div class="wg-reward-pill">
-              <span>✨ Günlük Mini Görev Tamamlandı: Profiline <strong>+0,2 Beceri Puanı</strong> Eklendi!</span>
+              <span>${escapeHtml(t('wgRewardNoticeCompleted', null) || '✨ Günlük Mini Görev Tamamlandı: Profiline +0,2 Beceri Puanı Eklendi!')}</span>
             </div>
           ` : `
             <div class="wg-reward-pill" style="background:rgba(245,185,66,0.18);border-color:#f5cf79;color:#f5cf79;">
-              <span>🎯 Günlük Mini Görev Puanı (+0,2) bugün zaten alındı • Kelime Pratiği Tamamlandı</span>
+              <span>${escapeHtml(t('wgRewardNoticeAlreadyClaimed', null) || '🎯 Günlük Mini Görev Puanı (+0,2) bugün zaten alındı • Kelime Pratiği Tamamlandı')}</span>
             </div>
           `}
         </div>
@@ -2011,32 +2011,32 @@ window.TDAWordGame = (function() {
                   <span class="wg-lobby-flag"><img src="${myFlag}" alt=""></span>
                 </div>
                 <div>
-                  <strong style="font-size:18px;color:#102343;display:block;">${escapeHtml(state.me.name)} (Sen)</strong>
-                  <small style="color:#64748b;font-weight:700;">${escapeHtml(state.me.country)} ${resultState === 'WIN' ? '• 👑 KAZANAN' : ''}</small>
+                  <strong style="font-size:18px;color:#102343;display:block;"><span data-no-translate>${escapeHtml(state.me.name)}</span> (${escapeHtml(t('wgYouTag', null) || 'Sen')})</strong>
+                  <small style="color:#64748b;font-weight:700;">${escapeHtml(state.me.country)} ${resultState === 'WIN' ? `• 👑 ${escapeHtml(t('wgWinnerLabel', null) || 'KAZANAN')}` : ''}</small>
                 </div>
               </div>
               <div style="text-align:right;">
-                <span style="font-size:26px;font-weight:900;color:#15803d;">${myMetrics.correctCount} Doğru</span>
-                <small style="display:block;font-size:11.5px;color:#475569;font-weight:800;">Toplam Süre: ${myMetrics.totalRawTimeSec} sn</small>
+                <span style="font-size:26px;font-weight:900;color:#15803d;">${myMetrics.correctCount} ${escapeHtml(t('wgCorrectBadge', null) || 'Doğru')}</span>
+                <small style="display:block;font-size:11.5px;color:#475569;font-weight:800;">${escapeHtml(t('wgTotalTimeLabel', null) || 'Toplam Süre:')} ${myMetrics.totalRawTimeSec} ${escapeHtml(t('wgSecondUnit', null) || 'sn')}</small>
               </div>
             </div>
 
             <div class="wg-result-metrics">
               <div class="wg-metric-box">
                 <strong style="color:#15803d;">${myMetrics.correctCount}</strong>
-                <small>Doğru (1. Kriter)</small>
+                <small>${escapeHtml(t('wgCorrectBadge', null) || 'Doğru')} (1. Kriter)</small>
               </div>
               <div class="wg-metric-box">
                 <strong style="color:#dc2626;">${myMetrics.wrongCount}</strong>
-                <small>Yanlış (-${myMetrics.penaltyPointsTotal}p)</small>
+                <small>${escapeHtml(t('wgWrongBadge', null) || 'Yanlış')} (-${myMetrics.penaltyPointsTotal}p)</small>
               </div>
               <div class="wg-metric-box">
                 <strong style="color:#b45309;">${myMetrics.avgRawTimeSec}s</strong>
-                <small>Ort. Hız / Soru</small>
+                <small>${escapeHtml(t('wgAverageSpeedLabel', null) || 'Ort. Hız / Soru')}</small>
               </div>
               <div class="wg-metric-box">
                 <strong style="color:#102343;">${state.match.myScore}</strong>
-                <small>Net Puan</small>
+                <small>${escapeHtml(t('wgNetPointsLabel', null) || 'Net Puan')}</small>
               </div>
             </div>
           </div>
@@ -2050,32 +2050,32 @@ window.TDAWordGame = (function() {
                   <span class="wg-lobby-flag"><img src="${oppFlag}" alt=""></span>
                 </div>
                 <div>
-                  <strong style="font-size:18px;color:#102343;display:block;">${escapeHtml(opp.name)}</strong>
-                  <small style="color:#64748b;font-weight:700;">${escapeHtml(opp.country)} ${resultState === 'LOSS' ? '• 👑 KAZANAN' : ''}</small>
+                  <strong style="font-size:18px;color:#102343;display:block;"><span data-no-translate>${escapeHtml(opp.name)}</span></strong>
+                  <small style="color:#64748b;font-weight:700;">${escapeHtml(opp.country)} ${resultState === 'LOSS' ? `• 👑 ${escapeHtml(t('wgWinnerLabel', null) || 'KAZANAN')}` : ''}</small>
                 </div>
               </div>
               <div style="text-align:right;">
-                <span style="font-size:26px;font-weight:900;color:#15803d;">${oppMetrics.correctCount} Doğru</span>
-                <small style="display:block;font-size:11.5px;color:#475569;font-weight:800;">Toplam Süre: ${oppMetrics.totalRawTimeSec} sn</small>
+                <span style="font-size:26px;font-weight:900;color:#15803d;">${oppMetrics.correctCount} ${escapeHtml(t('wgCorrectBadge', null) || 'Doğru')}</span>
+                <small style="display:block;font-size:11.5px;color:#475569;font-weight:800;">${escapeHtml(t('wgTotalTimeLabel', null) || 'Toplam Süre:')} ${oppMetrics.totalRawTimeSec} ${escapeHtml(t('wgSecondUnit', null) || 'sn')}</small>
               </div>
             </div>
 
             <div class="wg-result-metrics">
               <div class="wg-metric-box">
                 <strong style="color:#15803d;">${oppMetrics.correctCount}</strong>
-                <small>Doğru (1. Kriter)</small>
+                <small>${escapeHtml(t('wgCorrectBadge', null) || 'Doğru')} (1. Kriter)</small>
               </div>
               <div class="wg-metric-box">
                 <strong style="color:#dc2626;">${oppMetrics.wrongCount}</strong>
-                <small>Yanlış (-${oppMetrics.penaltyPointsTotal}p)</small>
+                <small>${escapeHtml(t('wgWrongBadge', null) || 'Yanlış')} (-${oppMetrics.penaltyPointsTotal}p)</small>
               </div>
               <div class="wg-metric-box">
                 <strong style="color:#b45309;">${oppMetrics.avgRawTimeSec}s</strong>
-                <small>Ort. Hız / Soru</small>
+                <small>${escapeHtml(t('wgAverageSpeedLabel', null) || 'Ort. Hız / Soru')}</small>
               </div>
               <div class="wg-metric-box">
                 <strong style="color:#102343;">${state.match.oppScore}</strong>
-                <small>Net Puan</small>
+                <small>${escapeHtml(t('wgNetPointsLabel', null) || 'Net Puan')}</small>
               </div>
             </div>
           </div>
@@ -2086,64 +2086,64 @@ window.TDAWordGame = (function() {
           <table class="wg-comparison-table">
             <thead>
               <tr>
-                <th style="text-align:left;">Değerlendirme Kriteri</th>
-                <th>${escapeHtml(state.me.name)} (Sen)</th>
-                <th>${escapeHtml(opp.name)} (Rakip)</th>
-                <th>Üstünlük</th>
+                <th style="text-align:left;">${escapeHtml(t('wgEvalCriteriaHeader', null) || 'Değerlendirme Kriteri')}</th>
+                <th><span data-no-translate>${escapeHtml(state.me.name)}</span> (${escapeHtml(t('wgYouTag', null) || 'Sen')})</th>
+                <th><span data-no-translate>${escapeHtml(opp.name)}</span> (${escapeHtml(t('wgOpponentTag', null) || 'Rakip')})</th>
+                <th>${escapeHtml(t('wgSuperiorityHeader', null) || 'Üstünlük')}</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td class="metric-label">1. Öncelikli Kriter: Doğru Sayısı</td>
-                <td><strong style="color:#15803d;font-size:15px;">${myMetrics.correctCount} Doğru</strong></td>
-                <td><strong style="color:#15803d;font-size:15px;">${oppMetrics.correctCount} Doğru</strong></td>
+                <td class="metric-label">${escapeHtml(t('wgCrit1Name', null) || '1. Öncelikli Kriter: Doğru Sayısı')}</td>
+                <td><strong style="color:#15803d;font-size:15px;">${myMetrics.correctCount} ${escapeHtml(t('wgCorrectBadge', null) || 'Doğru')}</strong></td>
+                <td><strong style="color:#15803d;font-size:15px;">${oppMetrics.correctCount} ${escapeHtml(t('wgCorrectBadge', null) || 'Doğru')}</strong></td>
                 <td>
                   ${myMetrics.correctCount > oppMetrics.correctCount
-                    ? `<span style="color:#15803d;font-weight:800;">✓ Sen (+${myMetrics.correctCount - oppMetrics.correctCount})</span>`
+                    ? `<span style="color:#15803d;font-weight:800;">✓ ${escapeHtml(t('wgYouTag', null) || 'Sen')} (+${myMetrics.correctCount - oppMetrics.correctCount})</span>`
                     : (oppMetrics.correctCount > myMetrics.correctCount
-                      ? `<span style="color:#dc2626;font-weight:800;">Rakip (+${oppMetrics.correctCount - myMetrics.correctCount})</span>`
-                      : '<span style="color:#b45309;font-weight:800;">Eşit (2. Kritere Bakılır)</span>')}
+                      ? `<span style="color:#dc2626;font-weight:800;">${escapeHtml(t('wgOpponentTag', null) || 'Rakip')} (+${oppMetrics.correctCount - myMetrics.correctCount})</span>`
+                      : `<span style="color:#b45309;font-weight:800;">${escapeHtml(t('wgTieLookCrit2', null) || 'Eşit (2. Kritere Bakılır)')}</span>`)}
                 </td>
               </tr>
               <tr>
-                <td class="metric-label">Yanlış Cevap &amp; Ceza Etkisi</td>
-                <td><span style="color:#dc2626;font-weight:750;">${myMetrics.wrongCount} Yanlış</span> <small class="muted">(-${myMetrics.penaltyPointsTotal}p / +${myMetrics.penaltyTimeSecTotal}sn)</small></td>
-                <td><span style="color:#dc2626;font-weight:750;">${oppMetrics.wrongCount} Yanlış</span> <small class="muted">(-${oppMetrics.penaltyPointsTotal}p / +${oppMetrics.penaltyTimeSecTotal}sn)</small></td>
+                <td class="metric-label">${escapeHtml(t('wgCritPenaltyName', null) || 'Yanlış Cevap & Ceza Etkisi')}</td>
+                <td><span style="color:#dc2626;font-weight:750;">${myMetrics.wrongCount} ${escapeHtml(t('wgWrongBadge', null) || 'Yanlış')}</span> <small class="muted">(-${myMetrics.penaltyPointsTotal}p / +${myMetrics.penaltyTimeSecTotal}${escapeHtml(t('wgSecondUnit', null) || 'sn')})</small></td>
+                <td><span style="color:#dc2626;font-weight:750;">${oppMetrics.wrongCount} ${escapeHtml(t('wgWrongBadge', null) || 'Yanlış')}</span> <small class="muted">(-${oppMetrics.penaltyPointsTotal}p / +${oppMetrics.penaltyTimeSecTotal}${escapeHtml(t('wgSecondUnit', null) || 'sn')})</small></td>
                 <td>
                   ${myMetrics.wrongCount < oppMetrics.wrongCount
-                    ? '<span style="color:#15803d;font-weight:800;">✓ Daha Az Hata</span>'
-                    : (oppMetrics.wrongCount < myMetrics.wrongCount ? '<span style="color:#dc2626;font-weight:800;">Rakip Daha Az Hatalı</span>' : 'Eşit')}
+                    ? `<span style="color:#15803d;font-weight:800;">${escapeHtml(t('wgLessMistakes', null) || '✓ Daha Az Hata')}</span>`
+                    : (oppMetrics.wrongCount < myMetrics.wrongCount ? `<span style="color:#dc2626;font-weight:800;">${escapeHtml(t('wgOpponentLessMistakes', null) || 'Rakip Daha Az Hatalı')}</span>` : `${escapeHtml(t('anyOption', null) || 'Eşit')}`)}
                 </td>
               </tr>
               <tr>
-                <td class="metric-label">2. Kriter (Eşitlik Bozan): Toplam Yanıt Süresi</td>
-                <td><strong>${myMetrics.totalRawTimeSec} sn</strong> <small class="muted">(${myMetrics.totalRawTimeMs} ms)</small></td>
-                <td><strong>${oppMetrics.totalRawTimeSec} sn</strong> <small class="muted">(${oppMetrics.totalRawTimeMs} ms)</small></td>
+                <td class="metric-label">${escapeHtml(t('wgCrit2Name', null) || '2. Kriter (Eşitlik Bozan): Toplam Yanıt Süresi')}</td>
+                <td><strong>${myMetrics.totalRawTimeSec} ${escapeHtml(t('wgSecondUnit', null) || 'sn')}</strong> <small class="muted">(${myMetrics.totalRawTimeMs} ms)</small></td>
+                <td><strong>${oppMetrics.totalRawTimeSec} ${escapeHtml(t('wgSecondUnit', null) || 'sn')}</strong> <small class="muted">(${oppMetrics.totalRawTimeMs} ms)</small></td>
                 <td>
                   ${myMetrics.totalRawTimeMs < oppMetrics.totalRawTimeMs
-                    ? `<span style="color:#15803d;font-weight:800;">⚡ Sen Daha Hızlısın (-${((oppMetrics.totalRawTimeMs - myMetrics.totalRawTimeMs) / 1000).toFixed(2)} sn)</span>`
+                    ? `<span style="color:#15803d;font-weight:800;">${escapeHtml(t('wgYouFaster', { diff: ((oppMetrics.totalRawTimeMs - myMetrics.totalRawTimeMs) / 1000).toFixed(2) }) || `⚡ Sen Daha Hızlısın (-${((oppMetrics.totalRawTimeMs - myMetrics.totalRawTimeMs) / 1000).toFixed(2)} sn)`)}</span>`
                     : (oppMetrics.totalRawTimeMs < myMetrics.totalRawTimeMs
-                      ? `<span style="color:#dc2626;font-weight:800;">Rakip Daha Hızlı (-${((myMetrics.totalRawTimeMs - oppMetrics.totalRawTimeMs) / 1000).toFixed(2)} sn)</span>`
-                      : 'Eşit')}
+                      ? `<span style="color:#dc2626;font-weight:800;">${escapeHtml(t('wgOpponentFaster', { diff: ((myMetrics.totalRawTimeMs - oppMetrics.totalRawTimeMs) / 1000).toFixed(2) }) || `Rakip Daha Hızlı (-${((myMetrics.totalRawTimeMs - oppMetrics.totalRawTimeMs) / 1000).toFixed(2)} sn)`)}</span>`
+                      : `${escapeHtml(t('anyOption', null) || 'Eşit')}`)}
                 </td>
               </tr>
               <tr>
-                <td class="metric-label">Ortalama Yanıt Hızı (Soru Başına)</td>
-                <td><strong>${myMetrics.avgRawTimeSec} sn / soru</strong></td>
-                <td><strong>${oppMetrics.avgRawTimeSec} sn / soru</strong></td>
-                <td>${Number(myMetrics.avgRawTimeSec) <= Number(oppMetrics.avgRawTimeSec) ? '⚡ Sen' : 'Rakip'}</td>
+                <td class="metric-label">${escapeHtml(t('wgCritSpeedName', null) || 'Ortalama Yanıt Hızı (Soru Başına)')}</td>
+                <td><strong>${myMetrics.avgRawTimeSec} ${escapeHtml(t('wgPerQuestionUnit', null) || 'sn / soru')}</strong></td>
+                <td><strong>${oppMetrics.avgRawTimeSec} ${escapeHtml(t('wgPerQuestionUnit', null) || 'sn / soru')}</strong></td>
+                <td>${Number(myMetrics.avgRawTimeSec) <= Number(oppMetrics.avgRawTimeSec) ? `⚡ ${escapeHtml(t('wgYouTag', null) || 'Sen')}` : `${escapeHtml(t('wgOpponentTag', null) || 'Rakip')}`}</td>
               </tr>
               <tr>
-                <td class="metric-label">Efektif Süre (Yanlış Cezaları Dahil)</td>
-                <td><strong>${myMetrics.totalEffectiveTimeSec} sn</strong></td>
-                <td><strong>${oppMetrics.totalEffectiveTimeSec} sn</strong></td>
-                <td>${myMetrics.totalEffectiveTimeMs <= oppMetrics.totalEffectiveTimeMs ? '✓ Sen Avantajlısın' : 'Rakip Avantajlı'}</td>
+                <td class="metric-label">${escapeHtml(t('wgCritEffectiveName', null) || 'Efektif Süre (Yanlış Cezaları Dahil)')}</td>
+                <td><strong>${myMetrics.totalEffectiveTimeSec} ${escapeHtml(t('wgSecondUnit', null) || 'sn')}</strong></td>
+                <td><strong>${oppMetrics.totalEffectiveTimeSec} ${escapeHtml(t('wgSecondUnit', null) || 'sn')}</strong></td>
+                <td>${myMetrics.totalEffectiveTimeMs <= oppMetrics.totalEffectiveTimeMs ? `${escapeHtml(t('wgYouAdvantage', null) || '✓ Sen Avantajlısın')}` : `${escapeHtml(t('wgOpponentAdvantage', null) || 'Rakip Avantajlı')}`}</td>
               </tr>
               <tr>
-                <td class="metric-label">Net Maç Puanı &amp; En Yüksek Seri</td>
-                <td><strong>${state.match.myScore} Puan</strong> <small class="muted">(🔥 ${state.match.myBestStreak}x)</small></td>
-                <td><strong>${state.match.oppScore} Puan</strong> <small class="muted">(🔥 ${state.match.oppBestStreak}x)</small></td>
-                <td>${state.match.myScore >= state.match.oppScore ? '✓ Sen' : 'Rakip'}</td>
+                <td class="metric-label">${escapeHtml(t('wgCritNetScoreName', null) || 'Net Maç Puanı & En Yüksek Seri')}</td>
+                <td><strong>${state.match.myScore} ${escapeHtml(t('wgScoreLabel', null) || 'Puan')}</strong> <small class="muted">(🔥 ${state.match.myBestStreak}x)</small></td>
+                <td><strong>${state.match.oppScore} ${escapeHtml(t('wgScoreLabel', null) || 'Puan')}</strong> <small class="muted">(🔥 ${state.match.oppBestStreak}x)</small></td>
+                <td>${state.match.myScore >= state.match.oppScore ? `✓ ${escapeHtml(t('wgYouTag', null) || 'Sen')}` : `${escapeHtml(t('wgOpponentTag', null) || 'Rakip')}`}</td>
               </tr>
             </tbody>
           </table>
@@ -2151,7 +2151,7 @@ window.TDAWordGame = (function() {
 
         <!-- Maçta Sorulan Kelimelerin Soru Bazlı Süre & Doğruluk İncelemesi -->
         <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;padding:20px;margin-bottom:24px;">
-          <h4 style="margin:0 0 12px;color:#102343;font-size:16px;">📚 Soru Bazlı Yanıt Süresi ve Doğruluk Karşılaştırması</h4>
+          <h4 style="margin:0 0 12px;color:#102343;font-size:16px;">${escapeHtml(t('wgReviewSectionTitle', null) || '📚 Soru Bazlı Yanıt Süresi ve Doğruluk Karşılaştırması')}</h4>
           <div class="wg-review-list">
             ${state.match.questions.map((q, i) => {
               const myA = state.match.myAnswers[i];
@@ -2164,7 +2164,7 @@ window.TDAWordGame = (function() {
                 <div class="wg-review-item">
                   <div style="flex:1;min-width:240px;">
                     <span style="font-size:11px;font-weight:800;color:#1d4ed8;background:#eff6ff;padding:3px 8px;border-radius:6px;">
-                      Soru ${i + 1} • ${escapeHtml(q.dialect)}
+                      ${escapeHtml(t('question', { fallback: 'Soru' }))} ${i + 1} • ${escapeHtml(q.dialect)}
                     </span>
                     <strong style="font-size:14.5px;color:#102343;margin-left:6px;">
                       "<span data-no-translate>${escapeHtml(q.word)}</span>" → <span style="color:#15803d;" data-no-translate>${escapeHtml(q.options[q.correctIndex])}</span>
@@ -2173,7 +2173,7 @@ window.TDAWordGame = (function() {
                   </div>
                   <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:12px;font-weight:800;">
                     <div style="background:${myA?.isCorrect ? '#f0fdf4' : '#fef2f2'};border:1px solid ${myA?.isCorrect ? '#bbf7d0' : '#fecaca'};padding:6px 10px;border-radius:10px;color:${myA?.isCorrect ? '#166534' : '#991b1b'};">
-                      Sen: ${myA?.isCorrect ? '✓' : '✕'} ${escapeHtml(myChoiceText)} (${myTimeStr})
+                      ${escapeHtml(t('wgYouTag', null) || 'Sen')}: ${myA?.isCorrect ? '✓' : '✕'} ${escapeHtml(myChoiceText)} (${myTimeStr})
                     </div>
                     <div style="background:${oppA?.isCorrect ? '#f0fdf4' : '#fef2f2'};border:1px solid ${oppA?.isCorrect ? '#bbf7d0' : '#fecaca'};padding:6px 10px;border-radius:10px;color:${oppA?.isCorrect ? '#166534' : '#991b1b'};">
                       ${escapeHtml(opp.name.split(' ')[0])}: ${oppA?.isCorrect ? '✓' : '✕'} ${escapeHtml(oppChoiceText)} (${oppTimeStr})
@@ -2188,11 +2188,11 @@ window.TDAWordGame = (function() {
         <!-- Alt Butonlar: Rövanş & Ana Menüye Dön -->
         <div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;">
           <button type="button" class="wg-btn-ghost" id="wgBtnReturnMenu" style="padding:14px 24px;font-size:14.5px;">
-            🏠 Oyun Ana Menüsüne Dön
+            🏠 ${escapeHtml(t('wgBackToMenu', null) || 'Ana Menüye Dön')}
           </button>
           <button type="button" class="wg-btn-primary" id="wgBtnRematch" style="width:auto;min-width:240px;">
             <span>🔄</span>
-            <span>Rövanş / Sıfırdan Yeni Maç Başlat</span>
+            <span>${escapeHtml(t('wgPlayAgain', null) || 'Tekrar Oyna')}</span>
           </button>
         </div>
       </div>

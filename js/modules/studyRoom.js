@@ -650,7 +650,8 @@ window.TDAStudyRoom = (function() {
       setSceneState('FOCUS');
       startPomodoro();
       const goalLabel = document.getElementById('pomoActiveGoalText');
-      if (goalLabel) goalLabel.textContent = `Hedef: ${goalText}`;
+      const goalPrefix = window.TDAI18n ? window.TDAI18n.t('pomoGoalPrefix') : 'Hedef:';
+      if (goalLabel) goalLabel.textContent = `${goalPrefix} ${goalText}`;
       const toastMsg = window.TDAI18n ? window.TDAI18n.t('sessionStartedToast', { n: state.userDeskNumber, fallback: `🎯 Masa ${state.userDeskNumber}'de seans başladı. Verimli çalışmalar!` }) : `🎯 Masa ${state.userDeskNumber}'de seans başladı. Verimli çalışmalar!`;
       showToast(toastMsg);
     }, 760);
@@ -728,7 +729,8 @@ window.TDAStudyRoom = (function() {
     document.getElementById('socialPeerAvatar').src = peer.avatarUrl;
     document.getElementById('socialPeerFlag').textContent = peer.flag;
     document.getElementById('socialPeerName').textContent = peer.name;
-    document.getElementById('socialPeerCity').textContent = `${peer.city}, ${peer.country}`;
+    const localizedCountry = window.TDAI18n ? window.TDAI18n.t(peer.country, { fallback: peer.country }) : peer.country;
+    document.getElementById('socialPeerCity').textContent = `${peer.city}, ${localizedCountry}`;
     document.getElementById('socialPeerStatus').textContent = peer.status;
 
     popover.style.display = 'block';
@@ -745,7 +747,7 @@ window.TDAStudyRoom = (function() {
     const peer = state.activePeerPopover;
 
     closeSocialPopover();
-    showToast(`${peer.name} öğrencisine "${emoji}" reaksiyonu gönderdin!`);
+    showToast(window.TDAI18n ? window.TDAI18n.t('socialReactionSent', { name: peer.name, emoji: emoji }) : `${peer.name} öğrencisine "${emoji}" reaksiyonu gönderdin!`);
   }
 
   function showToast(message) {
@@ -762,12 +764,41 @@ window.TDAStudyRoom = (function() {
 
   // --- 10. LIGHT MODE FLOATING POMODORO ZAMANLAYICI ---
 
+  function syncPomodoroI18n() {
+    const goalLabel = document.getElementById('pomoActiveGoalText');
+    const goalPrefix = window.TDAI18n ? window.TDAI18n.t('pomoGoalPrefix') : 'Hedef:';
+    const defaultGoal = window.TDAI18n ? window.TDAI18n.t('pomoDefaultGoal') : 'Derin Odaklanma Seansı';
+    const activeText = (state.activeGoal && state.activeGoal !== 'Derin Odaklanma Seansı') ? state.activeGoal : defaultGoal;
+    if (goalLabel) {
+      goalLabel.textContent = `${goalPrefix} ${activeText}`;
+    }
+
+    const select = document.getElementById('pomoBreakDurationSelect');
+    if (select) {
+      const minShort = window.TDAI18n ? window.TDAI18n.t('pomoMinuteShort') : 'dk';
+      Array.from(select.options).forEach(opt => {
+        const val = opt.value;
+        opt.textContent = `${val} ${minShort}`;
+      });
+    }
+
+    const workBtn = document.getElementById('pomoModeWorkBtn');
+    if (workBtn && window.TDAI18n) {
+      workBtn.textContent = window.TDAI18n.t('pomoFocusMode');
+    }
+    const breakBtn = document.getElementById('pomoModeBreakBtn');
+    if (breakBtn && window.TDAI18n) {
+      breakBtn.textContent = window.TDAI18n.t('pomoBreakMode');
+    }
+  }
+
   function initPomodoro() {
     try {
       const savedStreak = localStorage.getItem(STORAGE_POMO_KEY);
       if (savedStreak) state.pomodoro.completedSessions = parseInt(savedStreak, 10) || 0;
     } catch(e) {}
 
+    syncPomodoroI18n();
     updatePomodoroDisplay();
   }
 
@@ -1565,11 +1596,11 @@ window.TDAStudyRoom = (function() {
     window.addEventListener('tda:languageChanged', () => {
       renderRoomSelector();
       renderHallDesks();
+      syncPomodoroI18n();
     });
 
     if (state.userDeskNumber && state.userSeatedRoomId === state.activeRoomId) {
-      const goalLabel = document.getElementById('pomoActiveGoalText');
-      if (goalLabel) goalLabel.textContent = `Hedef: ${state.activeGoal}`;
+      syncPomodoroI18n();
       setSceneState('FOCUS');
       setTimeout(() => smoothZoomToDesk(state.userDeskNumber), 300);
     } else {

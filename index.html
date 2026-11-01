@@ -13,9 +13,9 @@
 <link rel="apple-touch-icon" href="./assets/images/mektup-ikon.png"/>
 
   <!-- Modüler CSS Mimarisi -->
-  <link rel="stylesheet" href="./css/main.css?v=20261101-1">
-  <link rel="stylesheet" href="./css/components.css?v=20261101-1">
-  <link rel="stylesheet" href="./css/tabs.css?v=20261101-1">
+  <link rel="stylesheet" href="./css/main.css?v=20261101-2">
+  <link rel="stylesheet" href="./css/components.css?v=20261101-2">
+  <link rel="stylesheet" href="./css/tabs.css?v=20261101-2">
   <link rel="stylesheet" href="./css/features.css?v=20261031-1">
   <link rel="stylesheet" href="./css/flags-ticker.css?v=20261031-1">
   <link rel="stylesheet" href="./css/turan.css?v=20261031-1">
@@ -30,7 +30,7 @@
     <span class="logo-text-lead" data-i18n="logoLead">TÜRK DÜNYASI</span>
     <span class="logo-text-tail" data-i18n="logoTail">BECERİ AĞI</span>
   </a>
-  <div class="header-nav-wrap">
+  <div class="header-right" style="display:flex;align-items:center">
     <nav id="mainNav">
       <a href="#home" data-i18n="tabHome">Ana Sayfa</a>
       <a href="#nasil" data-i18n="tabJourney">Nasıl Çalışır?</a>
@@ -41,17 +41,11 @@
       <a href="#calisma-odasi" class="nav-study-link"><span class="nav-study-icon" aria-hidden="true">🎧</span><span data-i18n="navStudy">Çalışma Odası</span></a>
       <a href="#kelime-oyunu" data-i18n="navWordGame">Kelime Oyunu</a>
       <a href="#kultur-arsivi" data-i18n="navCultureArchive">Dijital Kültür Arşivi</a>
-      <div class="auth-actions mobile-only-auth">
+      <div class="auth-actions">
         <button class="auth-btn" data-i18n="loginTitle" onclick="openAuth('login')" type="button">Giriş Yap</button>
         <button class="auth-btn register" data-i18n="registerTitle" onclick="openAuth('register')" type="button">Kayıt Ol</button>
       </div>
     </nav>
-  </div>
-  <div class="header-right-actions">
-    <div class="auth-actions desktop-auth">
-      <button class="auth-btn" data-i18n="loginTitle" onclick="openAuth('login')" type="button">Giriş Yap</button>
-      <button class="auth-btn register" data-i18n="registerTitle" onclick="openAuth('register')" type="button">Kayıt Ol</button>
-    </div>
     <div class="lang-wrap">
       <span aria-hidden="true">🌐</span>
       <select aria-label="Dil seçimi" data-i18n-aria="Dil seçimi" class="lang-select" id="languageSelect">
@@ -1165,7 +1159,7 @@
 
   <!-- 3. Fonksiyonel Modüller -->
   <script charset="utf-8" src="./js/modules/auth.js?v=20261031-1"></script>
-  <script charset="utf-8" src="./js/modules/tabs.js?v=20261031-1"></script>
+  <script charset="utf-8" src="./js/modules/tabs.js?v=20261101-2"></script>
   <script charset="utf-8" src="./js/modules/matching.js?v=20261031-1"></script>
   <script charset="utf-8" src="./js/modules/community.js?v=20261031-1"></script>
   <script charset="utf-8" src="./js/modules/articles.js?v=20261031-1"></script>

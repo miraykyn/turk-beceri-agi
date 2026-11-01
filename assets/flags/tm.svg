@@ -9,7 +9,9 @@
    id="svg585"
    version="1.1"
    height="600"
-   width="900">
+   width="900"
+   viewBox="0 0 900 600"
+   preserveAspectRatio="none">
   <metadata
      id="metadata591">
     <rdf:RDF>
